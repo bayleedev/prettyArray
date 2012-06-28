@@ -194,6 +194,7 @@ class PrettyArray implements ArrayAccess {
 	 * - Alias
 	 * 	- find_key
 	 * 	- find_index
+	 * 	- has_value
 	 * @param mixed $index 
 	 * @return mixed Either the key (if found), or null.
 	 */
@@ -317,14 +318,15 @@ class PrettyArray implements ArrayAccess {
 	 * echo $obj; // Array ( [0] => Foo [1] => bar [2] => foobar )
 	 * </code>
 	 * @param boolean $save If you want to save (true) or return (false) this shuffled PrettyArray.
-	 * @return mixed
+	 * @return PrettyArray (chainable)
 	 */
 	public function shuffle($save = false) {
-		if($save) {
-			return shuffle($this->data);
+		if(!$save) {
+			$temp = clone $this;
+			return ($temp->shuffle(true)) ? $temp : null;
 		}
-		$temp = clone $this;
-		return ($temp->shuffle(true)) ? $temp : null;
+		shuffle($this->data);
+		return $this;
 	}
 
 	/**
@@ -338,9 +340,8 @@ class PrettyArray implements ArrayAccess {
 	public function first() {
 		if(reset($this->data)) {
 			current($this->data);
-			return $this;
 		}
-		return false;
+		return $this;
 	}
 
 	/**
@@ -454,27 +455,6 @@ class PrettyArray implements ArrayAccess {
 	}
 
 	/**
-	 * Will return true/false if the value exists in the base PrettyArray
-	 * - Alias
-	 * 	- include
-	 * <code>
-	 * $obj = new PrettyArray('Foo', 'bar', 'foobar');
-	 * $obj->include('bar'); // true
-	 * $obj->include('github'); // false
-	 * </code>
-	 * @param mixed $val 
-	 * @return boolean
-	 */
-	public function has_value($val) {
-		foreach($this->data as $key => $value) {
-			if($val == $value) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
 	 * Will implode data for you.
 	 * <code>
 	 * $obj = new PrettyArray('Foo', 'bar', 'foobar');
@@ -505,7 +485,7 @@ class PrettyArray implements ArrayAccess {
 		}
 		foreach($this->data as $key => &$value) {
 			if(is_null($value)) {
-				unset($this->data[$key]);
+				$this->offsetUnset($key);
 			}
 		}
 		return $this;
