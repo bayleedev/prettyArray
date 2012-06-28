@@ -123,8 +123,8 @@ class PrettyArray implements ArrayAccess {
 	 * Will iterate all items in the array on the first level.
 	 * <code>
 	 * <?php
-	 * $foo = new PrettyArray(1, 2, 3);
-	 * $foo->map(function($key, &$value) {
+	 * $obj = new PrettyArray(1, 2, 3);
+	 * $obj->map(function($key, &$value) {
 	 * 		$value .= "rawr";
 	 * });
 	 * </code>
@@ -550,7 +550,7 @@ class PrettyArray implements ArrayAccess {
 	 * $obj = new PrettyArray('Foo', 'bar', 'foobar');
 	 * echo $obj->reverse_map(function($key, &$value) {
 	 * 	$value .= '_';
-	 * }); // Array ( [2] => foobar_ [1] => bar_ [0] => Foo_ )
+	 * }); // foobar_, bar_, foo_
 	 * </code>
 	 * - Alias
 	 * 	- reverse_each
