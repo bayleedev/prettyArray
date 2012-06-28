@@ -1,5 +1,16 @@
 <?php
+/**
+ * PrettyArray
+ * @author Blaine Schmeisser <Blaine.Sch@gmail.com>
+ */
 
+/**
+ * PrettyArray
+ * An object oriented array to array development. Attempts to simulate a few Ruby array methods as well.
+ * @link http://www.ruby-doc.org/core-1.9.3/Array.html
+ * @link http://www.php.net/manual/en/language.types.array.php
+ * @todo join/merge/add/plus/subtract
+ */
 class PrettyArray implements ArrayAccess {
 
 	/**
