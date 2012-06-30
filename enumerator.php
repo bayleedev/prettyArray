@@ -9,6 +9,7 @@
  *  - flatten
  *  - grep
  *  - group_by
+ *  - partition
  * The new idea is that none of the functions will be "destructive" and use "__callStatic" and say if the last character of the method is a underscore and the method exists without it, it'll be destructive.
  * Or possibly the other way around where the destructive functions by default have the underscore at the end and callStatic makes the functions safe.
  * @todo Blah: chunk, collect_concat, cycle, each_cons, each_entry
@@ -25,7 +26,7 @@ class enumerator {
 	);
 
 	/**
-	 * Passes each element of the collection to the $callback, if it ever turns false or null I'll return false, else I'll return true.
+	 * Passes each element of the collection to the $callback, if it ever turns false or null this function will return false, else true.
 	 * @param array $arr 
 	 * @param callback $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
 	 * @return boolean
@@ -275,9 +276,10 @@ class enumerator {
 	 * The param $arr will be replaced with an array of these categories with all of their items.
 	 * @param array &$arr
 	 * @param callback $callback The callback will be passed each sliced item as an array. This can be passed by reference.
+	 * @param boolean $preserve_keys If you want to preserve the keys of this array. Defaults to false.
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-group_by
 	 */
-	public static function group_by(array &$arr, $callback) {
+	public static function group_by(array &$arr, $callback, $preserve_keys = false) {
 		$newArr = array();
 		foreach($arr as $key => &$value) {
 			$category = $callback($key, $value);
@@ -285,6 +287,12 @@ class enumerator {
 				$newArr[$category] = array();
 			}
 			$newArr[$category][$key] = $value;
+		}
+		if($preserve_keys) {
+			// Will destroy keys
+			foreach($newArr as $category => $array) {
+				$newArr[$category] = array_values($array);
+			}
 		}
 		$arr = $newArr;
 		return;
@@ -294,13 +302,13 @@ class enumerator {
 	 * This function will iterate over $arr, if any value is equal (===) to $needle this function will return true. If nothing is found this function will return false.
 	 * Alias:
 	 *  - include
-	 * @param array &$arr
+	 * @param array $arr
 	 * @param mixed $needle 
 	 * @return boolean
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-member-3F
 	 */
-	public static function member(array &$arr, $needle) {
-		foreach($arr as $key => &$value) {
+	public static function member(array $arr, $needle) {
+		foreach($arr as $key => $value) {
 			if($needle === $value) {
 				return true;
 			}
@@ -318,9 +326,10 @@ class enumerator {
 	 * 	return strcmp(strlen($val1), strlen($val2));
 	 * }); // dog
 	 * </code>
-	 * @param array &$arr
+	 * @param array $arr
 	 * @param callback optional $callback Will accept two values. Return 0 if they are equal, return -1 if the second parameter is bigger, and 1 is the first parameter is bigger.
 	 * @return mixed
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-min
 	 */
 	public static function min(array $arr, $callback = null) {
 		if(!is_callable($callback)) {
@@ -340,9 +349,10 @@ class enumerator {
 	 * 	return strcmp(strlen($val1), strlen($val2));
 	 * }); // albatross
 	 * </code>
-	 * @param array &$arr
+	 * @param array $arr
 	 * @param callback optional $callback Will accept two values. Return 0 if they are equal, return -1 if the second parameter is bigger, and 1 is the first parameter is bigger.
 	 * @return mixed
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-max
 	 */
 	public static function max(array $arr, $callback = null) {
 		if(!is_callable($callback)) {
@@ -360,9 +370,10 @@ class enumerator {
 	 * 	return strlen($val); 
 	 * }); // dog 
 	 * </code>
-	 * @param array &$arr
+	 * @param array $arr
 	 * @param callback optional $callback Will accept two values. Return 0 if they are equal, return -1 if the second parameter is bigger, and 1 is the first parameter is bigger.
 	 * @return mixed
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-min_by
 	 */
 	public static function min_by(array $arr, $callback) {
 		usort($arr, function($key1, $key2) use (&$callback) {
@@ -379,9 +390,10 @@ class enumerator {
 	 * 	return strlen($val);
 	 * }); // albatross
 	 * </code>
-	 * @param array &$arr
+	 * @param array $arr
 	 * @param callback optional $callback Will accept two values. Return 0 if they are equal, return -1 if the second parameter is bigger, and 1 is the first parameter is bigger.
 	 * @return mixed
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-max_by
 	 */
 	public static function max_by(array $arr, $callback) {
 		usort($arr, function($key1, $key2) use (&$callback) {
@@ -398,9 +410,10 @@ class enumerator {
 	 * 	return strcmp(strlen($val1), strlen($val2));
 	 * }); // array(dog, albatross)
 	 * </code>
-	 * @param array &$arr
+	 * @param array $arr
 	 * @param callback optional $callback Will accept two values. Return 0 if they are equal, return -1 if the second parameter is bigger, and 1 is the first parameter is bigger.
 	 * @return array
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-minmax
 	 */
 	public static function minmax(array $arr, $callback = null) {
 		if(!is_callable($callback)) {
@@ -418,14 +431,110 @@ class enumerator {
 	 * 	return strlen($val);
 	 * }); // array(dog, albatross)
 	 * </code>
-	 * @param array &$arr
+	 * @param array $arr
 	 * @param callback optional $callback Will accept two values. Return 0 if they are equal, return -1 if the second parameter is bigger, and 1 is the first parameter is bigger.
 	 * @return array
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-minmax_by
 	 */
 	public static function minmax_by(array $arr, $callback) {
 		usort($arr, function($key1, $key2) use (&$callback) {
 			return strcmp($callback($key1), $callback($key2));
 		});
 		return array(array_shift($arr), array_pop($arr));
+	}
+
+	/**
+	 * Passes each element of the collection to $callback. This will return true if $callback never returns true, else false.
+	 * <code>
+	 * $array = array('ant', 'bear', 'cat');
+	 * enumerator::none($array, function($key, $value) {
+	 * 	return (strlen($value) == 5);
+	 * }); // true
+	 * enumerator::none($array, function($key, $value) {
+	 * 	return (strlen($value) >= 4);
+	 * }); // false
+	 * enumerator::none(array()); // true
+	 * enumerator::none(array(null)); // true
+	 * enumerator::none(array(null, false)); // true
+	 * </code>
+	 * @param array $arr 
+	 * @param callback $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
+	 * @return boolean
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-none-3F
+	 */
+	public static function none(array $arr, $callback = null) {
+		if(!is_callable($callback)) {
+			$callback = function($key, $value) {
+				return $value;
+			};
+		}
+		foreach($arr as $key => &$value) {
+			$ret = $callback($key, $value);
+			if($ret === true) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * Pases each element of the collection to $callback. If $callback returns true once, the function will return true. Otherwise, the function will return false.
+	 * <code>
+	 * $array = array('ant','bear','cat');
+	 * enumerator::one($array, function($key, $value) {
+	 * 	return (strlen($value) == 4);
+	 * }); // true
+	 * enumerator::one(array(null, true, 99)); // false
+	 * enumerator::one(array(null, true, false)); // true
+	 * </code>
+	 * @param array $arr 
+	 * @param callback $callback 
+	 * @return boolean
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-one-3F
+	 */
+	public static function one(array $arr, $callback = null) {
+		if(!is_callable($callback)) {
+			$callback = function($key, $value) {
+				return $value;
+			};
+		}
+		$trueCount = 0;
+		foreach($arr as $key => $value) {
+			if((boolean)$callback($key, $value) == true) {
+				if($trueCount == 1) {
+					return false;
+				}
+				$trueCount++;
+			}
+		}
+		return ($trueCount == 1);
+	}
+
+	/**
+	 * Passes each element into $callback. If $callback returns true the item will be in the first category, otherwise the second.
+	 * <code>
+	 * $arr = range(1,6);
+	 * enumerator::partition($arr, function($key, $value) {
+	 * 	return ($value % 2 == 0);
+	 * }); // [[2, 4, 6], [1, 3, 5]]
+	 * </code>
+	 * @param array &$arr
+	 * @param callback $callback The callback will be passed each sliced item as an array. This can be passed by reference.
+	 * @param boolean $preserve_keys If you want to preserve the keys of this array. Defaults to false.
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-partition
+	 */
+	public static function partition(array &$arr, $callback, $preserve_keys = false) {
+		$newArr = array(array(), array());
+		foreach($arr as $key => &$value) {
+			$category = !(int)(boolean)$callback($key, $value);
+			$newArr[$category][$key] = $value;
+		}
+		if($preserve_keys) {
+			// Will destroy keys
+			$newArr[0] = array_values($newArr[0]);
+			$newArr[1] = array_values($newArr[1]);
+		}
+		$arr = $newArr;
+		return;
 	}
 }
