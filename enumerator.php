@@ -2,15 +2,23 @@
 
 /**
  * A handy static class for handling array functions.
- * @todo chunk, collect_concat, cycle
+ * @todo chunk, collect_concat, cycle, each_cons, each_entry
  * @link http://ruby-doc.org/core-1.9.3/Enumerable.html
  */
 class enumerator {
 
+	protected static $phpFunctions = array(
+		'array_slice'
+	);
+
+	protected static $funAlias = array(
+		'drop' => 'array_slice'
+	);
+
 	/**
 	 * Passes each element of the collection to the $callback, if it ever turns false or null I'll return false, else I'll return true.
 	 * @param array $arr 
-	 * @param callback $callback 
+	 * @param callback $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
 	 * @return boolean
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-all-3F
 	 */
@@ -32,7 +40,7 @@ class enumerator {
 	/**
 	 * Passes each element of the collection to the $callback, if it ever returns anything besides null or false I'll return true, else I'll return false.
 	 * @param array $arr 
-	 * @param callback $callback 
+	 * @param callback $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
 	 * @return boolean
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-any-3F
 	 */
@@ -56,8 +64,9 @@ class enumerator {
 	 * Alias
 	 *  - map
 	 *  - foreach
+	 *  - each_with_index
 	 * @param array &$arr
-	 * @param callback $callback
+	 * @param callback $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-collect
 	 */
 	public static function collect(array &$arr, $callback) {
@@ -75,7 +84,7 @@ class enumerator {
 	 *  - Size
 	 *  - Length
 	 * @param array &$arr 
-	 * @param mixed $callback 
+	 * @param callback $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
 	 * @return int
 	 */
 	public static function count(array &$arr, $callback = null) {
@@ -102,7 +111,7 @@ class enumerator {
 	 * Alias
 	 *  - find
 	 * @param array &$arr
-	 * @param callback $callback 
+	 * @param callback $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
 	 * @param mixed $ifnone 
 	 * @return mixed
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-detect
@@ -122,14 +131,58 @@ class enumerator {
 	}
 
 	/**
-	 * Drops the first $offset elements in the array
+	 * Will pass the elements to the callback and unset them if the callback returns false.
 	 * @param array &$arr
-	 * @param type $offset
-	 * @return array
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-drop
+	 * @param callback $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
+	 * @return array The array that has already been edited by reference.
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-drop_while
 	 */
-	public static function drop(array &$arr, $offset) {
-		return array_slice($arr, $offset);
+	public static function drop_while(array &$arr, $callback) {
+		foreach($arr as $key => &$value) {
+			if($callback($key, $value) === false) {
+				unset($arr[$key]);
+			}
+		}
+		return;
 	}
 
+	/**
+	 * Will slice the elements into $size and pass to $callback if defined. If not defined, the slized array is returned.
+	 * @param array &$arr
+	 * @param int $size The size of each slice.
+	 * @param callback $callback The callback will be passed each sliced item as an array. This can be passed by reference.
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-each_slice
+	 */
+	public static function each_slice(array &$arr, $size, $callback = null) {
+		$count = self::count($arr);
+		$iterations = ceil($count/$size);
+		$newArr = array();
+		for($i = 0;$i<$iterations;$i++) {
+			$newArr[] = array_slice($arr, $i * $size, $size);
+		}
+		if(is_callable($callback)) {
+			foreach($newArr as &$item) {
+				$callback($item);
+			}
+		}
+		$arr = $newArr;
+		return;
+	}
+
+	/**
+	 * Will iterate the items in $arr passing each one to $callback.
+	 * Alias
+	 *  - reduce
+	 * @param array &$arr
+	 * @param callback $callback A $key, $value, and $memo are passed to this callback. The $value and $memo can be accepted by reference.
+	 * @param mixed optional $memo This value is passed to all callback. Be sure to accept it by reference. Defaults to 0 (zero).
+	 * @return mixed The memo variable.
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-inject
+	 */
+	public function inject(array &$arr, $callback, $memo = 0) {
+		foreach($arr as $key => &$value) {
+			$callback($key, $value, $memo);
+		}
+		return $memo;
+	}
 }
