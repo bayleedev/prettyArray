@@ -664,7 +664,7 @@ class enumerator {
 	}
 
 	/**
-	 * Description
+	 * Will turn each element in $arr into an array then appending the associated indexs from the other arrays into this array as well.
 	 * <code>
 	 * $a = [1,2,3];
 	 * enumerator::zip($a, [4,5,6], [7,8,9]); // [[1,4,7],[2,5,8],[3,6,9]]
