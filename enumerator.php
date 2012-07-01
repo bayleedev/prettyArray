@@ -838,6 +838,11 @@ class enumerator {
 			The definition for this method makes no sense.
 			It probably doesn't help there are formatting issues..
 			The text is being parsed as code...
+			a.slice_before {|cur|
+			  prev, prev2 = cur, prev  # one step further
+			  prev2 + 1 != prev        # two ago != one ago ? --> new slice
+			}.to_a
+			# => [[0], [2, 3, 4], [6, 7], [9]]
 		*/
 	}
 }
