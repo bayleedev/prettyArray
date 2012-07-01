@@ -52,6 +52,7 @@ class enumerator {
 		'any' => false,
 		'collect' => true,
 		'count' => false,
+		'detect' => false,
 		'select' => true,
 		'each_slice' => true,
 		'first' => true,
@@ -248,6 +249,14 @@ class enumerator {
 	/**
 	 * Will pass the key and value to $callback the first result that does not return false is returned.
 	 * If no results are found this function will return the result of $ifnone (mixed) if none is provided false will be returned.
+	 * <code>
+	 * enumerator::detect(range(1,10), function($key, &$value) {
+	 * 	return ($value % 5 == 0 and $value % 7 == 0);
+	 * }); // null
+	 * enumerator::detect(range(1,100), function($key, &$value) {
+	 * 	return ($value % 5 == 0 and $value % 7 == 0);
+	 * }); // 35
+	 * </code>
 	 * Alias:
 	 *  - find
 	 * @param array &$arr
@@ -256,7 +265,7 @@ class enumerator {
 	 * @return mixed
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-detect
 	 */
-	public static function detect(array &$arr, $callback, $ifnone = null) {
+	public static function detect_(array &$arr, $callback, $ifnone = null) {
 		foreach($arr as $key => &$value) {
 			if($callback($key, $value) !== false) {
 				return $value;
