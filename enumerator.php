@@ -51,6 +51,7 @@ class enumerator {
 		'all' => false,
 		'any' => false,
 		'collect' => true,
+		'count' => false,
 		'select' => true,
 		'each_slice' => true,
 		'first' => true,
@@ -211,6 +212,14 @@ class enumerator {
 	 * If the callback is null, this function give you the total size of the array.
 	 * If the callback is a anonmous function, this function iterate the blocks and count how many times it returns true.
 	 * Otherwise this function will count how many times $callback is equal to $value.
+	 * <code>
+	 * $arr = [1,2,4,2];
+	 * echo enumerator::count($arr); // 4
+	 * echo enumerator::count($arr, 2); // 2
+	 * echo enumerator::count($arr, function($key, &$value) {
+	 * 	return ($value % 2 == 0);
+	 * }); // 3
+	 * </code>
 	 * Alias:
 	 *  - Size
 	 *  - Length
@@ -218,7 +227,7 @@ class enumerator {
 	 * @param callable $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
 	 * @return int
 	 */
-	public static function count(array &$arr, $callback = null) {
+	public static function count_(array &$arr, $callback = null) {
 		if(is_null($callback)) {
 			return count($arr);
 		} else if(!is_callable($callback)) {
