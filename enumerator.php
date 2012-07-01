@@ -10,9 +10,13 @@
  *  - grep
  *  - group_by
  *  - partition
+ *  - reject
+ *  - select
+ *  - sort
+ *  - sort_by
  * The new idea is that none of the functions will be "destructive" and use "__callStatic" and say if the last character of the method is a underscore and the method exists without it, it'll be destructive.
  * Or possibly the other way around where the destructive functions by default have the underscore at the end and callStatic makes the functions safe.
- * @todo Blah: chunk, collect_concat, cycle, each_cons, each_entry
+ * @todo Blah: chunk, collect_concat, cycle, each_cons, each_entry, slice_before
  * @link http://ruby-doc.org/core-1.9.3/Enumerable.html
  */
 class enumerator {
@@ -184,23 +188,6 @@ class enumerator {
 	}
 
 	/**
-	 * Will iterate the items in $arr passing each one to $callback.
-	 * Alias:
-	 *  - reduce
-	 * @param array &$arr
-	 * @param callback $callback A $key, $value, and $memo are passed to this callback. The $value and $memo can be accepted by reference.
-	 * @param mixed optional $memo This value is passed to all callback. Be sure to accept it by reference. Defaults to 0 (zero).
-	 * @return mixed The memo variable.
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-inject
-	 */
-	public static function inject(array &$arr, $callback, $memo = 0) {
-		foreach($arr as $key => &$value) {
-			$callback($key, $value, $memo);
-		}
-		return $memo;
-	}
-
-	/**
 	 * If $callback is callable, this function will pass each item into $callback and return the first value that $callback returns true on.
 	 * If $callback is not callable and is an index inside of $arr, this function will return it's value.
 	 * If not found nothing is returned.
@@ -276,10 +263,9 @@ class enumerator {
 	 * The param $arr will be replaced with an array of these categories with all of their items.
 	 * @param array &$arr
 	 * @param callback $callback The callback will be passed each sliced item as an array. This can be passed by reference.
-	 * @param boolean $preserve_keys If you want to preserve the keys of this array. Defaults to false.
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-group_by
 	 */
-	public static function group_by(array &$arr, $callback, $preserve_keys = false) {
+	public static function group_by(array &$arr, $callback) {
 		$newArr = array();
 		foreach($arr as $key => &$value) {
 			$category = $callback($key, $value);
@@ -287,12 +273,6 @@ class enumerator {
 				$newArr[$category] = array();
 			}
 			$newArr[$category][$key] = $value;
-		}
-		if($preserve_keys) {
-			// Will destroy keys
-			foreach($newArr as $category => $array) {
-				$newArr[$category] = array_values($array);
-			}
 		}
 		$arr = $newArr;
 		return;
@@ -371,7 +351,7 @@ class enumerator {
 	 * }); // dog 
 	 * </code>
 	 * @param array $arr
-	 * @param callback optional $callback Will accept two values. Return 0 if they are equal, return -1 if the second parameter is bigger, and 1 is the first parameter is bigger.
+	 * @param callback $callback
 	 * @return mixed
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-min_by
 	 */
@@ -391,7 +371,7 @@ class enumerator {
 	 * }); // albatross
 	 * </code>
 	 * @param array $arr
-	 * @param callback optional $callback Will accept two values. Return 0 if they are equal, return -1 if the second parameter is bigger, and 1 is the first parameter is bigger.
+	 * @param callback $callback
 	 * @return mixed
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-max_by
 	 */
@@ -432,12 +412,12 @@ class enumerator {
 	 * }); // array(dog, albatross)
 	 * </code>
 	 * @param array $arr
-	 * @param callback optional $callback Will accept two values. Return 0 if they are equal, return -1 if the second parameter is bigger, and 1 is the first parameter is bigger.
+	 * @param callback $callback
 	 * @return array
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-minmax_by
 	 */
 	public static function minmax_by(array $arr, $callback) {
-		usort($arr, function($key1, $key2) use (&$callback) {
+		sort($arr, function($key1, $key2) use (&$callback) {
 			return strcmp($callback($key1), $callback($key2));
 		});
 		return array(array_shift($arr), array_pop($arr));
@@ -458,7 +438,7 @@ class enumerator {
 	 * enumerator::none(array(null, false)); // true
 	 * </code>
 	 * @param array $arr 
-	 * @param callback $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
+	 * @param callback $callback A $key, $value are passed to this callback.
 	 * @return boolean
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-none-3F
 	 */
@@ -488,7 +468,7 @@ class enumerator {
 	 * enumerator::one(array(null, true, false)); // true
 	 * </code>
 	 * @param array $arr 
-	 * @param callback $callback 
+	 * @param callback $callback A $key, $value are passed to this callback.
 	 * @return boolean
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-one-3F
 	 */
@@ -519,22 +499,143 @@ class enumerator {
 	 * }); // [[2, 4, 6], [1, 3, 5]]
 	 * </code>
 	 * @param array &$arr
-	 * @param callback $callback The callback will be passed each sliced item as an array. This can be passed by reference.
-	 * @param boolean $preserve_keys If you want to preserve the keys of this array. Defaults to false.
+	 * @param callback $callback A $key, $value are passed to this callback.
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-partition
 	 */
-	public static function partition(array &$arr, $callback, $preserve_keys = false) {
+	public static function partition(array &$arr, $callback) {
 		$newArr = array(array(), array());
 		foreach($arr as $key => &$value) {
 			$category = !(int)(boolean)$callback($key, $value);
 			$newArr[$category][$key] = $value;
 		}
-		if($preserve_keys) {
-			// Will destroy keys
-			$newArr[0] = array_values($newArr[0]);
-			$newArr[1] = array_values($newArr[1]);
-		}
 		$arr = $newArr;
 		return;
 	}
+
+	/**
+	 * Will iterate the items in $arr passing each one to $callback.
+	 * Alias:
+	 *  - reduce
+	 * @param array &$arr
+	 * @param callback $callback A $key, $value are passed to this callback.
+	 * @param mixed optional $memo This value is passed to all callback. Be sure to accept it by reference. Defaults to 0 (zero).
+	 * @return mixed The memo variable.
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-inject
+	 */
+	public static function inject(array &$arr, $callback, $memo = 0) {
+		foreach($arr as $key => &$value) {
+			$callback($key, $value, $memo);
+		}
+		return $memo;
+	}
+
+	/**
+	 * Will unset an item in $arr if $callback returns true for it.
+	 * <code>
+	 * $arr = range(1,10);
+	 * enumerator::reject($arr, function($key, $value) {
+	 * 	return ($value % 3 == 0);
+	 * }); // [1, 2, 4, 5, 7, 8, 10]
+	 * </code>
+	 * @param array &$arr
+	 * @param callback $callback A $key, $value are passed to this callback. The $value can be passed by reference.
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-reject
+	 */
+	public static function reject(array &$arr, $callback) {
+		foreach($arr as $key => &$value) {
+			if($callback($key, $value)) {
+				unset($arr[$key]);
+			}
+		}
+		return;
+	}
+
+	/**
+	 * Will iterate the array in reverse, but will NOT save the order.
+	 * <code>
+	 * $array = array(1, 2, 3);
+	 * enumerator::reverse_each($array, function($key, &$value) {
+	 * 	echo $value . ', ';
+	 * }); // 3, 2, 1, 
+	 * </code>
+	 * @param array &$arr
+	 * @param callback $callback A $key, $value are passed to this callback. The $value can be passed by reference.
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-reverse_each
+	 */
+	public static function reverse_each(array &$arr, $callback) {
+		for(end($arr);!is_null($key = key($arr));prev($arr)) {
+			$callback($key, $arr[$key]);
+		}
+		return;
+	}
+
+
+
+	/**
+	 * Will unset an item in $arr if $callback returns false for it.
+	 * <code>
+	 * $arr = range(1,10);
+	 * enumerator::select($arr, function($key, &$value) {
+	 * 	return ($value % 3 == 0);
+	 * }); // [3, 6, 9]
+	 * </code>
+	 * Alias:
+	 *  - find_all
+	 * @param array &$arr
+	 * @param callback $callback A $key, $value are passed to this callback. The $value can be passed by reference.
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-select
+	 */
+	public static function select(array &$arr, $callback) {
+		foreach($arr as $key => &$value) {
+			if(!$callback($key, $value)) {
+				unset($arr[$key]);
+			}
+		}
+		return;
+	}
+
+	/**
+	 * Will sort the contents of $arr. A callback can be used to sort.
+	 * <code>
+	 * $arr = array('rhea', 'kea', 'flea');
+	 * enumerator::sort($arr); // [flea, kea, rhea]
+	 * enumerator::sort($arr, function($val1, $val2) {
+	 * 	return strcmp($val2, $val1);
+	 * }); // [rhea, kea, flea]
+	 * </code>
+	 * @param array &$arr
+	 * @param callback $callback A $key, $value are passed to this callback. The $value can be passed by reference.
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-sort
+	 */
+	public static function sort(array &$arr, $callback = null) {
+		if(!is_callable($callback)) {
+			sort($arr);
+			return;
+		}
+		uasort($arr, $callback);
+		return;
+	}
+
+	/**
+	 * Will sort based off of the return of $callback.
+	 * $arr = array('rhea', 'kea', 'flea');
+	 * enumerator::sort_by($arr, function($val) {
+	 * 	return strlen($val);
+	 * }); // [kea, flea, rhea]
+	 * @param array &$arr 
+	 * @param callback $callback
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-sort_by
+	 */
+	public static function sort_by(array &$arr, $callback) {
+		uasort($arr, function($key1, $key2) use ($callback) {
+			return strcmp($callback($key1), $callback($key2));
+		});
+		return;
+	}
 }
+
+$arr = array('rhea', 'kea', 'flea');
+enumerator::sort_by($arr, function($val) {
+	return strlen($val);
+}); // [kea, flea, rhea]
+print_r($arr);
