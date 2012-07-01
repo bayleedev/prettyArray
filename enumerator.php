@@ -304,10 +304,16 @@ class enumerator {
 	}
 
 	/**
-	 * Will slice the elements into $size and pass to $callback if defined. If not defined, the slized array is returned.
+	 * Will slice the elements into $size collections and pass to $callback if defined. If not defined, the slized array is returned.
+	 * <code>
+	 * enumerator::each_slice(range(1,10), 3, function(&$collection) {
+	 * 	foreach($collection as $key => &$value) ++$value;
+	 * 	return;
+	 * }); // [[2,3,4], [5,6,7], [8,9,10], [11]]
+	 * </code>
 	 * @param array &$arr
 	 * @param int $size The size of each slice.
-	 * @param callable $callback The callback will be passed each sliced item as an array. This can be passed by reference.
+	 * @param callable $callback The callback will be passed each collection. This can be passed by reference.
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-each_slice
 	 */
 	public static function each_slice_(array &$arr, $size, $callback = null) {
