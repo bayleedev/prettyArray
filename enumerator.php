@@ -53,6 +53,7 @@ class enumerator {
 		'collect' => true,
 		'count' => false,
 		'detect' => false,
+		'find_index' => false,
 		'select' => true,
 		'each_slice' => true,
 		'first' => true,
@@ -336,12 +337,23 @@ class enumerator {
 	 * If $callback is callable, this function will pass each item into $callback and return the first value that $callback returns true on.
 	 * If $callback is not callable and is an index inside of $arr, this function will return it's value.
 	 * If not found nothing is returned.
+	 * <code>
+	 * $less = range(1,10);
+	 * $more = range(1,100);
+	 * enumerator::find_index($less, function($key, &$value) {
+	 * 	return ($value % 5 == 0 && $value % 7 == 0);
+	 * }); // null
+	 * enumerator::find_index($more, function($key, &$value) {
+	 * 	return ($value % 5 == 0 && $value % 7 == 0);
+	 * }); // 34
+	 * enumerator::find_index($more, 50); // 49
+	 * </code>
 	 * @param array &$arr
 	 * @param callable $callback The callback will be passed each sliced item as an array. This can be passed by reference.
 	 * @return mixed
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-find_index
 	 */
-	public static function find_index(array &$arr, $callback) {
+	public static function find_index_(array &$arr, $callback) {
 		if(is_callable($callback)) {
 			foreach($arr as $key => &$value) {
 				if($callback($key, $value) === true) {
@@ -349,13 +361,18 @@ class enumerator {
 				}
 			}
 		} else if(isset($arr[$callback])) {
-			return $arr[$callback];
+			return array_search($callback, $arr);
 		}
 		return;
 	}
 
 	/**
 	 * Will overwrite $arr with the first $count items in array.
+	 * <code>
+	 * $animals = ['cat', 'dog', 'cow', 'pig'];
+	 * enumerator::first($animals); // cat
+	 * enumerator::first($animals, 2); // cat, dog
+	 * </code>
 	 * Alias:
 	 *  - take
 	 * @param array &$arr
@@ -370,6 +387,12 @@ class enumerator {
 	/**
 	 * Will flatten the input $arr into a non-multi-dimensional array.It will pass the current key and the value to $callback which has the potential to change the value.
 	 * The new array will have discarded all current keys.
+	 * <code>
+	 * $arr = [[1,2],[3,4]];
+	 * $i = enumerator::flat_map($arr, function($key, &$value) {
+	 * 	return ++$value;
+	 * }); // [2,3,4,5]
+	 * </code>
 	 * Alias:
 	 *  - flat_map
 	 * @param array &$arr
@@ -389,6 +412,10 @@ class enumerator {
 	/**
 	 * Will only keep an item if the value of the item matches $pattern.
 	 * If a callback is provided, it will pass the $key and $value into the array.
+	 * <code>
+	 * $arr = ['snowball', 'snowcone', 'snowangel', 'igloo', 'ice'];
+	 * enumerator::grep($arr, "/^snow/"); // [snowball, snowcone, snowangel]
+	 * </code>
 	 * @param array &$arr
 	 * @param string $pattern The regex pattern.
 	 * @param callable $callback The callback will be passed each sliced item as an array. This can be passed by reference.
@@ -407,6 +434,12 @@ class enumerator {
 	/**
 	 * Each item will be passed into $callback and the return value will be the new "category" of this item.
 	 * The param $arr will be replaced with an array of these categories with all of their items.
+	 * <code>
+	 * $arr = range(1,6);
+	 * enumerator::group_by($arr, function($key, &$value) {
+	 * 	return ($value % 3);
+	 * });
+	 * </code>
 	 * @param array &$arr
 	 * @param callable $callback The callback will be passed each sliced item as an array. This can be passed by reference.
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-group_by
@@ -420,12 +453,25 @@ class enumerator {
 			}
 			$newArr[$category][$key] = $value;
 		}
+		ksort($newArr);
 		$arr = $newArr;
 		return;
 	}
 
 	/**
 	 * This function will iterate over $arr, if any value is equal (===) to $needle this function will return true. If nothing is found this function will return false.
+	 * <code>
+	 * $arr = ['snowball', 'snowcone', 'snowangel', 'igloo', 'ice'];
+	 * enumerator::member($arr, 'snowcone'); // true
+	 * enumerator::member($arr, 'snowman'); // false
+	 * </code>
+	 * NOTICE: The alias "include" will throw a error since this is a language construct, the only way to use this alias is through variable method calls. I'm leaving this alias for compatibality with the ruby methods.
+	 * <code>
+	 * $fun = 'include';
+	 * $arr = ['snowball', 'snowcone', 'snowangel', 'igloo', 'ice'];
+	 * enumerator::$fun($arr, 'snowcone'); // true
+	 * enumerator::$fun($arr, 'snowman'); // false
+	 * </code>
 	 * Alias:
 	 *  - include
 	 * @param array $arr
