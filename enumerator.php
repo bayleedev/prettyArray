@@ -22,10 +22,8 @@ class enumerator {
 		'find_all' => 'select',
 		'reduce' => 'inject',
 		'include' => 'member',
-		'flat_map' => 'flatten',
-		'collect_concat' => 'flatten',
+		'flat_map' => 'collect_concat',
 		'take' => 'first',
-		'find_all' => 'select',
 		'find' => 'detect',
 		'size' => 'count',
 		'length' => 'count',
@@ -45,20 +43,18 @@ class enumerator {
 	 * Or possibly the other way around where the destructive functions by default have the underscore at the end and callStatic makes the functions safe.
 	 */
 	protected static $destructiveMap = array(
-		'collect',
-		'select',
-		'each_slice',
-		'first',
-		'flatten',
-		'grep',
-		'group_by',
-		'partition',
-		'reject',
-		'select',
-		'sort',
-		'sort_by',
-		'take_while',
-		'zip'
+		'select' => 'select_',
+		'each_slice' => 'each_slice_',
+		'first' => 'first_',
+		'collect_concat' => 'collect_concat_',
+		'grep' => 'grep_',
+		'group_by' => 'group_by_',
+		'partition' => 'partition_',
+		'reject' => 'reject_',
+		'sort' => 'sort_',
+		'sort_by' => 'sort_by_',
+		'take_while' => 'take_while_',
+		'zip' => 'zip_'
 	);
 
 	public static function __callStatic($method, $params) {
@@ -66,7 +62,29 @@ class enumerator {
 			// php function
 			return call_user_func_array($method, $params);
 		}
-		$destructive = (substr($method, -1, 1) == "_");
+		$destructiveCall = (substr($method, -1, 1) == "_"); // ture if a "_" is at the end of the method. example: "call_"
+		$key = ($destructiveCall) ? substr($method, 0, -1) : $method; // Get the real name if they have a "_" at the end.
+		$params[0] =& $params[0]; // this looks stupid, but is necessary to pass this not referenced variable by reference
+		if(isset(self::$methodMap[$key])) {
+			// Method exists
+			$key = self::$methodMap[$key];
+			$destructiveMethod = isset(self::$destructiveMap[$key]);
+			if($destructiveCall && $destructiveMethod) {
+				// Destructive calls don't work on callStatic since no params are by reference
+				$key = self::$destructiveMap[$key];
+				trigger_error("The alias '{$method}' cannot be destructive. Use it's non-alias form to be destructive: '{$key}'.", E_USER_NOTICE);
+			}
+			if($destructiveMethod) {
+				// destructive method
+				call_user_func_array(array(__CLASS__, $key), $params);
+				return $params[0];
+			}
+			// This funtion will return something
+			return call_user_func_array(array(__CLASS__, $key), $params);
+		} else {
+			throw new BadMethodCallException();
+		}
+		return;
 	}
 
 	/**
@@ -125,7 +143,7 @@ class enumerator {
 	 * @param callback $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-collect
 	 */
-	public static function collect_(array &$arr, $callback) {
+	public static function collect(array &$arr, $callback) {
 		foreach($arr as $key => &$value) {
 			$callback($key, $value);
 		}
@@ -188,6 +206,12 @@ class enumerator {
 
 	/**
 	 * Will pass the elements to the callback and unset them if the callback returns false.
+	 * <code>
+	 * $arr = range(1,10);
+	 * enumerator::select($arr,function($key, &$value) {
+	 * 	return ($value % 3 == 0);
+	 * }); // [3, 6, 9]
+	 * </code>
 	 * Alias:
 	 *  - find_all
 	 * @param array &$arr
@@ -195,7 +219,7 @@ class enumerator {
 	 * @return array The array that has already been edited by reference.
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-select
 	 */
-	public static function select(array &$arr, $callback) {
+	public static function select_(array &$arr, $callback) {
 		foreach($arr as $key => &$value) {
 			if($callback($key, $value) === false) {
 				unset($arr[$key]);
@@ -211,7 +235,7 @@ class enumerator {
 	 * @param callback $callback The callback will be passed each sliced item as an array. This can be passed by reference.
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-each_slice
 	 */
-	public static function each_slice(array &$arr, $size, $callback = null) {
+	public static function each_slice_(array &$arr, $size, $callback = null) {
 		$count = self::count($arr);
 		$iterations = ceil($count/$size);
 		$newArr = array();
@@ -257,7 +281,7 @@ class enumerator {
 	 * @param type $count The number of items you wish to return. Defaults to 1
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-first
 	 */
-	public static function first(array &$arr, $count = 1) {
+	public static function first_(array &$arr, $count = 1) {
 		$arr = array_slice($arr, 0, $count, true);
 		return;
 	}
@@ -267,12 +291,11 @@ class enumerator {
 	 * The new array will have discarded all current keys.
 	 * Alias:
 	 *  - flat_map
-	 *  - collect_concat
 	 * @param array &$arr
 	 * @param callback $callback The callback will be passed each sliced item as an array. This can be passed by reference.
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-flat_map
 	 */
-	public static function flatten(array &$arr, $callback) {
+	public static function collect_concat_(array &$arr, $callback) {
 		$newArr = array();
 		array_walk_recursive($arr, function(&$value, $key) use (&$callback, &$newArr) {
 			$callback($key, $value);
@@ -290,7 +313,7 @@ class enumerator {
 	 * @param callback $callback The callback will be passed each sliced item as an array. This can be passed by reference.
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-grep
 	 */
-	public static function grep(array &$arr, $pattern, $callback = null) {
+	public static function grep_(array &$arr, $pattern, $callback = null) {
 		$arr = preg_grep($pattern, $arr);
 		if(is_callable($callback)) {
 			foreach($arr as $key => &$value) {
@@ -307,7 +330,7 @@ class enumerator {
 	 * @param callback $callback The callback will be passed each sliced item as an array. This can be passed by reference.
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-group_by
 	 */
-	public static function group_by(array &$arr, $callback) {
+	public static function group_by_(array &$arr, $callback) {
 		$newArr = array();
 		foreach($arr as $key => &$value) {
 			$category = $callback($key, $value);
@@ -544,7 +567,7 @@ class enumerator {
 	 * @param callback $callback A $key, $value are passed to this callback.
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-partition
 	 */
-	public static function partition(array &$arr, $callback) {
+	public static function partition_(array &$arr, $callback) {
 		$newArr = array(array(), array());
 		foreach($arr as $key => &$value) {
 			$category = !(int)(boolean)$callback($key, $value);
@@ -583,7 +606,7 @@ class enumerator {
 	 * @param callback $callback A $key, $value are passed to this callback. The $value can be passed by reference.
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-reject
 	 */
-	public static function reject(array &$arr, $callback) {
+	public static function reject_(array &$arr, $callback) {
 		foreach($arr as $key => &$value) {
 			if($callback($key, $value)) {
 				unset($arr[$key]);
@@ -629,7 +652,7 @@ class enumerator {
 	 * @param callback $callback A $key, $value are passed to this callback. The $value can be passed by reference.
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-sort
 	 */
-	public static function sort(array &$arr, $callback = null) {
+	public static function sort_(array &$arr, $callback = null) {
 		if(!is_callable($callback)) {
 			sort($arr);
 			return;
@@ -648,7 +671,7 @@ class enumerator {
 	 * @param callback $callback
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-sort_by
 	 */
-	public static function sort_by(array &$arr, $callback) {
+	public static function sort_by_(array &$arr, $callback) {
 		uasort($arr, function($key1, $key2) use ($callback) {
 			return strcmp($callback($key1), $callback($key2));
 		});
@@ -667,7 +690,7 @@ class enumerator {
 	 * @param callback $callback A $key, $value are passed to this callback.
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-take_while
 	 */
-	public static function take_while(array &$arr, $callback) {
+	public static function take_while_(array &$arr, $callback) {
 		$i = 0;
 		foreach($arr as $key => &$value) {
 			$r = $callback($key, $value);
@@ -698,7 +721,7 @@ class enumerator {
 	 * @param type array $one 
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-zip
 	 */
-	public static function zip(array &$arr, array $one) {
+	public static function zip_(array &$arr, array $one) {
 		$args = func_get_args();
 		array_shift($args); // get $arr out of the way
 		foreach($arr as $key => $value) {
@@ -724,7 +747,7 @@ class enumerator {
 	 * @param callback $callback 
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-drop_while
 	 */
-	public static function drop_while(array &$arr, $callback) {
+	public static function drop_while_(array &$arr, $callback) {
 		$i = 0;
 		foreach($arr as $key => &$value) {
 			if($callback($key, $value) == false) {
@@ -735,3 +758,12 @@ class enumerator {
 		}
 	}
 }
+
+$arr = range(1,10);
+$arr2 = enumerator::find_all_($arr,function($key, &$value) {
+	return ($value % 3 == 0);
+}); // [3, 6, 9]
+
+print_r($arr);
+echo '<hr />';
+print_r($arr2);
