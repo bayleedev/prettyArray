@@ -59,9 +59,18 @@ class enumerator {
 		'take_while' => 'take_while_',
 		'zip' => 'zip_',
 		'drop_while' => 'drop_while_',
-		'each_cons' => 'each_cons_'
+		'each_cons' => 'each_cons_',
+		'slice_before' => 'slice_before_'
 	);
 
+	/**
+	 * This magic method helps with method alias' and calling destrucitve methods in a non-destructive way.
+	 * For example the real method "partition_" will take over your $array, but calling the magic method "partition" will not.
+	 * All methods implemented in this class that have an underscore at the end are destructive and have a non-destructive alias.
+	 * @param string $method The method name
+	 * @param array $params  An array of parrams you wish to pass
+	 * @return mixed
+	 */
 	public static function __callStatic($method, $params) {
 		if(isset(self::$functionMap[$method])) {
 			// php function
@@ -833,18 +842,40 @@ class enumerator {
 		return;
 	}
 
-	public static function each_entry() {
+	/**
+	 * Description
+	 * <code>
+	 * $arr = array(1,2,3,4,5,6,7,8,9,0);
+	 * enumerator::slice_before($arr, "/[02468]/"); // will "splice before" an even number.
+	 * // [1], [2,3], [4,5], [6,7], [8,9], [0]
+	 * </code>
+	 * @param type array &$arr 
+	 * @param type $pattern 
+	 * @return type
+	 */
+	public static function slice_before_(array &$arr, $pattern) {
 		/*
-			The definition for this method makes no sense.
-			It probably doesn't help there are formatting issues..
-			The text is being parsed as code...
-			a = [0,2,3,4,6,7,9]
-			prev = a[0]
-			a.slice_before {|cur|
-			  prev, prev2 = cur, prev  # one step further
-			  prev2 + 1 != prev        # two ago != one ago ? --> new slice
-			}.to_a
-			# => [[0], [2, 3, 4], [6, 7], [9]]
+			Will iterate the array splitting it into chunks.
+			When $pattern is matched in an element, all previous elements not include previous chunks are placed into a new chunk.
+			$arr = explode(" ", "Ruby is 2 parts Perl, 1 part Python, and 1 part Smalltalk");
+			enumerator::slice_before($arr, $pattern);
+			// [["Ruby", "is"], ["2", "parts", "Perl,"], ["1", "part", "Python,", "and"], ["1", "part", "Smalltalk"]]
 		*/
+		$newArr = array();
+		$follower = 0;
+		$leader = 0;
+		$size = count($arr);
+		foreach($arr as $key => $value) {
+			if(preg_match($pattern, $value, $matches) !== 0) {
+				$newArr[] = array_slice($arr, $follower, $leader-$follower);
+				$follower = $leader;
+			}
+			$leader++;
+		}
+		if($leader > $follower) {
+			$newArr[] = array_slice($arr, $follower, $leader-$follower);
+		}
+		$arr = $newArr;
+		return;
 	}
 }
