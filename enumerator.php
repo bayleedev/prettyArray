@@ -2,35 +2,72 @@
 
 /**
  * A handy static class for handling array functions.
- * Current destructive functions:
- *  - collect
- *  - drop_while
- *  - each_slice
- *  - first
- *  - flatten
- *  - grep
- *  - group_by
- *  - partition
- *  - reject
- *  - select
- *  - sort
- *  - sort_by
- *  - take_while
- *  - zip
- * The new idea is that none of the functions will be "destructive" and use "__callStatic" and say if the last character of the method is a underscore and the method exists without it, it'll be destructive.
- * Or possibly the other way around where the destructive functions by default have the underscore at the end and callStatic makes the functions safe.
  * @todo Blah: chunk, collect_concat, cycle, each_cons, each_entry, slice_before
  * @link http://ruby-doc.org/core-1.9.3/Enumerable.html
  */
 class enumerator {
 
+	/**
+	 * Will map directly from an alias to a php function.
+	 */
 	protected static $functionMap = array(
 		'array_slice' => 'array_slice',
 		'drop' => 'array_slice'
 	);
 
+	/**
+	 * Will map their "alias" to their real method.
+	 */
 	protected static $methodMap = array(
+		'find_all' => 'select',
+		'reduce' => 'inject',
+		'include' => 'member',
+		'flat_map' => 'flatten',
+		'collect_concat' => 'flatten',
+		'take' => 'first',
+		'find_all' => 'select',
+		'find' => 'detect',
+		'size' => 'count',
+		'length' => 'count',
+		'array_walk' => 'collect',
+		'each' => 'collect',
+		'map' => 'collect',
+		'foreach' => 'collect',
+		'each_with_index' => 'collect',
+		'reverse_each' => 'reverse_collect',
+		'reverse_map' => 'reverse_collect',
+		'reverse_foreach' => 'reverse_collect',
+		'reverse_each_with_index' => 'reverse_collect'
 	);
+
+	/**
+	 * The new idea is that none of the functions will be "destructive" and use "__callStatic" and say if the last character of the method is a underscore and the method exists without it, it'll be destructive.
+	 * Or possibly the other way around where the destructive functions by default have the underscore at the end and callStatic makes the functions safe.
+	 */
+	protected static $destructiveMap = array(
+		'collect',
+		'select',
+		'each_slice',
+		'first',
+		'flatten',
+		'grep',
+		'group_by',
+		'partition',
+		'reject',
+		'select',
+		'sort',
+		'sort_by',
+		'take_while',
+		'zip'
+	);
+
+	public static function __callStatic($method, $params) {
+		if(isset(self::$functionMap[$method])) {
+			// php function
+			return call_user_func_array($method, $params);
+		}
+		$destructive = (substr($method, -1, 1) == "_");
+	}
 
 	/**
 	 * Passes each element of the collection to the $callback, if it ever turns false or null this function will return false, else true.
@@ -79,6 +116,7 @@ class enumerator {
 	/**
 	 * Will iterate the elements in the array. Has the potential to change the values.
 	 * Alias:
+	 *  - each
 	 *  - map
 	 *  - foreach
 	 *  - each_with_index
@@ -87,7 +125,7 @@ class enumerator {
 	 * @param callback $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-collect
 	 */
-	public static function collect(array &$arr, $callback) {
+	public static function collect_(array &$arr, $callback) {
 		foreach($arr as $key => &$value) {
 			$callback($key, $value);
 		}
@@ -152,13 +190,12 @@ class enumerator {
 	 * Will pass the elements to the callback and unset them if the callback returns false.
 	 * Alias:
 	 *  - find_all
-	 *  - select
 	 * @param array &$arr
 	 * @param callback $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
 	 * @return array The array that has already been edited by reference.
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-drop_while
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-select
 	 */
-	public static function drop_while(array &$arr, $callback) {
+	public static function select(array &$arr, $callback) {
 		foreach($arr as $key => &$value) {
 			if($callback($key, $value) === false) {
 				unset($arr[$key]);
@@ -559,42 +596,22 @@ class enumerator {
 	 * Will iterate the array in reverse, but will NOT save the order.
 	 * <code>
 	 * $array = array(1, 2, 3);
-	 * enumerator::reverse_each($array, function($key, &$value) {
+	 * enumerator::reverse_collect($array, function($key, &$value) {
 	 * 	echo $value . ', ';
 	 * }); // 3, 2, 1, 
 	 * </code>
+	 * Alias:
+	 *  - reverse_each
+	 *  - reverse_map
+	 *  - reverse_foreach
+	 *  - reverse_each_with_index
 	 * @param array &$arr
 	 * @param callback $callback A $key, $value are passed to this callback. The $value can be passed by reference.
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-reverse_each
 	 */
-	public static function reverse_each(array &$arr, $callback) {
+	public static function reverse_collect(array &$arr, $callback) {
 		for(end($arr);!is_null($key = key($arr));prev($arr)) {
 			$callback($key, $arr[$key]);
-		}
-		return;
-	}
-
-
-
-	/**
-	 * Will unset an item in $arr if $callback returns false for it.
-	 * <code>
-	 * $arr = range(1,10);
-	 * enumerator::select($arr, function($key, &$value) {
-	 * 	return ($value % 3 == 0);
-	 * }); // [3, 6, 9]
-	 * </code>
-	 * Alias:
-	 *  - find_all
-	 * @param array &$arr
-	 * @param callback $callback A $key, $value are passed to this callback. The $value can be passed by reference.
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-select
-	 */
-	public static function select(array &$arr, $callback) {
-		foreach($arr as $key => &$value) {
-			if(!$callback($key, $value)) {
-				unset($arr[$key]);
-			}
 		}
 		return;
 	}
@@ -694,5 +711,27 @@ class enumerator {
 			}
 		}
 		return;
+	}
+
+	/**
+	 * Will pass elements into $callback until false is returned at which point all elements before the current one will be removed.
+	 * <code>
+	 * $arr = [1,2,3,4,5,0];
+	 * enumerator::drop_while($arr, function($key, &$value) {
+	 * 	return ($value < 3);
+	 * }); // [3,4,5,0]
+	 * @param array &$arr 
+	 * @param callback $callback 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-drop_while
+	 */
+	public static function drop_while(array &$arr, $callback) {
+		$i = 0;
+		foreach($arr as $key => &$value) {
+			if($callback($key, $value) == false) {
+				$arr = array_slice($arr, $i);
+				return;
+			}
+			$i++;
+		}
 	}
 }
