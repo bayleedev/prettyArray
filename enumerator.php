@@ -44,9 +44,12 @@ class enumerator {
 	/**
 	 * The new idea is that none of the functions will be "destructive" and use "__callStatic" and say if the last character of the method is a underscore and the method exists without it, it'll be destructive.
 	 * Or possibly the other way around where the destructive functions by default have the underscore at the end and callStatic makes the functions safe.
+	 * If the method is set to "true" it needs to return the input array, if set to "false" it will return what the array returns.
+	 * For complete flexibility calling "any" and your callback passing the value by reference will still not be destructive. You MUST call "any_" to ever edit your array in this class.
 	 */
 	protected static $destructiveMap = array(
 		'all' => false,
+		'any' => false,
 		'select' => true,
 		'each_slice' => true,
 		'first' => true,
@@ -101,8 +104,6 @@ class enumerator {
 				trigger_error("The alias '{$method}' cannot be destructive. Use it's non-alias form to be destructive: '{$key}'.", E_USER_NOTICE);
 			}
 			$ret = call_user_func_array(array(__CLASS__, $key), $params);
-			echo 'here: '. $ret;
-			var_dump($arrReturn, $key);
 			return ($arrReturn) ? $params[0] : $ret;
 		} else {
 			// They are clueless
@@ -145,12 +146,22 @@ class enumerator {
 
 	/**
 	 * Passes each element of the collection to the $callback, if it ever returns anything besides null or false I'll return true, else I'll return false.
-	 * @param array $arr 
+	 * <code>
+	 * $animals = array('ant', 'bear', 'cat');
+	 * enumerator::any($animals, function($key, &$value) {
+	 * 	return (strlen($value) >= 3);
+	 * }); // true
+	 * enumerator::any($animals, function($key, &$value) {
+	 * 	return (strlen($value) >= 4);
+	 * }); // true
+	 * enumerator::any(array(null, true, 99)); // true
+	 * </code>
+	 * @param array $arr
 	 * @param callable $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
 	 * @return boolean
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-any-3F
 	 */
-	public static function any(array &$arr, $callback = null) {
+	public static function any_(array &$arr, $callback = null) {
 		if(!is_callable($callback)) {
 			$callback = function($key, $value) {
 				return $value;
