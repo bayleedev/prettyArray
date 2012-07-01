@@ -46,6 +46,7 @@ class enumerator {
 	 * Or possibly the other way around where the destructive functions by default have the underscore at the end and callStatic makes the functions safe.
 	 */
 	protected static $destructiveMap = array(
+		'all' => 'all_',
 		'select' => 'select_',
 		'each_slice' => 'each_slice_',
 		'first' => 'first_',
@@ -72,30 +73,36 @@ class enumerator {
 	 * @return mixed
 	 */
 	public static function __callStatic($method, $params) {
+		// Make pass by reference methods/functions happy
+		$params[0] =& $params[0]; 
+
+		// PHP Function?
 		if(isset(self::$functionMap[$method])) {
-			// php function
 			return call_user_func_array($method, $params);
 		}
+
+		// Look for method Startup
 		$destructiveCall = (substr($method, -1, 1) == "_"); // ture if a "_" is at the end of the method. example: "call_"
 		$key = ($destructiveCall) ? substr($method, 0, -1) : $method; // Get the real name if they have a "_" at the end.
-		$params[0] =& $params[0]; // this looks stupid, but is necessary to pass this not referenced variable by reference
-		if(isset(self::$methodMap[$key])) {
-			// Method exists
+		$hasMethodMap = isset(self::$methodMap[$key]); // an alias exists
+		$hasDestructiveMap = (!$hasMethodMap) ? isset(self::$destructiveMap[$key]) : isset(self::$destructiveMap[self::$methodMap[$key]]);
+			// This may not be an alias, but a non-destructive method OR an alias to a non-destructive method.
+
+		// Look for method logic
+		if($hasMethodMap && !$hasDestructiveMap) {
+			// Method alias
 			$key = self::$methodMap[$key];
-			$destructiveMethod = isset(self::$destructiveMap[$key]);
-			if($destructiveCall && $destructiveMethod) {
-				// Destructive calls don't work on callStatic since no params are by reference
-				$key = self::$destructiveMap[$key];
+			return call_user_func_array(array(__CLASS__, $key), $params);
+		} else if($hasDestructiveMap) {
+			// Non-destructive call and possible alias
+			$key = self::$destructiveMap[self::$methodMap[$key]];
+			if($destructiveCall) {
 				trigger_error("The alias '{$method}' cannot be destructive. Use it's non-alias form to be destructive: '{$key}'.", E_USER_NOTICE);
 			}
-			if($destructiveMethod) {
-				// destructive method
-				call_user_func_array(array(__CLASS__, $key), $params);
-				return $params[0];
-			}
-			// This funtion will return something
-			return call_user_func_array(array(__CLASS__, $key), $params);
+			$ret = call_user_func_array(array(__CLASS__, $key), $params);
+			return $params[0];
 		} else {
+			// They are clueless
 			throw new BadMethodCallException();
 		}
 		return;
@@ -103,19 +110,19 @@ class enumerator {
 
 	/**
 	 * Passes each element of the collection to the $callback, if it ever turns false or null this function will return false, else true.
-	 * @param array $arr 
+	 * @param array &$arr 
 	 * @param callable $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
 	 * @return boolean
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-all-3F
 	 */
-	public static function all(array &$arr, $callback = null) {
+	public static function all_(array &$arr, $callback = null) {
 		if(!is_callable($callback)) {
 			$callback = function($key, $value) {
 				return $value;
 			};
 		}
 		foreach($arr as $key => &$value) {
-			$ret = $callable($key, $value);
+			$ret = $callback($key, $value);
 			if(is_null($ret) OR $ret === false) {
 				return false;
 			}
@@ -879,3 +886,11 @@ class enumerator {
 		return;
 	}
 }
+
+
+$arr = range(1,10);
+print_r(enumerator::find_all($arr,function($key, &$value) {
+	return ($value % 3 == 0);
+})); // [3, 6, 9]
+
+print_r($arr);
