@@ -2,7 +2,9 @@
 
 /**
  * A handy static class for handling array functions.
- * @todo Blah: chunk, collect_concat, cycle, each_cons, each_entry, slice_before
+ * @todo Methods: chunk, collect_concat, cycle, each_cons, each_entry, slice_before
+ * @todo Some methods need code examples.
+ * @todo phpunit
  * @link http://ruby-doc.org/core-1.9.3/Enumerable.html
  */
 class enumerator {
