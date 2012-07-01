@@ -886,11 +886,3 @@ class enumerator {
 		return;
 	}
 }
-
-
-$arr = range(1,10);
-print_r(enumerator::find_all($arr,function($key, &$value) {
-	return ($value % 3 == 0);
-})); // [3, 6, 9]
-
-print_r($arr);
