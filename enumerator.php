@@ -50,6 +50,7 @@ class enumerator {
 	protected static $destructiveMap = array(
 		'all' => false,
 		'any' => false,
+		'collect' => true,
 		'select' => true,
 		'each_slice' => true,
 		'first' => true,
@@ -178,6 +179,17 @@ class enumerator {
 
 	/**
 	 * Will iterate the elements in the array. Has the potential to change the values.
+	 * <code>
+	 * $arr = range(1,4);
+	 * enumerator::collect($arr, function($key, &$value) {
+	 * 	$value *= $value;
+	 * 	return;
+	 * }); // [1, 4, 9, 16]
+	 * enumerator::collect($arr, function($key, &$value) {
+	 * 	$value = "cat";
+	 * 	return;
+	 * }); // ["cat", "cat", "cat", "cat"]
+	 * </code>
 	 * Alias:
 	 *  - each
 	 *  - map
@@ -188,7 +200,7 @@ class enumerator {
 	 * @param callable $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-collect
 	 */
-	public static function collect(array &$arr, $callback) {
+	public static function collect_(array &$arr, $callback) {
 		foreach($arr as $key => &$value) {
 			$callback($key, $value);
 		}
