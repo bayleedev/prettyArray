@@ -1,8 +1,9 @@
 <?php
 
 /**
- * A handy static class for handling array functions.
- * @todo Methods: chunk, collect_concat, cycle, each_cons, each_entry, slice_before
+ * A handy class for handling array methods similar to the methods available to ruby.
+ * There are "destructive" methods which are identified by the "_" at the end of the method name. These methods will overwrite the $array passed to them. To get around this, I have added many "alias" magic methods. Any destructive methods with a underscore at the end has an alias without it that does not overwrite your $arry but returns a new one instead, even though the original method usually returns nothing.
+ * Some methods contain "alias" methods that have different names then it like "find_all" points to "select". If  you attempt to use a destructive call on an alias like "find_all_" it will not be destructive and it will throw a warning.
  * @todo Some methods need code examples.
  * @todo phpunit
  * @link http://ruby-doc.org/core-1.9.3/Enumerable.html
@@ -56,7 +57,9 @@ class enumerator {
 		'sort' => 'sort_',
 		'sort_by' => 'sort_by_',
 		'take_while' => 'take_while_',
-		'zip' => 'zip_'
+		'zip' => 'zip_',
+		'drop_while' => 'drop_while_',
+		'each_cons' => 'each_cons_'
 	);
 
 	public static function __callStatic($method, $params) {
@@ -758,5 +761,83 @@ class enumerator {
 			}
 			$i++;
 		}
+	}
+
+	/**
+	 * Will pass every element of $arr into $callback exactly $it times.
+	 * <code>
+	 * echo enumerator::cycle([1,2,3], 3, function($key, $value, $it) {
+	 * 	echo $value . ',';
+	 * }); // 1,2,3,1,2,3,1,2,3,
+	 * </code>
+	 * @param array $arr 
+	 * @param int $it 
+	 * @param callback $callback This can accept 3 arguments: $key - The key in the array, $value - The value of this key, $it - The current iteration.
+	 * @link http://ruby-doc.org/core-1.9.3/Array.html#method-i-cycle
+	 */
+	public static function cycle(array $arr, $it, $callback) {
+		for($i = 0;$i<$it;$i++) {
+			foreach($arr as $key => &$value) {
+				$callback($key, $value, $i);
+			}
+		}
+		return;
+	}
+
+	/**
+	 * This will return each section as an item in an array.
+	 * A section is each consecutive $size of $arr.
+	 * It will also iterate over each item in every section.
+	 * <code>
+	 * $arr = range(1,10);
+	 * $follower = 0;
+	 * enumerator::each_cons($arr, 3, function($key, $value, $leader) use (&$follower) {
+	 * 	if($follower < $leader) {
+	 * 		echo '||';
+	 * 		$follower = $leader;
+	 * 	}
+	 * 	echo $value . ',';
+	 * }); // 1,2,3,||2,3,4,||3,4,5,||4,5,6,||5,6,7,||6,7,8,||7,8,9,||8,9,10,
+	 * /*
+	 * $arr =
+	 * [[1, 2, 3],
+	 *  [2, 3, 4],
+	 *  [3, 4, 5],
+	 *  [4, 5, 6],
+	 *  [5, 6, 7],
+	 *  [6, 7, 8],
+	 *  [7, 8, 9],
+	 *  [8, 9, 10]]
+	 * *\/
+	 * </code>
+	 * @param array &$arr 
+	 * @param int $size 
+	 * @param callback $callback 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-each_cons
+	 */
+	public static function each_cons_(array &$arr, $size, $callback) {
+		$newArr = array();
+		$count = count($arr);
+		$current = 0;
+		foreach($arr as $key => $value) {
+			if($current + $size > $count) {
+				break;
+			}
+			$newArr[$current] = array_slice($arr, $current, $size);
+			foreach($newArr[$current] as $key => &$value) {
+				$callback($key, $value, $current);
+			}
+			$current++;
+		}
+		$arr = $newArr();
+		return;
+	}
+
+	public static function each_entry() {
+		/*
+			The definition for this method makes no sense.
+			It probably doesn't help there are formatting issues..
+			The text is being parsed as code...
+		*/
 	}
 }
