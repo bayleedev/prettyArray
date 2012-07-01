@@ -6,6 +6,7 @@
  *  - collect
  *  - drop_while
  *  - each_slice
+ *  - first
  *  - flatten
  *  - grep
  *  - group_by
@@ -14,6 +15,8 @@
  *  - select
  *  - sort
  *  - sort_by
+ *  - take_while
+ *  - zip
  * The new idea is that none of the functions will be "destructive" and use "__callStatic" and say if the last character of the method is a underscore and the method exists without it, it'll be destructive.
  * Or possibly the other way around where the destructive functions by default have the underscore at the end and callStatic makes the functions safe.
  * @todo Blah: chunk, collect_concat, cycle, each_cons, each_entry, slice_before
@@ -211,6 +214,8 @@ class enumerator {
 
 	/**
 	 * Will overwrite $arr with the first $count items in array.
+	 * Alias:
+	 *  - take
 	 * @param array &$arr
 	 * @param type $count The number of items you wish to return. Defaults to 1
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-first
@@ -513,7 +518,7 @@ class enumerator {
 	}
 
 	/**
-	 * Will iterate the items in $arr passing each one to $callback.
+	 * Will iterate the items in $arr passing each one to $callback with $memo as the third argument.
 	 * Alias:
 	 *  - reduce
 	 * @param array &$arr
@@ -632,10 +637,62 @@ class enumerator {
 		});
 		return;
 	}
-}
 
-$arr = array('rhea', 'kea', 'flea');
-enumerator::sort_by($arr, function($val) {
-	return strlen($val);
-}); // [kea, flea, rhea]
-print_r($arr);
+	/**
+	 * Passes elements into $callback until it returns false or null, at which point this function will stop and set $arr to all prior elements.
+	 * <code>
+	 * $arr = [1,2,3,4,5,0];
+	 * enumerator::take_while($arr, function($key, &$value) {
+	 * 	return ($value < 3);
+	 * }); // 1, 2
+	 * </code>
+	 * @param type array &$arr 
+	 * @param callback $callback A $key, $value are passed to this callback.
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-take_while
+	 */
+	public static function take_while(array &$arr, $callback) {
+		$i = 0;
+		foreach($arr as $key => &$value) {
+			$r = $callback($key, $value);
+			if($r === false || is_null($r)) {
+				$arr = array_slice($arr, 0, $i, true);
+				return;
+			}
+			$i++;
+		}
+		return;
+	}
+
+	/**
+	 * Description
+	 * <code>
+	 * $a = [1,2,3];
+	 * enumerator::zip($a, [4,5,6], [7,8,9]); // [[1,4,7],[2,5,8],[3,6,9]]
+	 * </code>
+	 * <code>
+	 * $a = [1,2];
+	 * enumerator::zip($a, [4,5,6],[7,8,9]); // [[1, 4, 7], [2, 5, 8]]
+	 * </code>
+	 * <code>
+	 * $a = [4,5,6];
+	 * enumerator::zip($a, [1,2], [8]); // [[4, 1, 8], [5, 2, null], [6, null, null]]
+	 * </code>
+	 * @param type array &$arr 
+	 * @param type array $one 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-zip
+	 */
+	public static function zip(array &$arr, array $one) {
+		$args = func_get_args();
+		array_shift($args); // get $arr out of the way
+		foreach($arr as $key => $value) {
+			$arr[$key] = array($value);
+			foreach($args as $k => $v) {
+				$arr[$key][] = current($args[$k]);
+				if(next($args[$k]) === false && $args[$k] != array(null)) {
+					$args[$k] = array(null);
+				}
+			}
+		}
+		return;
+	}
+}
