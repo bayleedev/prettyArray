@@ -46,22 +46,22 @@ class enumerator {
 	 * Or possibly the other way around where the destructive functions by default have the underscore at the end and callStatic makes the functions safe.
 	 */
 	protected static $destructiveMap = array(
-		'all' => 'all_',
-		'select' => 'select_',
-		'each_slice' => 'each_slice_',
-		'first' => 'first_',
-		'collect_concat' => 'collect_concat_',
-		'grep' => 'grep_',
-		'group_by' => 'group_by_',
-		'partition' => 'partition_',
-		'reject' => 'reject_',
-		'sort' => 'sort_',
-		'sort_by' => 'sort_by_',
-		'take_while' => 'take_while_',
-		'zip' => 'zip_',
-		'drop_while' => 'drop_while_',
-		'each_cons' => 'each_cons_',
-		'slice_before' => 'slice_before_'
+		'all' => false,
+		'select' => true,
+		'each_slice' => true,
+		'first' => true,
+		'collect_concat' => true,
+		'grep' => true,
+		'group_by' => true,
+		'partition' => true,
+		'reject' => true,
+		'sort' => true,
+		'sort_by' => true,
+		'take_while' => true,
+		'zip' => true,
+		'drop_while' => true,
+		'each_cons' => true,
+		'slice_before' => true
 	);
 
 	/**
@@ -95,12 +95,15 @@ class enumerator {
 			return call_user_func_array(array(__CLASS__, $key), $params);
 		} else if($hasDestructiveMap) {
 			// Non-destructive call and possible alias
-			$key = self::$destructiveMap[self::$methodMap[$key]];
+			$key = (($hasMethodMap) ? self::$methodMap[$key] : $key) . '_';
+			$arrReturn = self::$destructiveMap[substr($key, 0, -1)];
 			if($destructiveCall) {
 				trigger_error("The alias '{$method}' cannot be destructive. Use it's non-alias form to be destructive: '{$key}'.", E_USER_NOTICE);
 			}
 			$ret = call_user_func_array(array(__CLASS__, $key), $params);
-			return $params[0];
+			echo 'here: '. $ret;
+			var_dump($arrReturn, $key);
+			return ($arrReturn) ? $params[0] : $ret;
 		} else {
 			// They are clueless
 			throw new BadMethodCallException();
@@ -110,7 +113,17 @@ class enumerator {
 
 	/**
 	 * Passes each element of the collection to the $callback, if it ever turns false or null this function will return false, else true.
-	 * @param array &$arr 
+	 * <code>
+	 * $animals = array('ant', 'bear', 'cat');
+	 * enumerator::all($animals, function($key, &$value) {
+	 * 	return (strlen($value) >= 3);
+	 * }); // true
+	 * enumerator::all($animals, function($key, &$value) {
+	 * 	return (strlen($value) >= 4);
+	 * }); // false
+	 * enumerator::all(array(null, true, 99)); // false
+	 * </code>
+	 * @param array &$arr
 	 * @param callable $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
 	 * @return boolean
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-all-3F
