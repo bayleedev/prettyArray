@@ -760,12 +760,3 @@ class enumerator {
 		}
 	}
 }
-
-$arr = range(1,10);
-$arr2 = enumerator::find_all_($arr,function($key, &$value) {
-	return ($value % 3 == 0);
-}); // [3, 6, 9]
-
-print_r($arr);
-echo '<hr />';
-print_r($arr2);
