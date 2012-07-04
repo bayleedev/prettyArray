@@ -31,7 +31,8 @@ class enumerator {
 		'reverse_each' => 'reverse_collect',
 		'reverse_map' => 'reverse_collect',
 		'reverse_foreach' => 'reverse_collect',
-		'reverse_each_with_index' => 'reverse_collect'
+		'reverse_each_with_index' => 'reverse_collect',
+		'concat' => 'concat'
 	);
 
 	/**
@@ -41,6 +42,7 @@ class enumerator {
 	 * For complete flexibility calling "any" and your callback passing the value by reference will still not be destructive. You MUST call "any_" to ever edit your array in this class.
 	 */
 	protected static $destructiveMap = array(
+		'merge' => true,
 		'drop' => true,
 		'reverse_collect' => false,
 		'inject' => false,
@@ -1116,7 +1118,7 @@ class enumerator {
 	}
 
 	/**
-	 * Methods: merge, merge_
+	 * Methods: merge, merge_, concat
 	 * 
 	 * Will merge two or more arrays together.
 	 * 
@@ -1133,4 +1135,6 @@ class enumerator {
 		$arr = call_user_func_array('array_merge', func_get_args());
 		return;
 	}
+
+	public static function flatten
 }
