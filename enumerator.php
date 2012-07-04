@@ -1135,6 +1135,4 @@ class enumerator {
 		$arr = call_user_func_array('array_merge', func_get_args());
 		return;
 	}
-
-	public static function flatten
 }
