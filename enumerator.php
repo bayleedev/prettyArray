@@ -11,17 +11,10 @@
 class enumerator {
 
 	/**
-	 * Will map directly from an alias to a php function.
-	 */
-	protected static $functionMap = array(
-		'array_slice' => 'array_slice',
-		'drop' => 'array_slice'
-	);
-
-	/**
 	 * Will map their "alias" to their real method.
 	 */
 	protected static $methodMap = array(
+		'array_slice' => 'drop',
 		'find_all' => 'select',
 		'reduce' => 'inject',
 		'include' => 'member',
@@ -48,6 +41,7 @@ class enumerator {
 	 * For complete flexibility calling "any" and your callback passing the value by reference will still not be destructive. You MUST call "any_" to ever edit your array in this class.
 	 */
 	protected static $destructiveMap = array(
+		'drop' => true,
 		'reverse_collect' => false,
 		'inject' => false,
 		'all' => false,
@@ -84,12 +78,7 @@ class enumerator {
 	 */
 	public static function __callStatic($method, $params) {
 		// Make pass by reference methods/functions happy
-		$params[0] =& $params[0]; 
-
-		// PHP Function?
-		if(isset(self::$functionMap[$method])) {
-			return call_user_func_array($method, $params);
-		}
+		$params[0] =& $params[0];
 
 		// Look for method Startup
 		$destructiveCall = (substr($method, -1, 1) == "_"); // ture if a "_" is at the end of the method. example: "call_"
@@ -156,6 +145,24 @@ class enumerator {
 	}
 
 	/**
+	 * Methods: drop, drop_
+	 * 
+	 * Drops the first $count elements.
+	 * 
+	 * <code>
+	 * $animals = array('ant', 'bear', 'cat');
+	 * enumerator::drop($animals, 1); // bear, cat
+	 * </code>
+	 * 
+	 * @param array &$arr
+	 * @param int $count
+	 */
+	public static function drop_(array &$arr, $count) {
+		$arr = array_slice($arr, $count);
+		return;
+	}
+
+	/**
 	 * Methods: any, any_
 	 * 
 	 * Passes each element of the collection to the $callback, if it ever returns anything besides null or false I'll return true, else I'll return false.
@@ -213,9 +220,7 @@ class enumerator {
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-collect
 	 */
 	public static function collect_(array &$arr, $callback) {
-		foreach($arr as $key => &$value) {
-			$callback($key, $value);
-		}
+		array_walk($arr, $callback);
 		return;
 	}
 
@@ -953,7 +958,7 @@ class enumerator {
 	 * </code>
 	 * 
 	 * @param array &$arr 
-	 * @param array $one
+	 * @param array $one Unlimited of this.
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-zip
 	 */
 	public static function zip_(array &$arr, array $one) {
@@ -1107,6 +1112,25 @@ class enumerator {
 			$newArr[] = array_slice($arr, $follower, $leader-$follower);
 		}
 		$arr = $newArr;
+		return;
+	}
+
+	/**
+	 * Methods: merge, merge_
+	 * 
+	 * Will merge two or more arrays together.
+	 * 
+	 * <code>
+	 * $animals = ['dog', 'cat', 'pig'];
+	 * $trees = ['pine'];
+	 * enumerator::merge($animals, $trees, ['wool']); // dog, cat, pig, pine, wool
+	 * </code>
+	 * 
+	 * @param array &$arr
+	 * @param  array $arr2 
+	 */
+	public static function merge_(array &$arr, array $arr2) {
+		$arr = call_user_func_array('array_merge', func_get_args());
 		return;
 	}
 }
