@@ -222,7 +222,9 @@ class enumerator {
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-collect
 	 */
 	public static function collect_(array &$arr, $callback) {
-		array_walk($arr, $callback);
+		foreach($arr as $key => &$value) {
+			$callback($key, $value);
+		}
 		return;
 	}
 
