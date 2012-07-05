@@ -11,8 +11,7 @@ include('./enumerator.php');
  * 
  * An object oriented approach to array development.
  * 
- * @todo getRange and getSet are destructive. Make static function like in enumerator. On second thought, we should benchamrk if it's faster to use magic or write them out.
- * 
+ * @todo getRange and getSet are destructive. Make static function like in enumerator.
  */
 class PrettyArray implements ArrayAccess {
 
@@ -60,7 +59,13 @@ class PrettyArray implements ArrayAccess {
 	}
 
 	// PrettyArray
+	/*
 	public function getRange($start, $end) {
+		$that = clone $this;
+		return $that->getRange_($start, $end);
+	}
+	*/
+	public function getRange_($start, $end) {
 		$ret = new PrettyArray();
 		$collecting = false;
 		foreach($this->data as $key => &$value) {
@@ -74,7 +79,14 @@ class PrettyArray implements ArrayAccess {
 		}
 		return $ret;
 	}
+
+	/*
 	public function getSet($start, $length) {
+		$that = clone $this;
+		return $that->getSet_($start, $length);
+	}
+	*/
+	public function getSet_($start, $length) {
 		$ret = new PrettyArray();
 		$count = 0;
 		foreach($this->data as $key => &$value) {
@@ -88,6 +100,7 @@ class PrettyArray implements ArrayAccess {
 		}
 		return $ret;
 	}
+
 	public function setByReference($key, &$value) {
 		$this->data[$key] =& $value;
 	}
