@@ -1,10 +1,12 @@
 <?php
-include('./enumerator.php');
 /**
  * PrettyArray
  * 
  * @author Blaine Schmeisser <Blaine.Sch@gmail.com>
  */
+
+// Dependencies
+include('./enumerator.php');
 
 /**
  * PrettyArray
@@ -15,15 +17,47 @@ include('./enumerator.php');
  */
 class PrettyArray implements ArrayAccess {
 
+	/**
+	 * The real data
+	 */
 	protected $data = array();
-	protected $mixins;
+	
+	/**
+	 * Currently only one mixin, but this might change.
+	 */
+	protected static $mixins = 'enumerator';
+	
+	/**
+	 * Remaps non-destructive methods to their destructive counter parts.
+	 */
+	protected static $destructiveMap = array(
+		'getRange' => 'getRange_',
+		'getSet' => 'getSet_'
+	);
 
+	/**
+	 * The default array can be passed as the first argument in the constructor.
+	 * @param array optional $defaults 
+	 */
 	public function __construct(array $defaults = array()) {
-		$this->mixins = 'enumerator';
 		$this->data = $defaults;
 	}
 
-	// ArrayAccess
+
+	/**
+	 * Method: offsetSet
+	 * 
+	 * Part of ArrayAccess. Allows PrettyArray to set a value based on the [] operator.
+	 * 
+	 * <code>
+	 * $arr = new PrettyArray();
+	 * $arr[] = 'new'; // magic of this method
+	 * </code>
+	 * 
+	 * @param mixed $key 
+	 * @param mixed $value 
+	 * @return $value
+	 */
 	public function offsetSet($key, $value) {
 		if(empty($key)) {
 			$this->data[] = $value;
@@ -32,43 +66,164 @@ class PrettyArray implements ArrayAccess {
 		}
 		return $value;
 	}
-	public function offsetExists($keys) {
+
+	/**
+	 * Method: offsetExists
+	 * 
+	 * Part of ArrayAccess. If the offest exists.
+	 * 
+	 * <code>
+	 * $arr = new PrettyArray();
+	 * $arr[0] = 'foobar';
+	 * var_dump(isset($arr[0])); // true
+	 * </code>
+	 * 
+	 * @param mixed $key 
+	 * @return boolean
+	 */
+	public function offsetExists($key) {
 		return (isset($this->data[$key]));
 	}
+
+	/**
+	 * Method: offsetUnset
+	 * 
+	 * Part of ArrayAccess. Will unset the value if it exists.
+	 * 
+	 * <code>
+	 * $arr = new PrettyArray();
+	 * $arr[0] = 'foobar';
+	 * unset($arr[0]);
+	 * print_r($arr); // array()
+	 * </code>
+	 * 
+	 * @param mixed $key 
+	 * @return void
+	 */
 	public function offsetUnset($key) {
 		if(isset($this->data[$key])) {
 			unset($this->data[$key]);
 		}
 		return;
 	}
+
+	/**
+	 * Method: offsetGet
+	 * 
+	 * Part of ArrayAccess. Will get the value of the current offset.
+	 * 
+	 * <code>
+	 * $arr = new PrettyArray();
+	 * $arr[0] = 'foobar';
+	 * echo $arr[0]; // foobar
+	 * </code>
+	 * 
+	 * @param type $key 
+	 * @return type
+	 */
 	public function offsetGet($key) {
 		return (isset($this->data[$key])) ? $this->data[$key] : null;
 	}
 
-	// PHP Magic - 5.3 mixin support
+	/**
+	 * Methods: __call
+	 * 
+	 * This serves two purposes.
+	 * The first is that it helps the destructive methods in this class become non-destructive giving them aliases.
+	 * The second is that is also proxies/mixins the static enumerable methods to non-static calls on this class and appends the current array as the first param.
+	 * 
+	 * <code>
+	 * $arr = [1,2,3];
+	 * enumerator::collect_($arr, function($key, &$value) {
+	 * 	$value++;
+	 * 	return;
+	 * });
+	 * print_r($arr); // 2,3,4
+	 * 
+	 * $arr = new PrettyArray($arr);
+	 * $arr->collect_(function($key, &$value) {
+	 * 	$value--;
+	 * 	return;
+	 * });
+	 * print_r($arr); // 1,2,3
+	 * </code>
+	 * 
+	 * @param string $method 
+	 * @param array $params 
+	 * @return mixed
+	 */
 	public function __call($method, $params) {
-		array_unshift($params, 0);
-		$params[0] =& $this->data;
 
-		try {
-			$ret = call_user_func_array(array($this->mixins, $method), $params);
-		} catch(BadMethodCallException $e) {
-			$ret = null;
+		if(isset(self::$destructiveMap[$method])) {
+			// Destructive
+			$ret = call_user_func_array(array($this, self::$destructiveMap[$method]), $params);
+		} else {
+			// Mixin
+			array_unshift($params, 0);
+			$params[0] =& $this->data;
+			try {
+				$ret = call_user_func_array(array(self::$mixins, $method), $params);
+			} catch(BadMethodCallException $e) {
+				throw $e;
+			}
 		}
 		return $ret;
 	}
 
-	// PrettyArray
-	/*
-	public function getRange($start, $end) {
-		$that = clone $this;
-		return $that->getRange_($start, $end);
+	/**
+	 * Methods: __callStatic
+	 * 
+	 * A basic proxy for static methods on enumerator.
+	 * 
+	 * <code>
+	 * $arr = [1,2,3];
+	 * 
+	 * enumerator::collect($arr, function($key, &$value) {
+	 * 	echo $value;
+	 * }); // 123
+	 * 
+	 * PrettyArray::collect($arr, function($key, &$value) {
+	 * 	echo $value;
+	 * }); // 123
+	 * </code>
+	 * 
+	 * @param string $method 
+	 * @param array $params 
+	 * @return mixed
+	 */
+	public static function __callStatic($method, $params) {
+		return call_user_func_array(array(self::$mixins, $method), $params);
 	}
-	*/
+
+	/**
+	 * Will get a 'range' from PrettyArray. Calling it destructively will force the return value to be references to the current PrettyArray.
+	 * 
+	 * <code>
+	 * $arr = new PrettyArray(['swamp', 'desert', 'snow', 'rain', 'fog']);
+	 * $arr->getSet(1,3); // [ 1 => desert, 2 => snow, 3 => rain]
+	 * </code>
+	 * 
+	 * <code>
+	 * $arr = new PrettyArray();
+	 * $arr['nasty'] = 'swamp';
+	 * $arr['hot'] = 'desert';
+	 * $arr['cold'] = 'snow';
+	 * $arr[] = 'rain';
+	 * $arr[] = 'fog';
+	 * $arr->getRange('hot', 0); // [ hot => desert, cold => snow, 0 => rain ]
+	 * </code>
+	 * 
+	 * @param mixed $start 
+	 * @param mixed $end 
+	 * @return PrettyArray
+	 */
 	public function getRange_($start, $end) {
 		$ret = new PrettyArray();
 		$collecting = false;
+		$start = (string)$start;
+		$end = (string)$end;
 		foreach($this->data as $key => &$value) {
+			$key = (string)$key;
 			if($start == $key || $collecting) {
 				$collecting = true;
 				$ret->setByReference($key, $value);
@@ -80,12 +235,20 @@ class PrettyArray implements ArrayAccess {
 		return $ret;
 	}
 
-	/*
-	public function getSet($start, $length) {
-		$that = clone $this;
-		return $that->getSet_($start, $length);
-	}
-	*/
+	/**
+	 * Methods: getSet, getSet_
+	 * 
+	 * Will get a 'set' from PrettyArray. Calling it destructively will force the return value to be references to the current PrettyArray.
+	 * 
+	 * <code>
+	 * $arr = new PrettyArray([1,2,3,4,5]);
+	 * $arr->getSet(1, 2); //[ 1 => 2, 2 => 3 ]
+	 * </code>
+	 * 
+	 * @param mixed $start 
+	 * @param int $length 
+	 * @return PrettyArray
+	 */
 	public function getSet_($start, $length) {
 		$ret = new PrettyArray();
 		$count = 0;
@@ -101,11 +264,14 @@ class PrettyArray implements ArrayAccess {
 		return $ret;
 	}
 
+	/**
+	 * By default you can't set by reference. This helps you do so.
+	 * @param mixed $key 
+	 * @param mixed &$value 
+	 * @return $value from before
+	 */
 	public function setByReference($key, &$value) {
 		$this->data[$key] =& $value;
-	}
-
-	public function get() {
-		return $this->data;
+		return $value;
 	}
 }

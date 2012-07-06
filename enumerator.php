@@ -36,10 +36,7 @@ class enumerator {
 	);
 
 	/**
-	 * The new idea is that none of the functions will be "destructive" and use "__callStatic" and say if the last character of the method is a underscore and the method exists without it, it'll be destructive.
-	 * Or possibly the other way around where the destructive functions by default have the underscore at the end and callStatic makes the functions safe.
-	 * If the method is set to "true" it needs to return the input array, if set to "false" it will return what the array returns.
-	 * For complete flexibility calling "any" and your callback passing the value by reference will still not be destructive. You MUST call "any_" to ever edit your array in this class.
+	 * The method exists if the key exists and will be checked in __callStatic. If the value is true, the edited array will be returned. If false the return value of the method call is returned.
 	 */
 	protected static $destructiveMap = array(
 		'merge' => true,
