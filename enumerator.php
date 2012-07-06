@@ -32,7 +32,8 @@ class enumerator {
 		'reverse_map' => 'reverse_collect',
 		'reverse_foreach' => 'reverse_collect',
 		'reverse_each_with_index' => 'reverse_collect',
-		'concat' => 'concat'
+		'concat' => 'concat',
+		'sample' => 'random'
 	);
 
 	/**
@@ -1173,5 +1174,26 @@ class enumerator {
 	public static function reverse_(array &$arr, $preserve_keys = false) {
 		$arr = array_reverse($arr, $preserve_keys);
 		return;
+	}
+
+	/**
+	 * Methods: random, sample
+	 * 
+	 * Will get $count random values from $arr. If $count is 1 then it'll return the value, otherwise it'll return an array of values.
+	 * 
+	 * <code>
+	 * $arr = ['pig', 'cow', 'dog', 'horse'];
+	 * enumerator::random($arr); // dog
+	 * enumerator::random($arr, 2); // [dog, cow]
+	 * </code>
+	 * 
+	 * @param array $arr 
+	 * @param int optional $count Defaults to 1
+	 * @return mixed
+	 */
+	public static function random(array $arr, $count = 1) {
+		shuffle($arr);
+		$ret = array_slice($arr, 0, $count, true);
+		return (count($ret) == 1) ? $ret[0] : $ret;
 	}
 }
