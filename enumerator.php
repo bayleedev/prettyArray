@@ -63,7 +63,8 @@ class enumerator {
 		'zip' => true,
 		'drop_while' => true,
 		'each_cons' => true,
-		'slice_before' => true
+		'slice_before' => true,
+		'rotate' => true
 	);
 
 	/**
@@ -1132,6 +1133,26 @@ class enumerator {
 	 */
 	public static function merge_(array &$arr, array $arr2) {
 		$arr = call_user_func_array('array_merge', func_get_args());
+		return;
+	}
+
+	/**
+	 * Methods: rotate, rotate_
+	 * 
+	 * Will rotate the array so that $index is the first element in the array. Negative indexs are allowed.
+	 * 
+	 * <code>
+	 * $arr = ['Foo', 'bar', 'foobar'];
+	 * enumerator::rotate($arr, 1); // bar, foobar, Foo
+	 * enumerator::rotate($arr, -1); // foobar, Foo, bar
+	 * </code>
+	 * 
+	 * @param array &$arr
+	 * @param int $index The starting index
+	 * @link http://ruby-doc.org/core-1.9.3/Array.html#method-i-rotate
+	 */
+	public static function rotate_(array &$arr, $index) {
+		$arr = array_merge(array_slice($arr, $index), array_slice($arr, 0, $index));
 		return;
 	}
 }
