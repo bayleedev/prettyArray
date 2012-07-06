@@ -1239,4 +1239,35 @@ class enumerator {
 		$arr = $ret;
 		return;
 	}
+
+	/**
+	 * Method: values_at, values_at_
+	 * 
+	 * Will replace the current array with only the inserted indexs. Use the non-destructive form to get the array returned instead.
+	 * 
+	 * <code>
+	 * $name = [
+	 * 	'name' => 'John Doe',
+	 * 	'first' => 'John',
+	 * 	'middle' => 'M',
+	 * 	'last' => 'Doe',
+	 * 	'title' => 'Dr.'
+	 * ];
+	 * enumerator::values_at($name, 'title', 'last'); // ['title' => 'Dr.', 'last' => 'Doe'];
+	 * </code>
+	 * 
+	 * @param type array &$arr 
+	 * @param mixed $index Put in as many indexes as you please.
+	 * @return array
+	 */
+	public static function values_at(array &$arr, $index) {
+		$ret = array();
+		$keys = func_get_args();
+		array_shift($keys);
+		foreach($keys as $key) {
+			$ret[$key] = $arr[$key];
+		}
+		$arr = $ret;
+		return;
+	}
 }
