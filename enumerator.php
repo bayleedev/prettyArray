@@ -39,7 +39,9 @@ class enumerator {
 	);
 
 	/**
-	 * The method exists if the key exists and will be checked in __callStatic. If the value is true, the edited array will be returned. If false the return value of the method call is returned.
+	 * The method exists if the key exists and will be checked in __callStatic.
+	 * If the value is true, the edited array will be returned.
+	 * If the value is false, the return value of the method call is returned.
 	 */
 	protected static $destructiveMap = array(
 		'merge' => true,
@@ -68,7 +70,10 @@ class enumerator {
 		'each_cons' => true,
 		'slice_before' => true,
 		'rotate' => true,
-		'reverse' => true
+		'reverse' => true,
+		'values_at' => true,
+		'shuffle' => true,
+		'random' => true
 	);
 
 	/**
@@ -1193,15 +1198,16 @@ class enumerator {
 	 * enumerator::random($arr, 2); // [dog, cow]
 	 * </code>
 	 * 
-	 * @param array $arr 
+	 * @param array &$arr 
 	 * @param int optional $count Defaults to 1
 	 * @return mixed
 	 * @link http://ruby-doc.org/core-1.9.3/Array.html#method-i-sample
 	 */
-	public static function random(array $arr, $count = 1) {
+	public static function random_(array &$arr, $count = 1) {
 		shuffle($arr);
 		$ret = array_slice($arr, 0, $count, true);
-		return (count($ret) == 1) ? $ret[0] : $ret;
+		$arr = (count($ret) == 1) ? $ret[0] : $ret;
+		return;
 	}
 
 	/**
@@ -1223,7 +1229,7 @@ class enumerator {
 	 * @param boolean $preserve_keys If you want to preserve keys or not. Defaults to false.
 	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-shuffle
 	 */
-	public static function shuffle(array &$arr, $preserve_keys = false) {
+	public static function shuffle_(array &$arr, $preserve_keys = false) {
 		if(!$preserve_keys) {
 			// Who needs keys anyways?
 			shuffle($arr);
@@ -1260,7 +1266,7 @@ class enumerator {
 	 * @param mixed $index Put in as many indexes as you please.
 	 * @return array
 	 */
-	public static function values_at(array &$arr, $index) {
+	public static function values_at_(array &$arr, $index) {
 		$ret = array();
 		$keys = func_get_args();
 		array_shift($keys);
