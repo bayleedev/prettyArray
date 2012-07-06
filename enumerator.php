@@ -64,7 +64,8 @@ class enumerator {
 		'drop_while' => true,
 		'each_cons' => true,
 		'slice_before' => true,
-		'rotate' => true
+		'rotate' => true,
+		'reverse' => true
 	);
 
 	/**
@@ -1153,6 +1154,24 @@ class enumerator {
 	 */
 	public static function rotate_(array &$arr, $index) {
 		$arr = array_merge(array_slice($arr, $index), array_slice($arr, 0, $index));
+		return;
+	}
+
+	/**
+	 * Methods: reverse, reverse_
+	 * 
+	 * Will reverse an array.
+	 * 
+	 * <code>
+	 * $arr = [1,2,3];
+	 * enumerator::reverse($arr); // 3, 2, 1
+	 * </code>
+	 * 
+	 * @param array &$arr 
+	 * @param boolean optional $preserve_keys Defaults to false. If you want to preserve the keys or not.
+	 */
+	public static function reverse_(array &$arr, $preserve_keys = false) {
+		$arr = array_reverse($arr, $preserve_keys);
 		return;
 	}
 }
