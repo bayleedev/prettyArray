@@ -1172,6 +1172,7 @@ class enumerator {
 	 * 
 	 * @param array &$arr 
 	 * @param boolean optional $preserve_keys Defaults to false. If you want to preserve the keys or not.
+	 * @link http://ruby-doc.org/core-1.9.3/Array.html#method-i-reverse
 	 */
 	public static function reverse_(array &$arr, $preserve_keys = false) {
 		$arr = array_reverse($arr, $preserve_keys);
@@ -1192,6 +1193,7 @@ class enumerator {
 	 * @param array $arr 
 	 * @param int optional $count Defaults to 1
 	 * @return mixed
+	 * @link http://ruby-doc.org/core-1.9.3/Array.html#method-i-sample
 	 */
 	public static function random(array $arr, $count = 1) {
 		shuffle($arr);
