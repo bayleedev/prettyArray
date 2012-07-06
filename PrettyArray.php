@@ -276,4 +276,18 @@ class PrettyArray implements ArrayAccess {
 		$this->data[$key] =& $value;
 		return $value;
 	}
+
+	/**
+	 * Method: __toString
+	 * 
+	 * Converts the PrettyArray into a print_r string.
+	 * 
+	 * <code>
+	 * $arr = new PrettyArray([1,2,3]);
+	 * echo $arr; // Array ( [0] => 1 [1] => 2 [2] => 3 )
+	 * </code>
+	 */
+	public function __toString() {
+		return print_r($this->data, true);
+	}
 }
