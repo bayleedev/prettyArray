@@ -6,7 +6,7 @@
  * Some methods contain "alias" methods that have different names then it like "find_all" points to "select". If  you attempt to use a destructive call on an alias like "find_all_" it will not be destructive and it will throw a warning.
  * 
  * @todo phpunit
- * @todo compact, keep_if, delete_if, index / find_index, has_value, count, isEmpty
+ * @todo compact, index / find_index, has_value, count, isEmpty
  * @link http://ruby-doc.org/core-1.9.3/Enumerable.html
  */
 class enumerator {
@@ -17,6 +17,7 @@ class enumerator {
 	protected static $methodMap = array(
 		'array_slice' => 'drop',
 		'find_all' => 'select',
+		'keep_if' => 'select',
 		'reduce' => 'inject',
 		'include' => 'member',
 		'flat_map' => 'collect_concat',
@@ -35,7 +36,8 @@ class enumerator {
 		'reverse_each_with_index' => 'reverse_collect',
 		'concat' => 'concat',
 		'sample' => 'random',
-		'usort' => 'sort'
+		'usort' => 'sort',
+		'delete_if' => 'reject'
 	);
 
 	/**
@@ -311,7 +313,7 @@ class enumerator {
 	}
 
 	/**
-	 * Methods: select, select_, find_all
+	 * Methods: select, select_, find_all, keep_if
 	 * 
 	 * Will pass the elements to the callback and unset them if the callback returns false.
 	 * 
@@ -825,7 +827,7 @@ class enumerator {
 	}
 
 	/**
-	 * Methods: reject: reject_
+	 * Methods: reject: reject_, delete_if
 	 * 
 	 * Will unset an item in $arr if $callback returns true for it.
 	 * 
