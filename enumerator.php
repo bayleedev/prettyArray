@@ -6,7 +6,7 @@
  * Some methods contain "alias" methods that have different names then it like "find_all" points to "select". If  you attempt to use a destructive call on an alias like "find_all_" it will not be destructive and it will throw a warning.
  * 
  * @todo phpunit
- * @todo compact, values_at, keep_if, delete_if, index / find_index, has_value, count, isEmpty
+ * @todo compact, keep_if, delete_if, index / find_index, has_value, count, isEmpty
  * @link http://ruby-doc.org/core-1.9.3/Enumerable.html
  */
 class enumerator {
@@ -1264,7 +1264,7 @@ class enumerator {
 	 * 
 	 * @param type array &$arr 
 	 * @param mixed $index Put in as many indexes as you please.
-	 * @return array
+	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-values_at
 	 */
 	public static function values_at_(array &$arr, $index) {
 		$ret = array();
