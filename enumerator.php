@@ -6,7 +6,7 @@
  * Some methods contain "alias" methods that have different names then it like "find_all" points to "select". If  you attempt to use a destructive call on an alias like "find_all_" it will not be destructive and it will throw a warning.
  * 
  * @todo phpunit
- * @todo compact, shuffle, values_at, keep_if, delete_if, index / find_index, has_value, count, isEmpty
+ * @todo compact, values_at, keep_if, delete_if, index / find_index, has_value, count, isEmpty
  * @link http://ruby-doc.org/core-1.9.3/Enumerable.html
  */
 class enumerator {
@@ -1202,5 +1202,41 @@ class enumerator {
 		shuffle($arr);
 		$ret = array_slice($arr, 0, $count, true);
 		return (count($ret) == 1) ? $ret[0] : $ret;
+	}
+
+	/**
+	 * Methods: shuffle, shuffle_
+	 * 
+	 * Will shuffle the inputted array.
+	 * 
+	 * <code>
+	 * $arr = [1,2,3];
+	 * enumerator::shuffle($arr); // [2,1,3]
+	 * </code>
+	 * 
+	 * <code>
+	 * $arr = ['a' => 'apple', 'b' => 'banana', 'c' => 'carrot'];
+	 * enumerator::shuffle($arr, true); // [a => apple, c => carrot, b => banana]
+	 * </code>
+	 * 
+	 * @param array &$arr
+	 * @param boolean $preserve_keys If you want to preserve keys or not. Defaults to false.
+	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-shuffle
+	 */
+	public static function shuffle(array &$arr, $preserve_keys = false) {
+		if(!$preserve_keys) {
+			// Who needs keys anyways?
+			shuffle($arr);
+			return;
+		}
+		// Wait, hold on. I need keys! :o
+		$ret = array();
+		$keys = array_keys($arr);
+		shuffle($keys);
+		foreach($keys as $key) {
+			$ret[$key] = $arr[$key];
+		}
+		$arr = $ret;
+		return;
 	}
 }
