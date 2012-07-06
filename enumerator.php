@@ -160,6 +160,7 @@ class enumerator {
 	 * 
 	 * @param array &$arr
 	 * @param int $count
+	 * @link http://www.ruby-doc.org/core-1.9.3/Enumerable.html#method-i-drop
 	 */
 	public static function drop_(array &$arr, $count) {
 		$arr = array_slice($arr, $count);
@@ -249,6 +250,7 @@ class enumerator {
 	 * @param array &$arr 
 	 * @param callable $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
 	 * @return int
+	 * @link http://www.ruby-doc.org/core-1.9.3/Enumerable.html#method-i-count
 	 */
 	public static function count_(array &$arr, $callback = null) {
 		if(is_null($callback)) {
@@ -1133,7 +1135,8 @@ class enumerator {
 	 * </code>
 	 * 
 	 * @param array &$arr
-	 * @param  array $arr2 
+	 * @param array $arr2
+	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-2B
 	 */
 	public static function merge_(array &$arr, array $arr2) {
 		$arr = call_user_func_array('array_merge', func_get_args());
