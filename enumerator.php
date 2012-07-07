@@ -2,6 +2,8 @@
 /**
  * PrettyArray
  * 
+ * An object oriented approach to array development.
+ * 
  * @author Blaine Schmeisser <Blaine.Sch@gmail.com>
  */
 

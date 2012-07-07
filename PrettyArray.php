@@ -2,6 +2,8 @@
 /**
  * PrettyArray
  * 
+ * An object oriented approach to array development.
+ * 
  * @author Blaine Schmeisser <Blaine.Sch@gmail.com>
  */
 
@@ -11,9 +13,12 @@ include('enumerator.php');
 /**
  * PrettyArray
  * 
- * An object oriented approach to array development.
+ * This class does not have very much in it, and is planning on staying that way. Instead, it makes magic calls to the 'enumerator' class.
+ * All methods in enumerator are static, which allows this class to call them statically or non-statically making PrettyArray very versatile.
+ * When you are calling methods in enumerator it will always append the current array to the paramater list.
  * 
- * @todo getRange and getSet are destructive. Make static function like in enumerator.
+ * @see PrettyArray::__call()
+ * @see PrettyArray::__callStatic()
  */
 class PrettyArray implements ArrayAccess {
 
