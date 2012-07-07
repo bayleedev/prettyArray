@@ -6,7 +6,6 @@
  * Some methods contain "alias" methods that have different names then it like "find_all" points to "select". If  you attempt to use a destructive call on an alias like "find_all_" it will not be destructive and it will throw a warning.
  * 
  * @todo phpunit
- * @todo compact
  * @link http://ruby-doc.org/core-1.9.3/Enumerable.html
  */
 class enumerator {
@@ -79,7 +78,8 @@ class enumerator {
 		'shuffle' => true,
 		'random' => true,
 		'index' => false,
-		'rindex' => false
+		'rindex' => false,
+		'compact' => true
 	);
 
 	/**
@@ -1427,5 +1427,38 @@ class enumerator {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Methods: compact, compact_
+	 * 
+	 * Will remove all null values inside of $arr. If $recursive is set to true, it will crawl sub-arrays.
+	 * 
+	 * <code>
+	 * $arr = [1,2,3,null,[2,3,4,null]];
+	 * enumerator::compact($arr); // [1,2,3,[2,3,4,null]]
+	 * enumerator::compact($arr, true); // [1,2,3,[2,3,4]]
+	 * </code>
+	 * 
+	 * @param array &$arr
+	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-compact
+	 */
+	public static function compact_(array &$arr, $recursive = false) {
+		if(!$recursive) {
+			foreach($arr as $key => $value) {
+				if(is_null($value)) {
+					unset($arr[$key]);
+				}
+			}
+		} else {
+			foreach($arr as $key => $value) {
+				if(is_null($value)) {
+					unset($arr[$key]);
+				} else if(is_array($value)) {
+					self::compact_($arr[$key], true);
+				}
+			}
+		}
+		return;
 	}
 }
