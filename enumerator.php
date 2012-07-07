@@ -6,7 +6,7 @@
  * Some methods contain "alias" methods that have different names then it like "find_all" points to "select". If  you attempt to use a destructive call on an alias like "find_all_" it will not be destructive and it will throw a warning.
  * 
  * @todo phpunit
- * @todo compact, index / find_index, has_value, count, isEmpty
+ * @todo compact, index / find_index, has_value, isEmpty
  * @link http://ruby-doc.org/core-1.9.3/Enumerable.html
  */
 class enumerator {
@@ -37,7 +37,8 @@ class enumerator {
 		'concat' => 'concat',
 		'sample' => 'random',
 		'usort' => 'sort',
-		'delete_if' => 'reject'
+		'delete_if' => 'reject',
+		'empty' => 'isEmpty'
 	);
 
 	/**
@@ -516,13 +517,14 @@ class enumerator {
 	 * Methods: member, include
 	 * 
 	 * This function will iterate over $arr, if any value is equal (===) to $needle this function will return true. If nothing is found this function will return false.
+	 * NOTICE: that 'include' alias is a language construct so this alias cannot be called directly. Refer to example #2.
 	 * 
 	 * <code>
 	 * $arr = ['snowball', 'snowcone', 'snowangel', 'igloo', 'ice'];
 	 * enumerator::member($arr, 'snowcone'); // true
 	 * enumerator::member($arr, 'snowman'); // false
 	 * </code>
-	 * NOTICE: The alias "include" will throw a error since this is a language construct, the only way to use this alias is through variable method calls. I'm leaving this alias for compatibality with the ruby methods.
+	 * 
 	 * <code>
 	 * $fun = 'include';
 	 * $arr = ['snowball', 'snowcone', 'snowangel', 'igloo', 'ice'];
@@ -1277,5 +1279,34 @@ class enumerator {
 		}
 		$arr = $ret;
 		return;
+	}
+
+	/**
+	 * Methods: empty, isEmpty
+	 * 
+	 * If the array is empty or not.
+	 * NOTICE: that 'empty' alias is a language construct so this alias cannot be called directly. Refer to example #3.
+	 * 
+	 * <code>
+	 * $arr = [];
+	 * enumerator::isEmpty($arr); // true
+	 * </code>
+	 * 
+	 * <code>
+	 * $arr = [1,2,3];
+	 * enumerator::isEmpty($arr); // false
+	 * </code>
+	 * 
+	 * <code>
+	 * $empty = 'empty';
+	 * $arr = [1,2,3];
+	 * enumerator::$empty($arr); // false
+	 * </code>
+	 * 
+	 * @param array $arr 
+	 * @return boolean
+	 */
+	public static function isEmpty(array $arr) {
+		return (count($arr) == 0);
 	}
 }
