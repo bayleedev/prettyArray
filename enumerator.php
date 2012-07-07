@@ -456,7 +456,7 @@ class enumerator {
 	 * 
 	 * <code>
 	 * $arr = [[1,2],[3,4]];
-	 * $i = enumerator::flat_map($arr, function($key, &$value) {
+	 * enumerator::collect_concat($arr, function($key, &$value) {
 	 * 	return ++$value;
 	 * }); // [2,3,4,5]
 	 * </code>
@@ -511,21 +511,26 @@ class enumerator {
 	 * $arr = range(1,6);
 	 * enumerator::group_by($arr, function($key, &$value) {
 	 * 	return ($value % 3);
-	 * });
+	 * }); // [[3,6],[1,4],[2,5]]
 	 * </code>
 	 * 
 	 * @param array &$arr
 	 * @param callable $callback The callback will be passed each sliced item as an array. This can be passed by reference.
+	 * @param boolean $preserve_keys If you want to preserve the keys or not.
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-group_by
 	 */
-	public static function group_by_(array &$arr, $callback) {
+	public static function group_by_(array &$arr, $callback, $preserve_keys = false) {
 		$newArr = array();
 		foreach($arr as $key => &$value) {
 			$category = $callback($key, $value);
 			if(!isset($newArr[$category])) {
 				$newArr[$category] = array();
 			}
-			$newArr[$category][$key] = $value;
+			if($preserve_keys) {
+				$newArr[$category][$key] = $value;
+			} else {
+				$newArr[$category][] = $value;
+			}
 		}
 		ksort($newArr);
 		$arr = $newArr;
@@ -824,11 +829,11 @@ class enumerator {
 	 * 
 	 * <code>
 	 * $arr = range(5, 10);
-	 * echo enumerator::inject($arr, function($key, &$value, &$memo){
+	 * enumerator::inject($arr, function($key, &$value, &$memo){
 	 * 	$memo += $value;
 	 * 	return;
 	 * }); // 45
-	 * echo enumerator::inject($arr, function($key, &$value, &$memo){
+	 * enumerator::inject($arr, function($key, &$value, &$memo){
 	 * 	$memo *= $value;
 	 * 	return;
 	 * }, 1); // 151200
@@ -1045,7 +1050,7 @@ class enumerator {
 	 * Will pass every element of $arr into $callback exactly $it times.
 	 * 
 	 * <code>
-	 * echo enumerator::cycle([1,2,3], 3, function($key, $value, $it) {
+	 * enumerator::cycle([1,2,3], 3, function($key, $value, $it) {
 	 * 	echo $value . ',';
 	 * }); // 1,2,3,1,2,3,1,2,3,
 	 * </code>
