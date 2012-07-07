@@ -394,7 +394,7 @@ class enumerator {
 	/**
 	 * Methods: find_index, find_index_
 	 * 
-	 * If $callback is callable, this function will pass each item into $callback and return the first value that $callback returns true on.
+	 * If $callback is callable, this function will pass each item into $callback and return the first index that $callback returns true on.
 	 * If $callback is not callable and is an index inside of $arr, this function will return it's value.
 	 * If not found nothing is returned.
 	 * 
@@ -419,7 +419,7 @@ class enumerator {
 		if(is_callable($callback)) {
 			foreach($arr as $key => &$value) {
 				if($callback($key, $value) === true) {
-					return $value;
+					return $key;
 				}
 			}
 		} else if(isset($arr[$callback])) {
