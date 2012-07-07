@@ -6,7 +6,7 @@
  * Some methods contain "alias" methods that have different names then it like "find_all" points to "select". If  you attempt to use a destructive call on an alias like "find_all_" it will not be destructive and it will throw a warning.
  * 
  * @todo phpunit
- * @todo compact, index / find_index, has_value
+ * @todo compact
  * @link http://ruby-doc.org/core-1.9.3/Enumerable.html
  */
 class enumerator {
@@ -38,7 +38,8 @@ class enumerator {
 		'sample' => 'random',
 		'usort' => 'sort',
 		'delete_if' => 'reject',
-		'empty' => 'isEmpty'
+		'empty' => 'isEmpty',
+		'find_index' => 'index'
 	);
 
 	/**
@@ -76,7 +77,9 @@ class enumerator {
 		'reverse' => true,
 		'values_at' => true,
 		'shuffle' => true,
-		'random' => true
+		'random' => true,
+		'index' => false,
+		'rindex' => false
 	);
 
 	/**
@@ -1339,6 +1342,88 @@ class enumerator {
 		foreach($arr as $key => $val) {
 			if($value === $val) {
 				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Methods: index, index_, find_index
+	 * 
+	 * Will return the first index if found or false otherwise. Use '===' for comparing.
+	 * If $callback is a callback function, the $key is returned the first time $callback returns true.
+	 * If $callback is not a callback, we are looking for the first $value in $arr to be === $callback.
+	 * 
+	 * <code>
+	 * $name = [
+	 * 	'name' => 'John Doe',
+	 * 	'first' => 'John',
+	 * 	'middle' => 'M',
+	 * 	'last' => 'Doe',
+	 * 	'title' => 'Dr.',
+	 * 	'suffix' => 'Jr.'
+	 * ];
+	 * enumerator::index($name, 'John'); // 'first'
+	 * enumerator::index_($name, function($key, &$value) {
+	 * 	// I could edit $value since I'm using the destructive form 'index_'
+	 * 	return (strpos($value, '.') !== false); // Has a decimal
+	 * }); // title
+	 * </code>
+	 * 
+	 * @param array &$arr 
+	 * @param mixed $callback 
+	 * @return mixed
+	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-index
+	 */
+	public static function index(array &$arr, $callback = null) {
+		if(!is_callable($callback)) {
+			return array_search($callback, $arr);
+		}
+		foreach($arr as $key => &$value) {
+			if($callback($key, $value) === true) {
+				return $key;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Methods: rindex, rindex_
+	 * 
+	 * Similar to index but looks for the last occurace of $callback.
+	 * If $callback is a callback function, the $key is returned the last time $callback returns true.
+	 * If $callback is not a callback, we are looking for the last $value in $arr to be === $callback.
+	 * 
+	 * <code>
+	 * $name = [
+	 * 	'name' => 'John Doe',
+	 * 	'first' => 'John',
+	 * 	'middle' => 'M',
+	 * 	'last' => 'Doe',
+	 * 	'title' => 'Dr.',
+	 * 	'suffix' => 'Jr.'
+	 * ];
+	 * enumerator::rindex($name, 'John'); // 'first'
+	 * enumerator::rindex_($name, function($key, &$value) {
+	 * 	// I could edit $value since I'm using the destructive form 'rindex_'
+	 * 	return (strpos($value, '.') !== false);
+	 * }); // 'suffix'
+	 * </code>
+	 * 
+	 * @param array &$arr 
+	 * @param mixed $callback 
+	 * @return mixed
+	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-rindex
+	 */
+	public static function rindex_(array &$arr, $callback) {
+		$arr2 = array_reverse($arr);
+		if(!is_callable($callback)) {
+			return array_search($callback, $arr2);
+		}
+		foreach($arr2 as $key => $value) {
+			$value =& $arr[$key];
+			if($callback($key, $value) === true) {
+				return $key;
 			}
 		}
 		return false;
