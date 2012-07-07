@@ -6,7 +6,7 @@
  * Some methods contain "alias" methods that have different names then it like "find_all" points to "select". If  you attempt to use a destructive call on an alias like "find_all_" it will not be destructive and it will throw a warning.
  * 
  * @todo phpunit
- * @todo compact, index / find_index, has_value, isEmpty
+ * @todo compact, index / find_index, has_value
  * @link http://ruby-doc.org/core-1.9.3/Enumerable.html
  */
 class enumerator {
@@ -1308,5 +1308,39 @@ class enumerator {
 	 */
 	public static function isEmpty(array $arr) {
 		return (count($arr) == 0);
+	}
+
+
+	/**
+	 * Methods: has_value
+	 * 
+	 * Will return a boolean based on the condition that $value exists inside of $arr and are the same data type.
+	 * 
+	 * <code>
+	 * $arr = [0,false];
+	 * enumerator::has_value($arr, null); // false
+	 * </code>
+	 * 
+	 * <code>
+	 * $arr = [false,null];
+	 * enumerator::has_value($arr, 0); // false
+	 * </code>
+	 * 
+	 * <code>
+	 * $arr = ['apple', 'banana', 'orange'];
+	 * enumerator::has_value($arr, 'orange'); // true
+	 * </code>
+	 * 
+	 * @param array $arr 
+	 * @param mixed $value 
+	 * @return boolean
+	 */
+	public static function has_value(array $arr, $value) {
+		foreach($arr as $key => $val) {
+			if($value === $val) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
