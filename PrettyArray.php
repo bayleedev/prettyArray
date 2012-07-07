@@ -6,7 +6,7 @@
  */
 
 // Dependencies
-include('./enumerator.php');
+include('enumerator.php');
 
 /**
  * PrettyArray
