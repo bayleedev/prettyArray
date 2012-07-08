@@ -95,7 +95,8 @@ class enumerator {
 		'random' => true,
 		'index' => false,
 		'rindex' => false,
-		'compact' => true
+		'compact' => true,
+		'cycle' => true
 	);
 
 	/**
@@ -891,6 +892,7 @@ class enumerator {
 	 * $array = array(1, 2, 3);
 	 * enumerator::reverse_collect($array, function($key, &$value) {
 	 * 	echo $value . ', ';
+	 * 	return;
 	 * }); // 3, 2, 1, 
 	 * </code>
 	 * 
@@ -922,12 +924,16 @@ class enumerator {
 	 * @param callable $callback A $key, $value are passed to this callback. The $value can be passed by reference.
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-sort
 	 */
-	public static function sort_(array &$arr, $callback = null) {
+	public static function sort_(array &$arr, $callback = null, $preserve_keys = false) {
 		if(!is_callable($callback)) {
 			sort($arr);
 			return;
 		}
-		uasort($arr, $callback);
+		if($preserve_keys) {
+			uasort($arr, $callback);
+		} else {
+			usort($arr, $callback);
+		}
 		return;
 	}
 
@@ -947,8 +953,9 @@ class enumerator {
 	 * @param callable $callback
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-sort_by
 	 */
-	public static function sort_by_(array &$arr, $callback) {
-		uasort($arr, function($key1, $key2) use ($callback) {
+	public static function sort_by_(array &$arr, $callback, $preserve_keys = false) {
+		$method = ($preserve_keys) ? 'uasort' : 'usort';
+		$method($arr, function($key1, $key2) use ($callback) {
 			return strcmp($callback($key1), $callback($key2));
 		});
 		return;
@@ -989,18 +996,18 @@ class enumerator {
 	 * Will turn each element in $arr into an array then appending the associated indexs from the other arrays into this array as well.
 	 * 
 	 * <code>
-	 * $a = [1,2,3];
-	 * enumerator::zip($a, [4,5,6], [7,8,9]); // [[1,4,7],[2,5,8],[3,6,9]]
+	 * $arr = [1,2,3];
+	 * enumerator::zip($arr, [4,5,6], [7,8,9]); // [[1,4,7],[2,5,8],[3,6,9]]
 	 * </code>
 	 * 
 	 * <code>
-	 * $a = [1,2];
-	 * enumerator::zip($a, [4,5,6],[7,8,9]); // [[1, 4, 7], [2, 5, 8]]
+	 * $arr = [1,2];
+	 * enumerator::zip($arr, [4,5,6],[7,8,9]); // [[1, 4, 7], [2, 5, 8]]
 	 * </code>
 	 * 
 	 * <code>
-	 * $a = [4,5,6];
-	 * enumerator::zip($a, [1,2], [8]); // [[4, 1, 8], [5, 2, null], [6, null, null]]
+	 * $arr = [4,5,6];
+	 * enumerator::zip($arr, [1,2], [8]); // [[4, 1, 8], [5, 2, null], [6, null, null]]
 	 * </code>
 	 * 
 	 * @param array &$arr 
@@ -1065,7 +1072,7 @@ class enumerator {
 	 * @param callable $callback This can accept 3 arguments: $key - The key in the array, $value - The value of this key, $it - The current iteration.
 	 * @link http://ruby-doc.org/core-1.9.3/Array.html#method-i-cycle
 	 */
-	public static function cycle(array $arr, $it, $callback) {
+	public static function cycle_(array $arr, $it, $callback) {
 		for($i = 0;$i<$it;$i++) {
 			foreach($arr as $key => &$value) {
 				$callback($key, $value, $i);
