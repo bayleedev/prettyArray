@@ -71,6 +71,7 @@ class enumerator {
 		'any' => false,
 		'collect' => true,
 		'count' => false,
+		'git' => false,
 		'detect' => false,
 		'find_index' => false,
 		'select' => true,
@@ -1108,7 +1109,7 @@ class enumerator {
 	 *  [6, 7, 8],
 	 *  [7, 8, 9],
 	 *  [8, 9, 10]]
-	 * *\/
+	 * {@*}
 	 * </code>
 	 * 
 	 * @param array &$arr 
