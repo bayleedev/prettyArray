@@ -810,13 +810,18 @@ class enumerator {
 	 * 
 	 * @param array &$arr
 	 * @param callable $callback A $key, $value are passed to this callback.
+	 * @param boolean $preserve_keys
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-partition
 	 */
-	public static function partition_(array &$arr, $callback) {
+	public static function partition_(array &$arr, $callback, $preserve_keys = false) {
 		$newArr = array(array(), array());
 		foreach($arr as $key => &$value) {
 			$category = !(int)(boolean)$callback($key, $value);
-			$newArr[$category][$key] = $value;
+			if($preserve_keys) {
+				$newArr[$category][$key] = $value;
+			} else {
+				$newArr[$category][] = $value;
+			}
 		}
 		$arr = $newArr;
 		return;
