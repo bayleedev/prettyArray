@@ -64,7 +64,7 @@ class PrettyArray implements ArrayAccess {
 	 * @return $value
 	 */
 	public function offsetSet($key, $value) {
-		if(empty($key)) {
+		if(is_null($key)) {
 			$this->data[] = $value;
 		} else {
 			$this->data[$key] = $value;
@@ -278,7 +278,11 @@ class PrettyArray implements ArrayAccess {
 	 * @link http://ruby-doc.org/core-1.9.3/Array.html#method-i-slice
 	 */
 	public function setByReference($key, &$value) {
-		$this->data[$key] =& $value;
+		if(is_null($key)) {
+			$this->data[] =& $value;
+		} else {
+			$this->data[$key] =& $value;
+		}
 		return $value;
 	}
 
