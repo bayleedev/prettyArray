@@ -1120,7 +1120,7 @@ class enumerator {
 		$newArr = array();
 		$count = count($arr);
 		$current = 0;
-		foreach($arr as $key => $value) {
+		foreach($arr as $k => $v) {
 			if($current + $size > $count) {
 				break;
 			}
@@ -1130,7 +1130,7 @@ class enumerator {
 			}
 			$current++;
 		}
-		$arr = $newArr();
+		$arr = $newArr;
 		return;
 	}
 
