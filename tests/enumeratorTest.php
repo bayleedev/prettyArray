@@ -1,6 +1,7 @@
 <?php
 
 // Tests all the real method in enumerator
+
 class enumeratorTest extends PHPUnit_Framework_TestCase {
 
 	public function test_all() {
