@@ -715,7 +715,7 @@ class enumerator {
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-minmax_by
 	 */
 	public static function minmax_by(array $arr, $callback) {
-		sort($arr, function($key1, $key2) use (&$callback) {
+		usort($arr, function($key1, $key2) use (&$callback) {
 			return strcmp($callback($key1), $callback($key2));
 		});
 		return array(array_shift($arr), array_pop($arr));
