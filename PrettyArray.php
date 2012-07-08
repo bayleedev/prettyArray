@@ -295,4 +295,20 @@ class PrettyArray implements ArrayAccess {
 	public function __toString() {
 		return print_r($this->data, true);
 	}
+
+	/**
+	 * Methods: to_a
+	 * 
+	 * Will return the array of data that PrettyArray has stored.
+	 * 
+	 * <code>
+	 * $arr = new PrettyArray([1,2,3]);
+	 * print_r($arr->to_a()); // Array ( [0] => 1 [1] => 2 [2] => 3 )
+	 * </code>
+	 * 
+	 * @return array
+	 */
+	public function to_a() {
+		return $this->data;
+	}
 }
