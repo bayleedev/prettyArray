@@ -169,13 +169,14 @@ class PrettyArray implements ArrayAccess {
 			$ret = call_user_func_array(array($this, self::$destructiveMap[$method]), $params);
 		} else {
 			// Mixin
-			array_unshift($params, 0);
-			$params[0] =& $this->data;
-			try {
-				$ret = call_user_func_array(array(self::$mixins, $method), $params);
-			} catch(BadMethodCallException $e) {
-				throw $e;
+			$isDestructive = (substr($method, -1) == '_');
+			if($isDestructive) {
+				array_unshift($params, 0);
+				$params[0] =& $this->data;
+			} else {
+				array_unshift($params, $this->data);
 			}
+			$ret = call_user_func_array(array(self::$mixins, $method), $params);
 		}
 		return $ret;
 	}
@@ -202,6 +203,10 @@ class PrettyArray implements ArrayAccess {
 	 * @return mixed
 	 */
 	public static function __callStatic($method, $params) {
+		$isDestructive = (substr($method, -1) == '_');
+		if($isDestructive) {
+			$params[0] =& $params[0];
+		}
 		return call_user_func_array(array(self::$mixins, $method), $params);
 	}
 
