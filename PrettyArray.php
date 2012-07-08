@@ -57,6 +57,7 @@ class PrettyArray implements ArrayAccess {
 	 * <code>
 	 * $arr = new PrettyArray();
 	 * $arr[] = 'new'; // magic of this method
+	 * $arr->offsetSet(null, 2);
 	 * </code>
 	 * 
 	 * @param mixed $key 
@@ -81,6 +82,7 @@ class PrettyArray implements ArrayAccess {
 	 * $arr = new PrettyArray();
 	 * $arr[0] = 'foobar';
 	 * var_dump(isset($arr[0])); // true
+	 * var_dump($arr->offsetExists(0)); // true
 	 * </code>
 	 * 
 	 * @param mixed $key 
@@ -99,6 +101,8 @@ class PrettyArray implements ArrayAccess {
 	 * $arr = new PrettyArray();
 	 * $arr[0] = 'foobar';
 	 * unset($arr[0]);
+	 * $arr[1] = 'foo';
+	 * $arr->offsetUnset(1);
 	 * print_r($arr); // array()
 	 * </code>
 	 * 
@@ -121,6 +125,7 @@ class PrettyArray implements ArrayAccess {
 	 * $arr = new PrettyArray();
 	 * $arr[0] = 'foobar';
 	 * echo $arr[0]; // foobar
+	 * echo $arr->offsetGet(0); // foobar
 	 * </code>
 	 * 
 	 * @param type $key 
