@@ -4,7 +4,7 @@
  * 
  * An object oriented approach to array development.
  * 
- * @author Blaine Schmeisser <Blaine.Sch@gmail.com>
+ * @author Blaine Schmeisser <BlaineSch@gmail.com>
  */
 
 // Dependencies

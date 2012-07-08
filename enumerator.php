@@ -4,7 +4,7 @@
  * 
  * An object oriented approach to array development.
  * 
- * @author Blaine Schmeisser <Blaine.Sch@gmail.com>
+ * @author Blaine Schmeisser <BlaineSch@gmail.com>
  */
 
 /**
@@ -21,7 +21,7 @@
  * Some methods contain "alias" methods that have different names then it like "find_all" points to "select".
  * If you attempt to use a destructive call on an alias like "find_all_" it will not be destructive and it will throw a warning.
  * 
- * @todo phpunit
+ * @todo change examples to be 5.3 compatiable
  * @link http://ruby-doc.org/core-1.9.3/Enumerable.html
  */
 class enumerator {
