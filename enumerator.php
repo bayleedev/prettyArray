@@ -1408,7 +1408,7 @@ class enumerator {
 	 * @return mixed
 	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-index
 	 */
-	public static function index(array &$arr, $callback = null) {
+	public static function index_(array &$arr, $callback = null) {
 		if(!is_callable($callback)) {
 			return array_search($callback, $arr);
 		}
