@@ -182,35 +182,6 @@ class PrettyArray implements ArrayAccess {
 	}
 
 	/**
-	 * Methods: __callStatic
-	 * 
-	 * A basic proxy for static methods on enumerator.
-	 * 
-	 * <code>
-	 * $arr = [1,2,3];
-	 * 
-	 * enumerator::collect($arr, function($key, &$value) {
-	 * 	echo $value;
-	 * }); // 123
-	 * 
-	 * PrettyArray::collect($arr, function($key, &$value) {
-	 * 	echo $value;
-	 * }); // 123
-	 * </code>
-	 * 
-	 * @param string $method 
-	 * @param array $params 
-	 * @return mixed
-	 */
-	public static function __callStatic($method, $params) {
-		$isDestructive = (substr($method, -1) == '_');
-		if($isDestructive) {
-			$params[0] =& $params[0];
-		}
-		return call_user_func_array(array(self::$mixins, $method), $params);
-	}
-
-	/**
 	 * Will get a 'range' from PrettyArray. Calling it destructively will force the return value to be references to the current PrettyArray.
 	 * 
 	 * <code>
