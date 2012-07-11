@@ -2,7 +2,7 @@
 
 // All tests for pretty array should be in here.
 
-class prettyArrayTests extends PHPUnit_Framework_TestCase {
+class prettyArrayTest extends PHPUnit_Framework_TestCase {
 
 	public function test_set_get_1() {
 		$arr = new PrettyArray();
