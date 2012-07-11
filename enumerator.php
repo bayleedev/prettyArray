@@ -6,6 +6,8 @@
  * 
  * @author Blaine Schmeisser <BlaineSch@gmail.com>
  */
+// Dependencies
+require_once('enumerator.php');
 
 /**
  * A handy class for handling array methods similar to the methods available to ruby.
@@ -1418,7 +1420,7 @@ class enumerator {
 	 * @return mixed
 	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-index
 	 */
-	public function find_index_(array &$arr, $callback = null) {
+	public static function find_index_(array &$arr, $callback = null) {
 		// Alias destructive method
 		return self::index_($arr, $callback);
 	}
