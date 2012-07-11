@@ -205,6 +205,7 @@ class PrettyArray implements ArrayAccess {
 	public static function __callStatic($method, $params) {
 		$isDestructive = (substr($method, -1) == '_');
 		if($isDestructive) {
+			trigger_error("Statically calling an enumerator method '{$method}' via the PrettyArray proxy cannot be used destructively. Either use the enumerator class, or this method non-statically.", E_USER_NOTICE);
 			$params[0] =& $params[0];
 		}
 		return call_user_func_array(array(self::$mixins, $method), $params);

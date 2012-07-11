@@ -18,9 +18,8 @@
  * Just remove the ending '_' and instaed of overwriting the array it'll return it.
  * 
  * Method Alias':
- * Some methods contain "alias" methods that have different names then it like "find_all" points to "select".
- * If you attempt to use a destructive call on an alias like "find_all_" it will not be destructive and it will throw a warning.
- * 
+ * Methods often have various alias' which are pointed out in the documentation. They work identically to the real function call.
+ *  
  * @todo change examples to be 5.3 compatiable
  * @link http://ruby-doc.org/core-1.9.3/Enumerable.html
  */
@@ -58,7 +57,7 @@ class enumerator {
 	);
 
 	/**
-	 * The method exists if the key exists and will be checked in __callStatic.
+	 * This is a list of destructive methods. Hard coded aliases will not be in this array.
 	 * If the value is true, the edited array will be returned.
 	 * If the value is false, the return value of the method call is returned.
 	 */
@@ -73,7 +72,6 @@ class enumerator {
 		'count' => false,
 		'git' => false,
 		'detect' => false,
-		'find_index' => false,
 		'select' => true,
 		'each_slice' => true,
 		'first' => true,
@@ -320,6 +318,10 @@ class enumerator {
 	 * @return mixed
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-detect
 	 */
+	public static function find_(array &$arr, $callback, $ifnone = null) {
+		// Alias destructive method
+		return self::detect_($arr, $callback, $ifnone);
+	}
 	public static function detect_(array &$arr, $callback, $ifnone = null) {
 		foreach($arr as $key => &$value) {
 			if($callback($key, $value) !== false) {
@@ -335,7 +337,7 @@ class enumerator {
 	}
 
 	/**
-	 * Methods: select, select_, find_all, keep_if
+	 * Methods: select, select_, find_all, find_all_, keep_if, keep_if_
 	 * 
 	 * Will pass the elements to the callback and unset them if the callback returns false.
 	 * 
@@ -351,6 +353,14 @@ class enumerator {
 	 * @return array The array that has already been edited by reference.
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-select
 	 */
+	public static function find_all_(array &$arr, $callback) {
+		// Alias destructive method
+		return self::select_($arr, $callback);
+	}
+	public static function keep_if_(array &$arr, $callback) {
+		// Alias destructive method
+		return self::select_($arr, $callback);
+	}
 	public static function select_(array &$arr, $callback) {
 		foreach($arr as $key => &$value) {
 			if($callback($key, $value) === false) {
@@ -394,43 +404,6 @@ class enumerator {
 	}
 
 	/**
-	 * Methods: find_index, find_index_
-	 * 
-	 * If $callback is callable, this function will pass each item into $callback and return the first index that $callback returns true on.
-	 * If $callback is not callable and is an index inside of $arr, this function will return it's value.
-	 * If not found nothing is returned.
-	 * 
-	 * <code>
-	 * $less = range(1,10);
-	 * $more = range(1,100);
-	 * enumerator::find_index($less, function($key, &$value) {
-	 * 	return ($value % 5 == 0 && $value % 7 == 0);
-	 * }); // null
-	 * enumerator::find_index($more, function($key, &$value) {
-	 * 	return ($value % 5 == 0 && $value % 7 == 0);
-	 * }); // 34
-	 * enumerator::find_index($more, 50); // 49
-	 * </code>
-	 * 
-	 * @param array &$arr
-	 * @param callable $callback The callback will be passed each sliced item as an array. This can be passed by reference.
-	 * @return mixed
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-find_index
-	 */
-	public static function find_index_(array &$arr, $callback) {
-		if(is_callable($callback)) {
-			foreach($arr as $key => &$value) {
-				if($callback($key, $value) === true) {
-					return $key;
-				}
-			}
-		} else if(isset($arr[$callback])) {
-			return array_search($callback, $arr);
-		}
-		return;
-	}
-
-	/**
 	 * Methods: first, first_
 	 * 
 	 * Will overwrite $arr with the first $count items in array.
@@ -451,7 +424,7 @@ class enumerator {
 	}
 
 	/**
-	 * Methods: collect_concat, collect_concat_, flat_map
+	 * Methods: collect_concat, collect_concat_, flat_map, flat_map_
 	 * 
 	 * Will flatten the input $arr into a non-multi-dimensional array.It will pass the current key and the value to $callback which has the potential to change the value.
 	 * The new array will have discarded all current keys.
@@ -467,6 +440,10 @@ class enumerator {
 	 * @param callable $callback The callback will be passed each sliced item as an array. This can be passed by reference.
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-flat_map
 	 */
+	public static function flat_map_(array &$arr, $callback) {
+		// Alias destructive method
+		return self::collect_concat_($arr, $callback);
+	}
 	public static function collect_concat_(array &$arr, $callback) {
 		$newArr = array();
 		array_walk_recursive($arr, function(&$value, $key) use (&$callback, &$newArr) {
@@ -830,7 +807,7 @@ class enumerator {
 	}
 
 	/**
-	 * Methods: inject, inject_, reduce
+	 * Methods: inject, inject_, reduce, reduce_
 	 * 
 	 * Will iterate the items in $arr passing each one to $callback with $memo as the third argument.
 	 * 
@@ -852,6 +829,10 @@ class enumerator {
 	 * @return mixed The memo variable.
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-inject
 	 */
+	public static function reduce_(array &$arr, $callback, $memo = 0) {
+		// Alias destructive method
+		return self::inject_($arr, $callback, $memo);
+	}
 	public static function inject_(array &$arr, $callback, $memo = 0) {
 		foreach($arr as $key => &$value) {
 			$callback($key, $value, $memo);
@@ -875,6 +856,10 @@ class enumerator {
 	 * @param callable $callback A $key, $value are passed to this callback. The $value can be passed by reference.
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-reject
 	 */
+	public static function delete_if_(array &$arr, $callback) {
+		// Alias destructive method
+		self::reject_($arr, $callback);
+	}
 	public static function reject_(array &$arr, $callback) {
 		foreach($arr as $key => &$value) {
 			if($callback($key, $value)) {
@@ -885,7 +870,7 @@ class enumerator {
 	}
 
 	/**
-	 * Methods: reverse_collect, reverse_collect_, reverse_each, reverse_map, reverse_foreach, reverse_each_with_index
+	 * Methods: reverse_collect, reverse_collect_, reverse_each, reverse_each_, reverse_map, reverse_map_, reverse_foreach, reverse_foreach_, reverse_each_with_index
 	 * 
 	 * Will iterate the array in reverse, but will NOT save the order.
 	 * 
@@ -901,6 +886,22 @@ class enumerator {
 	 * @param callable $callback A $key, $value are passed to this callback. The $value can be passed by reference.
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-reverse_each
 	 */
+	public static function reverse_each_(array &$arr, $callback) {
+		// Alias destructive method
+		return self::reverse_collect_($arr, $callback);
+	}
+	public static function reverse_map_(array &$arr, $callback) {
+		// Alias destructive method
+		return self::reverse_collect_($arr, $callback);
+	}
+	public static function reverse_foreach_(array &$arr, $callback) {
+		// Alias destructive method
+		return self::reverse_collect_($arr, $callback);
+	}
+	public static function reverse_each_with_index_(array &$arr, $callback) {
+		// Alias destructive method
+		return self::reverse_collect_($arr, $callback);
+	}
 	public static function reverse_collect_(array &$arr, $callback) {
 		for(end($arr);!is_null($key = key($arr));prev($arr)) {
 			$callback($key, $arr[$key]);
@@ -1058,7 +1059,7 @@ class enumerator {
 	}
 
 	/**
-	 * Methods: cycle
+	 * Methods: cycle, cycle_
 	 * 
 	 * Will pass every element of $arr into $callback exactly $it times.
 	 * 
@@ -1170,7 +1171,7 @@ class enumerator {
 	}
 
 	/**
-	 * Methods: merge, merge_, concat
+	 * Methods: merge, merge_, concat, concat_
 	 * 
 	 * Will merge two or more arrays together.
 	 * 
@@ -1184,6 +1185,10 @@ class enumerator {
 	 * @param array $arr2
 	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-2B
 	 */
+	public static function concat_(array &$arr, array $arr2) {
+		// Alias destructive method
+		return call_user_func_array('enumerator::merge_', func_get_args());
+	}
 	public static function merge_(array &$arr, array $arr2) {
 		$arr = call_user_func_array('array_merge', func_get_args());
 		return;
@@ -1229,7 +1234,7 @@ class enumerator {
 	}
 
 	/**
-	 * Methods: random, sample
+	 * Methods: random, random_, sample, sample_
 	 * 
 	 * Will get $count random values from $arr. If $count is 1 then it'll return the value, otherwise it'll return an array of values.
 	 * 
@@ -1244,6 +1249,10 @@ class enumerator {
 	 * @return mixed
 	 * @link http://ruby-doc.org/core-1.9.3/Array.html#method-i-sample
 	 */
+	public static function sample_(array &$arr, $count = 1) {
+		// Alias destructive method
+		return self::random_($arr, $count);
+	}
 	public static function random_(array &$arr, $count = 1) {
 		shuffle($arr);
 		$ret = array_slice($arr, 0, $count, true);
@@ -1382,7 +1391,7 @@ class enumerator {
 	}
 
 	/**
-	 * Methods: index, index_, find_index
+	 * Methods: index, index_, find_index, find_index_
 	 * 
 	 * Will return the first index if found or false otherwise. Use '===' for comparing.
 	 * If $callback is a callback function, the $key is returned the first time $callback returns true.
@@ -1409,6 +1418,10 @@ class enumerator {
 	 * @return mixed
 	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-index
 	 */
+	public function find_index_(array &$arr, $callback = null) {
+		// Alias destructive method
+		return self::index_($arr, $callback);
+	}
 	public static function index_(array &$arr, $callback = null) {
 		if(!is_callable($callback)) {
 			return array_search($callback, $arr);
