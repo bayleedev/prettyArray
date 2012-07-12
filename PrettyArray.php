@@ -178,6 +178,9 @@ class PrettyArray implements ArrayAccess {
 			}
 			$ret = call_user_func_array(array(self::$mixins, $method), $params);
 		}
+		if(is_array($ret)) {
+			$ret = new PrettyArray($ret);
+		}
 		return $ret;
 	}
 
