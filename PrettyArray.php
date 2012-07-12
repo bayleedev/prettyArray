@@ -8,7 +8,7 @@
  */
 
 // Dependencies
-include('enumerator.php');
+require_once('enumerator.php');
 
 /**
  * PrettyArray
