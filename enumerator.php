@@ -68,7 +68,7 @@ class enumerator {
 	protected static $destructiveMap = array(
 		'merge' => true,
 		'drop' => true,
-		'reverse_collect' => false,
+		'reverse_collect' => true,
 		'inject' => false,
 		'all' => false,
 		'any' => false,
