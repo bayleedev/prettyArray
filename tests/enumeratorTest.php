@@ -6,7 +6,7 @@
 
 class enumeratorTest extends PHPUnit_Framework_TestCase {
 
-	public function test_all() {
+	public function test_all_1() {
 		// Callback testing
 		$animals = array('ant', 'bear', 'cat');
 		$ret = enumerator::all_($animals, function($key, $value) {
