@@ -1,6 +1,8 @@
 <?php
 
-// Tests all the real method in enumerator
+/*
+	Will test the __call on PrettyArray which redirects to enumerator.
+*/
 
 class prettyArrayEnumeratorTest extends PHPUnit_Framework_TestCase {
 
