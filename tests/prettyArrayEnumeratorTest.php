@@ -357,7 +357,7 @@ class prettyArrayEnumeratorTest extends PHPUnit_Framework_TestCase {
 		$ret = $array->minmax(function($val1, $val2) { 
 			return strcmp(strlen($val1), strlen($val2));
 		}); // array(dog, albatross)
-		$this->assertEquals($ret, array('dog', 'albatross'));
+		$this->assertEquals($ret->to_a(), array('dog', 'albatross'));
 	}
 
 	public function test_minmax_by_1() {
@@ -365,7 +365,7 @@ class prettyArrayEnumeratorTest extends PHPUnit_Framework_TestCase {
 		$ret = $array->minmax_by(function($val) { 
 			return strlen($val);
 		}); // array(dog, albatross)
-		$this->assertEquals($ret, array('dog', 'albatross'));
+		$this->assertEquals($ret->to_a(), array('dog', 'albatross'));
 	}
 
 	public function test_none_1() {
