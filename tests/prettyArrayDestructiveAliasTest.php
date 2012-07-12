@@ -1,7 +1,7 @@
 <?php
 
 /*
-	Tests hard/destructive aliases in enumerator.
+	Tests hard/destructive aliases in PrettyArray.
 */
 
 class prettyArrayDestructiveAliasTest extends PHPUnit_Framework_TestCase {
