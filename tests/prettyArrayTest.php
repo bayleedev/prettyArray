@@ -1,7 +1,10 @@
 <?php
 
-// All tests for pretty array should be in here.
+/*
 
+	This will test the core functionality of PrettyArray
+
+*/
 class prettyArrayTest extends PHPUnit_Framework_TestCase {
 
 	public function test_set_get_1() {

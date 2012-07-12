@@ -1,6 +1,8 @@
 <?php
 
-// Tests all the real method in enumerator
+/*
+	Tests the core functionality of Enumerator
+*/
 
 class enumeratorTest extends PHPUnit_Framework_TestCase {
 
@@ -537,7 +539,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($arr, array(array(1), array(2,3), array(4,5), array(6,7), array(8,9), array(0)));
 	}
 
-	public function test_merge() {
+	public function test_merge_1() {
 		$arr = array();
 		$animals = array('dog', 'cat', 'pig');
 		$trees = array('pine');
@@ -651,7 +653,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 			'title' => 'Dr.',
 			'suffix' => 'Jr.'
 		);
-		$ret = enumerator::index($name, 'John');
+		$ret = enumerator::index_($name, 'John');
 		$this->assertEquals($ret, 'first');
 	}
 
@@ -664,7 +666,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 			'title' => 'Dr.',
 			'suffix' => 'Jr.'
 		);
-		$ret = enumerator::index($name, function($key, &$value) {
+		$ret = enumerator::index_($name, function($key, &$value) {
 			return (strpos($value, '.') !== false); // Has a decimal
 		});
 		$this->assertEquals($ret, 'title');
@@ -679,7 +681,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 			'title' => 'Dr.',
 			'suffix' => 'Jr.'
 		);
-		$ret = enumerator::rindex($name, 'John');
+		$ret = enumerator::rindex_($name, 'John');
 		$this->assertEquals($ret, 'first');
 	}
 
