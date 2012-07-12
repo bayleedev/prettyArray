@@ -10,6 +10,8 @@
 require_once('enumerator.php');
 
 /**
+ * Enumerator
+ * 
  * A handy class for handling array methods similar to the methods available to ruby.
  * 
  * Destructive Methods:
@@ -1189,7 +1191,9 @@ class enumerator {
 	 */
 	public static function concat_(array &$arr, array $arr2) {
 		// Alias destructive method
-		return call_user_func_array('enumerator::merge_', func_get_args());
+		$params = func_get_args();
+		$params[0] =& $arr; 
+		return call_user_func_array('enumerator::merge_', $params);
 	}
 	public static function merge_(array &$arr, array $arr2) {
 		$arr = call_user_func_array('array_merge', func_get_args());
