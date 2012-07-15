@@ -102,12 +102,14 @@ class enumerator {
 	);
 
 	/**
+	 * Methods: __callStatic
+	 * 
 	 * This magic method helps with method alias' and calling destrucitve methods in a non-destructive way.
 	 * For example the real method "partition_" will take over your $array, but calling the magic method "partition" will not.
 	 * All methods implemented in this class that have an underscore at the end are destructive and have a non-destructive alias.
 	 * 
 	 * @param string $method The method name
-	 * @param array $params  An array of parrams you wish to pass
+	 * @param array $params An array of parrams you wish to pass
 	 * @return mixed
 	 */
 	public static function __callStatic($method, $params) {
@@ -234,7 +236,7 @@ class enumerator {
 	}
 
 	/**
-	 * Methods: collect, collect_, each, map, foreach, each_with_index, array_walk
+	 * Methods: collect, collect_, each, each_, map, map_, foreach, foreach_, each_with_index, each_with_index_, array_walk
 	 * 
 	 * Will iterate the elements in the array. Has the potential to change the values.
 	 * 
@@ -254,6 +256,26 @@ class enumerator {
 	 * @param callable $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-collect
 	 */
+	public static function array_walk_(array &$arr, $callback) {
+		// Alias destructive method
+		return self::collect_($arr, $callback);
+	}
+	public static function each_with_index_(array &$arr, $callback) {
+		// Alias destructive method
+		return self::collect_($arr, $callback);
+	}
+	public static function foreach_(array &$arr, $callback) {
+		// Alias destructive method
+		return self::collect_($arr, $callback);
+	}
+	public static function map_(array &$arr, $callback) {
+		// Alias destructive method
+		return self::collect_($arr, $callback);
+	}
+	public static function each_(array &$arr, $callback) {
+		// Alias destructive method
+		return self::collect_($arr, $callback);
+	}
 	public static function collect_(array &$arr, $callback) {
 		foreach($arr as $key => &$value) {
 			$callback($key, $value);
@@ -262,7 +284,7 @@ class enumerator {
 	}
 
 	/**
-	 * Methods: count, count_, size, length
+	 * Methods: count, count_, size, size_, length, length_
 	 * 
 	 * If the callback is null, this function give you the total size of the array.
 	 * If the callback is a anonmous function, this function iterate the blocks and count how many times it returns true.
@@ -282,6 +304,14 @@ class enumerator {
 	 * @return int
 	 * @link http://www.ruby-doc.org/core-1.9.3/Enumerable.html#method-i-count
 	 */
+	public static function size_(array &$arr, $callback) {
+		// Alias destructive method
+		return self::count_($arr, $callback);
+	}
+	public static function length_(array &$arr, $callback) {
+		// Alias destructive method
+		return self::count_($arr, $callback);
+	}
 	public static function count_(array &$arr, $callback = null) {
 		if(is_null($callback)) {
 			return count($arr);
@@ -301,7 +331,7 @@ class enumerator {
 	}
 
 	/**
-	 * Methods, detect, detect_, find
+	 * Methods, detect, detect_, find, find_
 	 * 
 	 * Will pass the key and value to $callback the first result that does not return false is returned.
 	 * If no results are found this function will return the result of $ifnone (mixed) if none is provided false will be returned.
@@ -844,7 +874,7 @@ class enumerator {
 	}
 
 	/**
-	 * Methods: reject: reject_, delete_if
+	 * Methods: reject: reject_, delete_if, delete_if_
 	 * 
 	 * Will unset an item in $arr if $callback returns true for it.
 	 * 
