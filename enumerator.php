@@ -151,14 +151,34 @@ class enumerator {
 	 * 
 	 * <code>
 	 * $animals = array('ant', 'bear', 'cat');
-	 * enumerator::all($animals, function($key, &$value) {
+	 * $o = enumerator::all($animals, function($key, &$value) {
 	 * 	return (strlen($value) >= 3);
-	 * }); // true
-	 * enumerator::all($animals, function($key, &$value) {
-	 * 	return (strlen($value) >= 4);
-	 * }); // false
-	 * enumerator::all(array(null, true, 99)); // false
+	 * });
+	 * var_dump($o);
 	 * </code>
+	 * <pre>
+	 * bool(true)
+	 * </pre>
+	 * 
+	 * <code>
+	 * $animals = array('ant', 'bear', 'cat');
+	 * $o = enumerator::all($animals, function($key, &$value) {
+	 * 	return (strlen($value) >= 4);
+	 * });
+	 * var_dump($o);
+	 * </code>
+	 * <pre>
+	 * bool(false)
+	 * </pre>
+	 * 
+	 * <code>
+	 * $arr = array(null, true, 99);
+	 * $o = enumerator::all($arr);
+	 * var_dump($o);
+	 * </code>
+	 * <pre>
+	 * bool(false)
+	 * </pre>
 	 * 
 	 * @param array &$arr
 	 * @param callable $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
@@ -187,8 +207,16 @@ class enumerator {
 	 * 
 	 * <code>
 	 * $animals = array('ant', 'bear', 'cat');
-	 * enumerator::drop($animals, 1); // bear, cat
+	 * $o = enumerator::drop($animals, 1);
+	 * print_r($o);
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => bear
+	 *     [1] => cat
+	 * )
+	 * </pre>
 	 * 
 	 * @param array &$arr
 	 * @param int $count
@@ -206,14 +234,34 @@ class enumerator {
 	 * 
 	 * <code>
 	 * $animals = array('ant', 'bear', 'cat');
-	 * enumerator::any($animals, function($key, &$value) {
+	 * $o = enumerator::any($animals, function($key, &$value) {
 	 * 	return (strlen($value) >= 3);
-	 * }); // true
-	 * enumerator::any($animals, function($key, &$value) {
-	 * 	return (strlen($value) >= 4);
-	 * }); // true
-	 * enumerator::any(array(null, true, 99)); // true
+	 * });
+	 * var_dump($o);
 	 * </code>
+	 * <pre>
+	 * bool(true)
+	 * </pre>
+	 * 
+	 * <code>
+	 * $animals = array('ant', 'bear', 'cat');
+	 * $o = enumerator::any($animals, function($key, &$value) {
+	 * 	return (strlen($value) >= 4);
+	 * });
+	 * var_dump($o);
+	 * </code>
+	 * <pre>
+	 * bool(true)
+	 * </pre>
+	 * 
+	 * <code>
+	 * $arr = array(null, true, 99);
+	 * $o = enumerator::any($arr);
+	 * var_dump($o);
+	 * </code>
+	 * <pre>
+	 * bool(true)
+	 * </pre>
 	 * 
 	 * @param array $arr
 	 * @param callable $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
@@ -242,15 +290,39 @@ class enumerator {
 	 * 
 	 * <code>
 	 * $arr = range(1,4);
-	 * enumerator::collect($arr, function($key, &$value) {
+	 * $o = enumerator::collect($arr, function($key, &$value) {
 	 * 	$value *= $value;
 	 * 	return;
-	 * }); // [1, 4, 9, 16]
-	 * enumerator::collect($arr, function($key, &$value) {
+	 * });
+	 * print_r($o);
+	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => 1
+	 *     [1] => 4
+	 *     [2] => 9
+	 *     [3] => 16
+	 * )
+	 * </pre>
+	 * 
+	 * <code>
+	 * $arr = range(1,4);
+	 * $o = enumerator::collect($arr, function($key, &$value) {
 	 * 	$value = "cat";
 	 * 	return;
-	 * }); // ["cat", "cat", "cat", "cat"]
+	 * });
+	 * print_r($o);
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => cat
+	 *     [1] => cat
+	 *     [2] => cat
+	 *     [3] => cat
+	 * )
+	 * </pre>
 	 * 
 	 * @param array &$arr
 	 * @param callable $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
@@ -291,13 +363,30 @@ class enumerator {
 	 * Otherwise this function will count how many times $callback is equal to $value.
 	 * 
 	 * <code>
-	 * $arr = [1,2,4,2];
-	 * echo enumerator::count($arr); // 4
-	 * echo enumerator::count($arr, 2); // 2
+	 * $arr = array(1,2,4,2);
+	 * echo enumerator::count($arr);
+	 * </code>
+	 * <pre>
+	 * 4
+	 * </pre>
+	 * 
+	 * <code>
+	 * $arr = array(1,2,4,2);
+	 * echo enumerator::count($arr, 2);
+	 * </code>
+	 * <pre>
+	 * 2
+	 * </pre>
+	 * 
+	 * <code>
+	 * $arr = array(1,2,4,2);
 	 * echo enumerator::count($arr, function($key, &$value) {
 	 * 	return ($value % 2 == 0);
-	 * }); // 3
+	 * });
 	 * </code>
+	 * <pre>
+	 * 3
+	 * </pre>
 	 * 
 	 * @param array &$arr 
 	 * @param callable $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
@@ -337,13 +426,25 @@ class enumerator {
 	 * If no results are found this function will return the result of $ifnone (mixed) if none is provided false will be returned.
 	 * 
 	 * <code>
-	 * enumerator::detect(range(1,10), function($key, &$value) {
+	 * $arr = range(1,10);
+	 * $o = enumerator::detect($arr, function($key, &$value) {
 	 * 	return ($value % 5 == 0 and $value % 7 == 0);
-	 * }); // null
-	 * enumerator::detect(range(1,100), function($key, &$value) {
-	 * 	return ($value % 5 == 0 and $value % 7 == 0);
-	 * }); // 35
+	 * });
+	 * var_dump($o);
 	 * </code>
+	 * <pre>
+	 * NULL
+	 * </pre>
+	 * 
+	 * <code>
+	 * $arr = range(1,100);
+	 * echo enumerator::detect($arr, function($key, &$value) {
+	 * 	return ($value % 5 == 0 and $value % 7 == 0);
+	 * });
+	 * </code>
+	 * <pre>
+	 * 35
+	 * </pre>
 	 * 
 	 * @param array &$arr
 	 * @param callable $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
@@ -362,7 +463,7 @@ class enumerator {
 			}
 		}
 		if(is_null($ifnone)) {
-			return false;
+			return null;
 		} else if(is_callable($ifnone)) {
 			return $ifnone();
 		}
@@ -376,10 +477,19 @@ class enumerator {
 	 * 
 	 * <code>
 	 * $arr = range(1,10);
-	 * enumerator::select($arr,function($key, &$value) {
+	 * $o = enumerator::select($arr, function($key, &$value) {
 	 * 	return ($value % 3 == 0);
-	 * }); // [3, 6, 9]
+	 * });
+	 * print_r($o);
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [2] => 3
+	 *     [5] => 6
+	 *     [8] => 9
+	 * )
+	 * </pre>
 	 * 
 	 * @param array &$arr
 	 * @param callable $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
@@ -409,11 +519,45 @@ class enumerator {
 	 * Will slice the elements into $size collections and pass to $callback if defined. If not defined, the slized array is returned.
 	 * 
 	 * <code>
-	 * enumerator::each_slice(range(1,10), 3, function(&$collection) {
+	 * $arr = range(1,10);
+	 * $o = enumerator::each_slice($arr, 3, function(&$collection) {
 	 * 	foreach($collection as $key => &$value) ++$value;
 	 * 	return;
-	 * }); // [[2,3,4], [5,6,7], [8,9,10], [11]]
+	 * });
+	 * print_r($o);
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => Array
+	 *         (
+	 *             [0] => 2
+	 *             [1] => 3
+	 *             [2] => 4
+	 *         )
+	 * 
+	 *     [1] => Array
+	 *         (
+	 * 
+	 *             [0] => 5
+	 *             [1] => 6
+	 *             [2] => 7
+	 *         )
+	 * 
+	 *     [2] => Array
+	 *         (
+	 *             [0] => 8
+	 *             [1] => 9
+	 *             [2] => 10
+	 *         )
+	 * 
+	 *     [3] => Array
+	 *         (
+	 *             [0] => 11
+	 *         )
+	 * 
+	 * )
+	 * </pre>
 	 * 
 	 * @param array &$arr
 	 * @param int $size The size of each slice.
@@ -442,10 +586,29 @@ class enumerator {
 	 * Will overwrite $arr with the first $count items in array.
 	 * 
 	 * <code>
-	 * $animals = ['cat', 'dog', 'cow', 'pig'];
-	 * enumerator::first($animals); // cat
-	 * enumerator::first($animals, 2); // cat, dog
+	 * $animals = array('cat', 'dog', 'cow', 'pig');
+	 * $o = enumerator::first($animals);
+	 * print_r($o);
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => cat
+	 * )
+	 * </pre>
+	 * 
+	 * <code>
+	 * $animals = array('cat', 'dog', 'cow', 'pig');
+	 * $o = enumerator::first($animals, 2);
+	 * print_r($o);
+	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => cat
+	 *     [1] => dog
+	 * )
+	 * </pre>
 	 * 
 	 * @param array &$arr
 	 * @param int $count The number of items you wish to return. Defaults to 1
@@ -463,11 +626,21 @@ class enumerator {
 	 * The new array will have discarded all current keys.
 	 * 
 	 * <code>
-	 * $arr = [[1,2],[3,4]];
-	 * enumerator::collect_concat($arr, function($key, &$value) {
+	 * $arr = array(array(1,2),array(3,4));
+	 * $o = enumerator::collect_concat($arr, function($key, &$value) {
 	 * 	return ++$value;
-	 * }); // [2,3,4,5]
+	 * });
+	 * print_r($o);
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => 2
+	 *     [1] => 3
+	 *     [2] => 4
+	 *     [3] => 5
+	 * )
+	 * </pre>
 	 * 
 	 * @param array &$arr
 	 * @param callable $callback The callback will be passed each sliced item as an array. This can be passed by reference.
@@ -494,9 +667,18 @@ class enumerator {
 	 * If a callback is provided, it will pass the $key and $value into the array.
 	 * 
 	 * <code>
-	 * $arr = ['snowball', 'snowcone', 'snowangel', 'igloo', 'ice'];
-	 * enumerator::grep($arr, "/^snow/"); // [snowball, snowcone, snowangel]
+	 * $arr = array('snowball', 'snowcone', 'snowangel', 'igloo', 'ice');
+	 * $o = enumerator::grep($arr, "/^snow/");
+	 * print_r($o);
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => snowball
+	 *     [1] => snowcone
+	 *     [2] => snowangel
+	 * )
+	 * </pre>
 	 * 
 	 * @param array &$arr
 	 * @param string $pattern The regex pattern.
@@ -521,10 +703,34 @@ class enumerator {
 	 * 
 	 * <code>
 	 * $arr = range(1,6);
-	 * enumerator::group_by($arr, function($key, &$value) {
+	 * $o = enumerator::group_by($arr, function($key, &$value) {
 	 * 	return ($value % 3);
-	 * }); // [[3,6],[1,4],[2,5]]
+	 * });
+	 * print_r($o);
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => Array
+	 *         (
+	 *             [0] => 3
+	 *             [1] => 6
+	 *         )
+	 * 
+	 *     [1] => Array
+	 *         (
+	 *             [0] => 1
+	 *             [1] => 4
+	 *         )
+	 * 
+	 *     [2] => Array
+	 *         (
+	 *             [0] => 2
+	 *             [1] => 5
+	 *         )
+	 * 
+	 * )
+	 * </pre>
 	 * 
 	 * @param array &$arr
 	 * @param callable $callback The callback will be passed each sliced item as an array. This can be passed by reference.
@@ -556,17 +762,32 @@ class enumerator {
 	 * NOTICE: that 'include' alias is a language construct so this alias cannot be called directly. Refer to example #2.
 	 * 
 	 * <code>
-	 * $arr = ['snowball', 'snowcone', 'snowangel', 'igloo', 'ice'];
-	 * enumerator::member($arr, 'snowcone'); // true
-	 * enumerator::member($arr, 'snowman'); // false
+	 * $arr = array('snowball', 'snowcone', 'snowangel', 'igloo', 'ice');
+	 * $o = enumerator::member($arr, 'snowcone');
+	 * var_dump($o);
 	 * </code>
+	 * <pre>
+	 * bool(true)
+	 * </pre>
+	 * 
+	 * <code>
+	 * $arr = array('snowball', 'snowcone', 'snowangel', 'igloo', 'ice');
+	 * $o = enumerator::member($arr, 'snowman');
+	 * var_dump($o);
+	 * </code>
+	 * <pre>
+	 * bool(false)
+	 * </pre>
 	 * 
 	 * <code>
 	 * $fun = 'include';
-	 * $arr = ['snowball', 'snowcone', 'snowangel', 'igloo', 'ice'];
-	 * enumerator::$fun($arr, 'snowcone'); // true
-	 * enumerator::$fun($arr, 'snowman'); // false
+	 * $arr = array('snowball', 'snowcone', 'snowangel', 'igloo', 'ice');
+	 * $o = enumerator::$fun($arr, 'snowcone');
+	 * var_dump($o);
 	 * </code>
+	 * <pre>
+	 * bool(true)
+	 * </pre>
 	 * 
 	 * @param array $arr
 	 * @param mixed $needle 
@@ -589,12 +810,21 @@ class enumerator {
 	 * 
 	 * <code>
 	 * $array = array('albatross','dog','horse');
-	 * enumerator::min($array); // albatross
-	 * $array = array('albatross','dog','horse');
-	 * enumerator::min($array, function($val1, $val2) {
-	 * 	return strcmp(strlen($val1), strlen($val2));
-	 * }); // dog
+	 * echo enumerator::min($array);
 	 * </code>
+	 * <pre>
+	 * albatross
+	 * </pre>
+	 * 
+	 * <code>
+	 * $array = array('albatross','dog','horse');
+	 * echo enumerator::min($array, function($val1, $val2) {
+	 * 	return strcmp(strlen($val1), strlen($val2));
+	 * });
+	 * </code>
+	 * <pre>
+	 * dog
+	 * </pre>
 	 * 
 	 * @param array $arr
 	 * @param callback optional $callback Will accept two values. Return 0 if they are equal, return -1 if the second parameter is bigger, and 1 is the first parameter is bigger.
@@ -616,12 +846,21 @@ class enumerator {
 	 * 
 	 * <code>
 	 * $array = array('albatross','dog','horse');
-	 * enumerator::max($array); // horse
-	 * $array = array('albatross','dog','horse');
-	 * enumerator::max($array, function($val1, $val2) {
-	 * 	return strcmp(strlen($val1), strlen($val2));
-	 * }); // albatross
+	 * echo enumerator::max($array);
 	 * </code>
+	 * <pre>
+	 * horse
+	 * </pre>
+	 * 
+	 * <code>
+	 * $array = array('albatross','dog','horse');
+	 * echo enumerator::max($array, function($val1, $val2) {
+	 * 	return strcmp(strlen($val1), strlen($val2));
+	 * });
+	 * </code>
+	 * <pre>
+	 * albatross
+	 * </pre>
 	 * 
 	 * @param array $arr
 	 * @param callback optional $callback Will accept two values. Return 0 if they are equal, return -1 if the second parameter is bigger, and 1 is the first parameter is bigger.
@@ -642,11 +881,14 @@ class enumerator {
 	 * Will find the lowest item in the array but comparing the output os $callback against every item.
 	 * 
 	 * <code>
-	 * $array = array('albatross','dog','horse'); 
-	 * enumerator::min_by($array, function($val) { 
+	 * $array = array('albatross','dog','horse');
+	 * echo enumerator::min_by($array, function($val) { 
 	 * 	return strlen($val); 
-	 * }); // dog 
+	 * });
 	 * </code>
+	 * <pre>
+	 * dog
+	 * </pre>
 	 * 
 	 * @param array $arr
 	 * @param callable $callback
@@ -667,10 +909,13 @@ class enumerator {
 	 * 
 	 * <code>
 	 * $array = array('albatross','dog','horse');
-	 * enumerator::max_by($array, function($val) {
+	 * echo enumerator::max_by($array, function($val) {
 	 * 	return strlen($val);
-	 * }); // albatross
+	 * });
 	 * </code>
+	 * <pre>
+	 * albatross
+	 * </pre>
 	 * 
 	 * @param array $arr
 	 * @param callable $callback
@@ -691,10 +936,18 @@ class enumerator {
 	 * 
 	 * <code>
 	 * $array = array('albatross','dog','horse'); 
-	 * enumerator::minmax($array, function($val1, $val2) { 
+	 * $o = enumerator::minmax($array, function($val1, $val2) { 
 	 * 	return strcmp(strlen($val1), strlen($val2));
-	 * }); // array(dog, albatross)
+	 * });
+	 * print_r($o);
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => dog
+	 *     [1] => albatross
+	 * )
+	 * </pre>
 	 * 
 	 * @param array $arr
 	 * @param callback optional $callback Will accept two values. Return 0 if they are equal, return -1 if the second parameter is bigger, and 1 is the first parameter is bigger.
@@ -715,11 +968,19 @@ class enumerator {
 	 * Will find the lowest and highest item in the array but comparing the output os $callback against every item.
 	 * 
 	 * <code>
-	 * $array = array('albatross','dog','horse'); 
-	 * enumerator::minmax_by($array, function($val) { 
+	 * $array = array('albatross','dog','horse');
+	 * $o = enumerator::minmax_by($array, function($val) { 
 	 * 	return strlen($val);
-	 * }); // array(dog, albatross)
+	 * });
+	 * print_r($o);
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => dog
+	 *     [1] => albatross
+	 * )
+	 * </pre>
 	 * 
 	 * @param array $arr
 	 * @param callable $callback
@@ -740,16 +1001,50 @@ class enumerator {
 	 * 
 	 * <code>
 	 * $array = array('ant', 'bear', 'cat');
-	 * enumerator::none($array, function($key, $value) {
+	 * $o = enumerator::none($array, function($key, $value) {
 	 * 	return (strlen($value) == 5);
-	 * }); // true
-	 * enumerator::none($array, function($key, $value) {
-	 * 	return (strlen($value) >= 4);
-	 * }); // false
-	 * enumerator::none(array()); // true
-	 * enumerator::none(array(null)); // true
-	 * enumerator::none(array(null, false)); // true
+	 * });
+	 * var_dump($o);
 	 * </code>
+	 * <pre>
+	 * bool(true)
+	 * </pre>
+	 * 
+	 * <code>
+	 * $array = array('ant', 'bear', 'cat');
+	 * $o = enumerator::none($array, function($key, $value) {
+	 * 	return (strlen($value) >= 4);
+	 * });
+	 * var_dump($o);
+	 * </code>
+	 * <pre>
+	 * bool(false)
+	 * </pre>
+	 * 
+	 * <code>
+	 * $o = enumerator::none(array());
+	 * var_dump($o);
+	 * </code>
+	 * <pre>
+	 * bool(true)
+	 * </pre>
+	 * 
+	 * <code>
+	 * $o = enumerator::none(array(null));
+	 * var_dump($o);
+	 * </code>
+	 * <pre>
+	 * bool(true)
+	 * </pre>
+	 * 
+	 * <code>
+	 * $arr = array(null, false);
+	 * $o = enumerator::none($arr);
+	 * var_dump($o);
+	 * </code>
+	 * <pre>
+	 * bool(true)
+	 * </pre>
 	 * 
 	 * @param array $arr 
 	 * @param callable $callback A $key, $value are passed to this callback.
@@ -778,12 +1073,30 @@ class enumerator {
 	 * 
 	 * <code>
 	 * $array = array('ant','bear','cat');
-	 * enumerator::one($array, function($key, $value) {
+	 * $o = enumerator::one($array, function($key, $value) {
 	 * 	return (strlen($value) == 4);
-	 * }); // true
-	 * enumerator::one(array(null, true, 99)); // false
-	 * enumerator::one(array(null, true, false)); // true
+	 * });
+	 * var_dump($o);
 	 * </code>
+	 * <pre>
+	 * bool(true)
+	 * </pre>
+	 * 
+	 * <code>
+	 * $o = enumerator::one(array(null, true, 99));
+	 * var_dump($o);
+	 * </code>
+	 * <pre>
+	 * bool(false)
+	 * </pre>
+	 * 
+	 * <code>
+	 * $o = enumerator::one(array(null, true, false));
+	 * var_dump($o);
+	 * </code>
+	 * <pre>
+	 * bool(true)
+	 * </pre>
 	 * 
 	 * @param array $arr 
 	 * @param callable $callback A $key, $value are passed to this callback.
@@ -815,10 +1128,29 @@ class enumerator {
 	 * 
 	 * <code>
 	 * $arr = range(1,6);
-	 * enumerator::partition($arr, function($key, $value) {
+	 * $o = enumerator::partition($arr, function($key, $value) {
 	 * 	return ($value % 2 == 0);
-	 * }); // [[2, 4, 6], [1, 3, 5]]
+	 * });
+	 * print_r($o);
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => Array
+	 *         (
+	 *             [0] => 2
+	 *             [1] => 4
+	 *             [2] => 6
+	 *         )
+	 * 
+	 *     [1] => Array
+	 *         (
+	 *             [0] => 1
+	 *             [1] => 3
+	 *             [2] => 5
+	 *         )
+	 * )
+	 * </pre>
 	 * 
 	 * @param array &$arr
 	 * @param callable $callback A $key, $value are passed to this callback.
@@ -846,15 +1178,25 @@ class enumerator {
 	 * 
 	 * <code>
 	 * $arr = range(5, 10);
-	 * enumerator::inject($arr, function($key, &$value, &$memo){
+	 * echo enumerator::inject($arr, function($key, &$value, &$memo){
 	 * 	$memo += $value;
 	 * 	return;
-	 * }); // 45
-	 * enumerator::inject($arr, function($key, &$value, &$memo){
+	 * });
+	 * </code>
+	 * <pre>
+	 * 45
+	 * </pre>
+	 * 
+	 * <code>
+	 * $arr = range(5, 10);
+	 * echo enumerator::inject($arr, function($key, &$value, &$memo){
 	 * 	$memo *= $value;
 	 * 	return;
-	 * }, 1); // 151200
+	 * }, 1);
 	 * </code>
+	 * <pre>
+	 * 151200
+	 * </pre>
 	 * 
 	 * @param array &$arr
 	 * @param callable $callback A $key, $value are passed to this callback.
@@ -880,10 +1222,23 @@ class enumerator {
 	 * 
 	 * <code>
 	 * $arr = range(1,10);
-	 * enumerator::reject($arr, function($key, $value) {
+	 * $o = enumerator::reject($arr, function($key, $value) {
 	 * 	return ($value % 3 == 0);
-	 * }); // [1, 2, 4, 5, 7, 8, 10]
+	 * });
+	 * print_r($o);
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => 1
+	 *     [1] => 2
+	 *     [3] => 4
+	 *     [4] => 5
+	 *     [6] => 7
+	 *     [7] => 8
+	 *     [9] => 10
+	 * )
+	 * </pre>
 	 * 
 	 * @param array &$arr
 	 * @param callable $callback A $key, $value are passed to this callback. The $value can be passed by reference.
@@ -908,12 +1263,15 @@ class enumerator {
 	 * Will iterate the array in reverse, but will NOT save the order.
 	 * 
 	 * <code>
-	 * $array = array(1, 2, 3);
-	 * enumerator::reverse_collect($array, function($key, &$value) {
+	 * $arr = array(1, 2, 3);
+	 * enumerator::reverse_collect($arr, function($key, &$value) {
 	 * 	echo $value . ', ';
 	 * 	return;
-	 * }); // 3, 2, 1, 
+	 * });
 	 * </code>
+	 * <pre>
+	 * 3, 2, 1, 
+	 * </pre>
 	 * 
 	 * @param array &$arr
 	 * @param callable $callback A $key, $value are passed to this callback. The $value can be passed by reference.
@@ -949,11 +1307,33 @@ class enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('rhea', 'kea', 'flea');
-	 * enumerator::sort($arr); // [flea, kea, rhea]
-	 * enumerator::sort($arr, function($val1, $val2) {
+	 * $o = enumerator::sort($arr);
+	 * print_r($o);
+	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => flea
+	 *     [1] => kea
+	 *     [2] => rhea
+	 * )
+	 * </pre>
+	 * 
+	 * <code>
+	 * $arr = array('rhea', 'kea', 'flea');
+	 * $o = enumerator::sort($arr, function($val1, $val2) {
 	 * 	return strcmp($val2, $val1);
 	 * }); // [rhea, kea, flea]
+	 * print_r($o);
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => rhea
+	 *     [1] => kea
+	 *     [2] => flea
+	 * )
+	 * </pre>
 	 * 
 	 * @param array &$arr
 	 * @param callable $callback A $key, $value are passed to this callback. The $value can be passed by reference.
@@ -979,10 +1359,19 @@ class enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('rhea', 'kea', 'flea');
-	 * enumerator::sort_by($arr, function($val) {
+	 * $o = enumerator::sort_by($arr, function($val) {
 	 * 	return strlen($val);
-	 * }); // [kea, flea, rhea]
+	 * });
+	 * print_r($o);
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => kea
+	 *     [1] => flea
+	 *     [2] => rhea
+	 * )
+	 * </pre>
 	 * 
 	 * @param array &$arr 
 	 * @param callable $callback
@@ -1002,11 +1391,19 @@ class enumerator {
 	 * Passes elements into $callback until it returns false or null, at which point this function will stop and set $arr to all prior elements.
 	 * 
 	 * <code>
-	 * $arr = [1,2,3,4,5,0];
-	 * enumerator::take_while($arr, function($key, &$value) {
+	 * $arr = array(1,2,3,4,5,0);
+	 * $o = enumerator::take_while($arr, function($key, &$value) {
 	 * 	return ($value < 3);
-	 * }); // 1, 2
+	 * });
+	 * print_r($o);
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => 1
+	 *     [1] => 2
+	 * )
+	 * </pre>
 	 * 
 	 * @param array &$arr 
 	 * @param callable $callback A $key, $value are passed to this callback.
@@ -1031,19 +1428,94 @@ class enumerator {
 	 * Will turn each element in $arr into an array then appending the associated indexs from the other arrays into this array as well.
 	 * 
 	 * <code>
-	 * $arr = [1,2,3];
-	 * enumerator::zip($arr, [4,5,6], [7,8,9]); // [[1,4,7],[2,5,8],[3,6,9]]
+	 * $arr = array(1,2,3);
+	 * $o = enumerator::zip($arr, array(4,5,6), array(7,8,9));
+	 * print_r($o);
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => Array
+	 *         (
+	 *             [0] => 1
+	 *             [1] => 4
+	 *             [2] => 7
+	 *         )
+	 * 
+	 *     [1] => Array
+	 *         (
+	 *             [0] => 2
+	 *             [1] => 5
+	 *             [2] => 8
+	 *         )
+	 * 
+	 *     [2] => Array
+	 *        (
+	 * 
+	 *             [0] => 3
+	 *             [1] => 6
+	 *             [2] => 9
+	 *         )
+	 * 
+	 * )
+	 * </pre>
 	 * 
 	 * <code>
-	 * $arr = [1,2];
-	 * enumerator::zip($arr, [4,5,6],[7,8,9]); // [[1, 4, 7], [2, 5, 8]]
+	 * $arr = array(1,2);
+	 * $o = enumerator::zip($arr, array(4,5,6),array(7,8,9));
+	 * print_r($o);
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => Array
+	 *         (
+	 *             [0] => 1
+	 *             [1] => 4
+	 *             [2] => 7
+	 *         )
+	 * 
+	 *     [1] => Array
+	 *         (
+	 *             [0] => 2
+	 *             [1] => 5
+	 *             [2] => 8
+	 *         )
+	 * 
+	 * )
+	 * </pre>
 	 * 
 	 * <code>
-	 * $arr = [4,5,6];
-	 * enumerator::zip($arr, [1,2], [8]); // [[4, 1, 8], [5, 2, null], [6, null, null]]
+	 * $arr = array(4,5,6);
+	 * $o = enumerator::zip($arr, array(1,2), array(8));
+	 * print_r($o);
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => Array
+	 *         (
+	 *             [0] => 4
+	 *             [1] => 1
+	 *             [2] => 8
+	 *         )
+	 * 
+	 *     [1] => Array
+	 *         (
+	 *             [0] => 5
+	 *             [1] => 2
+	 *             [2] => 
+	 *         )
+	 * 
+	 *     [2] => Array
+	 *         (
+	 *             [0] => 6
+	 *             [1] => 
+	 *             [2] => 
+	 *         )
+	 * 
+	 * )
+	 * </pre>
 	 * 
 	 * @param array &$arr 
 	 * @param array $one Unlimited of this.
@@ -1070,11 +1542,21 @@ class enumerator {
 	 * Will pass elements into $callback until false is returned at which point all elements before the current one will be removed.
 	 * 
 	 * <code>
-	 * $arr = [1,2,3,4,5,0];
-	 * enumerator::drop_while($arr, function($key, &$value) {
+	 * $arr = array(1,2,3,4,5,0);
+	 * $o = enumerator::drop_while($arr, function($key, &$value) {
 	 * 	return ($value < 3);
-	 * }); // [3,4,5,0]
+	 * });
+	 * print_r($o);
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => 3
+	 *     [1] => 4
+	 *     [2] => 5
+	 *     [3] => 0
+	 * )
+	 * </pre>
 	 * 
 	 * @param array &$arr 
 	 * @param callable $callback 
@@ -1097,10 +1579,14 @@ class enumerator {
 	 * Will pass every element of $arr into $callback exactly $it times.
 	 * 
 	 * <code>
-	 * enumerator::cycle([1,2,3], 3, function($key, $value, $it) {
+	 * $arr = array(1,2,3);
+	 * enumerator::cycle($arr, 3, function($key, $value, $it) {
 	 * 	echo $value . ',';
-	 * }); // 1,2,3,1,2,3,1,2,3,
+	 * });
 	 * </code>
+	 * <pre>
+	 * 1,2,3,1,2,3,1,2,3,
+	 * </pre>
 	 * 
 	 * @param array $arr 
 	 * @param int $it 
@@ -1125,33 +1611,57 @@ class enumerator {
 	 * 
 	 * <code>
 	 * $arr = range(1,10);
-	 * $follower = 0;
-	 * enumerator::each_cons($arr, 3, function($key, $value, $leader) use (&$follower) {
-	 * 	if($follower < $leader) {
-	 * 		echo '||';
-	 * 		$follower = $leader;
-	 * 	}
-	 * 	echo $value . ',';
-	 * }); // 1,2,3,||2,3,4,||3,4,5,||4,5,6,||5,6,7,||6,7,8,||7,8,9,||8,9,10,
-	 * /*
-	 * $arr =
-	 * [[1, 2, 3],
-	 *  [2, 3, 4],
-	 *  [3, 4, 5],
-	 *  [4, 5, 6],
-	 *  [5, 6, 7],
-	 *  [6, 7, 8],
-	 *  [7, 8, 9],
-	 *  [8, 9, 10]]
-	 * {@*}
+	 * $o = enumerator::each_cons($arr, 8);
+	 * print_r($o);
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => Array
+	 *         (
+	 *             [0] => 1
+	 *             [1] => 2
+	 *             [2] => 3
+	 *             [3] => 4
+	 *             [4] => 5
+	 *             [5] => 6
+	 *             [6] => 7
+	 *             [7] => 8
+	 *         )
+	 * 
+	 *     [1] => Array
+	 *         (
+	 *             [0] => 2
+	 *             [1] => 3
+	 *             [2] => 4
+	 *             [3] => 5
+	 *             [4] => 6
+	 *             [5] => 7
+	 *             [6] => 8
+	 *             [7] => 9
+	 *         )
+	 * 
+	 *     [2] => Array
+	 *         (
+	 *             [0] => 3
+	 *             [1] => 4
+	 *             [2] => 5
+	 *             [3] => 6
+	 *             [4] => 7
+	 *             [5] => 8
+	 *             [6] => 9
+	 *             [7] => 10
+	 *         )
+	 * 
+	 * )
+	 * </pre>
 	 * 
 	 * @param array &$arr 
 	 * @param int $size 
 	 * @param callable $callback 
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-each_cons
 	 */
-	public static function each_cons_(array &$arr, $size, $callback) {
+	public static function each_cons_(array &$arr, $size, $callback = false) {
 		$newArr = array();
 		$count = count($arr);
 		$current = 0;
@@ -1160,8 +1670,10 @@ class enumerator {
 				break;
 			}
 			$newArr[$current] = array_slice($arr, $current, $size);
-			foreach($newArr[$current] as $key => &$value) {
-				$callback($key, $value, $current);
+			if(is_callable($callback)) {
+				foreach($newArr[$current] as $key => &$value) {
+					$callback($key, $value, $current);
+				}
 			}
 			$current++;
 		}
@@ -1176,9 +1688,49 @@ class enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(1,2,3,4,5,6,7,8,9,0);
-	 * enumerator::slice_before($arr, "/[02468]/"); // will "splice before" an even number.
-	 * // [1], [2,3], [4,5], [6,7], [8,9], [0]
+	 * $o = enumerator::slice_before($arr, "/[02468]/"); // will "splice before" an even number.
+	 * print_r($o);
 	 * </code>
+	 * <pre>
+	 * 
+	 * Array
+	 * (
+	 *     [0] => Array
+	 *         (
+	 *             [0] => 1
+	 *         )
+	 * 
+	 *     [1] => Array
+	 *         (
+	 *             [0] => 2
+	 *             [1] => 3
+	 *         )
+	 * 
+	 *     [2] => Array
+	 *         (
+	 *             [0] => 4
+	 *             [1] => 5
+	 *         )
+	 * 
+	 *     [3] => Array
+	 *         (
+	 *             [0] => 6
+	 *             [1] => 7
+	 *         )
+	 * 
+	 *     [4] => Array
+	 *         (
+	 *             [0] => 8
+	 *             [1] => 9
+	 *         )
+	 * 
+	 *     [5] => Array
+	 *         (
+	 *             [0] => 0
+	 *         )
+	 * 
+	 * )
+	 * </pre>
 	 * 
 	 * @param array &$arr 
 	 * @param string $pattern
@@ -1209,10 +1761,21 @@ class enumerator {
 	 * Will merge two or more arrays together.
 	 * 
 	 * <code>
-	 * $animals = ['dog', 'cat', 'pig'];
-	 * $trees = ['pine'];
-	 * enumerator::merge($animals, $trees, ['wool']); // dog, cat, pig, pine, wool
+	 * $animals = array('dog', 'cat', 'pig');
+	 * $trees = array('pine');
+	 * $o = enumerator::merge($animals, $trees, array('wool'));
+	 * print_r($o);
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => dog
+	 *     [1] => cat
+	 *     [2] => pig
+	 *     [3] => pine
+	 *     [4] => wool
+	 * )
+	 * </pre>
 	 * 
 	 * @param array &$arr
 	 * @param array $arr2
@@ -1235,10 +1798,32 @@ class enumerator {
 	 * Will rotate the array so that $index is the first element in the array. Negative indexs are allowed.
 	 * 
 	 * <code>
-	 * $arr = ['Foo', 'bar', 'foobar'];
-	 * enumerator::rotate($arr, 1); // bar, foobar, Foo
-	 * enumerator::rotate($arr, -1); // foobar, Foo, bar
+	 * $arr = array('Foo', 'bar', 'foobar');
+	 * $o = enumerator::rotate($arr, 1);
+	 * print_r($o);
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => bar
+	 *     [1] => foobar
+	 *     [2] => Foo
+	 * )
+	 * </pre>
+	 * 
+	 * <code>
+	 * $arr = array('Foo', 'bar', 'foobar');
+	 * $o = enumerator::rotate($arr, -1);
+	 * print_r($o);
+	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => foobar
+	 *     [1] => Foo
+	 *     [2] => bar
+	 * )
+	 * </pre>
 	 * 
 	 * @param array &$arr
 	 * @param int $index The starting index
@@ -1255,9 +1840,18 @@ class enumerator {
 	 * Will reverse an array.
 	 * 
 	 * <code>
-	 * $arr = [1,2,3];
-	 * enumerator::reverse($arr); // 3, 2, 1
+	 * $arr = array(1,2,3);
+	 * $o = enumerator::reverse($arr);
+	 * print_r($o);
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => 3
+	 *     [1] => 2
+	 *     [2] => 1
+	 * )
+	 * </pre>
 	 * 
 	 * @param array &$arr 
 	 * @param boolean optional $preserve_keys Defaults to false. If you want to preserve the keys or not.
@@ -1274,10 +1868,26 @@ class enumerator {
 	 * Will get $count random values from $arr. If $count is 1 then it'll return the value, otherwise it'll return an array of values.
 	 * 
 	 * <code>
-	 * $arr = ['pig', 'cow', 'dog', 'horse'];
-	 * enumerator::random($arr); // dog
-	 * enumerator::random($arr, 2); // [dog, cow]
+	 * $arr = array('pig', 'cow', 'dog', 'horse');
+	 * $o = enumerator::random($arr);
+	 * echo $o;
 	 * </code>
+	 * <pre>
+	 * dog
+	 * </pre>
+	 * 
+	 * <code>
+	 * $arr = array('pig', 'cow', 'dog', 'horse');
+	 * $o = enumerator::random($arr, 2);
+	 * print_r($o);
+	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => dog
+	 *     [1] => cow
+	 * )
+	 * </pre>
 	 * 
 	 * @param array &$arr 
 	 * @param int optional $count Defaults to 1
@@ -1301,14 +1911,32 @@ class enumerator {
 	 * Will shuffle the inputted array.
 	 * 
 	 * <code>
-	 * $arr = [1,2,3];
-	 * enumerator::shuffle($arr); // [2,1,3]
+	 * $arr = array(1,2,3);
+	 * $o = enumerator::shuffle($arr);
+	 * print_r($o);
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => 2
+	 *     [1] => 1
+	 *     [2] => 3
+	 * )
+	 * </pre>
 	 * 
 	 * <code>
-	 * $arr = ['a' => 'apple', 'b' => 'banana', 'c' => 'carrot'];
-	 * enumerator::shuffle($arr, true); // [a => apple, c => carrot, b => banana]
+	 * $arr = array('a' => 'apple', 'b' => 'banana', 'c' => 'carrot');
+	 * $o = enumerator::shuffle($arr, true);
+	 * print_r($o);
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [a] => apple
+	 *     [c] => carrot
+	 *     [b] => banana
+	 * )
+	 * </pre>
 	 * 
 	 * @param array &$arr
 	 * @param boolean $preserve_keys If you want to preserve keys or not. Defaults to false.
@@ -1332,20 +1960,28 @@ class enumerator {
 	}
 
 	/**
-	 * Method: values_at, values_at_
+	 * Methods: values_at, values_at_
 	 * 
 	 * Will replace the current array with only the inserted indexs. Use the non-destructive form to get the array returned instead.
 	 * 
 	 * <code>
-	 * $name = [
+	 * $name = array(
 	 * 	'name' => 'John Doe',
 	 * 	'first' => 'John',
 	 * 	'middle' => 'M',
 	 * 	'last' => 'Doe',
 	 * 	'title' => 'Dr.'
-	 * ];
-	 * enumerator::values_at($name, 'title', 'last'); // ['title' => 'Dr.', 'last' => 'Doe'];
+	 * );
+	 * $o = enumerator::values_at($name, 'title', 'last');
+	 * print_r($o);
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [title] => Dr.
+	 *     [last] => Doe
+	 * )
+	 * </pre>
 	 * 
 	 * @param type array &$arr 
 	 * @param mixed $index Put in as many indexes as you please.
@@ -1369,20 +2005,29 @@ class enumerator {
 	 * NOTICE: that 'empty' alias is a language construct so this alias cannot be called directly. Refer to example #3.
 	 * 
 	 * <code>
-	 * $arr = [];
-	 * enumerator::isEmpty($arr); // true
+	 * $arr = array();
+	 * var_dump(enumerator::isEmpty($arr));
 	 * </code>
+	 * <pre>
+	 * bool(true)
+	 * </pre>
 	 * 
 	 * <code>
-	 * $arr = [1,2,3];
-	 * enumerator::isEmpty($arr); // false
+	 * $arr = array(1,2,3);
+	 * var_dump(enumerator::isEmpty($arr));
 	 * </code>
+	 * <pre>
+	 * bool(false)
+	 * </pre>
 	 * 
 	 * <code>
 	 * $empty = 'empty';
-	 * $arr = [1,2,3];
-	 * enumerator::$empty($arr); // false
+	 * $arr = array(1,2,3);
+	 * var_dump(enumerator::$empty($arr));
 	 * </code>
+	 * <pre>
+	 * bool(false)
+	 * </pre>
 	 * 
 	 * @param array $arr 
 	 * @return boolean
@@ -1398,19 +2043,28 @@ class enumerator {
 	 * Will return a boolean based on the condition that $value exists inside of $arr and are the same data type.
 	 * 
 	 * <code>
-	 * $arr = [0,false];
-	 * enumerator::has_value($arr, null); // false
+	 * $arr = array(0,false);
+	 * var_dump(enumerator::has_value($arr, null));
 	 * </code>
+	 * <pre>
+	 * bool(false)
+	 * </pre>
 	 * 
 	 * <code>
-	 * $arr = [false,null];
-	 * enumerator::has_value($arr, 0); // false
+	 * $arr = array(false,null);
+	 * var_dump(enumerator::has_value($arr, 0));
 	 * </code>
+	 * <pre>
+	 * bool(false)
+	 * </pre>
 	 * 
 	 * <code>
-	 * $arr = ['apple', 'banana', 'orange'];
-	 * enumerator::has_value($arr, 'orange'); // true
+	 * $arr = array('apple', 'banana', 'orange');
+	 * var_dump(enumerator::has_value($arr, 'orange'));
 	 * </code>
+	 * <pre>
+	 * bool(true)
+	 * </pre>
 	 * 
 	 * @param array $arr 
 	 * @param mixed $value 
@@ -1433,20 +2087,36 @@ class enumerator {
 	 * If $callback is not a callback, we are looking for the first $value in $arr to be === $callback.
 	 * 
 	 * <code>
-	 * $name = [
+	 * $name = array(
 	 * 	'name' => 'John Doe',
 	 * 	'first' => 'John',
 	 * 	'middle' => 'M',
 	 * 	'last' => 'Doe',
 	 * 	'title' => 'Dr.',
 	 * 	'suffix' => 'Jr.'
-	 * ];
-	 * enumerator::index($name, 'John'); // 'first'
-	 * enumerator::index_($name, function($key, &$value) {
-	 * 	// I could edit $value since I'm using the destructive form 'index_'
-	 * 	return (strpos($value, '.') !== false); // Has a decimal
-	 * }); // title
+	 * );
+	 * echo enumerator::index($name, 'John');
 	 * </code>
+	 * <pre>
+	 * first
+	 * </pre>
+	 * 
+	 * <code>
+	 * $name = array(
+	 * 	'name' => 'John Doe',
+	 * 	'first' => 'John',
+	 * 	'middle' => 'M',
+	 * 	'last' => 'Doe',
+	 * 	'title' => 'Dr.',
+	 * 	'suffix' => 'Jr.'
+	 * );
+	 * echo enumerator::index_($name, function($key, &$value) {
+	 * 	return (strpos($value, '.') !== false); // Has a decimal
+	 * });
+	 * </code>
+	 * <pre>
+	 * title
+	 * </pre>
 	 * 
 	 * @param array &$arr 
 	 * @param mixed $callback 
@@ -1477,20 +2147,36 @@ class enumerator {
 	 * If $callback is not a callback, we are looking for the last $value in $arr to be === $callback.
 	 * 
 	 * <code>
-	 * $name = [
+	 * $name = array(
 	 * 	'name' => 'John Doe',
 	 * 	'first' => 'John',
 	 * 	'middle' => 'M',
 	 * 	'last' => 'Doe',
 	 * 	'title' => 'Dr.',
 	 * 	'suffix' => 'Jr.'
-	 * ];
-	 * enumerator::rindex($name, 'John'); // 'first'
-	 * enumerator::rindex_($name, function($key, &$value) {
-	 * 	// I could edit $value since I'm using the destructive form 'rindex_'
-	 * 	return (strpos($value, '.') !== false);
-	 * }); // 'suffix'
+	 * );
+	 * echo enumerator::rindex($name, 'John');
 	 * </code>
+	 * <pre>
+	 * first
+	 * </pre>
+	 * 
+	 * <code>
+	 * $name = array(
+	 * 	'name' => 'John Doe',
+	 * 	'first' => 'John',
+	 * 	'middle' => 'M',
+	 * 	'last' => 'Doe',
+	 * 	'title' => 'Dr.',
+	 * 	'suffix' => 'Jr.'
+	 * );
+	 * echo enumerator::rindex_($name, function($key, &$value) {
+	 * 	return (strpos($value, '.') !== false);
+	 * });
+	 * </code>
+	 * <pre>
+	 * suffix
+	 * </pre>
 	 * 
 	 * @param array &$arr 
 	 * @param mixed $callback 
@@ -1517,10 +2203,47 @@ class enumerator {
 	 * Will remove all null values inside of $arr. If $recursive is set to true, it will crawl sub-arrays.
 	 * 
 	 * <code>
-	 * $arr = [1,2,3,null,[2,3,4,null]];
-	 * enumerator::compact($arr); // [1,2,3,[2,3,4,null]]
-	 * enumerator::compact($arr, true); // [1,2,3,[2,3,4]]
+	 * $arr = array(1,2,3,null,array(2,3,4,null));
+	 * $o = enumerator::compact($arr);
+	 * print_r($o);
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => 1
+	 *     [1] => 2
+	 *     [2] => 3
+	 *     [4] => Array
+	 *         (
+	 *             [0] => 2
+	 *             [1] => 3
+	 *             [2] => 4
+	 *             [3] => 
+	 *        )
+	 * 
+	 * )
+	 * </pre>
+	 * 
+	 * <code>
+	 * $arr = array(1,2,3,null,array(2,3,4,null));
+	 * $o = enumerator::compact($arr, true);
+	 * print_r($o);
+	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => 1
+	 *     [1] => 2
+	 *     [2] => 3
+	 *     [4] => Array
+	 *         (
+	 *             [0] => 2
+	 *             [1] => 3
+	 *             [2] => 4
+	 *        )
+	 * 
+	 * )
+	 * </pre>
 	 * 
 	 * @param array &$arr
 	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-compact
