@@ -50,15 +50,23 @@ class PrettyArray implements ArrayAccess {
 
 
 	/**
-	 * Method: offsetSet
+	 * Methods: offsetSet
 	 * 
 	 * Part of ArrayAccess. Allows PrettyArray to set a value based on the [] operator.
 	 * 
 	 * <code>
 	 * $arr = new PrettyArray();
-	 * $arr[] = 'new'; // magic of this method
+	 * $arr[] = 'new';
 	 * $arr->offsetSet(null, 2);
+	 * print_r($arr->to_a());
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => new
+	 *     [1] => 2
+	 * )
+	 * </pre>
 	 * 
 	 * @param mixed $key 
 	 * @param mixed $value 
@@ -74,7 +82,7 @@ class PrettyArray implements ArrayAccess {
 	}
 
 	/**
-	 * Method: offsetExists
+	 * Methods: offsetExists
 	 * 
 	 * Part of ArrayAccess. If the offest exists.
 	 * 
@@ -84,6 +92,10 @@ class PrettyArray implements ArrayAccess {
 	 * var_dump(isset($arr[0])); // true
 	 * var_dump($arr->offsetExists(0)); // true
 	 * </code>
+	 * <pre>
+	 * bool(true)
+	 * bool(true)
+	 * </pre>
 	 * 
 	 * @param mixed $key 
 	 * @return boolean
@@ -93,7 +105,7 @@ class PrettyArray implements ArrayAccess {
 	}
 
 	/**
-	 * Method: offsetUnset
+	 * Methods: offsetUnset
 	 * 
 	 * Part of ArrayAccess. Will unset the value if it exists.
 	 * 
@@ -103,8 +115,13 @@ class PrettyArray implements ArrayAccess {
 	 * unset($arr[0]);
 	 * $arr[1] = 'foo';
 	 * $arr->offsetUnset(1);
-	 * print_r($arr); // array()
+	 * print_r($arr->to_a());
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 * )
+	 * </pre>
 	 * 
 	 * @param mixed $key 
 	 * @return void
@@ -117,16 +134,20 @@ class PrettyArray implements ArrayAccess {
 	}
 
 	/**
-	 * Method: offsetGet
+	 * Methods: offsetGet
 	 * 
 	 * Part of ArrayAccess. Will get the value of the current offset.
 	 * 
 	 * <code>
 	 * $arr = new PrettyArray();
 	 * $arr[0] = 'foobar';
-	 * echo $arr[0]; // foobar
-	 * echo $arr->offsetGet(0); // foobar
+	 * echo $arr[0] . PHP_EOL;
+	 * echo $arr->offsetGet(0);
 	 * </code>
+	 * <pre>
+	 * foobar
+	 * foobar
+	 * </pre>
 	 * 
 	 * @param type $key 
 	 * @return type
@@ -143,27 +164,44 @@ class PrettyArray implements ArrayAccess {
 	 * The second is that is also proxies/mixins the static enumerable methods to non-static calls on this class and appends the current array as the first param.
 	 * 
 	 * <code>
-	 * $arr = [1,2,3];
+	 * $arr = array(1,2,3);
 	 * enumerator::collect_($arr, function($key, &$value) {
 	 * 	$value++;
 	 * 	return;
 	 * });
-	 * print_r($arr); // 2,3,4
+	 * print_r($arr);
+	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => 2
+	 *     [1] => 3
+	 *     [2] => 4
+	 * )
+	 * </pre>
 	 * 
-	 * $arr = new PrettyArray($arr);
+	 * <code>
+	 * $arr = new PrettyArray(array(2,3,4));
 	 * $arr->collect_(function($key, &$value) {
 	 * 	$value--;
 	 * 	return;
 	 * });
-	 * print_r($arr); // 1,2,3
+	 * print_r($arr->to_a());
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => 1
+	 *     [1] => 2
+	 *     [2] => 3
+	 * )
+	 * </pre>
 	 * 
 	 * @param string $method 
 	 * @param array $params 
 	 * @return mixed
 	 */
 	public function __call($method, $params) {
-
 		if(isset(self::$destructiveMap[$method])) {
 			// Destructive
 			$ret = call_user_func_array(array($this, self::$destructiveMap[$method]), $params);
@@ -190,16 +228,24 @@ class PrettyArray implements ArrayAccess {
 	 * A basic proxy for static methods on enumerator.
 	 * 
 	 * <code>
-	 * $arr = [1,2,3];
-	 * 
+	 * $arr = array(1,2,3);
 	 * enumerator::collect($arr, function($key, &$value) {
 	 * 	echo $value;
-	 * }); // 123
+	 * });
+	 * </code>
+	 * <pre>
+	 * 123
+	 * </pre>
 	 * 
+	 * <code>
+	 * $arr = array(1,2,3);
 	 * PrettyArray::collect($arr, function($key, &$value) {
 	 * 	echo $value;
-	 * }); // 123
+	 * });
 	 * </code>
+	 * <pre>
+	 * 123
+	 * </pre>
 	 * 
 	 * @param string $method 
 	 * @param array $params 
@@ -229,8 +275,18 @@ class PrettyArray implements ArrayAccess {
 	 * $arr['cold'] = 'snow';
 	 * $arr[] = 'rain';
 	 * $arr[] = 'fog';
-	 * $arr->getRange('hot', 0); // [ hot => desert, cold => snow, 0 => rain ]
+	 * 
+	 * $o = $arr->getRange('hot', 0)->to_a();
+	 * print_r($o);
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [hot] => desert
+	 *     [cold] => snow
+	 *     [0] => rain
+	 * )
+	 * </pre>
 	 * 
 	 * @param mixed $start 
 	 * @param mixed $end 
@@ -260,9 +316,17 @@ class PrettyArray implements ArrayAccess {
 	 * Will get a 'set' from PrettyArray. Calling it destructively will force the return value to be references to the current PrettyArray.
 	 * 
 	 * <code>
-	 * $arr = new PrettyArray([1,2,3,4,5]);
-	 * $arr->getSet(1, 2); //[ 1 => 2, 2 => 3 ]
+	 * $arr = new PrettyArray(array(1,2,3,4,5));
+	 * $o = $arr->getSet(1, 2)->to_a();
+	 * print_r($o);
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [1] => 2
+	 *     [2] => 3
+	 * )
+	 * </pre>
 	 * 
 	 * @param mixed $start 
 	 * @param int $length 
@@ -285,7 +349,21 @@ class PrettyArray implements ArrayAccess {
 	}
 
 	/**
+	 * Methods: setByReference
+	 * 
 	 * By default you can't set by reference. This helps you do so.
+	 * 
+	 * <code>
+	 * $arr = new PrettyArray();
+	 * $a = 'foo';
+	 * $arr->setByReference('a', $a);
+	 * $a = 'bar';
+	 * echo $arr['a'];
+	 * </code>
+	 * <pre>
+	 * bar
+	 * </pre>
+	 * 
 	 * @param mixed $key 
 	 * @param mixed &$value 
 	 * @return $value from before
@@ -306,9 +384,19 @@ class PrettyArray implements ArrayAccess {
 	 * Converts the PrettyArray into a print_r string.
 	 * 
 	 * <code>
-	 * $arr = new PrettyArray([1,2,3]);
-	 * echo $arr; // Array ( [0] => 1 [1] => 2 [2] => 3 )
+	 * $arr = new PrettyArray(array(1,2,3));
+	 * echo $arr;
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => 1
+	 *     [1] => 2
+	 *     [2] => 3
+	 * )
+	 * </pre>
+	 * 
+	 * @return string
 	 */
 	public function __toString() {
 		return print_r($this->data, true);
@@ -320,9 +408,17 @@ class PrettyArray implements ArrayAccess {
 	 * Will return the array of data that PrettyArray has stored.
 	 * 
 	 * <code>
-	 * $arr = new PrettyArray([1,2,3]);
-	 * print_r($arr->to_a()); // Array ( [0] => 1 [1] => 2 [2] => 3 )
+	 * $arr = new PrettyArray(array(1,2,3));
+	 * print_r($arr->to_a());
 	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => 1
+	 *     [1] => 2
+	 *     [2] => 3
+	 * )
+	 * </pre>
 	 * 
 	 * @return array
 	 */
