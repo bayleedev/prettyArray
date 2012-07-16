@@ -1,5 +1,7 @@
-Enumerator
+enumerator
 ==========
+Enumerator
+
 A handy class for handling array methods similar to the methods available to ruby.
 
 Destructive Methods:
@@ -12,20 +14,24 @@ Just remove the ending '_' and instaed of overwriting the array it'll return it.
 Method Alias':
 Methods often have various alias' which are pointed out in the documentation. They work identically to the real function call.
 
-### todo ###
+todo
+----
 * change examples to be 5.3 compatiable
 
-### link ###
+link
+----
 * http://ruby-doc.org/core-1.9.3/Enumerable.html
 
-# Methods: __callStatic
+Methods: __callStatic
+=====================
 mixed **__callStatic** (string $method , array $params )
 
 This magic method helps with method alias' and calling destrucitve methods in a non-destructive way.
 For example the real method "partition_" will take over your $array, but calling the magic method "partition" will not.
 All methods implemented in this class that have an underscore at the end are destructive and have a non-destructive alias.
 
-### Parameters
+Parameters
+----------
   **$method**
     ```
     The method name
@@ -36,17 +42,20 @@ All methods implemented in this class that have an underscore at the end are des
     An array of parrams you wish to pass
     ```
 
-### Return
-  void
+Return
+------
+ mixed
 
 
-# Methods: all, all_
+Methods: all, all_
+==================
 boolean **all** (array $arr [, callable $callback = NULL ] )
 boolean **all_** (array &$arr [, callable $callback = NULL ] )
 
 Passes each element of the collection to the $callback, if it ever turns false or null this function will return false, else true.
 
-### Parameters
+Parameters
+----------
   **&$arr**
 
   **$callback**
@@ -54,11 +63,12 @@ Passes each element of the collection to the $callback, if it ever turns false o
     A $key and a $value are passed to this callback. The $value can be accepted by reference.
     ```
 
-### Return
-  void
+Return
+------
+ boolean
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $animals = array('ant', 'bear', 'cat');
 $o = enumerator::all($animals, function($key, &$value) {
@@ -67,13 +77,12 @@ $o = enumerator::all($animals, function($key, &$value) {
 var_dump($o);
 ```
 
+```
+bool(true)
 ```
 
-bool(true)
-
-```
-
-**Example 2**
+Example 2
+---------
 ```php
 $animals = array('ant', 'bear', 'cat');
 $o = enumerator::all($animals, function($key, &$value) {
@@ -82,66 +91,66 @@ $o = enumerator::all($animals, function($key, &$value) {
 var_dump($o);
 ```
 
+```
+bool(false)
 ```
 
-bool(false)
-
-```
-
-**Example 3**
+Example 3
+---------
 ```php
 $arr = array(null, true, 99);
 $o = enumerator::all($arr);
 var_dump($o);
 ```
 
+```
+bool(false)
 ```
 
-bool(false)
 
-```
-
-
-# Methods: drop, drop_
+Methods: drop, drop_
+====================
 void **drop** (array $arr , int $count )
 void **drop_** (array &$arr , int $count )
 
 Drops the first $count elements.
 
-### Parameters
+Parameters
+----------
   **&$arr**
 
   **$count**
 
-### Return
-  void
+Return
+------
+ void
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $animals = array('ant', 'bear', 'cat');
 $o = enumerator::drop($animals, 1);
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => bear
     [1] => cat
-)
-
+)
 ```
 
 
-# Methods: any, any_
+Methods: any, any_
+==================
 boolean **any** (array $arr [, callable $callback = NULL ] )
 boolean **any_** (array $arr [, callable $callback = NULL ] )
 
 Passes each element of the collection to the $callback, if it ever returns anything besides null or false I'll return true, else I'll return false.
 
-### Parameters
+Parameters
+----------
   **$arr**
 
   **$callback**
@@ -149,11 +158,12 @@ Passes each element of the collection to the $callback, if it ever returns anyth
     A $key and a $value are passed to this callback. The $value can be accepted by reference.
     ```
 
-### Return
-  void
+Return
+------
+ boolean
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $animals = array('ant', 'bear', 'cat');
 $o = enumerator::any($animals, function($key, &$value) {
@@ -162,13 +172,12 @@ $o = enumerator::any($animals, function($key, &$value) {
 var_dump($o);
 ```
 
+```
+bool(true)
 ```
 
-bool(true)
-
-```
-
-**Example 2**
+Example 2
+---------
 ```php
 $animals = array('ant', 'bear', 'cat');
 $o = enumerator::any($animals, function($key, &$value) {
@@ -177,27 +186,25 @@ $o = enumerator::any($animals, function($key, &$value) {
 var_dump($o);
 ```
 
+```
+bool(true)
 ```
 
-bool(true)
-
-```
-
-**Example 3**
+Example 3
+---------
 ```php
 $arr = array(null, true, 99);
 $o = enumerator::any($arr);
 var_dump($o);
 ```
 
+```
+bool(true)
 ```
 
-bool(true)
 
-```
-
-
-# Methods: collect, collect_, each, each_, map, map_, foreach, foreach_, each_with_index, each_with_index_, array_walk
+Methods: collect, collect_, each, each_, map, map_, foreach, foreach_, each_with_index, each_with_index_, array_walk
+====================================================================================================================
 void **collect** (array $arr , callable $callback )
 void **collect_** (array &$arr , callable $callback )
 void **each** (array $arr , callable $callback )
@@ -212,7 +219,8 @@ void **array_walk** (array &$arr , callable $callback )
 
 Will iterate the elements in the array. Has the potential to change the values.
 
-### Parameters
+Parameters
+----------
   **&$arr**
 
   **$callback**
@@ -220,11 +228,12 @@ Will iterate the elements in the array. Has the potential to change the values.
     A $key and a $value are passed to this callback. The $value can be accepted by reference.
     ```
 
-### Return
-  void
+Return
+------
+ void
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $arr = range(1,4);
 $o = enumerator::collect($arr, function($key, &$value) {
@@ -234,19 +243,18 @@ $o = enumerator::collect($arr, function($key, &$value) {
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => 1
     [1] => 4
     [2] => 9
     [3] => 16
-)
-
+)
 ```
 
-**Example 2**
+Example 2
+---------
 ```php
 $arr = range(1,4);
 $o = enumerator::collect($arr, function($key, &$value) {
@@ -256,20 +264,19 @@ $o = enumerator::collect($arr, function($key, &$value) {
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => cat
     [1] => cat
     [2] => cat
     [3] => cat
-)
-
+)
 ```
 
 
-# Methods: count, count_, size, size_, length, length_
+Methods: count, count_, size, size_, length, length_
+====================================================
 int **count** (array $arr , callable $callback )
 int **count_** (array &$arr , callable $callback )
 int **size** (array $arr , callable $callback )
@@ -281,7 +288,8 @@ If the callback is null, this function give you the total size of the array.
 If the callback is a anonmous function, this function iterate the blocks and count how many times it returns true.
 Otherwise this function will count how many times $callback is equal to $value.
 
-### Parameters
+Parameters
+----------
   **&$arr**
 
   **$callback**
@@ -289,35 +297,34 @@ Otherwise this function will count how many times $callback is equal to $value.
     A $key and a $value are passed to this callback. The $value can be accepted by reference.
     ```
 
-### Return
-  void
+Return
+------
+ int
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $arr = array(1,2,4,2);
 echo enumerator::count($arr);
 ```
 
+```
+4
 ```
 
-4
-
-```
-
-**Example 2**
+Example 2
+---------
 ```php
 $arr = array(1,2,4,2);
 echo enumerator::count($arr, 2);
 ```
 
+```
+2
 ```
 
-2
-
-```
-
-**Example 3**
+Example 3
+---------
 ```php
 $arr = array(1,2,4,2);
 echo enumerator::count($arr, function($key, &$value) {
@@ -325,14 +332,13 @@ echo enumerator::count($arr, function($key, &$value) {
 });
 ```
 
+```
+3
 ```
 
-3
 
-```
-
-
-# Methods: Methods, detect, detect_, find, find_
+Methods: Methods, detect, detect_, find, find_
+==============================================
 mixed **Methods** (array $arr , callable $callback [, mixed $ifnone = NULL ] )
 mixed **detect** (array $arr , callable $callback [, mixed $ifnone = NULL ] )
 mixed **detect_** (array &$arr , callable $callback [, mixed $ifnone = NULL ] )
@@ -342,7 +348,8 @@ mixed **find_** (array &$arr , callable $callback [, mixed $ifnone = NULL ] )
 Will pass the key and value to $callback the first result that does not return false is returned.
 If no results are found this function will return the result of $ifnone (mixed) if none is provided false will be returned.
 
-### Parameters
+Parameters
+----------
   **&$arr**
 
   **$callback**
@@ -352,11 +359,12 @@ If no results are found this function will return the result of $ifnone (mixed) 
 
   **$ifnone**
 
-### Return
-  void
+Return
+------
+ mixed
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $arr = range(1,10);
 $o = enumerator::detect($arr, function($key, &$value) {
@@ -365,13 +373,12 @@ $o = enumerator::detect($arr, function($key, &$value) {
 var_dump($o);
 ```
 
+```
+NULL
 ```
 
-NULL
-
-```
-
-**Example 2**
+Example 2
+---------
 ```php
 $arr = range(1,100);
 echo enumerator::detect($arr, function($key, &$value) {
@@ -379,14 +386,13 @@ echo enumerator::detect($arr, function($key, &$value) {
 });
 ```
 
+```
+35
 ```
 
-35
 
-```
-
-
-# Methods: select, select_, find_all, find_all_, keep_if, keep_if_
+Methods: select, select_, find_all, find_all_, keep_if, keep_if_
+================================================================
 array **select** (array $arr , callable $callback )
 array **select_** (array &$arr , callable $callback )
 array **find_all** (array &$arr , callable $callback )
@@ -396,7 +402,8 @@ array **keep_if_** (array &$arr , callable $callback )
 
 Will pass the elements to the callback and unset them if the callback returns false.
 
-### Parameters
+Parameters
+----------
   **&$arr**
 
   **$callback**
@@ -404,14 +411,15 @@ Will pass the elements to the callback and unset them if the callback returns fa
     A $key and a $value are passed to this callback. The $value can be accepted by reference.
     ```
 
-### Return
+Return
+------
 array
     ```
     The array that has already been edited by reference.
     ```
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $arr = range(1,10);
 $o = enumerator::select($arr, function($key, &$value) {
@@ -420,25 +428,25 @@ $o = enumerator::select($arr, function($key, &$value) {
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [2] => 3
     [5] => 6
     [8] => 9
-)
-
+)
 ```
 
 
-# Methods: each_slice, each_slice_
+Methods: each_slice, each_slice_
+================================
 void **each_slice** (array &$arr , int $size [, callable $callback = NULL ] )
 void **each_slice_** (array &$arr , int $size [, callable $callback = NULL ] )
 
 Will slice the elements into $size collections and pass to $callback if defined. If not defined, the slized array is returned.
 
-### Parameters
+Parameters
+----------
   **&$arr**
 
   **$size**
@@ -451,11 +459,12 @@ Will slice the elements into $size collections and pass to $callback if defined.
     The callback will be passed each collection. This can be passed by reference.
     ```
 
-### Return
-  void
+Return
+------
+ void
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $arr = range(1,10);
 $o = enumerator::each_slice($arr, 3, function(&$collection) {
@@ -465,8 +474,7 @@ $o = enumerator::each_slice($arr, 3, function(&$collection) {
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => Array
@@ -496,18 +504,19 @@ Array
             [0] => 11
         )
 
-)
-
+)
 ```
 
 
-# Methods: first, first_
+Methods: first, first_
+======================
 void **first** (array $arr [, int $count = 1 ] )
 void **first_** (array &$arr [, int $count = 1 ] )
 
 Will overwrite $arr with the first $count items in array.
 
-### Parameters
+Parameters
+----------
   **&$arr**
 
   **$count**
@@ -515,45 +524,44 @@ Will overwrite $arr with the first $count items in array.
     The number of items you wish to return. Defaults to 1
     ```
 
-### Return
-  void
+Return
+------
+ void
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $animals = array('cat', 'dog', 'cow', 'pig');
 $o = enumerator::first($animals);
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => cat
-)
-
+)
 ```
 
-**Example 2**
+Example 2
+---------
 ```php
 $animals = array('cat', 'dog', 'cow', 'pig');
 $o = enumerator::first($animals, 2);
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => cat
     [1] => dog
-)
-
+)
 ```
 
 
-# Methods: collect_concat, collect_concat_, flat_map, flat_map_
+Methods: collect_concat, collect_concat_, flat_map, flat_map_
+=============================================================
 void **collect_concat** (array &$arr , callable $callback )
 void **collect_concat_** (array &$arr , callable $callback )
 void **flat_map** (array &$arr , callable $callback )
@@ -562,7 +570,8 @@ void **flat_map_** (array &$arr , callable $callback )
 Will flatten the input $arr into a non-multi-dimensional array.It will pass the current key and the value to $callback which has the potential to change the value.
 The new array will have discarded all current keys.
 
-### Parameters
+Parameters
+----------
   **&$arr**
 
   **$callback**
@@ -570,11 +579,12 @@ The new array will have discarded all current keys.
     The callback will be passed each sliced item as an array. This can be passed by reference.
     ```
 
-### Return
-  void
+Return
+------
+ void
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $arr = array(array(1,2),array(3,4));
 $o = enumerator::collect_concat($arr, function($key, &$value) {
@@ -583,27 +593,27 @@ $o = enumerator::collect_concat($arr, function($key, &$value) {
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => 2
     [1] => 3
     [2] => 4
     [3] => 5
-)
-
+)
 ```
 
 
-# Methods: grep, grep_
+Methods: grep, grep_
+====================
 void **grep** (array $arr , string $pattern [, callable $callback = NULL ] )
 void **grep_** (array &$arr , string $pattern [, callable $callback = NULL ] )
 
 Will only keep an item if the value of the item matches $pattern.
 If a callback is provided, it will pass the $key and $value into the array.
 
-### Parameters
+Parameters
+----------
   **&$arr**
 
   **$pattern**
@@ -616,37 +626,38 @@ If a callback is provided, it will pass the $key and $value into the array.
     The callback will be passed each sliced item as an array. This can be passed by reference.
     ```
 
-### Return
-  void
+Return
+------
+ void
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $arr = array('snowball', 'snowcone', 'snowangel', 'igloo', 'ice');
 $o = enumerator::grep($arr, "/^snow/");
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => snowball
     [1] => snowcone
     [2] => snowangel
-)
-
+)
 ```
 
 
-# Methods: group_by, group_by_
+Methods: group_by, group_by_
+============================
 void **group_by** (array &$arr , callable $callback [, boolean $preserve_keys = false ] )
 void **group_by_** (array &$arr , callable $callback [, boolean $preserve_keys = false ] )
 
 Each item will be passed into $callback and the return value will be the new "category" of this item.
 The param $arr will be replaced with an array of these categories with all of their items.
 
-### Parameters
+Parameters
+----------
   **&$arr**
 
   **$callback**
@@ -659,11 +670,12 @@ The param $arr will be replaced with an array of these categories with all of th
     If you want to preserve the keys or not.
     ```
 
-### Return
-  void
+Return
+------
+ void
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $arr = range(1,6);
 $o = enumerator::group_by($arr, function($key, &$value) {
@@ -672,8 +684,7 @@ $o = enumerator::group_by($arr, function($key, &$value) {
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => Array
@@ -694,54 +705,54 @@ Array
             [1] => 5
         )
 
-)
-
+)
 ```
 
 
-# Methods: member, include
+Methods: member, include
+========================
 boolean **member** (array $arr , mixed $needle )
 boolean **include** (array $arr , mixed $needle )
 
 This function will iterate over $arr, if any value is equal (===) to $needle this function will return true. If nothing is found this function will return false.
 NOTICE: that 'include' alias is a language construct so this alias cannot be called directly. Refer to example #2.
 
-### Parameters
+Parameters
+----------
   **$arr**
 
   **$needle**
 
-### Return
-  void
+Return
+------
+ boolean
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $arr = array('snowball', 'snowcone', 'snowangel', 'igloo', 'ice');
 $o = enumerator::member($arr, 'snowcone');
 var_dump($o);
 ```
 
+```
+bool(true)
 ```
 
-bool(true)
-
-```
-
-**Example 2**
+Example 2
+---------
 ```php
 $arr = array('snowball', 'snowcone', 'snowangel', 'igloo', 'ice');
 $o = enumerator::member($arr, 'snowman');
 var_dump($o);
 ```
 
+```
+bool(false)
 ```
 
-bool(false)
-
-```
-
-**Example 3**
+Example 3
+---------
 ```php
 $fun = 'include';
 $arr = array('snowball', 'snowcone', 'snowangel', 'igloo', 'ice');
@@ -749,19 +760,19 @@ $o = enumerator::$fun($arr, 'snowcone');
 var_dump($o);
 ```
 
+```
+bool(true)
 ```
 
-bool(true)
 
-```
-
-
-# Methods: min
+Methods: min
+============
 mixed **min** (array $arr , callback optional )
 
 Will find the lowest value. If callback is defined it will compare them.
 
-### Parameters
+Parameters
+----------
   **$arr**
 
   **optional**
@@ -769,23 +780,23 @@ Will find the lowest value. If callback is defined it will compare them.
     $callback Will accept two values. Return 0 if they are equal, return -1 if the second parameter is bigger, and 1 is the first parameter is bigger.
     ```
 
-### Return
-  void
+Return
+------
+ mixed
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $array = array('albatross','dog','horse');
 echo enumerator::min($array);
 ```
 
+```
+albatross
 ```
 
-albatross
-
-```
-
-**Example 2**
+Example 2
+---------
 ```php
 $array = array('albatross','dog','horse');
 echo enumerator::min($array, function($val1, $val2) {
@@ -793,19 +804,19 @@ echo enumerator::min($array, function($val1, $val2) {
 });
 ```
 
+```
+dog
 ```
 
-dog
 
-```
-
-
-# Methods: max
+Methods: max
+============
 mixed **max** (array $arr , callback optional )
 
 Will find the highest value. If callback is defined it will compare them.
 
-### Parameters
+Parameters
+----------
   **$arr**
 
   **optional**
@@ -813,23 +824,23 @@ Will find the highest value. If callback is defined it will compare them.
     $callback Will accept two values. Return 0 if they are equal, return -1 if the second parameter is bigger, and 1 is the first parameter is bigger.
     ```
 
-### Return
-  void
+Return
+------
+ mixed
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $array = array('albatross','dog','horse');
 echo enumerator::max($array);
 ```
 
+```
+horse
 ```
 
-horse
-
-```
-
-**Example 2**
+Example 2
+---------
 ```php
 $array = array('albatross','dog','horse');
 echo enumerator::max($array, function($val1, $val2) {
@@ -837,28 +848,29 @@ echo enumerator::max($array, function($val1, $val2) {
 });
 ```
 
+```
+albatross
 ```
 
-albatross
 
-```
-
-
-# Methods: min_by
+Methods: min_by
+===============
 mixed **min_by** (array $arr , callable $callback )
 
 Will find the lowest item in the array but comparing the output os $callback against every item.
 
-### Parameters
+Parameters
+----------
   **$arr**
 
   **$callback**
 
-### Return
-  void
+Return
+------
+ mixed
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $array = array('albatross','dog','horse');
 echo enumerator::min_by($array, function($val) { 
@@ -866,28 +878,29 @@ echo enumerator::min_by($array, function($val) {
 });
 ```
 
+```
+dog
 ```
 
-dog
 
-```
-
-
-# Methods: max_by
+Methods: max_by
+===============
 mixed **max_by** (array $arr , callable $callback )
 
 Will find the highest item in the array but comparing the output os $callback against every item.
 
-### Parameters
+Parameters
+----------
   **$arr**
 
   **$callback**
 
-### Return
-  void
+Return
+------
+ mixed
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $array = array('albatross','dog','horse');
 echo enumerator::max_by($array, function($val) {
@@ -895,19 +908,19 @@ echo enumerator::max_by($array, function($val) {
 });
 ```
 
+```
+albatross
 ```
 
-albatross
 
-```
-
-
-# Methods: minmax
+Methods: minmax
+===============
 array **minmax** (array $arr , callback optional )
 
 Will return an array of min and max. Optionally you can provide a callback to sort them.
 
-### Parameters
+Parameters
+----------
   **$arr**
 
   **optional**
@@ -915,11 +928,12 @@ Will return an array of min and max. Optionally you can provide a callback to so
     $callback Will accept two values. Return 0 if they are equal, return -1 if the second parameter is bigger, and 1 is the first parameter is bigger.
     ```
 
-### Return
-  void
+Return
+------
+ array
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $array = array('albatross','dog','horse'); 
 $o = enumerator::minmax($array, function($val1, $val2) { 
@@ -928,32 +942,33 @@ $o = enumerator::minmax($array, function($val1, $val2) {
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => dog
     [1] => albatross
-)
-
+)
 ```
 
 
-# Methods: minmax_by
+Methods: minmax_by
+==================
 array **minmax_by** (array $arr , callable $callback )
 
 Will find the lowest and highest item in the array but comparing the output os $callback against every item.
 
-### Parameters
+Parameters
+----------
   **$arr**
 
   **$callback**
 
-### Return
-  void
+Return
+------
+ array
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $array = array('albatross','dog','horse');
 $o = enumerator::minmax_by($array, function($val) { 
@@ -962,23 +977,23 @@ $o = enumerator::minmax_by($array, function($val) {
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => dog
     [1] => albatross
-)
-
+)
 ```
 
 
-# Methods: none
+Methods: none
+=============
 boolean **none** (array $arr [, callable $callback = NULL ] )
 
 Passes each element of the collection to $callback. This will return true if $callback never returns true, else false.
 
-### Parameters
+Parameters
+----------
   **$arr**
 
   **$callback**
@@ -986,11 +1001,12 @@ Passes each element of the collection to $callback. This will return true if $ca
     A $key, $value are passed to this callback.
     ```
 
-### Return
-  void
+Return
+------
+ boolean
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $array = array('ant', 'bear', 'cat');
 $o = enumerator::none($array, function($key, $value) {
@@ -999,13 +1015,12 @@ $o = enumerator::none($array, function($key, $value) {
 var_dump($o);
 ```
 
+```
+bool(true)
 ```
 
-bool(true)
-
-```
-
-**Example 2**
+Example 2
+---------
 ```php
 $array = array('ant', 'bear', 'cat');
 $o = enumerator::none($array, function($key, $value) {
@@ -1014,56 +1029,53 @@ $o = enumerator::none($array, function($key, $value) {
 var_dump($o);
 ```
 
+```
+bool(false)
 ```
 
-bool(false)
-
-```
-
-**Example 3**
+Example 3
+---------
 ```php
 $o = enumerator::none(array());
 var_dump($o);
 ```
 
+```
+bool(true)
 ```
 
-bool(true)
-
-```
-
-**Example 4**
+Example 4
+---------
 ```php
 $o = enumerator::none(array(null));
 var_dump($o);
 ```
 
+```
+bool(true)
 ```
 
-bool(true)
-
-```
-
-**Example 5**
+Example 5
+---------
 ```php
 $arr = array(null, false);
 $o = enumerator::none($arr);
 var_dump($o);
 ```
 
+```
+bool(true)
 ```
 
-bool(true)
 
-```
-
-
-# Methods: one
+Methods: one
+============
 boolean **one** (array $arr [, callable $callback = NULL ] )
 
 Pases each element of the collection to $callback. If $callback returns true once, the function will return true. Otherwise, the function will return false.
 
-### Parameters
+Parameters
+----------
   **$arr**
 
   **$callback**
@@ -1071,11 +1083,12 @@ Pases each element of the collection to $callback. If $callback returns true onc
     A $key, $value are passed to this callback.
     ```
 
-### Return
-  void
+Return
+------
+ boolean
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $array = array('ant','bear','cat');
 $o = enumerator::one($array, function($key, $value) {
@@ -1084,44 +1097,42 @@ $o = enumerator::one($array, function($key, $value) {
 var_dump($o);
 ```
 
+```
+bool(true)
 ```
 
-bool(true)
-
-```
-
-**Example 2**
+Example 2
+---------
 ```php
 $o = enumerator::one(array(null, true, 99));
 var_dump($o);
 ```
 
+```
+bool(false)
 ```
 
-bool(false)
-
-```
-
-**Example 3**
+Example 3
+---------
 ```php
 $o = enumerator::one(array(null, true, false));
 var_dump($o);
 ```
 
+```
+bool(true)
 ```
 
-bool(true)
 
-```
-
-
-# Methods: partition, partition_
+Methods: partition, partition_
+==============================
 void **partition** (array $arr , callable $callback [, boolean $preserve_keys = false ] )
 void **partition_** (array &$arr , callable $callback [, boolean $preserve_keys = false ] )
 
 Passes each element into $callback. If $callback returns true the item will be in the first category, otherwise the second.
 
-### Parameters
+Parameters
+----------
   **&$arr**
 
   **$callback**
@@ -1131,11 +1142,12 @@ Passes each element into $callback. If $callback returns true the item will be i
 
   **$preserve_keys**
 
-### Return
-  void
+Return
+------
+ void
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $arr = range(1,6);
 $o = enumerator::partition($arr, function($key, $value) {
@@ -1144,8 +1156,7 @@ $o = enumerator::partition($arr, function($key, $value) {
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => Array
@@ -1161,12 +1172,12 @@ Array
             [1] => 3
             [2] => 5
         )
-)
-
+)
 ```
 
 
-# Methods: inject, inject_, reduce, reduce_
+Methods: inject, inject_, reduce, reduce_
+=========================================
 mixed **inject** (array $arr , callable $callback , mixed optional )
 mixed **inject_** (array &$arr , callable $callback , mixed optional )
 mixed **reduce** (array $arr , callable $callback , mixed optional )
@@ -1174,7 +1185,8 @@ mixed **reduce_** (array &$arr , callable $callback , mixed optional )
 
 Will iterate the items in $arr passing each one to $callback with $memo as the third argument.
 
-### Parameters
+Parameters
+----------
   **&$arr**
 
   **$callback**
@@ -1187,14 +1199,15 @@ Will iterate the items in $arr passing each one to $callback with $memo as the t
     $memo This value is passed to all callback. Be sure to accept it by reference. Defaults to 0 (zero).
     ```
 
-### Return
+Return
+------
 mixed
     ```
     The memo variable.
     ```
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $arr = range(5, 10);
 echo enumerator::inject($arr, function($key, &$value, &$memo){
@@ -1203,13 +1216,12 @@ echo enumerator::inject($arr, function($key, &$value, &$memo){
 });
 ```
 
+```
+45
 ```
 
-45
-
-```
-
-**Example 2**
+Example 2
+---------
 ```php
 $arr = range(5, 10);
 echo enumerator::inject($arr, function($key, &$value, &$memo){
@@ -1218,21 +1230,21 @@ echo enumerator::inject($arr, function($key, &$value, &$memo){
 }, 1);
 ```
 
+```
+151200
 ```
 
-151200
 
-```
-
-
-# Methods: reject: reject_, delete_if, delete_if_
+Methods: reject: reject_, delete_if, delete_if_
+===============================================
 void **reject: reject_** (array &$arr , callable $callback )
 void **delete_if** (array &$arr , callable $callback )
 void **delete_if_** (array &$arr , callable $callback )
 
 Will unset an item in $arr if $callback returns true for it.
 
-### Parameters
+Parameters
+----------
   **&$arr**
 
   **$callback**
@@ -1240,11 +1252,12 @@ Will unset an item in $arr if $callback returns true for it.
     A $key, $value are passed to this callback. The $value can be passed by reference.
     ```
 
-### Return
-  void
+Return
+------
+ void
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $arr = range(1,10);
 $o = enumerator::reject($arr, function($key, $value) {
@@ -1253,8 +1266,7 @@ $o = enumerator::reject($arr, function($key, $value) {
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => 1
@@ -1264,12 +1276,12 @@ Array
     [6] => 7
     [7] => 8
     [9] => 10
-)
-
+)
 ```
 
 
-# Methods: reverse_collect, reverse_collect_, reverse_each, reverse_each_, reverse_map, reverse_map_, reverse_foreach, reverse_foreach_, reverse_each_with_index
+Methods: reverse_collect, reverse_collect_, reverse_each, reverse_each_, reverse_map, reverse_map_, reverse_foreach, reverse_foreach_, reverse_each_with_index
+==============================================================================================================================================================
 void **reverse_collect** (array &$arr , callable $callback )
 void **reverse_collect_** (array &$arr , callable $callback )
 void **reverse_each** (array &$arr , callable $callback )
@@ -1282,7 +1294,8 @@ void **reverse_each_with_index** (array &$arr , callable $callback )
 
 Will iterate the array in reverse, but will NOT save the order.
 
-### Parameters
+Parameters
+----------
   **&$arr**
 
   **$callback**
@@ -1290,11 +1303,12 @@ Will iterate the array in reverse, but will NOT save the order.
     A $key, $value are passed to this callback. The $value can be passed by reference.
     ```
 
-### Return
-  void
+Return
+------
+ void
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $arr = array(1, 2, 3);
 enumerator::reverse_collect($arr, function($key, &$value) {
@@ -1303,20 +1317,20 @@ enumerator::reverse_collect($arr, function($key, &$value) {
 });
 ```
 
+```
+3, 2, 1,
 ```
 
-3, 2, 1,
 
-```
-
-
-# Methods: sort, sort_
+Methods: sort, sort_
+====================
 void **sort** (array $arr [, callable $callback = NULL ] )
 void **sort_** (array &$arr [, callable $callback = NULL ] )
 
 Will sort the contents of $arr. A callback can be used to sort.
 
-### Parameters
+Parameters
+----------
   **&$arr**
 
   **$callback**
@@ -1324,29 +1338,29 @@ Will sort the contents of $arr. A callback can be used to sort.
     A $key, $value are passed to this callback. The $value can be passed by reference.
     ```
 
-### Return
-  void
+Return
+------
+ void
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $arr = array('rhea', 'kea', 'flea');
 $o = enumerator::sort($arr);
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => flea
     [1] => kea
     [2] => rhea
-)
-
+)
 ```
 
-**Example 2**
+Example 2
+---------
 ```php
 $arr = array('rhea', 'kea', 'flea');
 $o = enumerator::sort($arr, function($val1, $val2) {
@@ -1355,34 +1369,35 @@ $o = enumerator::sort($arr, function($val1, $val2) {
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => rhea
     [1] => kea
     [2] => flea
-)
-
+)
 ```
 
 
-# Methods: sort_by, sort_by_
+Methods: sort_by, sort_by_
+==========================
 void **sort_by** (array &$arr , callable $callback )
 void **sort_by_** (array &$arr , callable $callback )
 
 Will sort based off of the return of $callback.
 
-### Parameters
+Parameters
+----------
   **&$arr**
 
   **$callback**
 
-### Return
-  void
+Return
+------
+ void
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $arr = array('rhea', 'kea', 'flea');
 $o = enumerator::sort_by($arr, function($val) {
@@ -1391,25 +1406,25 @@ $o = enumerator::sort_by($arr, function($val) {
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => kea
     [1] => flea
     [2] => rhea
-)
-
+)
 ```
 
 
-# Methods: take_while, take_while_
+Methods: take_while, take_while_
+================================
 void **take_while** (array &$arr , callable $callback )
 void **take_while_** (array &$arr , callable $callback )
 
 Passes elements into $callback until it returns false or null, at which point this function will stop and set $arr to all prior elements.
 
-### Parameters
+Parameters
+----------
   **&$arr**
 
   **$callback**
@@ -1417,11 +1432,12 @@ Passes elements into $callback until it returns false or null, at which point th
     A $key, $value are passed to this callback.
     ```
 
-### Return
-  void
+Return
+------
+ void
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $arr = array(1,2,3,4,5,0);
 $o = enumerator::take_while($arr, function($key, &$value) {
@@ -1430,24 +1446,24 @@ $o = enumerator::take_while($arr, function($key, &$value) {
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => 1
     [1] => 2
-)
-
+)
 ```
 
 
-# Methods: zip, zip_
+Methods: zip, zip_
+==================
 void **zip** (array $arr , array $one )
 void **zip_** (array &$arr , array $one )
 
 Will turn each element in $arr into an array then appending the associated indexs from the other arrays into this array as well.
 
-### Parameters
+Parameters
+----------
   **&$arr**
 
   **$one**
@@ -1455,19 +1471,19 @@ Will turn each element in $arr into an array then appending the associated index
     Unlimited of this.
     ```
 
-### Return
-  void
+Return
+------
+ void
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $arr = array(1,2,3);
 $o = enumerator::zip($arr, array(4,5,6), array(7,8,9));
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => Array
@@ -1492,19 +1508,18 @@ Array
             [2] => 9
         )
 
-)
-
+)
 ```
 
-**Example 2**
+Example 2
+---------
 ```php
 $arr = array(1,2);
 $o = enumerator::zip($arr, array(4,5,6),array(7,8,9));
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => Array
@@ -1521,19 +1536,18 @@ Array
             [2] => 8
         )
 
-)
-
+)
 ```
 
-**Example 3**
+Example 3
+---------
 ```php
 $arr = array(4,5,6);
 $o = enumerator::zip($arr, array(1,2), array(8));
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => Array
@@ -1557,27 +1571,29 @@ Array
             [2] => 
         )
 
-)
-
+)
 ```
 
 
-# Methods: drop_while, drop_while_
+Methods: drop_while, drop_while_
+================================
 void **drop_while** (array &$arr , callable $callback )
 void **drop_while_** (array &$arr , callable $callback )
 
 Will pass elements into $callback until false is returned at which point all elements before the current one will be removed.
 
-### Parameters
+Parameters
+----------
   **&$arr**
 
   **$callback**
 
-### Return
-  void
+Return
+------
+ void
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $arr = array(1,2,3,4,5,0);
 $o = enumerator::drop_while($arr, function($key, &$value) {
@@ -1586,26 +1602,26 @@ $o = enumerator::drop_while($arr, function($key, &$value) {
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => 3
     [1] => 4
     [2] => 5
     [3] => 0
-)
-
+)
 ```
 
 
-# Methods: cycle, cycle_
+Methods: cycle, cycle_
+======================
 void **cycle** (array $arr , int $it , callable $callback )
 void **cycle_** (array $arr , int $it , callable $callback )
 
 Will pass every element of $arr into $callback exactly $it times.
 
-### Parameters
+Parameters
+----------
   **$arr**
 
   **$it**
@@ -1615,11 +1631,12 @@ Will pass every element of $arr into $callback exactly $it times.
     This can accept 3 arguments: $key - The key in the array, $value - The value of this key, $it - The current iteration.
     ```
 
-### Return
-  void
+Return
+------
+ void
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $arr = array(1,2,3);
 enumerator::cycle($arr, 3, function($key, $value, $it) {
@@ -1627,14 +1644,13 @@ enumerator::cycle($arr, 3, function($key, $value, $it) {
 });
 ```
 
+```
+1,2,3,1,2,3,1,2,3,
 ```
 
-1,2,3,1,2,3,1,2,3,
 
-```
-
-
-# Methods: each_cons, each_cons_
+Methods: each_cons, each_cons_
+==============================
 void **each_cons** (array &$arr , int $size [, callable $callback = false ] )
 void **each_cons_** (array &$arr , int $size [, callable $callback = false ] )
 
@@ -1642,26 +1658,27 @@ This will return each section as an item in an array.
 A section is each consecutive $size of $arr.
 It will also iterate over each item in every section.
 
-### Parameters
+Parameters
+----------
   **&$arr**
 
   **$size**
 
   **$callback**
 
-### Return
-  void
+Return
+------
+ void
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $arr = range(1,10);
 $o = enumerator::each_cons($arr, 8);
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => Array
@@ -1700,35 +1717,36 @@ Array
             [7] => 10
         )
 
-)
-
+)
 ```
 
 
-# Methods: slice_before, slice_before_
+Methods: slice_before, slice_before_
+====================================
 void **slice_before** (array &$arr , string $pattern )
 void **slice_before_** (array &$arr , string $pattern )
 
 When $pattern is matched in an element, all previous elements not include previous chunks are placed into a new chunk.
 
-### Parameters
+Parameters
+----------
   **&$arr**
 
   **$pattern**
 
-### Return
-  void
+Return
+------
+ void
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $arr = array(1,2,3,4,5,6,7,8,9,0);
 $o = enumerator::slice_before($arr, "/[02468]/"); // will "splice before" an even number.
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => Array
@@ -1765,12 +1783,12 @@ Array
             [0] => 0
         )
 
-)
-
+)
 ```
 
 
-# Methods: merge, merge_, concat, concat_
+Methods: merge, merge_, concat, concat_
+=======================================
 void **merge** (array $arr , array $arr2 )
 void **merge_** (array &$arr , array $arr2 )
 void **concat** (array $arr , array $arr2 )
@@ -1778,16 +1796,18 @@ void **concat_** (array &$arr , array $arr2 )
 
 Will merge two or more arrays together.
 
-### Parameters
+Parameters
+----------
   **&$arr**
 
   **$arr2**
 
-### Return
-  void
+Return
+------
+ void
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $animals = array('dog', 'cat', 'pig');
 $trees = array('pine');
@@ -1795,8 +1815,7 @@ $o = enumerator::merge($animals, $trees, array('wool'));
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => dog
@@ -1804,18 +1823,19 @@ Array
     [2] => pig
     [3] => pine
     [4] => wool
-)
-
+)
 ```
 
 
-# Methods: rotate, rotate_
+Methods: rotate, rotate_
+========================
 void **rotate** (array $arr , int $index )
 void **rotate_** (array &$arr , int $index )
 
 Will rotate the array so that $index is the first element in the array. Negative indexs are allowed.
 
-### Parameters
+Parameters
+----------
   **&$arr**
 
   **$index**
@@ -1823,54 +1843,54 @@ Will rotate the array so that $index is the first element in the array. Negative
     The starting index
     ```
 
-### Return
-  void
+Return
+------
+ void
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $arr = array('Foo', 'bar', 'foobar');
 $o = enumerator::rotate($arr, 1);
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => bar
     [1] => foobar
     [2] => Foo
-)
-
+)
 ```
 
-**Example 2**
+Example 2
+---------
 ```php
 $arr = array('Foo', 'bar', 'foobar');
 $o = enumerator::rotate($arr, -1);
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => foobar
     [1] => Foo
     [2] => bar
-)
-
+)
 ```
 
 
-# Methods: reverse, reverse_
+Methods: reverse, reverse_
+==========================
 void **reverse** (array $arr , boolean optional )
 void **reverse_** (array &$arr , boolean optional )
 
 Will reverse an array.
 
-### Parameters
+Parameters
+----------
   **&$arr**
 
   **optional**
@@ -1878,30 +1898,30 @@ Will reverse an array.
     $preserve_keys Defaults to false. If you want to preserve the keys or not.
     ```
 
-### Return
-  void
+Return
+------
+ void
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $arr = array(1,2,3);
 $o = enumerator::reverse($arr);
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => 3
     [1] => 2
     [2] => 1
-)
-
+)
 ```
 
 
-# Methods: random, random_, sample, sample_
+Methods: random, random_, sample, sample_
+=========================================
 mixed **random** (array $arr , int optional )
 mixed **random_** (array &$arr , int optional )
 mixed **sample** (array $arr , int optional )
@@ -1909,7 +1929,8 @@ mixed **sample_** (array &$arr , int optional )
 
 Will get $count random values from $arr. If $count is 1 then it'll return the value, otherwise it'll return an array of values.
 
-### Parameters
+Parameters
+----------
   **&$arr**
 
   **optional**
@@ -1917,48 +1938,48 @@ Will get $count random values from $arr. If $count is 1 then it'll return the va
     $count Defaults to 1
     ```
 
-### Return
-  void
+Return
+------
+ mixed
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $arr = array('pig', 'cow', 'dog', 'horse');
 $o = enumerator::random($arr);
 echo $o;
 ```
 
+```
+dog
 ```
 
-dog
-
-```
-
-**Example 2**
+Example 2
+---------
 ```php
 $arr = array('pig', 'cow', 'dog', 'horse');
 $o = enumerator::random($arr, 2);
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => dog
     [1] => cow
-)
-
+)
 ```
 
 
-# Methods: shuffle, shuffle_
+Methods: shuffle, shuffle_
+==========================
 void **shuffle** (array $arr [, boolean $preserve_keys = false ] )
 void **shuffle_** (array &$arr [, boolean $preserve_keys = false ] )
 
 Will shuffle the inputted array.
 
-### Parameters
+Parameters
+----------
   **&$arr**
 
   **$preserve_keys**
@@ -1966,54 +1987,54 @@ Will shuffle the inputted array.
     If you want to preserve keys or not. Defaults to false.
     ```
 
-### Return
-  void
+Return
+------
+ void
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $arr = array(1,2,3);
 $o = enumerator::shuffle($arr);
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => 2
     [1] => 1
     [2] => 3
-)
-
+)
 ```
 
-**Example 2**
+Example 2
+---------
 ```php
 $arr = array('a' => 'apple', 'b' => 'banana', 'c' => 'carrot');
 $o = enumerator::shuffle($arr, true);
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [a] => apple
     [c] => carrot
     [b] => banana
-)
-
+)
 ```
 
 
-# Methods: values_at, values_at_
+Methods: values_at, values_at_
+==============================
 void **values_at** (type array , mixed $index )
 void **values_at_** (type array , mixed $index )
 
 Will replace the current array with only the inserted indexs. Use the non-destructive form to get the array returned instead.
 
-### Parameters
+Parameters
+----------
   **array**
     ```
     &$arr
@@ -2024,11 +2045,12 @@ Will replace the current array with only the inserted indexs. Use the non-destru
     Put in as many indexes as you please.
     ```
 
-### Return
-  void
+Return
+------
+ void
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $name = array(
 	'name' => 'John Doe',
@@ -2041,121 +2063,118 @@ $o = enumerator::values_at($name, 'title', 'last');
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [title] => Dr.
     [last] => Doe
-)
-
+)
 ```
 
 
-# Methods: empty, isEmpty
+Methods: empty, isEmpty
+=======================
 boolean **empty** (array $arr )
 boolean **isEmpty** (array $arr )
 
 If the array is empty or not.
 NOTICE: that 'empty' alias is a language construct so this alias cannot be called directly. Refer to example #3.
 
-### Parameters
+Parameters
+----------
   **$arr**
 
-### Return
-  void
+Return
+------
+ boolean
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $arr = array();
 var_dump(enumerator::isEmpty($arr));
 ```
 
+```
+bool(true)
 ```
 
-bool(true)
-
-```
-
-**Example 2**
+Example 2
+---------
 ```php
 $arr = array(1,2,3);
 var_dump(enumerator::isEmpty($arr));
 ```
 
+```
+bool(false)
 ```
 
-bool(false)
-
-```
-
-**Example 3**
+Example 3
+---------
 ```php
 $empty = 'empty';
 $arr = array(1,2,3);
 var_dump(enumerator::$empty($arr));
 ```
 
+```
+bool(false)
 ```
 
-bool(false)
 
-```
-
-
-# Methods: has_value
+Methods: has_value
+==================
 boolean **has_value** (array $arr , mixed $value )
 
 Will return a boolean based on the condition that $value exists inside of $arr and are the same data type.
 
-### Parameters
+Parameters
+----------
   **$arr**
 
   **$value**
 
-### Return
-  void
+Return
+------
+ boolean
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $arr = array(0,false);
 var_dump(enumerator::has_value($arr, null));
 ```
 
+```
+bool(false)
 ```
 
-bool(false)
-
-```
-
-**Example 2**
+Example 2
+---------
 ```php
 $arr = array(false,null);
 var_dump(enumerator::has_value($arr, 0));
 ```
 
+```
+bool(false)
 ```
 
-bool(false)
-
-```
-
-**Example 3**
+Example 3
+---------
 ```php
 $arr = array('apple', 'banana', 'orange');
 var_dump(enumerator::has_value($arr, 'orange'));
 ```
 
+```
+bool(true)
 ```
 
-bool(true)
 
-```
-
-
-# Methods: index, index_, find_index, find_index_
+Methods: index, index_, find_index, find_index_
+===============================================
 mixed **index** (array $arr [, mixed $callback = NULL ] )
 mixed **index_** (array &$arr [, mixed $callback = NULL ] )
 mixed **find_index** (array &$arr [, mixed $callback = NULL ] )
@@ -2165,16 +2184,18 @@ Will return the first index if found or false otherwise. Use '===' for comparing
 If $callback is a callback function, the $key is returned the first time $callback returns true.
 If $callback is not a callback, we are looking for the first $value in $arr to be === $callback.
 
-### Parameters
+Parameters
+----------
   **&$arr**
 
   **$callback**
 
-### Return
-  void
+Return
+------
+ mixed
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $name = array(
 	'name' => 'John Doe',
@@ -2187,13 +2208,12 @@ $name = array(
 echo enumerator::index($name, 'John');
 ```
 
+```
+first
 ```
 
-first
-
-```
-
-**Example 2**
+Example 2
+---------
 ```php
 $name = array(
 	'name' => 'John Doe',
@@ -2208,14 +2228,13 @@ echo enumerator::index_($name, function($key, &$value) {
 });
 ```
 
+```
+title
 ```
 
-title
 
-```
-
-
-# Methods: rindex, rindex_
+Methods: rindex, rindex_
+========================
 mixed **rindex** (array $arr , mixed $callback )
 mixed **rindex_** (array &$arr , mixed $callback )
 
@@ -2223,16 +2242,18 @@ Similar to index but looks for the last occurace of $callback.
 If $callback is a callback function, the $key is returned the last time $callback returns true.
 If $callback is not a callback, we are looking for the last $value in $arr to be === $callback.
 
-### Parameters
+Parameters
+----------
   **&$arr**
 
   **$callback**
 
-### Return
-  void
+Return
+------
+ mixed
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $name = array(
 	'name' => 'John Doe',
@@ -2245,13 +2266,12 @@ $name = array(
 echo enumerator::rindex($name, 'John');
 ```
 
+```
+first
 ```
 
-first
-
-```
-
-**Example 2**
+Example 2
+---------
 ```php
 $name = array(
 	'name' => 'John Doe',
@@ -2266,35 +2286,35 @@ echo enumerator::rindex_($name, function($key, &$value) {
 });
 ```
 
+```
+suffix
 ```
 
-suffix
 
-```
-
-
-# Methods: compact, compact_
+Methods: compact, compact_
+==========================
 void **compact** (array $arr )
 void **compact_** (array &$arr )
 
 Will remove all null values inside of $arr. If $recursive is set to true, it will crawl sub-arrays.
 
-### Parameters
+Parameters
+----------
   **&$arr**
 
-### Return
-  void
+Return
+------
+ void
 
-### Examples
-**Example 1**
+Example 1
+---------
 ```php
 $arr = array(1,2,3,null,array(2,3,4,null));
 $o = enumerator::compact($arr);
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => 1
@@ -2308,19 +2328,18 @@ Array
             [3] => 
        )
 
-)
-
+)
 ```
 
-**Example 2**
+Example 2
+---------
 ```php
 $arr = array(1,2,3,null,array(2,3,4,null));
 $o = enumerator::compact($arr, true);
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => 1
@@ -2333,7 +2352,6 @@ Array
             [2] => 4
        )
 
-)
-
+)
 ```
 
