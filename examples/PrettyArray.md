@@ -11,7 +11,7 @@ see
 
 Methods: __construct
 ====================
-void **__construct** (array optional )
+void **\_\_construct** (array optional )
 
 
 The default array can be passed as the first argument in the constructor.
@@ -166,7 +166,7 @@ foobar
 
 Methods: __call
 ===============
-mixed **__call** (string $method , array $params )
+mixed **\_\_call** (string $method , array $params )
 
 
 This serves two purposes.
@@ -230,7 +230,7 @@ Array
 
 Methods: __callStatic
 =====================
-mixed **__callStatic** (string $method , array $params )
+mixed **\_\_callStatic** (string $method , array $params )
 
 
 A basic proxy for static methods on enumerator.
@@ -278,7 +278,7 @@ PrettyArray::collect($arr, function($key, &$value) {
 
 Methods: getRange_
 ==================
-PrettyArray **getRange_** (mixed $start , mixed $end )
+PrettyArray **getRange\_** (mixed $start , mixed $end )
 
 
 Will get a 'range' from PrettyArray. Calling it destructively will force the return value to be references to the current PrettyArray.
@@ -330,7 +330,7 @@ Methods: getSet, getSet_
 ========================
 PrettyArray **getSet** (mixed $start , int $length )
 
-PrettyArray **getSet_** (mixed $start , int $length )
+PrettyArray **getSet\_** (mixed $start , int $length )
 
 
 Will get a 'set' from PrettyArray. Calling it destructively will force the return value to be references to the current PrettyArray.
@@ -411,7 +411,7 @@ bar
 
 Methods: __toString
 ===================
-string **__toString** ()
+string **\_\_toString** ()
 
 
 Method: __toString
@@ -443,7 +443,7 @@ Array
 
 Methods: to_a
 =============
-array **to_a** ()
+array **to\_a** ()
 
 
 Will return the array of data that PrettyArray has stored.

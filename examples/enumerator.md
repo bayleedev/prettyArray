@@ -22,7 +22,7 @@ link
 
 Methods: __callStatic
 =====================
-mixed **__callStatic** (string $method , array $params )
+mixed **\_\_callStatic** (string $method , array $params )
 
 
 This magic method helps with method alias' and calling destrucitve methods in a non-destructive way.
@@ -50,7 +50,7 @@ Methods: all, all_
 ==================
 boolean **all** (array $arr [, callable $callback = NULL ] )
 
-boolean **all_** (array &$arr [, callable $callback = NULL ] )
+boolean **all\_** (array &$arr [, callable $callback = NULL ] )
 
 
 Passes each element of the collection to the $callback, if it ever turns false or null this function will return false, else true.
@@ -123,7 +123,7 @@ Methods: drop, drop_
 ====================
 void **drop** (array $arr , int $count )
 
-void **drop_** (array &$arr , int $count )
+void **drop\_** (array &$arr , int $count )
 
 
 Drops the first $count elements.
@@ -165,7 +165,7 @@ Methods: any, any_
 ==================
 boolean **any** (array $arr [, callable $callback = NULL ] )
 
-boolean **any_** (array $arr [, callable $callback = NULL ] )
+boolean **any\_** (array $arr [, callable $callback = NULL ] )
 
 
 Passes each element of the collection to the $callback, if it ever returns anything besides null or false I'll return true, else I'll return false.
@@ -238,25 +238,25 @@ Methods: collect, collect_, each, each_, map, map_, foreach, foreach_, each_with
 ====================================================================================================================
 void **collect** (array $arr , callable $callback )
 
-void **collect_** (array &$arr , callable $callback )
+void **collect\_** (array &$arr , callable $callback )
 
 void **each** (array $arr , callable $callback )
 
-void **each_** (array &$arr , callable $callback )
+void **each\_** (array &$arr , callable $callback )
 
 void **map** (array $arr , callable $callback )
 
-void **map_** (array &$arr , callable $callback )
+void **map\_** (array &$arr , callable $callback )
 
 void **foreach** (array $arr , callable $callback )
 
-void **foreach_** (array &$arr , callable $callback )
+void **foreach\_** (array &$arr , callable $callback )
 
-void **each_with_index** (array &$arr , callable $callback )
+void **each\_with\_index** (array &$arr , callable $callback )
 
-void **each_with_index_** (array &$arr , callable $callback )
+void **each\_with\_index\_** (array &$arr , callable $callback )
 
-void **array_walk** (array &$arr , callable $callback )
+void **array\_walk** (array &$arr , callable $callback )
 
 
 Will iterate the elements in the array. Has the potential to change the values.
@@ -329,15 +329,15 @@ Methods: count, count_, size, size_, length, length_
 ====================================================
 int **count** (array $arr , callable $callback )
 
-int **count_** (array &$arr , callable $callback )
+int **count\_** (array &$arr , callable $callback )
 
 int **size** (array $arr , callable $callback )
 
-int **size_** (array &$arr , callable $callback )
+int **size\_** (array &$arr , callable $callback )
 
 int **length** (array $arr , callable $callback )
 
-int **length_** (array &$arr , callable $callback )
+int **length\_** (array &$arr , callable $callback )
 
 
 If the callback is null, this function give you the total size of the array.
@@ -409,11 +409,11 @@ mixed **Methods** (array $arr , callable $callback [, mixed $ifnone = NULL ] )
 
 mixed **detect** (array $arr , callable $callback [, mixed $ifnone = NULL ] )
 
-mixed **detect_** (array &$arr , callable $callback [, mixed $ifnone = NULL ] )
+mixed **detect\_** (array &$arr , callable $callback [, mixed $ifnone = NULL ] )
 
 mixed **find** (array $arr , callable $callback [, mixed $ifnone = NULL ] )
 
-mixed **find_** (array &$arr , callable $callback [, mixed $ifnone = NULL ] )
+mixed **find\_** (array &$arr , callable $callback [, mixed $ifnone = NULL ] )
 
 
 Will pass the key and value to $callback the first result that does not return false is returned.
@@ -474,15 +474,15 @@ Methods: select, select_, find_all, find_all_, keep_if, keep_if_
 ================================================================
 array **select** (array $arr , callable $callback )
 
-array **select_** (array &$arr , callable $callback )
+array **select\_** (array &$arr , callable $callback )
 
-array **find_all** (array &$arr , callable $callback )
+array **find\_all** (array &$arr , callable $callback )
 
-array **find_all_** (array &$arr , callable $callback )
+array **find\_all\_** (array &$arr , callable $callback )
 
-array **keep_if** (array &$arr , callable $callback )
+array **keep\_if** (array &$arr , callable $callback )
 
-array **keep_if_** (array &$arr , callable $callback )
+array **keep\_if\_** (array &$arr , callable $callback )
 
 
 Will pass the elements to the callback and unset them if the callback returns false.
@@ -531,9 +531,9 @@ Array
 
 Methods: each_slice, each_slice_
 ================================
-void **each_slice** (array &$arr , int $size [, callable $callback = NULL ] )
+void **each\_slice** (array &$arr , int $size [, callable $callback = NULL ] )
 
-void **each_slice_** (array &$arr , int $size [, callable $callback = NULL ] )
+void **each\_slice\_** (array &$arr , int $size [, callable $callback = NULL ] )
 
 
 Will slice the elements into $size collections and pass to $callback if defined. If not defined, the slized array is returned.
@@ -611,7 +611,7 @@ Methods: first, first_
 ======================
 void **first** (array $arr [, int $count = 1 ] )
 
-void **first_** (array &$arr [, int $count = 1 ] )
+void **first\_** (array &$arr [, int $count = 1 ] )
 
 
 Will overwrite $arr with the first $count items in array.
@@ -671,13 +671,13 @@ Array
 
 Methods: collect_concat, collect_concat_, flat_map, flat_map_
 =============================================================
-void **collect_concat** (array &$arr , callable $callback )
+void **collect\_concat** (array &$arr , callable $callback )
 
-void **collect_concat_** (array &$arr , callable $callback )
+void **collect\_concat\_** (array &$arr , callable $callback )
 
-void **flat_map** (array &$arr , callable $callback )
+void **flat\_map** (array &$arr , callable $callback )
 
-void **flat_map_** (array &$arr , callable $callback )
+void **flat\_map\_** (array &$arr , callable $callback )
 
 
 Will flatten the input $arr into a non-multi-dimensional array.It will pass the current key and the value to $callback which has the potential to change the value.
@@ -727,7 +727,7 @@ Methods: grep, grep_
 ====================
 void **grep** (array $arr , string $pattern [, callable $callback = NULL ] )
 
-void **grep_** (array &$arr , string $pattern [, callable $callback = NULL ] )
+void **grep\_** (array &$arr , string $pattern [, callable $callback = NULL ] )
 
 
 Will only keep an item if the value of the item matches $pattern.
@@ -777,9 +777,9 @@ Array
 
 Methods: group_by, group_by_
 ============================
-void **group_by** (array &$arr , callable $callback [, boolean $preserve_keys = false ] )
+void **group\_by** (array &$arr , callable $callback [, boolean $preserve_keys = false ] )
 
-void **group_by_** (array &$arr , callable $callback [, boolean $preserve_keys = false ] )
+void **group\_by\_** (array &$arr , callable $callback [, boolean $preserve_keys = false ] )
 
 
 Each item will be passed into $callback and the return value will be the new "category" of this item.
@@ -1020,7 +1020,7 @@ albatross
 
 Methods: min_by
 ===============
-mixed **min_by** (array $arr , callable $callback )
+mixed **min\_by** (array $arr , callable $callback )
 
 
 Will find the lowest item in the array but comparing the output os $callback against every item.
@@ -1057,7 +1057,7 @@ dog
 
 Methods: max_by
 ===============
-mixed **max_by** (array $arr , callable $callback )
+mixed **max\_by** (array $arr , callable $callback )
 
 
 Will find the highest item in the array but comparing the output os $callback against every item.
@@ -1139,7 +1139,7 @@ Array
 
 Methods: minmax_by
 ==================
-array **minmax_by** (array $arr , callable $callback )
+array **minmax\_by** (array $arr , callable $callback )
 
 
 Will find the lowest and highest item in the array but comparing the output os $callback against every item.
@@ -1347,7 +1347,7 @@ Methods: partition, partition_
 ==============================
 void **partition** (array $arr , callable $callback [, boolean $preserve_keys = false ] )
 
-void **partition_** (array &$arr , callable $callback [, boolean $preserve_keys = false ] )
+void **partition\_** (array &$arr , callable $callback [, boolean $preserve_keys = false ] )
 
 
 Passes each element into $callback. If $callback returns true the item will be in the first category, otherwise the second.
@@ -1407,11 +1407,11 @@ Methods: inject, inject_, reduce, reduce_
 =========================================
 mixed **inject** (array $arr , callable $callback , mixed optional )
 
-mixed **inject_** (array &$arr , callable $callback , mixed optional )
+mixed **inject\_** (array &$arr , callable $callback , mixed optional )
 
 mixed **reduce** (array $arr , callable $callback , mixed optional )
 
-mixed **reduce_** (array &$arr , callable $callback , mixed optional )
+mixed **reduce\_** (array &$arr , callable $callback , mixed optional )
 
 
 Will iterate the items in $arr passing each one to $callback with $memo as the third argument.
@@ -1476,11 +1476,11 @@ echo enumerator::inject($arr, function($key, &$value, &$memo){
 
 Methods: reject: reject_, delete_if, delete_if_
 ===============================================
-void **reject: reject_** (array &$arr , callable $callback )
+void **reject: reject\_** (array &$arr , callable $callback )
 
-void **delete_if** (array &$arr , callable $callback )
+void **delete\_if** (array &$arr , callable $callback )
 
-void **delete_if_** (array &$arr , callable $callback )
+void **delete\_if\_** (array &$arr , callable $callback )
 
 
 Will unset an item in $arr if $callback returns true for it.
@@ -1530,23 +1530,23 @@ Array
 
 Methods: reverse_collect, reverse_collect_, reverse_each, reverse_each_, reverse_map, reverse_map_, reverse_foreach, reverse_foreach_, reverse_each_with_index
 ==============================================================================================================================================================
-void **reverse_collect** (array &$arr , callable $callback )
+void **reverse\_collect** (array &$arr , callable $callback )
 
-void **reverse_collect_** (array &$arr , callable $callback )
+void **reverse\_collect\_** (array &$arr , callable $callback )
 
-void **reverse_each** (array &$arr , callable $callback )
+void **reverse\_each** (array &$arr , callable $callback )
 
-void **reverse_each_** (array &$arr , callable $callback )
+void **reverse\_each\_** (array &$arr , callable $callback )
 
-void **reverse_map** (array &$arr , callable $callback )
+void **reverse\_map** (array &$arr , callable $callback )
 
-void **reverse_map_** (array &$arr , callable $callback )
+void **reverse\_map\_** (array &$arr , callable $callback )
 
-void **reverse_foreach** (array &$arr , callable $callback )
+void **reverse\_foreach** (array &$arr , callable $callback )
 
-void **reverse_foreach_** (array &$arr , callable $callback )
+void **reverse\_foreach\_** (array &$arr , callable $callback )
 
-void **reverse_each_with_index** (array &$arr , callable $callback )
+void **reverse\_each\_with\_index** (array &$arr , callable $callback )
 
 
 Will iterate the array in reverse, but will NOT save the order.
@@ -1589,7 +1589,7 @@ Methods: sort, sort_
 ====================
 void **sort** (array $arr [, callable $callback = NULL ] )
 
-void **sort_** (array &$arr [, callable $callback = NULL ] )
+void **sort\_** (array &$arr [, callable $callback = NULL ] )
 
 
 Will sort the contents of $arr. A callback can be used to sort.
@@ -1654,9 +1654,9 @@ Array
 
 Methods: sort_by, sort_by_
 ==========================
-void **sort_by** (array &$arr , callable $callback )
+void **sort\_by** (array &$arr , callable $callback )
 
-void **sort_by_** (array &$arr , callable $callback )
+void **sort\_by\_** (array &$arr , callable $callback )
 
 
 Will sort based off of the return of $callback.
@@ -1699,9 +1699,9 @@ Array
 
 Methods: take_while, take_while_
 ================================
-void **take_while** (array &$arr , callable $callback )
+void **take\_while** (array &$arr , callable $callback )
 
-void **take_while_** (array &$arr , callable $callback )
+void **take\_while\_** (array &$arr , callable $callback )
 
 
 Passes elements into $callback until it returns false or null, at which point this function will stop and set $arr to all prior elements.
@@ -1748,7 +1748,7 @@ Methods: zip, zip_
 ==================
 void **zip** (array $arr , array $one )
 
-void **zip_** (array &$arr , array $one )
+void **zip\_** (array &$arr , array $one )
 
 
 Will turn each element in $arr into an array then appending the associated indexs from the other arrays into this array as well.
@@ -1878,9 +1878,9 @@ Array
 
 Methods: drop_while, drop_while_
 ================================
-void **drop_while** (array &$arr , callable $callback )
+void **drop\_while** (array &$arr , callable $callback )
 
-void **drop_while_** (array &$arr , callable $callback )
+void **drop\_while\_** (array &$arr , callable $callback )
 
 
 Will pass elements into $callback until false is returned at which point all elements before the current one will be removed.
@@ -1926,7 +1926,7 @@ Methods: cycle, cycle_
 ======================
 void **cycle** (array $arr , int $it , callable $callback )
 
-void **cycle_** (array $arr , int $it , callable $callback )
+void **cycle\_** (array $arr , int $it , callable $callback )
 
 
 Will pass every element of $arr into $callback exactly $it times.
@@ -1968,9 +1968,9 @@ enumerator::cycle($arr, 3, function($key, $value, $it) {
 
 Methods: each_cons, each_cons_
 ==============================
-void **each_cons** (array &$arr , int $size [, callable $callback = false ] )
+void **each\_cons** (array &$arr , int $size [, callable $callback = false ] )
 
-void **each_cons_** (array &$arr , int $size [, callable $callback = false ] )
+void **each\_cons\_** (array &$arr , int $size [, callable $callback = false ] )
 
 
 This will return each section as an item in an array.
@@ -2048,9 +2048,9 @@ Array
 
 Methods: slice_before, slice_before_
 ====================================
-void **slice_before** (array &$arr , string $pattern )
+void **slice\_before** (array &$arr , string $pattern )
 
-void **slice_before_** (array &$arr , string $pattern )
+void **slice\_before\_** (array &$arr , string $pattern )
 
 
 When $pattern is matched in an element, all previous elements not include previous chunks are placed into a new chunk.
@@ -2124,11 +2124,11 @@ Methods: merge, merge_, concat, concat_
 =======================================
 void **merge** (array $arr , array $arr2 )
 
-void **merge_** (array &$arr , array $arr2 )
+void **merge\_** (array &$arr , array $arr2 )
 
 void **concat** (array $arr , array $arr2 )
 
-void **concat_** (array &$arr , array $arr2 )
+void **concat\_** (array &$arr , array $arr2 )
 
 
 Will merge two or more arrays together.
@@ -2174,7 +2174,7 @@ Methods: rotate, rotate_
 ========================
 void **rotate** (array $arr , int $index )
 
-void **rotate_** (array &$arr , int $index )
+void **rotate\_** (array &$arr , int $index )
 
 
 Will rotate the array so that $index is the first element in the array. Negative indexs are allowed.
@@ -2239,7 +2239,7 @@ Methods: reverse, reverse_
 ==========================
 void **reverse** (array $arr , boolean optional )
 
-void **reverse_** (array &$arr , boolean optional )
+void **reverse\_** (array &$arr , boolean optional )
 
 
 Will reverse an array.
@@ -2285,11 +2285,11 @@ Methods: random, random_, sample, sample_
 =========================================
 mixed **random** (array $arr , int optional )
 
-mixed **random_** (array &$arr , int optional )
+mixed **random\_** (array &$arr , int optional )
 
 mixed **sample** (array $arr , int optional )
 
-mixed **sample_** (array &$arr , int optional )
+mixed **sample\_** (array &$arr , int optional )
 
 
 Will get $count random values from $arr. If $count is 1 then it'll return the value, otherwise it'll return an array of values.
@@ -2348,7 +2348,7 @@ Methods: shuffle, shuffle_
 ==========================
 void **shuffle** (array $arr [, boolean $preserve_keys = false ] )
 
-void **shuffle_** (array &$arr [, boolean $preserve_keys = false ] )
+void **shuffle\_** (array &$arr [, boolean $preserve_keys = false ] )
 
 
 Will shuffle the inputted array.
@@ -2411,9 +2411,9 @@ Array
 
 Methods: values_at, values_at_
 ==============================
-void **values_at** (type array , mixed $index )
+void **values\_at** (type array , mixed $index )
 
-void **values_at_** (type array , mixed $index )
+void **values\_at\_** (type array , mixed $index )
 
 
 Will replace the current array with only the inserted indexs. Use the non-destructive form to get the array returned instead.
@@ -2524,7 +2524,7 @@ bool(false)
 
 Methods: has_value
 ==================
-boolean **has_value** (array $arr , mixed $value )
+boolean **has\_value** (array $arr , mixed $value )
 
 
 Will return a boolean based on the condition that $value exists inside of $arr and are the same data type.
@@ -2583,11 +2583,11 @@ Methods: index, index_, find_index, find_index_
 ===============================================
 mixed **index** (array $arr [, mixed $callback = NULL ] )
 
-mixed **index_** (array &$arr [, mixed $callback = NULL ] )
+mixed **index\_** (array &$arr [, mixed $callback = NULL ] )
 
-mixed **find_index** (array &$arr [, mixed $callback = NULL ] )
+mixed **find\_index** (array &$arr [, mixed $callback = NULL ] )
 
-mixed **find_index_** (array &$arr [, mixed $callback = NULL ] )
+mixed **find\_index\_** (array &$arr [, mixed $callback = NULL ] )
 
 
 Will return the first index if found or false otherwise. Use '===' for comparing.
@@ -2655,7 +2655,7 @@ Methods: rindex, rindex_
 ========================
 mixed **rindex** (array $arr , mixed $callback )
 
-mixed **rindex_** (array &$arr , mixed $callback )
+mixed **rindex\_** (array &$arr , mixed $callback )
 
 
 Similar to index but looks for the last occurace of $callback.
@@ -2723,7 +2723,7 @@ Methods: compact, compact_
 ==========================
 void **compact** (array $arr )
 
-void **compact_** (array &$arr )
+void **compact\_** (array &$arr )
 
 
 Will remove all null values inside of $arr. If $recursive is set to true, it will crawl sub-arrays.
