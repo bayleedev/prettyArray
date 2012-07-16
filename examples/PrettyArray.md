@@ -1,7 +1,5 @@
 PrettyArray
 ===========
-PrettyArray
-
 This class does not have very much in it, and is planning on staying that way. Instead, it makes magic calls to the 'enumerator' class.
 All methods in enumerator are static, which allows this class to call them statically or non-statically making PrettyArray very versatile.
 When you are calling methods in enumerator it will always append the current array to the paramater list.
@@ -14,6 +12,7 @@ see
 Methods: __construct
 ====================
 void **__construct** (array optional )
+
 
 The default array can be passed as the first argument in the constructor.
 
@@ -32,6 +31,7 @@ Return
 Methods: offsetSet
 ==================
 $value **offsetSet** (mixed $key , mixed $value )
+
 
 Part of ArrayAccess. Allows PrettyArray to set a value based on the [] operator.
 
@@ -54,18 +54,21 @@ $arr->offsetSet(null, 2);
 print_r($arr->to_a());
 ```
 
-```
+```
+
 Array
 (
     [0] => new
     [1] => 2
-)
+)
+
 ```
 
 
 Methods: offsetExists
 =====================
 boolean **offsetExists** (mixed $key )
+
 
 Part of ArrayAccess. If the offest exists.
 
@@ -86,15 +89,18 @@ var_dump(isset($arr[0])); // true
 var_dump($arr->offsetExists(0)); // true
 ```
 
-```
+```
+
 bool(true)
-bool(true)
+bool(true)
+
 ```
 
 
 Methods: offsetUnset
 ====================
 void **offsetUnset** (mixed $key )
+
 
 Part of ArrayAccess. Will unset the value if it exists.
 
@@ -117,16 +123,19 @@ $arr->offsetUnset(1);
 print_r($arr->to_a());
 ```
 
-```
+```
+
 Array
 (
-)
+)
+
 ```
 
 
 Methods: offsetGet
 ==================
 type **offsetGet** (type $key )
+
 
 Part of ArrayAccess. Will get the value of the current offset.
 
@@ -147,15 +156,18 @@ echo $arr[0] . PHP_EOL;
 echo $arr->offsetGet(0);
 ```
 
-```
+```
+
 foobar
-foobar
+foobar
+
 ```
 
 
 Methods: __call
 ===============
 mixed **__call** (string $method , array $params )
+
 
 This serves two purposes.
 The first is that it helps the destructive methods in this class become non-destructive giving them aliases.
@@ -182,13 +194,15 @@ enumerator::collect_($arr, function($key, &$value) {
 print_r($arr);
 ```
 
-```
+```
+
 Array
 (
     [0] => 2
     [1] => 3
     [2] => 4
-)
+)
+
 ```
 
 Example 2
@@ -202,19 +216,22 @@ $arr->collect_(function($key, &$value) {
 print_r($arr->to_a());
 ```
 
-```
+```
+
 Array
 (
     [0] => 1
     [1] => 2
     [2] => 3
-)
+)
+
 ```
 
 
 Methods: __callStatic
 =====================
 mixed **__callStatic** (string $method , array $params )
+
 
 A basic proxy for static methods on enumerator.
 
@@ -237,8 +254,10 @@ enumerator::collect($arr, function($key, &$value) {
 });
 ```
 
-```
-123
+```
+
+123
+
 ```
 
 Example 2
@@ -250,14 +269,17 @@ PrettyArray::collect($arr, function($key, &$value) {
 });
 ```
 
-```
-123
+```
+
+123
+
 ```
 
 
 Methods: getRange_
 ==================
 PrettyArray **getRange_** (mixed $start , mixed $end )
+
 
 Will get a 'range' from PrettyArray. Calling it destructively will force the return value to be references to the current PrettyArray.
 
@@ -292,22 +314,30 @@ $o = $arr->getRange('hot', 0)->to_a();
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [hot] => desert
     [cold] => snow
     [0] => rain
-)
+)
+
 ```
 
 
 Methods: getSet, getSet_
 ========================
 PrettyArray **getSet** (mixed $start , int $length )
+
 PrettyArray **getSet_** (mixed $start , int $length )
 
+
 Will get a 'set' from PrettyArray. Calling it destructively will force the return value to be references to the current PrettyArray.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Array.html#method-i-slice
 
 Parameters
 ----------
@@ -327,12 +357,14 @@ $o = $arr->getSet(1, 2)->to_a();
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [1] => 2
     [2] => 3
-)
+)
+
 ```
 
 
@@ -340,7 +372,12 @@ Methods: setByReference
 =======================
 $value **setByReference** (mixed $key , mixed $value )
 
+
 By default you can't set by reference. This helps you do so.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Array.html#method-i-slice
 
 Parameters
 ----------
@@ -365,14 +402,17 @@ $a = 'bar';
 echo $arr['a'];
 ```
 
-```
-bar
+```
+
+bar
+
 ```
 
 
 Methods: __toString
 ===================
 string **__toString** ()
+
 
 Method: __toString
 
@@ -389,19 +429,22 @@ $arr = new PrettyArray(array(1,2,3));
 echo $arr;
 ```
 
-```
+```
+
 Array
 (
     [0] => 1
     [1] => 2
     [2] => 3
-)
+)
+
 ```
 
 
 Methods: to_a
 =============
 array **to_a** ()
+
 
 Will return the array of data that PrettyArray has stored.
 
@@ -416,12 +459,14 @@ $arr = new PrettyArray(array(1,2,3));
 print_r($arr->to_a());
 ```
 
-```
+```
+
 Array
 (
     [0] => 1
     [1] => 2
     [2] => 3
-)
+)
+
 ```
 

@@ -1,7 +1,5 @@
-enumerator
-==========
 Enumerator
-
+==========
 A handy class for handling array methods similar to the methods available to ruby.
 
 Destructive Methods:
@@ -25,6 +23,7 @@ link
 Methods: __callStatic
 =====================
 mixed **__callStatic** (string $method , array $params )
+
 
 This magic method helps with method alias' and calling destrucitve methods in a non-destructive way.
 For example the real method "partition_" will take over your $array, but calling the magic method "partition" will not.
@@ -50,9 +49,15 @@ Return
 Methods: all, all_
 ==================
 boolean **all** (array $arr [, callable $callback = NULL ] )
+
 boolean **all_** (array &$arr [, callable $callback = NULL ] )
 
+
 Passes each element of the collection to the $callback, if it ever turns false or null this function will return false, else true.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-all-3F
 
 Parameters
 ----------
@@ -77,8 +82,10 @@ $o = enumerator::all($animals, function($key, &$value) {
 var_dump($o);
 ```
 
-```
-bool(true)
+```
+
+bool(true)
+
 ```
 
 Example 2
@@ -91,8 +98,10 @@ $o = enumerator::all($animals, function($key, &$value) {
 var_dump($o);
 ```
 
-```
-bool(false)
+```
+
+bool(false)
+
 ```
 
 Example 3
@@ -103,17 +112,25 @@ $o = enumerator::all($arr);
 var_dump($o);
 ```
 
-```
-bool(false)
+```
+
+bool(false)
+
 ```
 
 
 Methods: drop, drop_
 ====================
 void **drop** (array $arr , int $count )
+
 void **drop_** (array &$arr , int $count )
 
+
 Drops the first $count elements.
+
+Links
+-----
+ * http://www.ruby-doc.org/core-1.9.3/Enumerable.html#method-i-drop
 
 Parameters
 ----------
@@ -133,21 +150,29 @@ $o = enumerator::drop($animals, 1);
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [0] => bear
     [1] => cat
-)
+)
+
 ```
 
 
 Methods: any, any_
 ==================
 boolean **any** (array $arr [, callable $callback = NULL ] )
+
 boolean **any_** (array $arr [, callable $callback = NULL ] )
 
+
 Passes each element of the collection to the $callback, if it ever returns anything besides null or false I'll return true, else I'll return false.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-any-3F
 
 Parameters
 ----------
@@ -172,8 +197,10 @@ $o = enumerator::any($animals, function($key, &$value) {
 var_dump($o);
 ```
 
-```
-bool(true)
+```
+
+bool(true)
+
 ```
 
 Example 2
@@ -186,8 +213,10 @@ $o = enumerator::any($animals, function($key, &$value) {
 var_dump($o);
 ```
 
-```
-bool(true)
+```
+
+bool(true)
+
 ```
 
 Example 3
@@ -198,26 +227,43 @@ $o = enumerator::any($arr);
 var_dump($o);
 ```
 
-```
-bool(true)
+```
+
+bool(true)
+
 ```
 
 
 Methods: collect, collect_, each, each_, map, map_, foreach, foreach_, each_with_index, each_with_index_, array_walk
 ====================================================================================================================
 void **collect** (array $arr , callable $callback )
+
 void **collect_** (array &$arr , callable $callback )
+
 void **each** (array $arr , callable $callback )
+
 void **each_** (array &$arr , callable $callback )
+
 void **map** (array $arr , callable $callback )
+
 void **map_** (array &$arr , callable $callback )
+
 void **foreach** (array $arr , callable $callback )
+
 void **foreach_** (array &$arr , callable $callback )
+
 void **each_with_index** (array &$arr , callable $callback )
+
 void **each_with_index_** (array &$arr , callable $callback )
+
 void **array_walk** (array &$arr , callable $callback )
 
+
 Will iterate the elements in the array. Has the potential to change the values.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-collect
 
 Parameters
 ----------
@@ -243,14 +289,16 @@ $o = enumerator::collect($arr, function($key, &$value) {
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [0] => 1
     [1] => 4
     [2] => 9
     [3] => 16
-)
+)
+
 ```
 
 Example 2
@@ -264,29 +312,41 @@ $o = enumerator::collect($arr, function($key, &$value) {
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [0] => cat
     [1] => cat
     [2] => cat
     [3] => cat
-)
+)
+
 ```
 
 
 Methods: count, count_, size, size_, length, length_
 ====================================================
 int **count** (array $arr , callable $callback )
+
 int **count_** (array &$arr , callable $callback )
+
 int **size** (array $arr , callable $callback )
+
 int **size_** (array &$arr , callable $callback )
+
 int **length** (array $arr , callable $callback )
+
 int **length_** (array &$arr , callable $callback )
+
 
 If the callback is null, this function give you the total size of the array.
 If the callback is a anonmous function, this function iterate the blocks and count how many times it returns true.
 Otherwise this function will count how many times $callback is equal to $value.
+
+Links
+-----
+ * http://www.ruby-doc.org/core-1.9.3/Enumerable.html#method-i-count
 
 Parameters
 ----------
@@ -308,8 +368,10 @@ $arr = array(1,2,4,2);
 echo enumerator::count($arr);
 ```
 
-```
-4
+```
+
+4
+
 ```
 
 Example 2
@@ -319,8 +381,10 @@ $arr = array(1,2,4,2);
 echo enumerator::count($arr, 2);
 ```
 
-```
-2
+```
+
+2
+
 ```
 
 Example 3
@@ -332,21 +396,32 @@ echo enumerator::count($arr, function($key, &$value) {
 });
 ```
 
-```
-3
+```
+
+3
+
 ```
 
 
 Methods: Methods, detect, detect_, find, find_
 ==============================================
 mixed **Methods** (array $arr , callable $callback [, mixed $ifnone = NULL ] )
+
 mixed **detect** (array $arr , callable $callback [, mixed $ifnone = NULL ] )
+
 mixed **detect_** (array &$arr , callable $callback [, mixed $ifnone = NULL ] )
+
 mixed **find** (array $arr , callable $callback [, mixed $ifnone = NULL ] )
+
 mixed **find_** (array &$arr , callable $callback [, mixed $ifnone = NULL ] )
+
 
 Will pass the key and value to $callback the first result that does not return false is returned.
 If no results are found this function will return the result of $ifnone (mixed) if none is provided false will be returned.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-detect
 
 Parameters
 ----------
@@ -373,8 +448,10 @@ $o = enumerator::detect($arr, function($key, &$value) {
 var_dump($o);
 ```
 
-```
-NULL
+```
+
+NULL
+
 ```
 
 Example 2
@@ -386,21 +463,33 @@ echo enumerator::detect($arr, function($key, &$value) {
 });
 ```
 
-```
-35
+```
+
+35
+
 ```
 
 
 Methods: select, select_, find_all, find_all_, keep_if, keep_if_
 ================================================================
 array **select** (array $arr , callable $callback )
+
 array **select_** (array &$arr , callable $callback )
+
 array **find_all** (array &$arr , callable $callback )
+
 array **find_all_** (array &$arr , callable $callback )
+
 array **keep_if** (array &$arr , callable $callback )
+
 array **keep_if_** (array &$arr , callable $callback )
 
+
 Will pass the elements to the callback and unset them if the callback returns false.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-select
 
 Parameters
 ----------
@@ -428,22 +517,30 @@ $o = enumerator::select($arr, function($key, &$value) {
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [2] => 3
     [5] => 6
     [8] => 9
-)
+)
+
 ```
 
 
 Methods: each_slice, each_slice_
 ================================
 void **each_slice** (array &$arr , int $size [, callable $callback = NULL ] )
+
 void **each_slice_** (array &$arr , int $size [, callable $callback = NULL ] )
 
+
 Will slice the elements into $size collections and pass to $callback if defined. If not defined, the slized array is returned.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-each_slice
 
 Parameters
 ----------
@@ -474,7 +571,8 @@ $o = enumerator::each_slice($arr, 3, function(&$collection) {
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [0] => Array
@@ -504,16 +602,23 @@ Array
             [0] => 11
         )
 
-)
+)
+
 ```
 
 
 Methods: first, first_
 ======================
 void **first** (array $arr [, int $count = 1 ] )
+
 void **first_** (array &$arr [, int $count = 1 ] )
 
+
 Will overwrite $arr with the first $count items in array.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-first
 
 Parameters
 ----------
@@ -536,11 +641,13 @@ $o = enumerator::first($animals);
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [0] => cat
-)
+)
+
 ```
 
 Example 2
@@ -551,24 +658,34 @@ $o = enumerator::first($animals, 2);
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [0] => cat
     [1] => dog
-)
+)
+
 ```
 
 
 Methods: collect_concat, collect_concat_, flat_map, flat_map_
 =============================================================
 void **collect_concat** (array &$arr , callable $callback )
+
 void **collect_concat_** (array &$arr , callable $callback )
+
 void **flat_map** (array &$arr , callable $callback )
+
 void **flat_map_** (array &$arr , callable $callback )
+
 
 Will flatten the input $arr into a non-multi-dimensional array.It will pass the current key and the value to $callback which has the potential to change the value.
 The new array will have discarded all current keys.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-flat_map
 
 Parameters
 ----------
@@ -593,24 +710,32 @@ $o = enumerator::collect_concat($arr, function($key, &$value) {
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [0] => 2
     [1] => 3
     [2] => 4
     [3] => 5
-)
+)
+
 ```
 
 
 Methods: grep, grep_
 ====================
 void **grep** (array $arr , string $pattern [, callable $callback = NULL ] )
+
 void **grep_** (array &$arr , string $pattern [, callable $callback = NULL ] )
+
 
 Will only keep an item if the value of the item matches $pattern.
 If a callback is provided, it will pass the $key and $value into the array.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-grep
 
 Parameters
 ----------
@@ -638,23 +763,31 @@ $o = enumerator::grep($arr, "/^snow/");
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [0] => snowball
     [1] => snowcone
     [2] => snowangel
-)
+)
+
 ```
 
 
 Methods: group_by, group_by_
 ============================
 void **group_by** (array &$arr , callable $callback [, boolean $preserve_keys = false ] )
+
 void **group_by_** (array &$arr , callable $callback [, boolean $preserve_keys = false ] )
+
 
 Each item will be passed into $callback and the return value will be the new "category" of this item.
 The param $arr will be replaced with an array of these categories with all of their items.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-group_by
 
 Parameters
 ----------
@@ -684,7 +817,8 @@ $o = enumerator::group_by($arr, function($key, &$value) {
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [0] => Array
@@ -705,17 +839,24 @@ Array
             [1] => 5
         )
 
-)
+)
+
 ```
 
 
 Methods: member, include
 ========================
 boolean **member** (array $arr , mixed $needle )
+
 boolean **include** (array $arr , mixed $needle )
+
 
 This function will iterate over $arr, if any value is equal (===) to $needle this function will return true. If nothing is found this function will return false.
 NOTICE: that 'include' alias is a language construct so this alias cannot be called directly. Refer to example #2.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-member-3F
 
 Parameters
 ----------
@@ -735,8 +876,10 @@ $o = enumerator::member($arr, 'snowcone');
 var_dump($o);
 ```
 
-```
-bool(true)
+```
+
+bool(true)
+
 ```
 
 Example 2
@@ -747,8 +890,10 @@ $o = enumerator::member($arr, 'snowman');
 var_dump($o);
 ```
 
-```
-bool(false)
+```
+
+bool(false)
+
 ```
 
 Example 3
@@ -760,8 +905,10 @@ $o = enumerator::$fun($arr, 'snowcone');
 var_dump($o);
 ```
 
-```
-bool(true)
+```
+
+bool(true)
+
 ```
 
 
@@ -769,7 +916,12 @@ Methods: min
 ============
 mixed **min** (array $arr , callback optional )
 
+
 Will find the lowest value. If callback is defined it will compare them.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-min
 
 Parameters
 ----------
@@ -791,8 +943,10 @@ $array = array('albatross','dog','horse');
 echo enumerator::min($array);
 ```
 
-```
-albatross
+```
+
+albatross
+
 ```
 
 Example 2
@@ -804,8 +958,10 @@ echo enumerator::min($array, function($val1, $val2) {
 });
 ```
 
-```
-dog
+```
+
+dog
+
 ```
 
 
@@ -813,7 +969,12 @@ Methods: max
 ============
 mixed **max** (array $arr , callback optional )
 
+
 Will find the highest value. If callback is defined it will compare them.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-max
 
 Parameters
 ----------
@@ -835,8 +996,10 @@ $array = array('albatross','dog','horse');
 echo enumerator::max($array);
 ```
 
-```
-horse
+```
+
+horse
+
 ```
 
 Example 2
@@ -848,8 +1011,10 @@ echo enumerator::max($array, function($val1, $val2) {
 });
 ```
 
-```
-albatross
+```
+
+albatross
+
 ```
 
 
@@ -857,7 +1022,12 @@ Methods: min_by
 ===============
 mixed **min_by** (array $arr , callable $callback )
 
+
 Will find the lowest item in the array but comparing the output os $callback against every item.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-min_by
 
 Parameters
 ----------
@@ -878,8 +1048,10 @@ echo enumerator::min_by($array, function($val) {
 });
 ```
 
-```
-dog
+```
+
+dog
+
 ```
 
 
@@ -887,7 +1059,12 @@ Methods: max_by
 ===============
 mixed **max_by** (array $arr , callable $callback )
 
+
 Will find the highest item in the array but comparing the output os $callback against every item.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-max_by
 
 Parameters
 ----------
@@ -908,8 +1085,10 @@ echo enumerator::max_by($array, function($val) {
 });
 ```
 
-```
-albatross
+```
+
+albatross
+
 ```
 
 
@@ -917,7 +1096,12 @@ Methods: minmax
 ===============
 array **minmax** (array $arr , callback optional )
 
+
 Will return an array of min and max. Optionally you can provide a callback to sort them.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-minmax
 
 Parameters
 ----------
@@ -942,12 +1126,14 @@ $o = enumerator::minmax($array, function($val1, $val2) {
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [0] => dog
     [1] => albatross
-)
+)
+
 ```
 
 
@@ -955,7 +1141,12 @@ Methods: minmax_by
 ==================
 array **minmax_by** (array $arr , callable $callback )
 
+
 Will find the lowest and highest item in the array but comparing the output os $callback against every item.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-minmax_by
 
 Parameters
 ----------
@@ -977,12 +1168,14 @@ $o = enumerator::minmax_by($array, function($val) {
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [0] => dog
     [1] => albatross
-)
+)
+
 ```
 
 
@@ -990,7 +1183,12 @@ Methods: none
 =============
 boolean **none** (array $arr [, callable $callback = NULL ] )
 
+
 Passes each element of the collection to $callback. This will return true if $callback never returns true, else false.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-none-3F
 
 Parameters
 ----------
@@ -1015,8 +1213,10 @@ $o = enumerator::none($array, function($key, $value) {
 var_dump($o);
 ```
 
-```
-bool(true)
+```
+
+bool(true)
+
 ```
 
 Example 2
@@ -1029,8 +1229,10 @@ $o = enumerator::none($array, function($key, $value) {
 var_dump($o);
 ```
 
-```
-bool(false)
+```
+
+bool(false)
+
 ```
 
 Example 3
@@ -1040,8 +1242,10 @@ $o = enumerator::none(array());
 var_dump($o);
 ```
 
-```
-bool(true)
+```
+
+bool(true)
+
 ```
 
 Example 4
@@ -1051,8 +1255,10 @@ $o = enumerator::none(array(null));
 var_dump($o);
 ```
 
-```
-bool(true)
+```
+
+bool(true)
+
 ```
 
 Example 5
@@ -1063,8 +1269,10 @@ $o = enumerator::none($arr);
 var_dump($o);
 ```
 
-```
-bool(true)
+```
+
+bool(true)
+
 ```
 
 
@@ -1072,7 +1280,12 @@ Methods: one
 ============
 boolean **one** (array $arr [, callable $callback = NULL ] )
 
+
 Pases each element of the collection to $callback. If $callback returns true once, the function will return true. Otherwise, the function will return false.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-one-3F
 
 Parameters
 ----------
@@ -1097,8 +1310,10 @@ $o = enumerator::one($array, function($key, $value) {
 var_dump($o);
 ```
 
-```
-bool(true)
+```
+
+bool(true)
+
 ```
 
 Example 2
@@ -1108,8 +1323,10 @@ $o = enumerator::one(array(null, true, 99));
 var_dump($o);
 ```
 
-```
-bool(false)
+```
+
+bool(false)
+
 ```
 
 Example 3
@@ -1119,17 +1336,25 @@ $o = enumerator::one(array(null, true, false));
 var_dump($o);
 ```
 
-```
-bool(true)
+```
+
+bool(true)
+
 ```
 
 
 Methods: partition, partition_
 ==============================
 void **partition** (array $arr , callable $callback [, boolean $preserve_keys = false ] )
+
 void **partition_** (array &$arr , callable $callback [, boolean $preserve_keys = false ] )
 
+
 Passes each element into $callback. If $callback returns true the item will be in the first category, otherwise the second.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-partition
 
 Parameters
 ----------
@@ -1156,7 +1381,8 @@ $o = enumerator::partition($arr, function($key, $value) {
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [0] => Array
@@ -1172,18 +1398,27 @@ Array
             [1] => 3
             [2] => 5
         )
-)
+)
+
 ```
 
 
 Methods: inject, inject_, reduce, reduce_
 =========================================
 mixed **inject** (array $arr , callable $callback , mixed optional )
+
 mixed **inject_** (array &$arr , callable $callback , mixed optional )
+
 mixed **reduce** (array $arr , callable $callback , mixed optional )
+
 mixed **reduce_** (array &$arr , callable $callback , mixed optional )
 
+
 Will iterate the items in $arr passing each one to $callback with $memo as the third argument.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-inject
 
 Parameters
 ----------
@@ -1216,8 +1451,10 @@ echo enumerator::inject($arr, function($key, &$value, &$memo){
 });
 ```
 
-```
-45
+```
+
+45
+
 ```
 
 Example 2
@@ -1230,18 +1467,27 @@ echo enumerator::inject($arr, function($key, &$value, &$memo){
 }, 1);
 ```
 
-```
-151200
+```
+
+151200
+
 ```
 
 
 Methods: reject: reject_, delete_if, delete_if_
 ===============================================
 void **reject: reject_** (array &$arr , callable $callback )
+
 void **delete_if** (array &$arr , callable $callback )
+
 void **delete_if_** (array &$arr , callable $callback )
 
+
 Will unset an item in $arr if $callback returns true for it.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-reject
 
 Parameters
 ----------
@@ -1266,7 +1512,8 @@ $o = enumerator::reject($arr, function($key, $value) {
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [0] => 1
@@ -1276,23 +1523,37 @@ Array
     [6] => 7
     [7] => 8
     [9] => 10
-)
+)
+
 ```
 
 
 Methods: reverse_collect, reverse_collect_, reverse_each, reverse_each_, reverse_map, reverse_map_, reverse_foreach, reverse_foreach_, reverse_each_with_index
 ==============================================================================================================================================================
 void **reverse_collect** (array &$arr , callable $callback )
+
 void **reverse_collect_** (array &$arr , callable $callback )
+
 void **reverse_each** (array &$arr , callable $callback )
+
 void **reverse_each_** (array &$arr , callable $callback )
+
 void **reverse_map** (array &$arr , callable $callback )
+
 void **reverse_map_** (array &$arr , callable $callback )
+
 void **reverse_foreach** (array &$arr , callable $callback )
+
 void **reverse_foreach_** (array &$arr , callable $callback )
+
 void **reverse_each_with_index** (array &$arr , callable $callback )
 
+
 Will iterate the array in reverse, but will NOT save the order.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-reverse_each
 
 Parameters
 ----------
@@ -1317,17 +1578,25 @@ enumerator::reverse_collect($arr, function($key, &$value) {
 });
 ```
 
-```
-3, 2, 1,
+```
+
+3, 2, 1,
+
 ```
 
 
 Methods: sort, sort_
 ====================
 void **sort** (array $arr [, callable $callback = NULL ] )
+
 void **sort_** (array &$arr [, callable $callback = NULL ] )
 
+
 Will sort the contents of $arr. A callback can be used to sort.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-sort
 
 Parameters
 ----------
@@ -1350,13 +1619,15 @@ $o = enumerator::sort($arr);
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [0] => flea
     [1] => kea
     [2] => rhea
-)
+)
+
 ```
 
 Example 2
@@ -1369,22 +1640,30 @@ $o = enumerator::sort($arr, function($val1, $val2) {
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [0] => rhea
     [1] => kea
     [2] => flea
-)
+)
+
 ```
 
 
 Methods: sort_by, sort_by_
 ==========================
 void **sort_by** (array &$arr , callable $callback )
+
 void **sort_by_** (array &$arr , callable $callback )
 
+
 Will sort based off of the return of $callback.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-sort_by
 
 Parameters
 ----------
@@ -1406,22 +1685,30 @@ $o = enumerator::sort_by($arr, function($val) {
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [0] => kea
     [1] => flea
     [2] => rhea
-)
+)
+
 ```
 
 
 Methods: take_while, take_while_
 ================================
 void **take_while** (array &$arr , callable $callback )
+
 void **take_while_** (array &$arr , callable $callback )
 
+
 Passes elements into $callback until it returns false or null, at which point this function will stop and set $arr to all prior elements.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-take_while
 
 Parameters
 ----------
@@ -1446,21 +1733,29 @@ $o = enumerator::take_while($arr, function($key, &$value) {
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [0] => 1
     [1] => 2
-)
+)
+
 ```
 
 
 Methods: zip, zip_
 ==================
 void **zip** (array $arr , array $one )
+
 void **zip_** (array &$arr , array $one )
 
+
 Will turn each element in $arr into an array then appending the associated indexs from the other arrays into this array as well.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-zip
 
 Parameters
 ----------
@@ -1483,7 +1778,8 @@ $o = enumerator::zip($arr, array(4,5,6), array(7,8,9));
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [0] => Array
@@ -1508,7 +1804,8 @@ Array
             [2] => 9
         )
 
-)
+)
+
 ```
 
 Example 2
@@ -1519,7 +1816,8 @@ $o = enumerator::zip($arr, array(4,5,6),array(7,8,9));
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [0] => Array
@@ -1536,7 +1834,8 @@ Array
             [2] => 8
         )
 
-)
+)
+
 ```
 
 Example 3
@@ -1547,7 +1846,8 @@ $o = enumerator::zip($arr, array(1,2), array(8));
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [0] => Array
@@ -1571,16 +1871,23 @@ Array
             [2] => 
         )
 
-)
+)
+
 ```
 
 
 Methods: drop_while, drop_while_
 ================================
 void **drop_while** (array &$arr , callable $callback )
+
 void **drop_while_** (array &$arr , callable $callback )
 
+
 Will pass elements into $callback until false is returned at which point all elements before the current one will be removed.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-drop_while
 
 Parameters
 ----------
@@ -1602,23 +1909,31 @@ $o = enumerator::drop_while($arr, function($key, &$value) {
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [0] => 3
     [1] => 4
     [2] => 5
     [3] => 0
-)
+)
+
 ```
 
 
 Methods: cycle, cycle_
 ======================
 void **cycle** (array $arr , int $it , callable $callback )
+
 void **cycle_** (array $arr , int $it , callable $callback )
 
+
 Will pass every element of $arr into $callback exactly $it times.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Array.html#method-i-cycle
 
 Parameters
 ----------
@@ -1644,19 +1959,27 @@ enumerator::cycle($arr, 3, function($key, $value, $it) {
 });
 ```
 
-```
-1,2,3,1,2,3,1,2,3,
+```
+
+1,2,3,1,2,3,1,2,3,
+
 ```
 
 
 Methods: each_cons, each_cons_
 ==============================
 void **each_cons** (array &$arr , int $size [, callable $callback = false ] )
+
 void **each_cons_** (array &$arr , int $size [, callable $callback = false ] )
+
 
 This will return each section as an item in an array.
 A section is each consecutive $size of $arr.
 It will also iterate over each item in every section.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-each_cons
 
 Parameters
 ----------
@@ -1678,7 +2001,8 @@ $o = enumerator::each_cons($arr, 8);
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [0] => Array
@@ -1717,16 +2041,23 @@ Array
             [7] => 10
         )
 
-)
+)
+
 ```
 
 
 Methods: slice_before, slice_before_
 ====================================
 void **slice_before** (array &$arr , string $pattern )
+
 void **slice_before_** (array &$arr , string $pattern )
 
+
 When $pattern is matched in an element, all previous elements not include previous chunks are placed into a new chunk.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-slice_before
 
 Parameters
 ----------
@@ -1746,7 +2077,8 @@ $o = enumerator::slice_before($arr, "/[02468]/"); // will "splice before" an eve
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [0] => Array
@@ -1783,18 +2115,27 @@ Array
             [0] => 0
         )
 
-)
+)
+
 ```
 
 
 Methods: merge, merge_, concat, concat_
 =======================================
 void **merge** (array $arr , array $arr2 )
+
 void **merge_** (array &$arr , array $arr2 )
+
 void **concat** (array $arr , array $arr2 )
+
 void **concat_** (array &$arr , array $arr2 )
 
+
 Will merge two or more arrays together.
+
+Links
+-----
+ * http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-2B
 
 Parameters
 ----------
@@ -1815,7 +2156,8 @@ $o = enumerator::merge($animals, $trees, array('wool'));
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [0] => dog
@@ -1823,16 +2165,23 @@ Array
     [2] => pig
     [3] => pine
     [4] => wool
-)
+)
+
 ```
 
 
 Methods: rotate, rotate_
 ========================
 void **rotate** (array $arr , int $index )
+
 void **rotate_** (array &$arr , int $index )
 
+
 Will rotate the array so that $index is the first element in the array. Negative indexs are allowed.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Array.html#method-i-rotate
 
 Parameters
 ----------
@@ -1855,13 +2204,15 @@ $o = enumerator::rotate($arr, 1);
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [0] => bar
     [1] => foobar
     [2] => Foo
-)
+)
+
 ```
 
 Example 2
@@ -1872,22 +2223,30 @@ $o = enumerator::rotate($arr, -1);
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [0] => foobar
     [1] => Foo
     [2] => bar
-)
+)
+
 ```
 
 
 Methods: reverse, reverse_
 ==========================
 void **reverse** (array $arr , boolean optional )
+
 void **reverse_** (array &$arr , boolean optional )
 
+
 Will reverse an array.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Array.html#method-i-reverse
 
 Parameters
 ----------
@@ -1910,24 +2269,34 @@ $o = enumerator::reverse($arr);
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [0] => 3
     [1] => 2
     [2] => 1
-)
+)
+
 ```
 
 
 Methods: random, random_, sample, sample_
 =========================================
 mixed **random** (array $arr , int optional )
+
 mixed **random_** (array &$arr , int optional )
+
 mixed **sample** (array $arr , int optional )
+
 mixed **sample_** (array &$arr , int optional )
 
+
 Will get $count random values from $arr. If $count is 1 then it'll return the value, otherwise it'll return an array of values.
+
+Links
+-----
+ * http://ruby-doc.org/core-1.9.3/Array.html#method-i-sample
 
 Parameters
 ----------
@@ -1950,8 +2319,10 @@ $o = enumerator::random($arr);
 echo $o;
 ```
 
-```
-dog
+```
+
+dog
+
 ```
 
 Example 2
@@ -1962,21 +2333,29 @@ $o = enumerator::random($arr, 2);
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [0] => dog
     [1] => cow
-)
+)
+
 ```
 
 
 Methods: shuffle, shuffle_
 ==========================
 void **shuffle** (array $arr [, boolean $preserve_keys = false ] )
+
 void **shuffle_** (array &$arr [, boolean $preserve_keys = false ] )
 
+
 Will shuffle the inputted array.
+
+Links
+-----
+ * http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-shuffle
 
 Parameters
 ----------
@@ -1999,13 +2378,15 @@ $o = enumerator::shuffle($arr);
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [0] => 2
     [1] => 1
     [2] => 3
-)
+)
+
 ```
 
 Example 2
@@ -2016,22 +2397,30 @@ $o = enumerator::shuffle($arr, true);
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [a] => apple
     [c] => carrot
     [b] => banana
-)
+)
+
 ```
 
 
 Methods: values_at, values_at_
 ==============================
 void **values_at** (type array , mixed $index )
+
 void **values_at_** (type array , mixed $index )
 
+
 Will replace the current array with only the inserted indexs. Use the non-destructive form to get the array returned instead.
+
+Links
+-----
+ * http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-values_at
 
 Parameters
 ----------
@@ -2063,19 +2452,23 @@ $o = enumerator::values_at($name, 'title', 'last');
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [title] => Dr.
     [last] => Doe
-)
+)
+
 ```
 
 
 Methods: empty, isEmpty
 =======================
 boolean **empty** (array $arr )
+
 boolean **isEmpty** (array $arr )
+
 
 If the array is empty or not.
 NOTICE: that 'empty' alias is a language construct so this alias cannot be called directly. Refer to example #3.
@@ -2095,8 +2488,10 @@ $arr = array();
 var_dump(enumerator::isEmpty($arr));
 ```
 
-```
-bool(true)
+```
+
+bool(true)
+
 ```
 
 Example 2
@@ -2106,8 +2501,10 @@ $arr = array(1,2,3);
 var_dump(enumerator::isEmpty($arr));
 ```
 
-```
-bool(false)
+```
+
+bool(false)
+
 ```
 
 Example 3
@@ -2118,14 +2515,17 @@ $arr = array(1,2,3);
 var_dump(enumerator::$empty($arr));
 ```
 
-```
-bool(false)
+```
+
+bool(false)
+
 ```
 
 
 Methods: has_value
 ==================
 boolean **has_value** (array $arr , mixed $value )
+
 
 Will return a boolean based on the condition that $value exists inside of $arr and are the same data type.
 
@@ -2146,8 +2546,10 @@ $arr = array(0,false);
 var_dump(enumerator::has_value($arr, null));
 ```
 
-```
-bool(false)
+```
+
+bool(false)
+
 ```
 
 Example 2
@@ -2157,8 +2559,10 @@ $arr = array(false,null);
 var_dump(enumerator::has_value($arr, 0));
 ```
 
-```
-bool(false)
+```
+
+bool(false)
+
 ```
 
 Example 3
@@ -2168,21 +2572,31 @@ $arr = array('apple', 'banana', 'orange');
 var_dump(enumerator::has_value($arr, 'orange'));
 ```
 
-```
-bool(true)
+```
+
+bool(true)
+
 ```
 
 
 Methods: index, index_, find_index, find_index_
 ===============================================
 mixed **index** (array $arr [, mixed $callback = NULL ] )
+
 mixed **index_** (array &$arr [, mixed $callback = NULL ] )
+
 mixed **find_index** (array &$arr [, mixed $callback = NULL ] )
+
 mixed **find_index_** (array &$arr [, mixed $callback = NULL ] )
+
 
 Will return the first index if found or false otherwise. Use '===' for comparing.
 If $callback is a callback function, the $key is returned the first time $callback returns true.
 If $callback is not a callback, we are looking for the first $value in $arr to be === $callback.
+
+Links
+-----
+ * http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-index
 
 Parameters
 ----------
@@ -2208,8 +2622,10 @@ $name = array(
 echo enumerator::index($name, 'John');
 ```
 
-```
-first
+```
+
+first
+
 ```
 
 Example 2
@@ -2228,19 +2644,27 @@ echo enumerator::index_($name, function($key, &$value) {
 });
 ```
 
-```
-title
+```
+
+title
+
 ```
 
 
 Methods: rindex, rindex_
 ========================
 mixed **rindex** (array $arr , mixed $callback )
+
 mixed **rindex_** (array &$arr , mixed $callback )
+
 
 Similar to index but looks for the last occurace of $callback.
 If $callback is a callback function, the $key is returned the last time $callback returns true.
 If $callback is not a callback, we are looking for the last $value in $arr to be === $callback.
+
+Links
+-----
+ * http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-rindex
 
 Parameters
 ----------
@@ -2266,8 +2690,10 @@ $name = array(
 echo enumerator::rindex($name, 'John');
 ```
 
-```
-first
+```
+
+first
+
 ```
 
 Example 2
@@ -2286,17 +2712,25 @@ echo enumerator::rindex_($name, function($key, &$value) {
 });
 ```
 
-```
-suffix
+```
+
+suffix
+
 ```
 
 
 Methods: compact, compact_
 ==========================
 void **compact** (array $arr )
+
 void **compact_** (array &$arr )
 
+
 Will remove all null values inside of $arr. If $recursive is set to true, it will crawl sub-arrays.
+
+Links
+-----
+ * http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-compact
 
 Parameters
 ----------
@@ -2314,7 +2748,8 @@ $o = enumerator::compact($arr);
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [0] => 1
@@ -2328,7 +2763,8 @@ Array
             [3] => 
        )
 
-)
+)
+
 ```
 
 Example 2
@@ -2339,7 +2775,8 @@ $o = enumerator::compact($arr, true);
 print_r($o);
 ```
 
-```
+```
+
 Array
 (
     [0] => 1
@@ -2352,6 +2789,7 @@ Array
             [2] => 4
        )
 
-)
+)
+
 ```
 
