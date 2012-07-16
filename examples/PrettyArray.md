@@ -9,7 +9,7 @@ see
 * PrettyArray::__call()
 * PrettyArray::__callStatic()
 
-Methods: __construct
+Methods: \_\_construct
 ====================
 void **\_\_construct** (array optional )
 
@@ -164,7 +164,7 @@ foobar
 ```
 
 
-Methods: __call
+Methods: \_\_call
 ===============
 mixed **\_\_call** (string $method , array $params )
 
@@ -228,7 +228,7 @@ Array
 ```
 
 
-Methods: __callStatic
+Methods: \_\_callStatic
 =====================
 mixed **\_\_callStatic** (string $method , array $params )
 
@@ -276,7 +276,7 @@ PrettyArray::collect($arr, function($key, &$value) {
 ```
 
 
-Methods: getRange_
+Methods: getRange\_
 ==================
 PrettyArray **getRange\_** (mixed $start , mixed $end )
 
@@ -326,7 +326,7 @@ Array
 ```
 
 
-Methods: getSet, getSet_
+Methods: getSet, getSet\_
 ========================
 PrettyArray **getSet** (mixed $start , int $length )
 
@@ -409,7 +409,7 @@ bar
 ```
 
 
-Methods: __toString
+Methods: \_\_toString
 ===================
 string **\_\_toString** ()
 
@@ -441,7 +441,7 @@ Array
 ```
 
 
-Methods: to_a
+Methods: to\_a
 =============
 array **to\_a** ()
 
