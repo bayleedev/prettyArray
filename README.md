@@ -4,11 +4,13 @@ A object oriented approach to handling arrays in PHP.
 It attempts to combine Ruby (enumerator/array/hash) methods as well as built in PHP functions.
 
 ## Example 1
----------
 ```php
+<?php
+require_once('./libraries/PrettyArray/PrettyArray.php')
 $arr = new PrettyArray(array(1,2,3,null,array(2,3,4,null)));
 $arr->compact_($arr, true);
 print_r($arr->to_a());
+?>
 ```
 ```
 Array
@@ -26,18 +28,23 @@ Array
 )
 ```
 
+## Installation
+ * cd /libraries/
+ * git clone git@github.com:BlaineSch/PrettyArray.git
+ * Enjoy PrettyArray!
+
 ## More Examples
  * [PrettyArray Examples](examples/PrettyArray.md)
  * [Enumerator Examples](examples/enumerator.md)
 
 ## Requirements
- * PHP 5.3+
+ * [PHP 5.3+](http://php.net/downloads.php)
 
 ## Contributing
 
 ### Requirements
-	* PHP 5.3+
-	* PHPUnit
+ * [PHP 5.3+](http://php.net/downloads.php)
+ * [PHPUnit](http://www.phpunit.de/manual/3.6/en/installation.html/)
 
 ### Testing
 
