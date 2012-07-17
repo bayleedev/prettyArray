@@ -50,7 +50,26 @@ More examples can be found inside of the "/examples" directory in markdown forma
 
 After making any pull requests please verify that your methods pass the current unit tests.
 ```
-phpunit ./tests/
+cd PrettyArray/tests/
+phpunit ./
+```
+```
+PHPUnit 3.6.11 by Sebastian Bergmann.
+
+Configuration read from C:\xampp\htdocs\PrettyArray\tests\phpunit.xml
+
+...............................................................  63 / 410 ( 15%)
+............................................................... 126 / 410 ( 30%)
+............................................................... 189 / 410 ( 46%)
+............................................................... 252 / 410 ( 61%)
+............................................................... 315 / 410 ( 76%)
+............................................................... 378 / 410 ( 92%)
+................................
+
+Time: 1 second, Memory: 5.25Mb
+
+[30;42m[2KOK (410 tests, 488 assertions)
+[0m[2K
 ```
 
 ### Test Files
