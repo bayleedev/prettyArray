@@ -6,6 +6,7 @@ It attempts to combine Ruby (enumerator/array/hash) methods as well as built in 
 ## Example 1
 ```php
 <?php
+require_once('./libraries/PrettyArray/PrettyArray.php');
 $arr = new PrettyArray(range(1,6));
 $arr->group_by_(function($key, &$value) {
 	return ($value % 3);
