@@ -1,13 +1,4 @@
 <?php
-/**
- * PrettyArray
- * 
- * An object oriented approach to array development.
- * 
- * @author Blaine Schmeisser <BlaineSch@gmail.com>
- */
-// Dependencies
-require_once('enumerator.php');
 
 /**
  * Enumerator
