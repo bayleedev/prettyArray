@@ -410,7 +410,7 @@ class enumerator {
 	}
 
 	/**
-	 * Methods, detect, detect_, find, find_
+	 * Methods: detect, detect_, find, find_
 	 * 
 	 * Will pass the key and value to $callback the first result that does not return false is returned.
 	 * If no results are found this function will return the result of $ifnone (mixed) if none is provided false will be returned.
