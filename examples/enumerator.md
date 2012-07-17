@@ -141,7 +141,7 @@ Table Of Contents
  * [compact](#method_compact_)
  * [compact_](#method_compact_)
 
-Methods: \_\_callStatic <a name="#method___callStatic"></a>
+Methods: \_\_callStatic <a name="method___callStatic"></a>
 =====================
 mixed **\_\_callStatic** (string $method , array $params )
 
@@ -167,7 +167,7 @@ Return
  mixed
 
 
-Methods: all, all\_ <a name="#method_all_"></a>
+Methods: all, all\_ <a name="method_all_"></a>
 ==================
 boolean **all** (array $arr [, callable $callback = NULL ] )
 
@@ -234,7 +234,7 @@ bool(false)
 ```
 
 
-Methods: drop, drop\_ <a name="#method_drop_"></a>
+Methods: drop, drop\_ <a name="method_drop_"></a>
 ====================
 void **drop** (array $arr , int $count )
 
@@ -274,7 +274,7 @@ Array
 ```
 
 
-Methods: any, any\_ <a name="#method_any_"></a>
+Methods: any, any\_ <a name="method_any_"></a>
 ==================
 boolean **any** (array $arr [, callable $callback = NULL ] )
 
@@ -341,7 +341,7 @@ bool(true)
 ```
 
 
-Methods: collect, collect\_, each, each\_, map, map\_, foreach, foreach\_, each\_with\_index, each\_with\_index\_, array\_walk <a name="#method_array_walk_"></a>
+Methods: collect, collect\_, each, each\_, map, map\_, foreach, foreach\_, each\_with\_index, each\_with\_index\_, array\_walk <a name="method_array_walk_"></a>
 ====================================================================================================================
 void **collect** (array $arr , callable $callback )
 
@@ -428,7 +428,7 @@ Array
 ```
 
 
-Methods: count, count\_, size, size\_, length, length\_ <a name="#method_size_"></a>
+Methods: count, count\_, size, size\_, length, length\_ <a name="method_size_"></a>
 ====================================================
 int **count** (array $arr , callable $callback )
 
@@ -500,7 +500,7 @@ echo enumerator::count($arr, function($key, &$value) {
 ```
 
 
-Methods: Methods, detect, detect\_, find, find\_ <a name="#method_find_"></a>
+Methods: Methods, detect, detect\_, find, find\_ <a name="method_find_"></a>
 ==============================================
 mixed **Methods** (array $arr , callable $callback [, mixed $ifnone = NULL ] )
 
@@ -563,7 +563,7 @@ echo enumerator::detect($arr, function($key, &$value) {
 ```
 
 
-Methods: select, select\_, find\_all, find\_all\_, keep\_if, keep\_if\_ <a name="#method_find_all_"></a>
+Methods: select, select\_, find\_all, find\_all\_, keep\_if, keep\_if\_ <a name="method_find_all_"></a>
 ================================================================
 array **select** (array $arr , callable $callback )
 
@@ -620,7 +620,7 @@ Array
 ```
 
 
-Methods: each\_slice, each\_slice\_ <a name="#method_each_slice_"></a>
+Methods: each\_slice, each\_slice\_ <a name="method_each_slice_"></a>
 ================================
 void **each\_slice** (array &$arr , int $size [, callable $callback = NULL ] )
 
@@ -696,7 +696,7 @@ Array
 ```
 
 
-Methods: first, first\_ <a name="#method_first_"></a>
+Methods: first, first\_ <a name="method_first_"></a>
 ======================
 void **first** (array $arr [, int $count = 1 ] )
 
@@ -754,7 +754,7 @@ Array
 ```
 
 
-Methods: collect\_concat, collect\_concat\_, flat\_map, flat\_map\_ <a name="#method_flat_map_"></a>
+Methods: collect\_concat, collect\_concat\_, flat\_map, flat\_map\_ <a name="method_flat_map_"></a>
 =============================================================
 void **collect\_concat** (array &$arr , callable $callback )
 
@@ -806,7 +806,7 @@ Array
 ```
 
 
-Methods: grep, grep\_ <a name="#method_grep_"></a>
+Methods: grep, grep\_ <a name="method_grep_"></a>
 ====================
 void **grep** (array $arr , string $pattern [, callable $callback = NULL ] )
 
@@ -856,7 +856,7 @@ Array
 ```
 
 
-Methods: group\_by, group\_by\_ <a name="#method_group_by_"></a>
+Methods: group\_by, group\_by\_ <a name="method_group_by_"></a>
 ============================
 void **group\_by** (array &$arr , callable $callback [, boolean $preserve_keys = false ] )
 
@@ -923,7 +923,7 @@ Array
 ```
 
 
-Methods: member, include <a name="#method_member"></a>
+Methods: member, include <a name="method_member"></a>
 ========================
 boolean **member** (array $arr , mixed $needle )
 
@@ -985,7 +985,7 @@ bool(true)
 ```
 
 
-Methods: min <a name="#method_min"></a>
+Methods: min <a name="method_min"></a>
 ============
 mixed **min** (array $arr , callback optional )
 
@@ -1034,7 +1034,7 @@ dog
 ```
 
 
-Methods: max <a name="#method_max"></a>
+Methods: max <a name="method_max"></a>
 ============
 mixed **max** (array $arr , callback optional )
 
@@ -1083,7 +1083,7 @@ albatross
 ```
 
 
-Methods: min\_by <a name="#method_min_by"></a>
+Methods: min\_by <a name="method_min_by"></a>
 ===============
 mixed **min\_by** (array $arr , callable $callback )
 
@@ -1118,7 +1118,7 @@ dog
 ```
 
 
-Methods: max\_by <a name="#method_max_by"></a>
+Methods: max\_by <a name="method_max_by"></a>
 ===============
 mixed **max\_by** (array $arr , callable $callback )
 
@@ -1153,7 +1153,7 @@ albatross
 ```
 
 
-Methods: minmax <a name="#method_minmax"></a>
+Methods: minmax <a name="method_minmax"></a>
 ===============
 array **minmax** (array $arr , callback optional )
 
@@ -1196,7 +1196,7 @@ Array
 ```
 
 
-Methods: minmax\_by <a name="#method_minmax_by"></a>
+Methods: minmax\_by <a name="method_minmax_by"></a>
 ==================
 array **minmax\_by** (array $arr , callable $callback )
 
@@ -1236,7 +1236,7 @@ Array
 ```
 
 
-Methods: none <a name="#method_none"></a>
+Methods: none <a name="method_none"></a>
 =============
 boolean **none** (array $arr [, callable $callback = NULL ] )
 
@@ -1323,7 +1323,7 @@ bool(true)
 ```
 
 
-Methods: one <a name="#method_one"></a>
+Methods: one <a name="method_one"></a>
 ============
 boolean **one** (array $arr [, callable $callback = NULL ] )
 
@@ -1384,7 +1384,7 @@ bool(true)
 ```
 
 
-Methods: partition, partition\_ <a name="#method_partition_"></a>
+Methods: partition, partition\_ <a name="method_partition_"></a>
 ==============================
 void **partition** (array $arr , callable $callback [, boolean $preserve_keys = false ] )
 
@@ -1442,7 +1442,7 @@ Array
 ```
 
 
-Methods: inject, inject\_, reduce, reduce\_ <a name="#method_reduce_"></a>
+Methods: inject, inject\_, reduce, reduce\_ <a name="method_reduce_"></a>
 =========================================
 mixed **inject** (array $arr , callable $callback , mixed optional )
 
@@ -1509,7 +1509,7 @@ echo enumerator::inject($arr, function($key, &$value, &$memo){
 ```
 
 
-Methods: reject: reject\_, delete\_if, delete\_if\_ <a name="#method_delete_if_"></a>
+Methods: reject: reject\_, delete\_if, delete\_if\_ <a name="method_delete_if_"></a>
 ===============================================
 void **reject: reject\_** (array &$arr , callable $callback )
 
@@ -1561,7 +1561,7 @@ Array
 ```
 
 
-Methods: reverse\_collect, reverse\_collect\_, reverse\_each, reverse\_each\_, reverse\_map, reverse\_map\_, reverse\_foreach, reverse\_foreach\_, reverse\_each\_with\_index <a name="#method_reverse_each_"></a>
+Methods: reverse\_collect, reverse\_collect\_, reverse\_each, reverse\_each\_, reverse\_map, reverse\_map\_, reverse\_foreach, reverse\_foreach\_, reverse\_each\_with\_index <a name="method_reverse_each_"></a>
 ==============================================================================================================================================================
 void **reverse\_collect** (array &$arr , callable $callback )
 
@@ -1616,7 +1616,7 @@ enumerator::reverse_collect($arr, function($key, &$value) {
 ```
 
 
-Methods: sort, sort\_ <a name="#method_sort_"></a>
+Methods: sort, sort\_ <a name="method_sort_"></a>
 ====================
 void **sort** (array $arr [, callable $callback = NULL ] )
 
@@ -1679,7 +1679,7 @@ Array
 ```
 
 
-Methods: sort\_by, sort\_by\_ <a name="#method_sort_by_"></a>
+Methods: sort\_by, sort\_by\_ <a name="method_sort_by_"></a>
 ==========================
 void **sort\_by** (array &$arr , callable $callback )
 
@@ -1722,7 +1722,7 @@ Array
 ```
 
 
-Methods: take\_while, take\_while\_ <a name="#method_take_while_"></a>
+Methods: take\_while, take\_while\_ <a name="method_take_while_"></a>
 ================================
 void **take\_while** (array &$arr , callable $callback )
 
@@ -1767,7 +1767,7 @@ Array
 ```
 
 
-Methods: zip, zip\_ <a name="#method_zip_"></a>
+Methods: zip, zip\_ <a name="method_zip_"></a>
 ==================
 void **zip** (array $arr , array $one )
 
@@ -1893,7 +1893,7 @@ Array
 ```
 
 
-Methods: drop\_while, drop\_while\_ <a name="#method_drop_while_"></a>
+Methods: drop\_while, drop\_while\_ <a name="method_drop_while_"></a>
 ================================
 void **drop\_while** (array &$arr , callable $callback )
 
@@ -1937,7 +1937,7 @@ Array
 ```
 
 
-Methods: cycle, cycle\_ <a name="#method_cycle_"></a>
+Methods: cycle, cycle\_ <a name="method_cycle_"></a>
 ======================
 void **cycle** (array $arr , int $it , callable $callback )
 
@@ -1979,7 +1979,7 @@ enumerator::cycle($arr, 3, function($key, $value, $it) {
 ```
 
 
-Methods: each\_cons, each\_cons\_ <a name="#method_each_cons_"></a>
+Methods: each\_cons, each\_cons\_ <a name="method_each_cons_"></a>
 ==============================
 void **each\_cons** (array &$arr , int $size [, callable $callback = false ] )
 
@@ -2057,7 +2057,7 @@ Array
 ```
 
 
-Methods: slice\_before, slice\_before\_ <a name="#method_slice_before_"></a>
+Methods: slice\_before, slice\_before\_ <a name="method_slice_before_"></a>
 ====================================
 void **slice\_before** (array &$arr , string $pattern )
 
@@ -2129,7 +2129,7 @@ Array
 ```
 
 
-Methods: merge, merge\_, concat, concat\_ <a name="#method_concat_"></a>
+Methods: merge, merge\_, concat, concat\_ <a name="method_concat_"></a>
 =======================================
 void **merge** (array $arr , array $arr2 )
 
@@ -2177,7 +2177,7 @@ Array
 ```
 
 
-Methods: rotate, rotate\_ <a name="#method_rotate_"></a>
+Methods: rotate, rotate\_ <a name="method_rotate_"></a>
 ========================
 void **rotate** (array $arr , int $index )
 
@@ -2238,7 +2238,7 @@ Array
 ```
 
 
-Methods: reverse, reverse\_ <a name="#method_reverse_"></a>
+Methods: reverse, reverse\_ <a name="method_reverse_"></a>
 ==========================
 void **reverse** (array $arr , boolean optional )
 
@@ -2282,7 +2282,7 @@ Array
 ```
 
 
-Methods: random, random\_, sample, sample\_ <a name="#method_sample_"></a>
+Methods: random, random\_, sample, sample\_ <a name="method_sample_"></a>
 =========================================
 mixed **random** (array $arr , int optional )
 
@@ -2341,7 +2341,7 @@ Array
 ```
 
 
-Methods: shuffle, shuffle\_ <a name="#method_shuffle_"></a>
+Methods: shuffle, shuffle\_ <a name="method_shuffle_"></a>
 ==========================
 void **shuffle** (array $arr [, boolean $preserve_keys = false ] )
 
@@ -2402,7 +2402,7 @@ Array
 ```
 
 
-Methods: values\_at, values\_at\_ <a name="#method_values_at_"></a>
+Methods: values\_at, values\_at\_ <a name="method_values_at_"></a>
 ==============================
 void **values\_at** (type array , mixed $index )
 
@@ -2454,7 +2454,7 @@ Array
 ```
 
 
-Methods: empty, isEmpty <a name="#method_isEmpty"></a>
+Methods: empty, isEmpty <a name="method_isEmpty"></a>
 =======================
 boolean **empty** (array $arr )
 
@@ -2507,7 +2507,7 @@ bool(false)
 ```
 
 
-Methods: has\_value <a name="#method_has_value"></a>
+Methods: has\_value <a name="method_has_value"></a>
 ==================
 boolean **has\_value** (array $arr , mixed $value )
 
@@ -2558,7 +2558,7 @@ bool(true)
 ```
 
 
-Methods: index, index\_, find\_index, find\_index\_ <a name="#method_find_index_"></a>
+Methods: index, index\_, find\_index, find\_index\_ <a name="method_find_index_"></a>
 ===============================================
 mixed **index** (array $arr [, mixed $callback = NULL ] )
 
@@ -2626,7 +2626,7 @@ title
 ```
 
 
-Methods: rindex, rindex\_ <a name="#method_rindex_"></a>
+Methods: rindex, rindex\_ <a name="method_rindex_"></a>
 ========================
 mixed **rindex** (array $arr , mixed $callback )
 
@@ -2690,7 +2690,7 @@ suffix
 ```
 
 
-Methods: compact, compact\_ <a name="#method_compact_"></a>
+Methods: compact, compact\_ <a name="method_compact_"></a>
 ==========================
 void **compact** (array $arr )
 
