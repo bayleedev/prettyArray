@@ -15,7 +15,21 @@ require_once(__DIR__ . '/enumerator.php');
  * 
  * This class does not have very much in it, and is planning on staying that way. Instead, it makes magic calls to the 'enumerator' class.
  * All methods in enumerator are static, which allows this class to call them statically or non-statically making PrettyArray very versatile.
- * When you are calling methods in enumerator it will always append the current array to the paramater list.
+ * When you are calling methods in enumerator through PrettyArray non-statically it will always prepend the current array to the paramater list.
+ * 
+ * Destructive methods
+ * -------------------
+ * Some methods that this class provides are 'destructive' similar to methods in Ruby that end in an exclamation mark (!).
+ * Every destructive methods has a 'magic' alias which allow for non-destructive calls.
+ * 
+ * For example the method 'count_' has a callback which could modify the array, even though it never returns it.
+ * The method 'select_' returns nothing by default and simply modifies the input array, however it's non-destructive alias would return the array.
+ * The underscore is simply an extra precaution.
+ * 
+ * Method Aliases
+ * --------------
+ * Methods often have various aliases which are pointed out in the documentation. They work identically to the real function call.
+ * 
  * 
  * @see PrettyArray::__call()
  * @see PrettyArray::__callStatic()
