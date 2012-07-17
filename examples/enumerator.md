@@ -2,17 +2,20 @@ Enumerator
 ==========
 Enumerator
 
-A handy class for handling array methods similar to the methods available to ruby.
+A handy static class for handling array methods similar to the methods available to ruby.
 
-Destructive Methods:
-There are "destructive" methods which are identified by the "_" at the end of the method name.
-These methods will overwrite the $array passed to them.
+Destructive methods
+-------------------
+Some methods that this class provides are 'destructive' similar to methods in Ruby that end in an exclamation mark (!).
+Every destructive methods has a 'magic' alias which allow for non-destructive calls.
 
-To get around this, I have added many "alias" magic methods which all destructive methods have.
-Just remove the ending '_' and instaed of overwriting the array it'll return it.
+For example the method 'count_' has a callback which could modify the array, even though it never returns it.
+The method 'select_' returns nothing by default and simply modifies the input array, however it's non-destructive alias would return the array.
+The underscore is simply an extra precaution.
 
-Method Alias':
-Methods often have various alias' which are pointed out in the documentation. They work identically to the real function call.
+Method Aliases
+--------------
+Methods often have various aliases which are pointed out in the documentation. They work identically to the real function call.
 
 link
 ----
@@ -145,7 +148,7 @@ Table Of Contents
 mixed **\_\_callStatic** (string $method , array $params )
 
 
-This magic method helps with method alias' and calling destrucitve methods in a non-destructive way.
+This magic method helps with method aliases and calling destrucitve methods in a non-destructive way.
 For example the real method "partition_" will take over your $array, but calling the magic method "partition" will not.
 All methods implemented in this class that have an underscore at the end are destructive and have a non-destructive alias.
 
@@ -1009,8 +1012,8 @@ Return
 Example 1
 ---------
 ```php
-$array = array('albatross','dog','horse');
-echo enumerator::min($array);
+$arr = array('albatross','dog','horse');
+echo enumerator::min($arr);
 ```
 
 ```
@@ -1020,8 +1023,8 @@ albatross
 Example 2
 ---------
 ```php
-$array = array('albatross','dog','horse');
-echo enumerator::min($array, function($val1, $val2) {
+$arr = array('albatross','dog','horse');
+echo enumerator::min($arr, function($val1, $val2) {
 	return strcmp(strlen($val1), strlen($val2));
 });
 ```
@@ -1058,8 +1061,8 @@ Return
 Example 1
 ---------
 ```php
-$array = array('albatross','dog','horse');
-echo enumerator::max($array);
+$arr = array('albatross','dog','horse');
+echo enumerator::max($arr);
 ```
 
 ```
@@ -1069,8 +1072,8 @@ horse
 Example 2
 ---------
 ```php
-$array = array('albatross','dog','horse');
-echo enumerator::max($array, function($val1, $val2) {
+$arr = array('albatross','dog','horse');
+echo enumerator::max($arr, function($val1, $val2) {
 	return strcmp(strlen($val1), strlen($val2));
 });
 ```
@@ -1104,8 +1107,8 @@ Return
 Example 1
 ---------
 ```php
-$array = array('albatross','dog','horse');
-echo enumerator::min_by($array, function($val) { 
+$arr = array('albatross','dog','horse');
+echo enumerator::min_by($arr, function($val) { 
 	return strlen($val); 
 });
 ```
@@ -1139,8 +1142,8 @@ Return
 Example 1
 ---------
 ```php
-$array = array('albatross','dog','horse');
-echo enumerator::max_by($array, function($val) {
+$arr = array('albatross','dog','horse');
+echo enumerator::max_by($arr, function($val) {
 	return strlen($val);
 });
 ```
@@ -1177,8 +1180,8 @@ Return
 Example 1
 ---------
 ```php
-$array = array('albatross','dog','horse'); 
-$o = enumerator::minmax($array, function($val1, $val2) { 
+$arr = array('albatross','dog','horse'); 
+$o = enumerator::minmax($arr, function($val1, $val2) { 
 	return strcmp(strlen($val1), strlen($val2));
 });
 print_r($o);
@@ -1217,8 +1220,8 @@ Return
 Example 1
 ---------
 ```php
-$array = array('albatross','dog','horse');
-$o = enumerator::minmax_by($array, function($val) { 
+$arr = array('albatross','dog','horse');
+$o = enumerator::minmax_by($arr, function($val) { 
 	return strlen($val);
 });
 print_r($o);
@@ -1260,8 +1263,8 @@ Return
 Example 1
 ---------
 ```php
-$array = array('ant', 'bear', 'cat');
-$o = enumerator::none($array, function($key, $value) {
+$arr = array('ant', 'bear', 'cat');
+$o = enumerator::none($arr, function($key, $value) {
 	return (strlen($value) == 5);
 });
 var_dump($o);
@@ -1274,8 +1277,8 @@ bool(true)
 Example 2
 ---------
 ```php
-$array = array('ant', 'bear', 'cat');
-$o = enumerator::none($array, function($key, $value) {
+$arr = array('ant', 'bear', 'cat');
+$o = enumerator::none($arr, function($key, $value) {
 	return (strlen($value) >= 4);
 });
 var_dump($o);
@@ -1347,8 +1350,8 @@ Return
 Example 1
 ---------
 ```php
-$array = array('ant','bear','cat');
-$o = enumerator::one($array, function($key, $value) {
+$arr = array('ant','bear','cat');
+$o = enumerator::one($arr, function($key, $value) {
 	return (strlen($value) == 4);
 });
 var_dump($o);
@@ -1662,7 +1665,7 @@ Example 2
 $arr = array('rhea', 'kea', 'flea');
 $o = enumerator::sort($arr, function($val1, $val2) {
 	return strcmp($val2, $val1);
-}); // [rhea, kea, flea]
+});
 print_r($o);
 ```
 

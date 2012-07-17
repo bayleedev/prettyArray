@@ -4,7 +4,20 @@ PrettyArray
 
 This class does not have very much in it, and is planning on staying that way. Instead, it makes magic calls to the 'enumerator' class.
 All methods in enumerator are static, which allows this class to call them statically or non-statically making PrettyArray very versatile.
-When you are calling methods in enumerator it will always append the current array to the paramater list.
+When you are calling methods in enumerator through PrettyArray non-statically it will always prepend the current array to the paramater list.
+
+Destructive methods
+-------------------
+Some methods that this class provides are 'destructive' similar to methods in Ruby that end in an exclamation mark (!).
+Every destructive methods has a 'magic' alias which allow for non-destructive calls.
+
+For example the method 'count_' has a callback which could modify the array, even though it never returns it.
+The method 'select_' returns nothing by default and simply modifies the input array, however it's non-destructive alias would return the array.
+The underscore is simply an extra precaution.
+
+Method Aliases
+--------------
+Methods often have various aliases which are pointed out in the documentation. They work identically to the real function call.
 
 see
 ---
@@ -1769,7 +1782,6 @@ $o = $arr->one(function($key, $value) {
 	return (strlen($value) == 4);
 });
 var_dump($o);
-
 ```
 
 ```
@@ -2080,10 +2092,10 @@ Example 2
 ---------
 ```php
 $arr = new PrettyArray(array('rhea', 'kea', 'flea'));
-$o = $arr->sort(function($val1, $val2) {
+$arr->sort_(function($val1, $val2) {
 	return strcmp($val2, $val1);
 });
-print_r($o->to_a());
+print_r($arr->to_a());
 ```
 
 ```
