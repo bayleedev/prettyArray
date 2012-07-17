@@ -4,8 +4,8 @@ A object oriented approach to handling arrays in PHP.
 It attempts to combine Ruby (enumerator/array/hash) methods as well as built in PHP functions.
 
 ## Example 1
----------
 ```php
+<?php
 $arr = new PrettyArray(array(1,2,3,null,array(2,3,4,null)));
 $arr->compact_($arr, true);
 print_r($arr->to_a());
@@ -36,8 +36,8 @@ Array
 ## Contributing
 
 ### Requirements
-	* PHP 5.3+
-	* PHPUnit
+ * PHP 5.3+
+ * PHPUnit
 
 ### Testing
 
