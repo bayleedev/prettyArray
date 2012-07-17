@@ -34,8 +34,8 @@ Array
  * Enjoy PrettyArray!
 
 ## More Examples
- * [PrettyArray Examples](examples/PrettyArray.md)
- * [Enumerator Examples](examples/enumerator.md)
+ * [PrettyArray Examples](PrettyArray/examples/PrettyArray.md)
+ * [Enumerator Examples](PrettyArray/examples/enumerator.md)
 
 ## Requirements
  * [PHP 5.3+](http://php.net/downloads.php)
