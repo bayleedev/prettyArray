@@ -46,7 +46,6 @@ Table Of Contents
  * [size\_](#method_size_)
  * [length](#method_size_)
  * [length\_](#method_size_)
- * [Methods](#method_find_)
  * [detect](#method_find_)
  * [detect\_](#method_find_)
  * [find](#method_find_)
@@ -500,10 +499,8 @@ echo enumerator::count($arr, function($key, &$value) {
 ```
 
 
-<a name="method_find_"></a>Methods: Methods, detect, detect\_, find, find\_
-==============================================
-mixed **Methods** (array $arr , callable $callback [, mixed $ifnone = NULL ] )
-
+<a name="method_find_"></a>Methods: detect, detect\_, find, find\_
+=====================================
 mixed **detect** (array $arr , callable $callback [, mixed $ifnone = NULL ] )
 
 mixed **detect\_** (array &$arr , callable $callback [, mixed $ifnone = NULL ] )
