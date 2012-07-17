@@ -35,7 +35,7 @@ Array
 
 ## More Examples
 
-More examples can be found inside of the "examples" directory in markdown format which is viewable on Github.
+More examples can be found inside of the "/examples" directory in markdown format which is viewable on Github.
 
 ## Requirements
  * [PHP 5.3+](http://php.net/downloads.php)
