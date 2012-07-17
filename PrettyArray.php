@@ -2,7 +2,7 @@
 /**
  * PrettyArray
  * 
- * An object oriented approach to array development.
+ * A object oriented approach to handling arrays in PHP.
  * 
  * @author Blaine Schmeisser <BlaineSch@gmail.com>
  */
