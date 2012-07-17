@@ -15,7 +15,6 @@
  * Method Alias':
  * Methods often have various alias' which are pointed out in the documentation. They work identically to the real function call.
  *  
- * @todo change examples to be 5.3 compatiable
  * @link http://ruby-doc.org/core-1.9.3/Enumerable.html
  */
 class enumerator {
