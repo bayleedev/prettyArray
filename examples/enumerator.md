@@ -1,5 +1,7 @@
 Enumerator
 ==========
+Enumerator
+
 A handy class for handling array methods similar to the methods available to ruby.
 
 Destructive Methods:
@@ -12,15 +14,134 @@ Just remove the ending '_' and instaed of overwriting the array it'll return it.
 Method Alias':
 Methods often have various alias' which are pointed out in the documentation. They work identically to the real function call.
 
-todo
-----
-* change examples to be 5.3 compatiable
-
 link
 ----
 * http://ruby-doc.org/core-1.9.3/Enumerable.html
 
-Methods: \_\_callStatic
+---------
+
+Table Of Contents
+=================
+ * [__callStatic] [METHOD___callStatic]
+ * [all] [METHOD_all_]
+ * [all_] [METHOD_all_]
+ * [drop] [METHOD_drop_]
+ * [drop_] [METHOD_drop_]
+ * [any] [METHOD_any_]
+ * [any_] [METHOD_any_]
+ * [collect] [METHOD_array_walk_]
+ * [collect_] [METHOD_array_walk_]
+ * [each] [METHOD_array_walk_]
+ * [each_] [METHOD_array_walk_]
+ * [map] [METHOD_array_walk_]
+ * [map_] [METHOD_array_walk_]
+ * [foreach] [METHOD_array_walk_]
+ * [foreach_] [METHOD_array_walk_]
+ * [each_with_index] [METHOD_array_walk_]
+ * [each_with_index_] [METHOD_array_walk_]
+ * [array_walk] [METHOD_array_walk_]
+ * [count] [METHOD_size_]
+ * [count_] [METHOD_size_]
+ * [size] [METHOD_size_]
+ * [size_] [METHOD_size_]
+ * [length] [METHOD_size_]
+ * [length_] [METHOD_size_]
+ * [Methods] [METHOD_find_]
+ * [detect] [METHOD_find_]
+ * [detect_] [METHOD_find_]
+ * [find] [METHOD_find_]
+ * [find_] [METHOD_find_]
+ * [select] [METHOD_find_all_]
+ * [select_] [METHOD_find_all_]
+ * [find_all] [METHOD_find_all_]
+ * [find_all_] [METHOD_find_all_]
+ * [keep_if] [METHOD_find_all_]
+ * [keep_if_] [METHOD_find_all_]
+ * [each_slice] [METHOD_each_slice_]
+ * [each_slice_] [METHOD_each_slice_]
+ * [first] [METHOD_first_]
+ * [first_] [METHOD_first_]
+ * [collect_concat] [METHOD_flat_map_]
+ * [collect_concat_] [METHOD_flat_map_]
+ * [flat_map] [METHOD_flat_map_]
+ * [flat_map_] [METHOD_flat_map_]
+ * [grep] [METHOD_grep_]
+ * [grep_] [METHOD_grep_]
+ * [group_by] [METHOD_group_by_]
+ * [group_by_] [METHOD_group_by_]
+ * [member] [METHOD_member]
+ * [include] [METHOD_member]
+ * [min] [METHOD_min]
+ * [max] [METHOD_max]
+ * [min_by] [METHOD_min_by]
+ * [max_by] [METHOD_max_by]
+ * [minmax] [METHOD_minmax]
+ * [minmax_by] [METHOD_minmax_by]
+ * [none] [METHOD_none]
+ * [one] [METHOD_one]
+ * [partition] [METHOD_partition_]
+ * [partition_] [METHOD_partition_]
+ * [inject] [METHOD_reduce_]
+ * [inject_] [METHOD_reduce_]
+ * [reduce] [METHOD_reduce_]
+ * [reduce_] [METHOD_reduce_]
+ * [reject: reject_] [METHOD_delete_if_]
+ * [delete_if] [METHOD_delete_if_]
+ * [delete_if_] [METHOD_delete_if_]
+ * [reverse_collect] [METHOD_reverse_each_]
+ * [reverse_collect_] [METHOD_reverse_each_]
+ * [reverse_each] [METHOD_reverse_each_]
+ * [reverse_each_] [METHOD_reverse_each_]
+ * [reverse_map] [METHOD_reverse_each_]
+ * [reverse_map_] [METHOD_reverse_each_]
+ * [reverse_foreach] [METHOD_reverse_each_]
+ * [reverse_foreach_] [METHOD_reverse_each_]
+ * [reverse_each_with_index] [METHOD_reverse_each_]
+ * [sort] [METHOD_sort_]
+ * [sort_] [METHOD_sort_]
+ * [sort_by] [METHOD_sort_by_]
+ * [sort_by_] [METHOD_sort_by_]
+ * [take_while] [METHOD_take_while_]
+ * [take_while_] [METHOD_take_while_]
+ * [zip] [METHOD_zip_]
+ * [zip_] [METHOD_zip_]
+ * [drop_while] [METHOD_drop_while_]
+ * [drop_while_] [METHOD_drop_while_]
+ * [cycle] [METHOD_cycle_]
+ * [cycle_] [METHOD_cycle_]
+ * [each_cons] [METHOD_each_cons_]
+ * [each_cons_] [METHOD_each_cons_]
+ * [slice_before] [METHOD_slice_before_]
+ * [slice_before_] [METHOD_slice_before_]
+ * [merge] [METHOD_concat_]
+ * [merge_] [METHOD_concat_]
+ * [concat] [METHOD_concat_]
+ * [concat_] [METHOD_concat_]
+ * [rotate] [METHOD_rotate_]
+ * [rotate_] [METHOD_rotate_]
+ * [reverse] [METHOD_reverse_]
+ * [reverse_] [METHOD_reverse_]
+ * [random] [METHOD_sample_]
+ * [random_] [METHOD_sample_]
+ * [sample] [METHOD_sample_]
+ * [sample_] [METHOD_sample_]
+ * [shuffle] [METHOD_shuffle_]
+ * [shuffle_] [METHOD_shuffle_]
+ * [values_at] [METHOD_values_at_]
+ * [values_at_] [METHOD_values_at_]
+ * [empty] [METHOD_isEmpty]
+ * [isEmpty] [METHOD_isEmpty]
+ * [has_value] [METHOD_has_value]
+ * [index] [METHOD_find_index_]
+ * [index_] [METHOD_find_index_]
+ * [find_index] [METHOD_find_index_]
+ * [find_index_] [METHOD_find_index_]
+ * [rindex] [METHOD_rindex_]
+ * [rindex_] [METHOD_rindex_]
+ * [compact] [METHOD_compact_]
+ * [compact_] [METHOD_compact_]
+
+[METHOD___callStatic]: [METHOD___callStatic]  "Methods: \_\_callStatic"
 =====================
 mixed **\_\_callStatic** (string $method , array $params )
 
@@ -46,7 +167,7 @@ Return
  mixed
 
 
-Methods: all, all\_
+[METHOD_all_]: [METHOD_all_]  "Methods: all, all\_"
 ==================
 boolean **all** (array $arr [, callable $callback = NULL ] )
 
@@ -82,10 +203,8 @@ $o = enumerator::all($animals, function($key, &$value) {
 var_dump($o);
 ```
 
-```
-
-bool(true)
-
+```
+bool(true)
 ```
 
 Example 2
@@ -98,10 +217,8 @@ $o = enumerator::all($animals, function($key, &$value) {
 var_dump($o);
 ```
 
-```
-
-bool(false)
-
+```
+bool(false)
 ```
 
 Example 3
@@ -112,14 +229,12 @@ $o = enumerator::all($arr);
 var_dump($o);
 ```
 
+```
+bool(false)
 ```
 
-bool(false)
 
-```
-
-
-Methods: drop, drop\_
+[METHOD_drop_]: [METHOD_drop_]  "Methods: drop, drop\_"
 ====================
 void **drop** (array $arr , int $count )
 
@@ -150,18 +265,16 @@ $o = enumerator::drop($animals, 1);
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => bear
     [1] => cat
-)
-
+)
 ```
 
 
-Methods: any, any\_
+[METHOD_any_]: [METHOD_any_]  "Methods: any, any\_"
 ==================
 boolean **any** (array $arr [, callable $callback = NULL ] )
 
@@ -197,10 +310,8 @@ $o = enumerator::any($animals, function($key, &$value) {
 var_dump($o);
 ```
 
-```
-
-bool(true)
-
+```
+bool(true)
 ```
 
 Example 2
@@ -213,10 +324,8 @@ $o = enumerator::any($animals, function($key, &$value) {
 var_dump($o);
 ```
 
-```
-
-bool(true)
-
+```
+bool(true)
 ```
 
 Example 3
@@ -227,14 +336,12 @@ $o = enumerator::any($arr);
 var_dump($o);
 ```
 
+```
+bool(true)
 ```
 
-bool(true)
 
-```
-
-
-Methods: collect, collect\_, each, each\_, map, map\_, foreach, foreach\_, each\_with\_index, each\_with\_index\_, array\_walk
+[METHOD_array_walk_]: [METHOD_array_walk_]  "Methods: collect, collect\_, each, each\_, map, map\_, foreach, foreach\_, each\_with\_index, each\_with\_index\_, array\_walk"
 ====================================================================================================================
 void **collect** (array $arr , callable $callback )
 
@@ -289,16 +396,14 @@ $o = enumerator::collect($arr, function($key, &$value) {
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => 1
     [1] => 4
     [2] => 9
     [3] => 16
-)
-
+)
 ```
 
 Example 2
@@ -312,20 +417,18 @@ $o = enumerator::collect($arr, function($key, &$value) {
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => cat
     [1] => cat
     [2] => cat
     [3] => cat
-)
-
+)
 ```
 
 
-Methods: count, count\_, size, size\_, length, length\_
+[METHOD_size_]: [METHOD_size_]  "Methods: count, count\_, size, size\_, length, length\_"
 ====================================================
 int **count** (array $arr , callable $callback )
 
@@ -368,10 +471,8 @@ $arr = array(1,2,4,2);
 echo enumerator::count($arr);
 ```
 
-```
-
-4
-
+```
+4
 ```
 
 Example 2
@@ -381,10 +482,8 @@ $arr = array(1,2,4,2);
 echo enumerator::count($arr, 2);
 ```
 
-```
-
-2
-
+```
+2
 ```
 
 Example 3
@@ -396,14 +495,12 @@ echo enumerator::count($arr, function($key, &$value) {
 });
 ```
 
+```
+3
 ```
 
-3
 
-```
-
-
-Methods: Methods, detect, detect\_, find, find\_
+[METHOD_find_]: [METHOD_find_]  "Methods: Methods, detect, detect\_, find, find\_"
 ==============================================
 mixed **Methods** (array $arr , callable $callback [, mixed $ifnone = NULL ] )
 
@@ -448,10 +545,8 @@ $o = enumerator::detect($arr, function($key, &$value) {
 var_dump($o);
 ```
 
-```
-
-NULL
-
+```
+NULL
 ```
 
 Example 2
@@ -463,14 +558,12 @@ echo enumerator::detect($arr, function($key, &$value) {
 });
 ```
 
+```
+35
 ```
 
-35
 
-```
-
-
-Methods: select, select\_, find\_all, find\_all\_, keep\_if, keep\_if\_
+[METHOD_find_all_]: [METHOD_find_all_]  "Methods: select, select\_, find\_all, find\_all\_, keep\_if, keep\_if\_"
 ================================================================
 array **select** (array $arr , callable $callback )
 
@@ -517,19 +610,17 @@ $o = enumerator::select($arr, function($key, &$value) {
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [2] => 3
     [5] => 6
     [8] => 9
-)
-
+)
 ```
 
 
-Methods: each\_slice, each\_slice\_
+[METHOD_each_slice_]: [METHOD_each_slice_]  "Methods: each\_slice, each\_slice\_"
 ================================
 void **each\_slice** (array &$arr , int $size [, callable $callback = NULL ] )
 
@@ -571,8 +662,7 @@ $o = enumerator::each_slice($arr, 3, function(&$collection) {
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => Array
@@ -602,12 +692,11 @@ Array
             [0] => 11
         )
 
-)
-
+)
 ```
 
 
-Methods: first, first\_
+[METHOD_first_]: [METHOD_first_]  "Methods: first, first\_"
 ======================
 void **first** (array $arr [, int $count = 1 ] )
 
@@ -641,13 +730,11 @@ $o = enumerator::first($animals);
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => cat
-)
-
+)
 ```
 
 Example 2
@@ -658,18 +745,16 @@ $o = enumerator::first($animals, 2);
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => cat
     [1] => dog
-)
-
+)
 ```
 
 
-Methods: collect\_concat, collect\_concat\_, flat\_map, flat\_map\_
+[METHOD_flat_map_]: [METHOD_flat_map_]  "Methods: collect\_concat, collect\_concat\_, flat\_map, flat\_map\_"
 =============================================================
 void **collect\_concat** (array &$arr , callable $callback )
 
@@ -710,20 +795,18 @@ $o = enumerator::collect_concat($arr, function($key, &$value) {
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => 2
     [1] => 3
     [2] => 4
     [3] => 5
-)
-
+)
 ```
 
 
-Methods: grep, grep\_
+[METHOD_grep_]: [METHOD_grep_]  "Methods: grep, grep\_"
 ====================
 void **grep** (array $arr , string $pattern [, callable $callback = NULL ] )
 
@@ -763,19 +846,17 @@ $o = enumerator::grep($arr, "/^snow/");
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => snowball
     [1] => snowcone
     [2] => snowangel
-)
-
+)
 ```
 
 
-Methods: group\_by, group\_by\_
+[METHOD_group_by_]: [METHOD_group_by_]  "Methods: group\_by, group\_by\_"
 ============================
 void **group\_by** (array &$arr , callable $callback [, boolean $preserve_keys = false ] )
 
@@ -817,8 +898,7 @@ $o = enumerator::group_by($arr, function($key, &$value) {
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => Array
@@ -839,12 +919,11 @@ Array
             [1] => 5
         )
 
-)
-
+)
 ```
 
 
-Methods: member, include
+[METHOD_member]: [METHOD_member]  "Methods: member, include"
 ========================
 boolean **member** (array $arr , mixed $needle )
 
@@ -876,10 +955,8 @@ $o = enumerator::member($arr, 'snowcone');
 var_dump($o);
 ```
 
-```
-
-bool(true)
-
+```
+bool(true)
 ```
 
 Example 2
@@ -890,10 +967,8 @@ $o = enumerator::member($arr, 'snowman');
 var_dump($o);
 ```
 
-```
-
-bool(false)
-
+```
+bool(false)
 ```
 
 Example 3
@@ -905,14 +980,12 @@ $o = enumerator::$fun($arr, 'snowcone');
 var_dump($o);
 ```
 
+```
+bool(true)
 ```
 
-bool(true)
 
-```
-
-
-Methods: min
+[METHOD_min]: [METHOD_min]  "Methods: min"
 ============
 mixed **min** (array $arr , callback optional )
 
@@ -943,10 +1016,8 @@ $array = array('albatross','dog','horse');
 echo enumerator::min($array);
 ```
 
-```
-
-albatross
-
+```
+albatross
 ```
 
 Example 2
@@ -958,14 +1029,12 @@ echo enumerator::min($array, function($val1, $val2) {
 });
 ```
 
+```
+dog
 ```
 
-dog
 
-```
-
-
-Methods: max
+[METHOD_max]: [METHOD_max]  "Methods: max"
 ============
 mixed **max** (array $arr , callback optional )
 
@@ -996,10 +1065,8 @@ $array = array('albatross','dog','horse');
 echo enumerator::max($array);
 ```
 
-```
-
-horse
-
+```
+horse
 ```
 
 Example 2
@@ -1011,14 +1078,12 @@ echo enumerator::max($array, function($val1, $val2) {
 });
 ```
 
+```
+albatross
 ```
 
-albatross
 
-```
-
-
-Methods: min\_by
+[METHOD_min_by]: [METHOD_min_by]  "Methods: min\_by"
 ===============
 mixed **min\_by** (array $arr , callable $callback )
 
@@ -1048,14 +1113,12 @@ echo enumerator::min_by($array, function($val) {
 });
 ```
 
+```
+dog
 ```
 
-dog
 
-```
-
-
-Methods: max\_by
+[METHOD_max_by]: [METHOD_max_by]  "Methods: max\_by"
 ===============
 mixed **max\_by** (array $arr , callable $callback )
 
@@ -1085,14 +1148,12 @@ echo enumerator::max_by($array, function($val) {
 });
 ```
 
+```
+albatross
 ```
 
-albatross
 
-```
-
-
-Methods: minmax
+[METHOD_minmax]: [METHOD_minmax]  "Methods: minmax"
 ===============
 array **minmax** (array $arr , callback optional )
 
@@ -1126,18 +1187,16 @@ $o = enumerator::minmax($array, function($val1, $val2) {
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => dog
     [1] => albatross
-)
-
+)
 ```
 
 
-Methods: minmax\_by
+[METHOD_minmax_by]: [METHOD_minmax_by]  "Methods: minmax\_by"
 ==================
 array **minmax\_by** (array $arr , callable $callback )
 
@@ -1168,18 +1227,16 @@ $o = enumerator::minmax_by($array, function($val) {
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => dog
     [1] => albatross
-)
-
+)
 ```
 
 
-Methods: none
+[METHOD_none]: [METHOD_none]  "Methods: none"
 =============
 boolean **none** (array $arr [, callable $callback = NULL ] )
 
@@ -1213,10 +1270,8 @@ $o = enumerator::none($array, function($key, $value) {
 var_dump($o);
 ```
 
-```
-
-bool(true)
-
+```
+bool(true)
 ```
 
 Example 2
@@ -1229,10 +1284,8 @@ $o = enumerator::none($array, function($key, $value) {
 var_dump($o);
 ```
 
-```
-
-bool(false)
-
+```
+bool(false)
 ```
 
 Example 3
@@ -1242,10 +1295,8 @@ $o = enumerator::none(array());
 var_dump($o);
 ```
 
-```
-
-bool(true)
-
+```
+bool(true)
 ```
 
 Example 4
@@ -1255,10 +1306,8 @@ $o = enumerator::none(array(null));
 var_dump($o);
 ```
 
-```
-
-bool(true)
-
+```
+bool(true)
 ```
 
 Example 5
@@ -1269,14 +1318,12 @@ $o = enumerator::none($arr);
 var_dump($o);
 ```
 
+```
+bool(true)
 ```
 
-bool(true)
 
-```
-
-
-Methods: one
+[METHOD_one]: [METHOD_one]  "Methods: one"
 ============
 boolean **one** (array $arr [, callable $callback = NULL ] )
 
@@ -1310,10 +1357,8 @@ $o = enumerator::one($array, function($key, $value) {
 var_dump($o);
 ```
 
-```
-
-bool(true)
-
+```
+bool(true)
 ```
 
 Example 2
@@ -1323,10 +1368,8 @@ $o = enumerator::one(array(null, true, 99));
 var_dump($o);
 ```
 
-```
-
-bool(false)
-
+```
+bool(false)
 ```
 
 Example 3
@@ -1336,14 +1379,12 @@ $o = enumerator::one(array(null, true, false));
 var_dump($o);
 ```
 
+```
+bool(true)
 ```
 
-bool(true)
 
-```
-
-
-Methods: partition, partition\_
+[METHOD_partition_]: [METHOD_partition_]  "Methods: partition, partition\_"
 ==============================
 void **partition** (array $arr , callable $callback [, boolean $preserve_keys = false ] )
 
@@ -1381,8 +1422,7 @@ $o = enumerator::partition($arr, function($key, $value) {
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => Array
@@ -1398,12 +1438,11 @@ Array
             [1] => 3
             [2] => 5
         )
-)
-
+)
 ```
 
 
-Methods: inject, inject\_, reduce, reduce\_
+[METHOD_reduce_]: [METHOD_reduce_]  "Methods: inject, inject\_, reduce, reduce\_"
 =========================================
 mixed **inject** (array $arr , callable $callback , mixed optional )
 
@@ -1451,10 +1490,8 @@ echo enumerator::inject($arr, function($key, &$value, &$memo){
 });
 ```
 
-```
-
-45
-
+```
+45
 ```
 
 Example 2
@@ -1467,14 +1504,12 @@ echo enumerator::inject($arr, function($key, &$value, &$memo){
 }, 1);
 ```
 
+```
+151200
 ```
 
-151200
 
-```
-
-
-Methods: reject: reject\_, delete\_if, delete\_if\_
+[METHOD_delete_if_]: [METHOD_delete_if_]  "Methods: reject: reject\_, delete\_if, delete\_if\_"
 ===============================================
 void **reject: reject\_** (array &$arr , callable $callback )
 
@@ -1512,8 +1547,7 @@ $o = enumerator::reject($arr, function($key, $value) {
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => 1
@@ -1523,12 +1557,11 @@ Array
     [6] => 7
     [7] => 8
     [9] => 10
-)
-
+)
 ```
 
 
-Methods: reverse\_collect, reverse\_collect\_, reverse\_each, reverse\_each\_, reverse\_map, reverse\_map\_, reverse\_foreach, reverse\_foreach\_, reverse\_each\_with\_index
+[METHOD_reverse_each_]: [METHOD_reverse_each_]  "Methods: reverse\_collect, reverse\_collect\_, reverse\_each, reverse\_each\_, reverse\_map, reverse\_map\_, reverse\_foreach, reverse\_foreach\_, reverse\_each\_with\_index"
 ==============================================================================================================================================================
 void **reverse\_collect** (array &$arr , callable $callback )
 
@@ -1578,14 +1611,12 @@ enumerator::reverse_collect($arr, function($key, &$value) {
 });
 ```
 
+```
+3, 2, 1,
 ```
 
-3, 2, 1,
 
-```
-
-
-Methods: sort, sort\_
+[METHOD_sort_]: [METHOD_sort_]  "Methods: sort, sort\_"
 ====================
 void **sort** (array $arr [, callable $callback = NULL ] )
 
@@ -1619,15 +1650,13 @@ $o = enumerator::sort($arr);
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => flea
     [1] => kea
     [2] => rhea
-)
-
+)
 ```
 
 Example 2
@@ -1640,19 +1669,17 @@ $o = enumerator::sort($arr, function($val1, $val2) {
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => rhea
     [1] => kea
     [2] => flea
-)
-
+)
 ```
 
 
-Methods: sort\_by, sort\_by\_
+[METHOD_sort_by_]: [METHOD_sort_by_]  "Methods: sort\_by, sort\_by\_"
 ==========================
 void **sort\_by** (array &$arr , callable $callback )
 
@@ -1685,19 +1712,17 @@ $o = enumerator::sort_by($arr, function($val) {
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => kea
     [1] => flea
     [2] => rhea
-)
-
+)
 ```
 
 
-Methods: take\_while, take\_while\_
+[METHOD_take_while_]: [METHOD_take_while_]  "Methods: take\_while, take\_while\_"
 ================================
 void **take\_while** (array &$arr , callable $callback )
 
@@ -1733,18 +1758,16 @@ $o = enumerator::take_while($arr, function($key, &$value) {
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => 1
     [1] => 2
-)
-
+)
 ```
 
 
-Methods: zip, zip\_
+[METHOD_zip_]: [METHOD_zip_]  "Methods: zip, zip\_"
 ==================
 void **zip** (array $arr , array $one )
 
@@ -1778,8 +1801,7 @@ $o = enumerator::zip($arr, array(4,5,6), array(7,8,9));
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => Array
@@ -1804,8 +1826,7 @@ Array
             [2] => 9
         )
 
-)
-
+)
 ```
 
 Example 2
@@ -1816,8 +1837,7 @@ $o = enumerator::zip($arr, array(4,5,6),array(7,8,9));
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => Array
@@ -1834,8 +1854,7 @@ Array
             [2] => 8
         )
 
-)
-
+)
 ```
 
 Example 3
@@ -1846,8 +1865,7 @@ $o = enumerator::zip($arr, array(1,2), array(8));
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => Array
@@ -1871,12 +1889,11 @@ Array
             [2] => 
         )
 
-)
-
+)
 ```
 
 
-Methods: drop\_while, drop\_while\_
+[METHOD_drop_while_]: [METHOD_drop_while_]  "Methods: drop\_while, drop\_while\_"
 ================================
 void **drop\_while** (array &$arr , callable $callback )
 
@@ -1909,20 +1926,18 @@ $o = enumerator::drop_while($arr, function($key, &$value) {
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => 3
     [1] => 4
     [2] => 5
     [3] => 0
-)
-
+)
 ```
 
 
-Methods: cycle, cycle\_
+[METHOD_cycle_]: [METHOD_cycle_]  "Methods: cycle, cycle\_"
 ======================
 void **cycle** (array $arr , int $it , callable $callback )
 
@@ -1959,14 +1974,12 @@ enumerator::cycle($arr, 3, function($key, $value, $it) {
 });
 ```
 
+```
+1,2,3,1,2,3,1,2,3,
 ```
 
-1,2,3,1,2,3,1,2,3,
 
-```
-
-
-Methods: each\_cons, each\_cons\_
+[METHOD_each_cons_]: [METHOD_each_cons_]  "Methods: each\_cons, each\_cons\_"
 ==============================
 void **each\_cons** (array &$arr , int $size [, callable $callback = false ] )
 
@@ -2001,8 +2014,7 @@ $o = enumerator::each_cons($arr, 8);
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => Array
@@ -2041,12 +2053,11 @@ Array
             [7] => 10
         )
 
-)
-
+)
 ```
 
 
-Methods: slice\_before, slice\_before\_
+[METHOD_slice_before_]: [METHOD_slice_before_]  "Methods: slice\_before, slice\_before\_"
 ====================================
 void **slice\_before** (array &$arr , string $pattern )
 
@@ -2077,8 +2088,7 @@ $o = enumerator::slice_before($arr, "/[02468]/"); // will "splice before" an eve
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => Array
@@ -2115,12 +2125,11 @@ Array
             [0] => 0
         )
 
-)
-
+)
 ```
 
 
-Methods: merge, merge\_, concat, concat\_
+[METHOD_concat_]: [METHOD_concat_]  "Methods: merge, merge\_, concat, concat\_"
 =======================================
 void **merge** (array $arr , array $arr2 )
 
@@ -2156,8 +2165,7 @@ $o = enumerator::merge($animals, $trees, array('wool'));
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => dog
@@ -2165,12 +2173,11 @@ Array
     [2] => pig
     [3] => pine
     [4] => wool
-)
-
+)
 ```
 
 
-Methods: rotate, rotate\_
+[METHOD_rotate_]: [METHOD_rotate_]  "Methods: rotate, rotate\_"
 ========================
 void **rotate** (array $arr , int $index )
 
@@ -2204,15 +2211,13 @@ $o = enumerator::rotate($arr, 1);
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => bar
     [1] => foobar
     [2] => Foo
-)
-
+)
 ```
 
 Example 2
@@ -2223,19 +2228,17 @@ $o = enumerator::rotate($arr, -1);
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => foobar
     [1] => Foo
     [2] => bar
-)
-
+)
 ```
 
 
-Methods: reverse, reverse\_
+[METHOD_reverse_]: [METHOD_reverse_]  "Methods: reverse, reverse\_"
 ==========================
 void **reverse** (array $arr , boolean optional )
 
@@ -2269,19 +2272,17 @@ $o = enumerator::reverse($arr);
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => 3
     [1] => 2
     [2] => 1
-)
-
+)
 ```
 
 
-Methods: random, random\_, sample, sample\_
+[METHOD_sample_]: [METHOD_sample_]  "Methods: random, random\_, sample, sample\_"
 =========================================
 mixed **random** (array $arr , int optional )
 
@@ -2319,10 +2320,8 @@ $o = enumerator::random($arr);
 echo $o;
 ```
 
-```
-
-dog
-
+```
+dog
 ```
 
 Example 2
@@ -2333,18 +2332,16 @@ $o = enumerator::random($arr, 2);
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => dog
     [1] => cow
-)
-
+)
 ```
 
 
-Methods: shuffle, shuffle\_
+[METHOD_shuffle_]: [METHOD_shuffle_]  "Methods: shuffle, shuffle\_"
 ==========================
 void **shuffle** (array $arr [, boolean $preserve_keys = false ] )
 
@@ -2378,15 +2375,13 @@ $o = enumerator::shuffle($arr);
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => 2
     [1] => 1
     [2] => 3
-)
-
+)
 ```
 
 Example 2
@@ -2397,19 +2392,17 @@ $o = enumerator::shuffle($arr, true);
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [a] => apple
     [c] => carrot
     [b] => banana
-)
-
+)
 ```
 
 
-Methods: values\_at, values\_at\_
+[METHOD_values_at_]: [METHOD_values_at_]  "Methods: values\_at, values\_at\_"
 ==============================
 void **values\_at** (type array , mixed $index )
 
@@ -2452,18 +2445,16 @@ $o = enumerator::values_at($name, 'title', 'last');
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [title] => Dr.
     [last] => Doe
-)
-
+)
 ```
 
 
-Methods: empty, isEmpty
+[METHOD_isEmpty]: [METHOD_isEmpty]  "Methods: empty, isEmpty"
 =======================
 boolean **empty** (array $arr )
 
@@ -2488,10 +2479,8 @@ $arr = array();
 var_dump(enumerator::isEmpty($arr));
 ```
 
-```
-
-bool(true)
-
+```
+bool(true)
 ```
 
 Example 2
@@ -2501,10 +2490,8 @@ $arr = array(1,2,3);
 var_dump(enumerator::isEmpty($arr));
 ```
 
-```
-
-bool(false)
-
+```
+bool(false)
 ```
 
 Example 3
@@ -2515,14 +2502,12 @@ $arr = array(1,2,3);
 var_dump(enumerator::$empty($arr));
 ```
 
+```
+bool(false)
 ```
 
-bool(false)
 
-```
-
-
-Methods: has\_value
+[METHOD_has_value]: [METHOD_has_value]  "Methods: has\_value"
 ==================
 boolean **has\_value** (array $arr , mixed $value )
 
@@ -2546,10 +2531,8 @@ $arr = array(0,false);
 var_dump(enumerator::has_value($arr, null));
 ```
 
-```
-
-bool(false)
-
+```
+bool(false)
 ```
 
 Example 2
@@ -2559,10 +2542,8 @@ $arr = array(false,null);
 var_dump(enumerator::has_value($arr, 0));
 ```
 
-```
-
-bool(false)
-
+```
+bool(false)
 ```
 
 Example 3
@@ -2572,14 +2553,12 @@ $arr = array('apple', 'banana', 'orange');
 var_dump(enumerator::has_value($arr, 'orange'));
 ```
 
+```
+bool(true)
 ```
 
-bool(true)
 
-```
-
-
-Methods: index, index\_, find\_index, find\_index\_
+[METHOD_find_index_]: [METHOD_find_index_]  "Methods: index, index\_, find\_index, find\_index\_"
 ===============================================
 mixed **index** (array $arr [, mixed $callback = NULL ] )
 
@@ -2622,10 +2601,8 @@ $name = array(
 echo enumerator::index($name, 'John');
 ```
 
-```
-
-first
-
+```
+first
 ```
 
 Example 2
@@ -2644,14 +2621,12 @@ echo enumerator::index_($name, function($key, &$value) {
 });
 ```
 
+```
+title
 ```
 
-title
 
-```
-
-
-Methods: rindex, rindex\_
+[METHOD_rindex_]: [METHOD_rindex_]  "Methods: rindex, rindex\_"
 ========================
 mixed **rindex** (array $arr , mixed $callback )
 
@@ -2690,10 +2665,8 @@ $name = array(
 echo enumerator::rindex($name, 'John');
 ```
 
-```
-
-first
-
+```
+first
 ```
 
 Example 2
@@ -2712,14 +2685,12 @@ echo enumerator::rindex_($name, function($key, &$value) {
 });
 ```
 
+```
+suffix
 ```
 
-suffix
 
-```
-
-
-Methods: compact, compact\_
+[METHOD_compact_]: [METHOD_compact_]  "Methods: compact, compact\_"
 ==========================
 void **compact** (array $arr )
 
@@ -2748,8 +2719,7 @@ $o = enumerator::compact($arr);
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => 1
@@ -2763,8 +2733,7 @@ Array
             [3] => 
        )
 
-)
-
+)
 ```
 
 Example 2
@@ -2775,8 +2744,7 @@ $o = enumerator::compact($arr, true);
 print_r($o);
 ```
 
-```
-
+```
 Array
 (
     [0] => 1
@@ -2789,7 +2757,6 @@ Array
             [2] => 4
        )
 
-)
-
+)
 ```
 
