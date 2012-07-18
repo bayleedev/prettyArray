@@ -2404,9 +2404,9 @@ Array
 
 <a name="method_values_at_"></a>Methods: values\_at, values\_at\_
 ==============================
-void **values\_at** (type array , mixed $index )
+void **values\_at** (array &$arr , mixed $index )
 
-void **values\_at\_** (type array , mixed $index )
+void **values\_at\_** (array &$arr , mixed $index )
 
 
 Will replace the current array with only the inserted indexs. Use the non-destructive form to get the array returned instead.
@@ -2417,10 +2417,7 @@ Links
 
 Parameters
 ----------
-  **array**
-    ```
-    &$arr
-    ```
+  **&$arr**
 
   **$index**
     ```
