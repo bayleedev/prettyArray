@@ -9,7 +9,7 @@ It attempts to combine Ruby (enumerator/array/hash) methods as well as built in 
 require_once('./libraries/PrettyArray/PrettyArray.php');
 $arr = new PrettyArray(range(1,6));
 $arr->group_by_(function($key, &$value) {
-	return ($value % 3);
+    return ($value % 3);
 });
 print_r($arr->to_a());
 ?>
@@ -37,14 +37,14 @@ Array
 )
 ```
 
-## Installation
- * cd /libraries/
- * git clone git@github.com:BlaineSch/PrettyArray.git
- * Enjoy PrettyArray!
-
 ## More Examples
 
 More examples can be found inside of the "/examples" directory in markdown format which is viewable on Github.
+
+## Installation
+ * cd /libraries/
+ * git clone [git@github.com:BlaineSch/PrettyArray.git](https://github.com/BlaineSch/PrettyArray)
+ * Enjoy PrettyArray!
 
 ## Requirements
  * [PHP 5.3+](http://php.net/downloads.php)
@@ -57,7 +57,7 @@ More examples can be found inside of the "/examples" directory in markdown forma
 
 ### Testing
 
-After making any pull requests please verify that your methods pass the current unit tests.
+Before making any pull requests please verify that your methods pass the current unit tests.
 ```
 cd PrettyArray/tests/
 phpunit ./
@@ -85,10 +85,9 @@ Time: 1 second, Memory: 5.25Mb
 
  * [PrettyArray Test](tests/prettyArrayTest.php) - Tests the core functionality of PrettyArray.
  * [Enumerator Test](tests/enumeratorTest.php) - Tests all the core methods inside of enumerator.
+ * [PrettyArray Enumerator Test](tests/prettyArrayEnumeratorTest.php) - Tests alias methods that go directly to a core enumerator method.
  * [Enumerator Alias Test](tests/enumeratorAliasTest.php) - Tests all non-destructive aliases inside of enumerator.
  * [PrettyArray Alias Test](tests/prettyArrayAliasTest.php) - Tests all non-destructive aliases inside of enumerator.
+ * [PrettyArray Static Alias Test](tests/prettyArrayStaticAliasTest.php) - Tests static calls directly to non-destructive aliases on enumerator.
  * [Enumerator Destructive Alias Test](tests/enumeratorDestructiveAliasTest.php) - Tests all destructive aliases inside of enumerator.
  * [PrettyArray Destructive Alias Test](tests/prettyArrayDestructiveAliasTest.php) - Tests all destructive aliases inside of PrettyArray.
- * [PrettyArray Enumerator Test](tests/prettyArrayEnumeratorTest.php) - Tests alias methods that go directly to a core enumerator method.
- * [PrettyArray Static Test](tests/prettyArrayStaticAliasTest.php) - Tests static calls directly to non-destructive aliases on enumerator.
-
