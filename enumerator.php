@@ -2263,6 +2263,7 @@ class enumerator {
 	 * 
 	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-compact
 	 * @param array &$arr
+	 * @param boolean $recursive If you want this to iterate all child arrays.
 	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function compact_(array &$arr, $recursive = false) {
