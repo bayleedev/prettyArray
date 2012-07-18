@@ -155,8 +155,8 @@ Table Of Contents
  * [find\_index\_](#method_find_index_)
  * [rindex](#method_rindex_)
  * [rindex\_](#method_rindex_)
- * [compact](#method_compact_)
- * [compact\_](#method_compact_)
+ * [rindex](#method_compact_)
+ * [rindex\_](#method_compact_)
 
 <a name="method___construct"></a>Methods: \_\_construct
 ====================
@@ -596,9 +596,9 @@ Array
 
 <a name="method_all_"></a>Methods: all, all\_
 ==================
-boolean **all** (array $arr [, callable $callback = NULL ] )
+boolean **all** ([ callable $callback = NULL ] )
 
-boolean **all\_** (array &$arr [, callable $callback = NULL ] )
+boolean **all\_** ([ callable $callback = NULL ] )
 
 
 Passes each element of the collection to the $callback, if it ever turns false or null this function will return false, else true.
@@ -609,8 +609,6 @@ Links
 
 Parameters
 ----------
-  **&$arr**
-
   **$callback**
     ```
     A $key and a $value are passed to this callback. The $value can be accepted by reference.
@@ -663,9 +661,9 @@ bool(false)
 
 <a name="method_drop_"></a>Methods: drop, drop\_
 ====================
-void **drop** (array $arr , int $count )
+mixed **drop** (int $count )
 
-void **drop\_** (array &$arr , int $count )
+mixed **drop\_** (int $count )
 
 
 Drops the first $count elements.
@@ -676,13 +674,14 @@ Links
 
 Parameters
 ----------
-  **&$arr**
-
   **$count**
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -703,9 +702,9 @@ Array
 
 <a name="method_any_"></a>Methods: any, any\_
 ==================
-boolean **any** (array $arr [, callable $callback = NULL ] )
+boolean **any** ([ callable $callback = NULL ] )
 
-boolean **any\_** (array $arr [, callable $callback = NULL ] )
+boolean **any\_** ([ callable $callback = NULL ] )
 
 
 Passes each element of the collection to the $callback, if it ever returns anything besides null or false I'll return true, else I'll return false.
@@ -716,8 +715,6 @@ Links
 
 Parameters
 ----------
-  **$arr**
-
   **$callback**
     ```
     A $key and a $value are passed to this callback. The $value can be accepted by reference.
@@ -770,27 +767,27 @@ bool(true)
 
 <a name="method_array_walk_"></a>Methods: collect, collect\_, each, each\_, map, map\_, foreach, foreach\_, each\_with\_index, each\_with\_index\_, array\_walk
 ====================================================================================================================
-void **collect** (array $arr , callable $callback )
+mixed **collect** (callable $callback )
 
-void **collect\_** (array &$arr , callable $callback )
+mixed **collect\_** (callable $callback )
 
-void **each** (array $arr , callable $callback )
+mixed **each** (callable $callback )
 
-void **each\_** (array &$arr , callable $callback )
+mixed **each\_** (callable $callback )
 
-void **map** (array $arr , callable $callback )
+mixed **map** (callable $callback )
 
-void **map\_** (array &$arr , callable $callback )
+mixed **map\_** (callable $callback )
 
-void **foreach** (array $arr , callable $callback )
+mixed **foreach** (callable $callback )
 
-void **foreach\_** (array &$arr , callable $callback )
+mixed **foreach\_** (callable $callback )
 
-void **each\_with\_index** (array &$arr , callable $callback )
+mixed **each\_with\_index** (callable $callback )
 
-void **each\_with\_index\_** (array &$arr , callable $callback )
+mixed **each\_with\_index\_** (callable $callback )
 
-void **array\_walk** (array &$arr , callable $callback )
+mixed **array\_walk** (callable $callback )
 
 
 Will iterate the elements in the array. Has the potential to change the values.
@@ -801,8 +798,6 @@ Links
 
 Parameters
 ----------
-  **&$arr**
-
   **$callback**
     ```
     A $key and a $value are passed to this callback. The $value can be accepted by reference.
@@ -810,7 +805,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -857,17 +855,17 @@ Array
 
 <a name="method_size_"></a>Methods: count, count\_, size, size\_, length, length\_
 ====================================================
-int **count** (array $arr , callable $callback )
+int **count** (callable $callback )
 
-int **count\_** (array &$arr , callable $callback )
+int **count\_** (callable $callback )
 
-int **size** (array $arr , callable $callback )
+int **size** (callable $callback )
 
-int **size\_** (array &$arr , callable $callback )
+int **size\_** (callable $callback )
 
-int **length** (array $arr , callable $callback )
+int **length** (callable $callback )
 
-int **length\_** (array &$arr , callable $callback )
+int **length\_** (callable $callback )
 
 
 If the callback is null, this function give you the total size of the array.
@@ -880,8 +878,6 @@ Links
 
 Parameters
 ----------
-  **&$arr**
-
   **$callback**
     ```
     A $key and a $value are passed to this callback. The $value can be accepted by reference.
@@ -929,13 +925,13 @@ echo $arr->count(function($key, &$value) {
 
 <a name="method_find_"></a>Methods: detect, detect\_, find, find\_
 =====================================
-mixed **detect** (array $arr , callable $callback [, mixed $ifnone = NULL ] )
+mixed **detect** (callable $callback [, mixed $ifnone = NULL ] )
 
-mixed **detect\_** (array &$arr , callable $callback [, mixed $ifnone = NULL ] )
+mixed **detect\_** (callable $callback [, mixed $ifnone = NULL ] )
 
-mixed **find** (array $arr , callable $callback [, mixed $ifnone = NULL ] )
+mixed **find** (callable $callback [, mixed $ifnone = NULL ] )
 
-mixed **find\_** (array &$arr , callable $callback [, mixed $ifnone = NULL ] )
+mixed **find\_** (callable $callback [, mixed $ifnone = NULL ] )
 
 
 Will pass the key and value to $callback the first result that does not return false is returned.
@@ -947,8 +943,6 @@ Links
 
 Parameters
 ----------
-  **&$arr**
-
   **$callback**
     ```
     A $key and a $value are passed to this callback. The $value can be accepted by reference.
@@ -990,17 +984,17 @@ echo $arr->detect(function($key, &$value) {
 
 <a name="method_find_all_"></a>Methods: select, select\_, find\_all, find\_all\_, keep\_if, keep\_if\_
 ================================================================
-array **select** (array $arr , callable $callback )
+array **select** (callable $callback )
 
-array **select\_** (array &$arr , callable $callback )
+array **select\_** (callable $callback )
 
-array **find\_all** (array &$arr , callable $callback )
+array **find\_all** (callable $callback )
 
-array **find\_all\_** (array &$arr , callable $callback )
+array **find\_all\_** (callable $callback )
 
-array **keep\_if** (array &$arr , callable $callback )
+array **keep\_if** (callable $callback )
 
-array **keep\_if\_** (array &$arr , callable $callback )
+array **keep\_if\_** (callable $callback )
 
 
 Will pass the elements to the callback and unset them if the callback returns false.
@@ -1011,8 +1005,6 @@ Links
 
 Parameters
 ----------
-  **&$arr**
-
   **$callback**
     ```
     A $key and a $value are passed to this callback. The $value can be accepted by reference.
@@ -1022,7 +1014,7 @@ Return
 ------
 array
     ```
-    The array that has already been edited by reference.
+    Nothing if called destructively, otherwise a new array.
     ```
 
 Example 1
@@ -1047,9 +1039,9 @@ Array
 
 <a name="method_each_slice_"></a>Methods: each\_slice, each\_slice\_
 ================================
-void **each\_slice** (array &$arr , int $size [, callable $callback = NULL ] )
+mixed **each\_slice** (int $size [, callable $callback = NULL ] )
 
-void **each\_slice\_** (array &$arr , int $size [, callable $callback = NULL ] )
+mixed **each\_slice\_** (int $size [, callable $callback = NULL ] )
 
 
 Will slice the elements into $size collections and pass to $callback if defined. If not defined, the slized array is returned.
@@ -1060,8 +1052,6 @@ Links
 
 Parameters
 ----------
-  **&$arr**
-
   **$size**
     ```
     The size of each slice.
@@ -1074,7 +1064,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -1123,9 +1116,9 @@ Array
 
 <a name="method_first_"></a>Methods: first, first\_
 ======================
-void **first** (array $arr [, int $count = 1 ] )
+mixed **first** ([ int $count = 1 ] )
 
-void **first\_** (array &$arr [, int $count = 1 ] )
+mixed **first\_** ([ int $count = 1 ] )
 
 
 Will overwrite $arr with the first $count items in array.
@@ -1136,8 +1129,6 @@ Links
 
 Parameters
 ----------
-  **&$arr**
-
   **$count**
     ```
     The number of items you wish to return. Defaults to 1
@@ -1145,7 +1136,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -1181,13 +1175,13 @@ Array
 
 <a name="method_flat_map_"></a>Methods: collect\_concat, collect\_concat\_, flat\_map, flat\_map\_
 =============================================================
-void **collect\_concat** (array &$arr , callable $callback )
+mixed **collect\_concat** (callable $callback )
 
-void **collect\_concat\_** (array &$arr , callable $callback )
+mixed **collect\_concat\_** (callable $callback )
 
-void **flat\_map** (array &$arr , callable $callback )
+mixed **flat\_map** (callable $callback )
 
-void **flat\_map\_** (array &$arr , callable $callback )
+mixed **flat\_map\_** (callable $callback )
 
 
 Will flatten the input $arr into a non-multi-dimensional array.It will pass the current key and the value to $callback which has the potential to change the value.
@@ -1199,8 +1193,6 @@ Links
 
 Parameters
 ----------
-  **&$arr**
-
   **$callback**
     ```
     The callback will be passed each sliced item as an array. This can be passed by reference.
@@ -1208,7 +1200,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -1233,9 +1228,9 @@ Array
 
 <a name="method_grep_"></a>Methods: grep, grep\_
 ====================
-void **grep** (array $arr , string $pattern [, callable $callback = NULL ] )
+mixed **grep** (string $pattern [, callable $callback = NULL ] )
 
-void **grep\_** (array &$arr , string $pattern [, callable $callback = NULL ] )
+mixed **grep\_** (string $pattern [, callable $callback = NULL ] )
 
 
 Will only keep an item if the value of the item matches $pattern.
@@ -1247,8 +1242,6 @@ Links
 
 Parameters
 ----------
-  **&$arr**
-
   **$pattern**
     ```
     The regex pattern.
@@ -1261,7 +1254,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -1283,9 +1279,9 @@ Array
 
 <a name="method_group_by_"></a>Methods: group\_by, group\_by\_
 ============================
-void **group\_by** (array &$arr , callable $callback [, boolean $preserve_keys = false ] )
+mixed **group\_by** (callable $callback [, boolean $preserve_keys = false ] )
 
-void **group\_by\_** (array &$arr , callable $callback [, boolean $preserve_keys = false ] )
+mixed **group\_by\_** (callable $callback [, boolean $preserve_keys = false ] )
 
 
 Each item will be passed into $callback and the return value will be the new "category" of this item.
@@ -1297,8 +1293,6 @@ Links
 
 Parameters
 ----------
-  **&$arr**
-
   **$callback**
     ```
     The callback will be passed each sliced item as an array. This can be passed by reference.
@@ -1311,7 +1305,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -1350,9 +1347,9 @@ Array
 
 <a name="method_member"></a>Methods: member, include
 ========================
-boolean **member** (array $arr , mixed $needle )
+boolean **member** (mixed $needle )
 
-boolean **include** (array $arr , mixed $needle )
+boolean **include** (mixed $needle )
 
 
 This function will iterate over $arr, if any value is equal (===) to $needle this function will return true. If nothing is found this function will return false.
@@ -1364,8 +1361,6 @@ Links
 
 Parameters
 ----------
-  **$arr**
-
   **$needle**
 
 Return
@@ -1412,7 +1407,7 @@ bool(true)
 
 <a name="method_min"></a>Methods: min
 ============
-mixed **min** (array $arr , callback optional )
+mixed **min** (callback optional )
 
 
 Will find the lowest value. If callback is defined it will compare them.
@@ -1423,8 +1418,6 @@ Links
 
 Parameters
 ----------
-  **$arr**
-
   **optional**
     ```
     $callback Will accept two values. Return 0 if they are equal, return -1 if the second parameter is bigger, and 1 is the first parameter is bigger.
@@ -1461,7 +1454,7 @@ dog
 
 <a name="method_max"></a>Methods: max
 ============
-mixed **max** (array $arr , callback optional )
+mixed **max** (callback optional )
 
 
 Will find the highest value. If callback is defined it will compare them.
@@ -1472,8 +1465,6 @@ Links
 
 Parameters
 ----------
-  **$arr**
-
   **optional**
     ```
     $callback Will accept two values. Return 0 if they are equal, return -1 if the second parameter is bigger, and 1 is the first parameter is bigger.
@@ -1510,7 +1501,7 @@ albatross
 
 <a name="method_min_by"></a>Methods: min\_by
 ===============
-mixed **min\_by** (array $arr , callable $callback )
+mixed **min\_by** (callable $callback )
 
 
 Will find the lowest item in the array but comparing the output os $callback against every item.
@@ -1521,8 +1512,6 @@ Links
 
 Parameters
 ----------
-  **$arr**
-
   **$callback**
 
 Return
@@ -1545,7 +1534,7 @@ dog
 
 <a name="method_max_by"></a>Methods: max\_by
 ===============
-mixed **max\_by** (array $arr , callable $callback )
+mixed **max\_by** (callable $callback )
 
 
 Will find the highest item in the array but comparing the output os $callback against every item.
@@ -1556,8 +1545,6 @@ Links
 
 Parameters
 ----------
-  **$arr**
-
   **$callback**
 
 Return
@@ -1580,7 +1567,7 @@ albatross
 
 <a name="method_minmax"></a>Methods: minmax
 ===============
-array **minmax** (array $arr , callback optional )
+array **minmax** (callback optional )
 
 
 Will return an array of min and max. Optionally you can provide a callback to sort them.
@@ -1591,8 +1578,6 @@ Links
 
 Parameters
 ----------
-  **$arr**
-
   **optional**
     ```
     $callback Will accept two values. Return 0 if they are equal, return -1 if the second parameter is bigger, and 1 is the first parameter is bigger.
@@ -1623,7 +1608,7 @@ Array
 
 <a name="method_minmax_by"></a>Methods: minmax\_by
 ==================
-array **minmax\_by** (array $arr , callable $callback )
+array **minmax\_by** (callable $callback )
 
 
 Will find the lowest and highest item in the array but comparing the output os $callback against every item.
@@ -1634,8 +1619,6 @@ Links
 
 Parameters
 ----------
-  **$arr**
-
   **$callback**
 
 Return
@@ -1663,7 +1646,7 @@ Array
 
 <a name="method_none"></a>Methods: none
 =============
-boolean **none** (array $arr [, callable $callback = NULL ] )
+boolean **none** ([ callable $callback = NULL ] )
 
 
 Passes each element of the collection to $callback. This will return true if $callback never returns true, else false.
@@ -1674,8 +1657,6 @@ Links
 
 Parameters
 ----------
-  **$arr**
-
   **$callback**
     ```
     A $key, $value are passed to this callback.
@@ -1752,7 +1733,7 @@ bool(true)
 
 <a name="method_one"></a>Methods: one
 ============
-boolean **one** (array $arr [, callable $callback = NULL ] )
+boolean **one** ([ callable $callback = NULL ] )
 
 
 Pases each element of the collection to $callback. If $callback returns true once, the function will return true. Otherwise, the function will return false.
@@ -1763,8 +1744,6 @@ Links
 
 Parameters
 ----------
-  **$arr**
-
   **$callback**
     ```
     A $key, $value are passed to this callback.
@@ -1815,9 +1794,9 @@ bool(true)
 
 <a name="method_partition_"></a>Methods: partition, partition\_
 ==============================
-void **partition** (array $arr , callable $callback [, boolean $preserve_keys = false ] )
+mixed **partition** (callable $callback [, boolean $preserve_keys = false ] )
 
-void **partition\_** (array &$arr , callable $callback [, boolean $preserve_keys = false ] )
+mixed **partition\_** (callable $callback [, boolean $preserve_keys = false ] )
 
 
 Passes each element into $callback. If $callback returns true the item will be in the first category, otherwise the second.
@@ -1828,8 +1807,6 @@ Links
 
 Parameters
 ----------
-  **&$arr**
-
   **$callback**
     ```
     A $key, $value are passed to this callback.
@@ -1839,7 +1816,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -1873,13 +1853,13 @@ Array
 
 <a name="method_reduce_"></a>Methods: inject, inject\_, reduce, reduce\_
 =========================================
-mixed **inject** (array $arr , callable $callback , mixed optional )
+mixed **inject** (callable $callback , mixed optional )
 
-mixed **inject\_** (array &$arr , callable $callback , mixed optional )
+mixed **inject\_** (callable $callback , mixed optional )
 
-mixed **reduce** (array $arr , callable $callback , mixed optional )
+mixed **reduce** (callable $callback , mixed optional )
 
-mixed **reduce\_** (array &$arr , callable $callback , mixed optional )
+mixed **reduce\_** (callable $callback , mixed optional )
 
 
 Will iterate the items in $arr passing each one to $callback with $memo as the third argument.
@@ -1890,8 +1870,6 @@ Links
 
 Parameters
 ----------
-  **&$arr**
-
   **$callback**
     ```
     A $key, $value are passed to this callback.
@@ -1940,11 +1918,11 @@ echo $arr->inject(function($key, &$value, &$memo){
 
 <a name="method_delete_if_"></a>Methods: reject: reject\_, delete\_if, delete\_if\_
 ===============================================
-void **reject: reject\_** (array &$arr , callable $callback )
+mixed **reject: reject\_** (callable $callback )
 
-void **delete\_if** (array &$arr , callable $callback )
+mixed **delete\_if** (callable $callback )
 
-void **delete\_if\_** (array &$arr , callable $callback )
+mixed **delete\_if\_** (callable $callback )
 
 
 Will unset an item in $arr if $callback returns true for it.
@@ -1955,8 +1933,6 @@ Links
 
 Parameters
 ----------
-  **&$arr**
-
   **$callback**
     ```
     A $key, $value are passed to this callback. The $value can be passed by reference.
@@ -1964,7 +1940,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -1992,23 +1971,23 @@ Array
 
 <a name="method_reverse_each_"></a>Methods: reverse\_collect, reverse\_collect\_, reverse\_each, reverse\_each\_, reverse\_map, reverse\_map\_, reverse\_foreach, reverse\_foreach\_, reverse\_each\_with\_index
 ==============================================================================================================================================================
-void **reverse\_collect** (array &$arr , callable $callback )
+mixed **reverse\_collect** (callable $callback )
 
-void **reverse\_collect\_** (array &$arr , callable $callback )
+mixed **reverse\_collect\_** (callable $callback )
 
-void **reverse\_each** (array &$arr , callable $callback )
+mixed **reverse\_each** (callable $callback )
 
-void **reverse\_each\_** (array &$arr , callable $callback )
+mixed **reverse\_each\_** (callable $callback )
 
-void **reverse\_map** (array &$arr , callable $callback )
+mixed **reverse\_map** (callable $callback )
 
-void **reverse\_map\_** (array &$arr , callable $callback )
+mixed **reverse\_map\_** (callable $callback )
 
-void **reverse\_foreach** (array &$arr , callable $callback )
+mixed **reverse\_foreach** (callable $callback )
 
-void **reverse\_foreach\_** (array &$arr , callable $callback )
+mixed **reverse\_foreach\_** (callable $callback )
 
-void **reverse\_each\_with\_index** (array &$arr , callable $callback )
+mixed **reverse\_each\_with\_index** (callable $callback )
 
 
 Will iterate the array in reverse, but will NOT save the order.
@@ -2019,8 +1998,6 @@ Links
 
 Parameters
 ----------
-  **&$arr**
-
   **$callback**
     ```
     A $key, $value are passed to this callback. The $value can be passed by reference.
@@ -2028,7 +2005,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -2047,9 +2027,9 @@ $arr->reverse_collect(function($key, &$value) {
 
 <a name="method_sort_"></a>Methods: sort, sort\_
 ====================
-void **sort** (array $arr [, callable $callback = NULL ] )
+mixed **sort** ([ callable $callback = NULL ] )
 
-void **sort\_** (array &$arr [, callable $callback = NULL ] )
+mixed **sort\_** ([ callable $callback = NULL ] )
 
 
 Will sort the contents of $arr. A callback can be used to sort.
@@ -2060,8 +2040,6 @@ Links
 
 Parameters
 ----------
-  **&$arr**
-
   **$callback**
     ```
     A $key, $value are passed to this callback. The $value can be passed by reference.
@@ -2069,7 +2047,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -2110,9 +2091,9 @@ Array
 
 <a name="method_sort_by_"></a>Methods: sort\_by, sort\_by\_
 ==========================
-void **sort\_by** (array &$arr , callable $callback )
+mixed **sort\_by** (callable $callback )
 
-void **sort\_by\_** (array &$arr , callable $callback )
+mixed **sort\_by\_** (callable $callback )
 
 
 Will sort based off of the return of $callback.
@@ -2123,13 +2104,14 @@ Links
 
 Parameters
 ----------
-  **&$arr**
-
   **$callback**
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -2153,9 +2135,9 @@ Array
 
 <a name="method_take_while_"></a>Methods: take\_while, take\_while\_
 ================================
-void **take\_while** (array &$arr , callable $callback )
+mixed **take\_while** (callable $callback )
 
-void **take\_while\_** (array &$arr , callable $callback )
+mixed **take\_while\_** (callable $callback )
 
 
 Passes elements into $callback until it returns false or null, at which point this function will stop and set $arr to all prior elements.
@@ -2166,8 +2148,6 @@ Links
 
 Parameters
 ----------
-  **&$arr**
-
   **$callback**
     ```
     A $key, $value are passed to this callback.
@@ -2175,7 +2155,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -2198,9 +2181,9 @@ Array
 
 <a name="method_zip_"></a>Methods: zip, zip\_
 ==================
-void **zip** (array $arr , array $one )
+mixed **zip** (array $one )
 
-void **zip\_** (array &$arr , array $one )
+mixed **zip\_** (array $one )
 
 
 Will turn each element in $arr into an array then appending the associated indexs from the other arrays into this array as well.
@@ -2211,8 +2194,6 @@ Links
 
 Parameters
 ----------
-  **&$arr**
-
   **$one**
     ```
     Unlimited of this.
@@ -2220,7 +2201,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -2324,9 +2308,9 @@ Array
 
 <a name="method_drop_while_"></a>Methods: drop\_while, drop\_while\_
 ================================
-void **drop\_while** (array &$arr , callable $callback )
+mixed **drop\_while** (callable $callback )
 
-void **drop\_while\_** (array &$arr , callable $callback )
+mixed **drop\_while\_** (callable $callback )
 
 
 Will pass elements into $callback until false is returned at which point all elements before the current one will be removed.
@@ -2337,13 +2321,14 @@ Links
 
 Parameters
 ----------
-  **&$arr**
-
   **$callback**
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -2368,9 +2353,9 @@ Array
 
 <a name="method_cycle_"></a>Methods: cycle, cycle\_
 ======================
-void **cycle** (array $arr , int $it , callable $callback )
+mixed **cycle** (int $it , callable $callback )
 
-void **cycle\_** (array $arr , int $it , callable $callback )
+mixed **cycle\_** (int $it , callable $callback )
 
 
 Will pass every element of $arr into $callback exactly $it times.
@@ -2381,8 +2366,6 @@ Links
 
 Parameters
 ----------
-  **$arr**
-
   **$it**
 
   **$callback**
@@ -2392,7 +2375,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -2410,9 +2396,9 @@ $arr->cycle(3, function($key, $value, $it) {
 
 <a name="method_each_cons_"></a>Methods: each\_cons, each\_cons\_
 ==============================
-void **each\_cons** (array &$arr , int $size [, callable $callback = false ] )
+mixed **each\_cons** (int $size [, callable $callback = false ] )
 
-void **each\_cons\_** (array &$arr , int $size [, callable $callback = false ] )
+mixed **each\_cons\_** (int $size [, callable $callback = false ] )
 
 
 This will return each section as an item in an array.
@@ -2425,15 +2411,16 @@ Links
 
 Parameters
 ----------
-  **&$arr**
-
   **$size**
 
   **$callback**
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -2488,9 +2475,9 @@ Array
 
 <a name="method_slice_before_"></a>Methods: slice\_before, slice\_before\_
 ====================================
-void **slice\_before** (array &$arr , string $pattern )
+mixed **slice\_before** (string $pattern )
 
-void **slice\_before\_** (array &$arr , string $pattern )
+mixed **slice\_before\_** (string $pattern )
 
 
 When $pattern is matched in an element, all previous elements not include previous chunks are placed into a new chunk.
@@ -2501,13 +2488,14 @@ Links
 
 Parameters
 ----------
-  **&$arr**
-
   **$pattern**
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -2560,13 +2548,13 @@ Array
 
 <a name="method_concat_"></a>Methods: merge, merge\_, concat, concat\_
 =======================================
-void **merge** (array $arr , array $arr2 )
+mixed **merge** (array $arr2 )
 
-void **merge\_** (array &$arr , array $arr2 )
+mixed **merge\_** (array $arr2 )
 
-void **concat** (array $arr , array $arr2 )
+mixed **concat** (array $arr2 )
 
-void **concat\_** (array &$arr , array $arr2 )
+mixed **concat\_** (array $arr2 )
 
 
 Will merge two or more arrays together.
@@ -2577,13 +2565,14 @@ Links
 
 Parameters
 ----------
-  **&$arr**
-
   **$arr2**
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -2608,9 +2597,9 @@ Array
 
 <a name="method_rotate_"></a>Methods: rotate, rotate\_
 ========================
-void **rotate** (array $arr , int $index )
+mixed **rotate** (int $index )
 
-void **rotate\_** (array &$arr , int $index )
+mixed **rotate\_** (int $index )
 
 
 Will rotate the array so that $index is the first element in the array. Negative indexs are allowed.
@@ -2621,8 +2610,6 @@ Links
 
 Parameters
 ----------
-  **&$arr**
-
   **$index**
     ```
     The starting index
@@ -2630,7 +2617,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -2670,9 +2660,9 @@ Array
 
 <a name="method_reverse_"></a>Methods: reverse, reverse\_
 ==========================
-void **reverse** (array $arr , boolean optional )
+mixed **reverse** (boolean optional )
 
-void **reverse\_** (array &$arr , boolean optional )
+mixed **reverse\_** (boolean optional )
 
 
 Will reverse an array.
@@ -2683,8 +2673,6 @@ Links
 
 Parameters
 ----------
-  **&$arr**
-
   **optional**
     ```
     $preserve_keys Defaults to false. If you want to preserve the keys or not.
@@ -2692,7 +2680,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -2714,13 +2705,13 @@ Array
 
 <a name="method_sample_"></a>Methods: random, random\_, sample, sample\_
 =========================================
-mixed **random** (array $arr , int optional )
+mixed **random** (int optional )
 
-mixed **random\_** (array &$arr , int optional )
+mixed **random\_** (int optional )
 
-mixed **sample** (array $arr , int optional )
+mixed **sample** (int optional )
 
-mixed **sample\_** (array &$arr , int optional )
+mixed **sample\_** (int optional )
 
 
 Will get $count random values from $arr. If $count is 1 then it'll return the value, otherwise it'll return an array of values.
@@ -2731,8 +2722,6 @@ Links
 
 Parameters
 ----------
-  **&$arr**
-
   **optional**
     ```
     $count Defaults to 1
@@ -2740,7 +2729,10 @@ Parameters
 
 Return
 ------
- mixed
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -2772,9 +2764,9 @@ Array
 
 <a name="method_shuffle_"></a>Methods: shuffle, shuffle\_
 ==========================
-void **shuffle** (array $arr [, boolean $preserve_keys = false ] )
+mixed **shuffle** ([ boolean $preserve_keys = false ] )
 
-void **shuffle\_** (array &$arr [, boolean $preserve_keys = false ] )
+mixed **shuffle\_** ([ boolean $preserve_keys = false ] )
 
 
 Will shuffle the inputted array.
@@ -2785,8 +2777,6 @@ Links
 
 Parameters
 ----------
-  **&$arr**
-
   **$preserve_keys**
     ```
     If you want to preserve keys or not. Defaults to false.
@@ -2794,7 +2784,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -2833,9 +2826,9 @@ Array
 
 <a name="method_values_at_"></a>Methods: values\_at, values\_at\_
 ==============================
-void **values\_at** (array &$arr , mixed $index )
+mixed **values\_at** (mixed $index )
 
-void **values\_at\_** (array &$arr , mixed $index )
+mixed **values\_at\_** (mixed $index )
 
 
 Will replace the current array with only the inserted indexs. Use the non-destructive form to get the array returned instead.
@@ -2846,8 +2839,6 @@ Links
 
 Parameters
 ----------
-  **&$arr**
-
   **$index**
     ```
     Put in as many indexes as you please.
@@ -2855,7 +2846,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -2882,9 +2876,9 @@ Array
 
 <a name="method_isEmpty"></a>Methods: empty, isEmpty
 =======================
-boolean **empty** (array $arr )
+boolean **empty** ()
 
-boolean **isEmpty** (array $arr )
+boolean **isEmpty** ()
 
 
 If the array is empty or not.
@@ -2892,8 +2886,6 @@ NOTICE: that 'empty' alias is a language construct so this alias cannot be calle
 
 Parameters
 ----------
-  **$arr**
-
 Return
 ------
  boolean
@@ -2935,15 +2927,13 @@ bool(false)
 
 <a name="method_has_value"></a>Methods: has\_value
 ==================
-boolean **has\_value** (array $arr , mixed $value )
+boolean **has\_value** (mixed $value )
 
 
 Will return a boolean based on the condition that $value exists inside of $arr and are the same data type.
 
 Parameters
 ----------
-  **$arr**
-
   **$value**
 
 Return
@@ -2986,13 +2976,13 @@ bool(true)
 
 <a name="method_find_index_"></a>Methods: index, index\_, find\_index, find\_index\_
 ===============================================
-mixed **index** (array $arr [, mixed $callback = NULL ] )
+mixed **index** ([ mixed $callback = NULL ] )
 
-mixed **index\_** (array &$arr [, mixed $callback = NULL ] )
+mixed **index\_** ([ mixed $callback = NULL ] )
 
-mixed **find\_index** (array &$arr [, mixed $callback = NULL ] )
+mixed **find\_index** ([ mixed $callback = NULL ] )
 
-mixed **find\_index\_** (array &$arr [, mixed $callback = NULL ] )
+mixed **find\_index\_** ([ mixed $callback = NULL ] )
 
 
 Will return the first index if found or false otherwise. Use '===' for comparing.
@@ -3005,8 +2995,6 @@ Links
 
 Parameters
 ----------
-  **&$arr**
-
   **$callback**
 
 Return
@@ -3054,9 +3042,9 @@ title
 
 <a name="method_rindex_"></a>Methods: rindex, rindex\_
 ========================
-mixed **rindex** (array $arr , mixed $callback )
+mixed **rindex** (mixed $callback )
 
-mixed **rindex\_** (array &$arr , mixed $callback )
+mixed **rindex\_** (mixed $callback )
 
 
 Similar to index but looks for the last occurace of $callback.
@@ -3069,8 +3057,6 @@ Links
 
 Parameters
 ----------
-  **&$arr**
-
   **$callback**
 
 Return
@@ -3116,73 +3102,64 @@ suffix
 ```
 
 
-<a name="method_compact_"></a>Methods: compact, compact\_
-==========================
-void **compact** (array $arr )
+<a name="method_compact_"></a>Methods: rindex, rindex\_
+========================
+mixed **rindex** (mixed $callback )
 
-void **compact\_** (array &$arr )
+mixed **rindex\_** (mixed $callback )
 
 
-Will remove all null values inside of $arr. If $recursive is set to true, it will crawl sub-arrays.
+Similar to index but looks for the last occurace of $callback.
+If $callback is a callback function, the $key is returned the last time $callback returns true.
+If $callback is not a callback, we are looking for the last $value in $arr to be === $callback.
 
 Links
 -----
- * http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-compact
+ * http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-rindex
 
 Parameters
 ----------
-  **&$arr**
+  **$callback**
 
 Return
 ------
- void
+ mixed
 
 Example 1
 ---------
 ```php
-$arr = new PrettyArray(array(1,2,3,null,array(2,3,4,null)));
-$arr->compact_();
-print_r($arr->to_a());
+$name = new PrettyArray(array(
+	'name' => 'John Doe',
+	'first' => 'John',
+	'middle' => 'M',
+	'last' => 'Doe',
+	'title' => 'Dr.',
+	'suffix' => 'Jr.'
+));
+echo $name->rindex('John');
 ```
 
 ```
-Array
-(
-    [0] => 1
-    [1] => 2
-    [2] => 3
-    [4] => Array
-        (
-            [0] => 2
-            [1] => 3
-            [2] => 4
-            [3] => 
-       )
-
-)
+first
 ```
 
 Example 2
 ---------
 ```php
-$arr = new PrettyArray(array(1,2,3,null,array(2,3,4,null)));
-$o = $arr->compact(true);
-print_r($o->to_a());
+$name = new PrettyArray(array(
+	'name' => 'John Doe',
+	'first' => 'John',
+	'middle' => 'M',
+	'last' => 'Doe',
+	'title' => 'Dr.',
+	'suffix' => 'Jr.'
+));
+echo $name->rindex_(function($key, &$value) {
+	return (strpos($value, '.') !== false);
+});
 ```
 
 ```
-Array
-(
-    [0] => 1
-    [1] => 2
-    [2] => 3
-    [4] => Array
-        (
-            [0] => 2
-            [1] => 3
-            [2] => 4
-       )
-
-)
+suffix
 ```
 
