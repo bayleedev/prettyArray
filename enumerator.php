@@ -1976,7 +1976,7 @@ class enumerator {
 	 * )
 	 * </pre>
 	 * 
-	 * @param type array &$arr 
+	 * @param array &$arr 
 	 * @param mixed $index Put in as many indexes as you please.
 	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-values_at
 	 */
