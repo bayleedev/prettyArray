@@ -155,8 +155,8 @@ Table Of Contents
  * [find\_index\_](#method_find_index_)
  * [rindex](#method_rindex_)
  * [rindex\_](#method_rindex_)
- * [rindex](#method_compact_)
- * [rindex\_](#method_compact_)
+ * [compact](#method_compact_)
+ * [compact\_](#method_compact_)
 
 <a name="method___construct"></a>Methods: \_\_construct
 ====================
@@ -3102,64 +3102,79 @@ suffix
 ```
 
 
-<a name="method_compact_"></a>Methods: rindex, rindex\_
-========================
-mixed **rindex** (mixed $callback )
+<a name="method_compact_"></a>Methods: compact, compact\_
+==========================
+mixed **compact** ([ boolean $recursive = false ] )
 
-mixed **rindex\_** (mixed $callback )
+mixed **compact\_** ([ boolean $recursive = false ] )
 
 
-Similar to index but looks for the last occurace of $callback.
-If $callback is a callback function, the $key is returned the last time $callback returns true.
-If $callback is not a callback, we are looking for the last $value in $arr to be === $callback.
+Will remove all null values inside of $arr. If $recursive is set to true, it will crawl sub-arrays.
 
 Links
 -----
- * http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-rindex
+ * http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-compact
 
 Parameters
 ----------
-  **$callback**
+  **$recursive**
+    ```
+    If you want this to iterate all child arrays.
+    ```
 
 Return
 ------
- mixed
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
 ```php
-$name = new PrettyArray(array(
-	'name' => 'John Doe',
-	'first' => 'John',
-	'middle' => 'M',
-	'last' => 'Doe',
-	'title' => 'Dr.',
-	'suffix' => 'Jr.'
-));
-echo $name->rindex('John');
+$arr = new PrettyArray(array(1,2,3,null,array(2,3,4,null)));
+$arr->compact_();
+print_r($arr->to_a());
 ```
 
 ```
-first
+Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => 3
+    [4] => Array
+        (
+            [0] => 2
+            [1] => 3
+            [2] => 4
+            [3] => 
+       )
+
+)
 ```
 
 Example 2
 ---------
 ```php
-$name = new PrettyArray(array(
-	'name' => 'John Doe',
-	'first' => 'John',
-	'middle' => 'M',
-	'last' => 'Doe',
-	'title' => 'Dr.',
-	'suffix' => 'Jr.'
-));
-echo $name->rindex_(function($key, &$value) {
-	return (strpos($value, '.') !== false);
-});
+$arr = new PrettyArray(array(1,2,3,null,array(2,3,4,null)));
+$o = $arr->compact(true);
+print_r($o->to_a());
 ```
 
 ```
-suffix
+Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => 3
+    [4] => Array
+        (
+            [0] => 2
+            [1] => 3
+            [2] => 4
+       )
+
+)
 ```
 

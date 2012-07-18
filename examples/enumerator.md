@@ -238,9 +238,9 @@ bool(false)
 
 <a name="method_drop_"></a>Methods: drop, drop\_
 ====================
-void **drop** (array $arr , int $count )
+mixed **drop** (array $arr , int $count )
 
-void **drop\_** (array &$arr , int $count )
+mixed **drop\_** (array &$arr , int $count )
 
 
 Drops the first $count elements.
@@ -257,7 +257,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -345,27 +348,27 @@ bool(true)
 
 <a name="method_array_walk_"></a>Methods: collect, collect\_, each, each\_, map, map\_, foreach, foreach\_, each\_with\_index, each\_with\_index\_, array\_walk
 ====================================================================================================================
-void **collect** (array $arr , callable $callback )
+mixed **collect** (array $arr , callable $callback )
 
-void **collect\_** (array &$arr , callable $callback )
+mixed **collect\_** (array &$arr , callable $callback )
 
-void **each** (array $arr , callable $callback )
+mixed **each** (array $arr , callable $callback )
 
-void **each\_** (array &$arr , callable $callback )
+mixed **each\_** (array &$arr , callable $callback )
 
-void **map** (array $arr , callable $callback )
+mixed **map** (array $arr , callable $callback )
 
-void **map\_** (array &$arr , callable $callback )
+mixed **map\_** (array &$arr , callable $callback )
 
-void **foreach** (array $arr , callable $callback )
+mixed **foreach** (array $arr , callable $callback )
 
-void **foreach\_** (array &$arr , callable $callback )
+mixed **foreach\_** (array &$arr , callable $callback )
 
-void **each\_with\_index** (array &$arr , callable $callback )
+mixed **each\_with\_index** (array &$arr , callable $callback )
 
-void **each\_with\_index\_** (array &$arr , callable $callback )
+mixed **each\_with\_index\_** (array &$arr , callable $callback )
 
-void **array\_walk** (array &$arr , callable $callback )
+mixed **array\_walk** (array &$arr , callable $callback )
 
 
 Will iterate the elements in the array. Has the potential to change the values.
@@ -385,7 +388,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -597,7 +603,7 @@ Return
 ------
 array
     ```
-    The array that has already been edited by reference.
+    Nothing if called destructively, otherwise a new array.
     ```
 
 Example 1
@@ -622,9 +628,9 @@ Array
 
 <a name="method_each_slice_"></a>Methods: each\_slice, each\_slice\_
 ================================
-void **each\_slice** (array &$arr , int $size [, callable $callback = NULL ] )
+mixed **each\_slice** (array &$arr , int $size [, callable $callback = NULL ] )
 
-void **each\_slice\_** (array &$arr , int $size [, callable $callback = NULL ] )
+mixed **each\_slice\_** (array &$arr , int $size [, callable $callback = NULL ] )
 
 
 Will slice the elements into $size collections and pass to $callback if defined. If not defined, the slized array is returned.
@@ -649,7 +655,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -698,9 +707,9 @@ Array
 
 <a name="method_first_"></a>Methods: first, first\_
 ======================
-void **first** (array $arr [, int $count = 1 ] )
+mixed **first** (array $arr [, int $count = 1 ] )
 
-void **first\_** (array &$arr [, int $count = 1 ] )
+mixed **first\_** (array &$arr [, int $count = 1 ] )
 
 
 Will overwrite $arr with the first $count items in array.
@@ -720,7 +729,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -756,13 +768,13 @@ Array
 
 <a name="method_flat_map_"></a>Methods: collect\_concat, collect\_concat\_, flat\_map, flat\_map\_
 =============================================================
-void **collect\_concat** (array &$arr , callable $callback )
+mixed **collect\_concat** (array &$arr , callable $callback )
 
-void **collect\_concat\_** (array &$arr , callable $callback )
+mixed **collect\_concat\_** (array &$arr , callable $callback )
 
-void **flat\_map** (array &$arr , callable $callback )
+mixed **flat\_map** (array &$arr , callable $callback )
 
-void **flat\_map\_** (array &$arr , callable $callback )
+mixed **flat\_map\_** (array &$arr , callable $callback )
 
 
 Will flatten the input $arr into a non-multi-dimensional array.It will pass the current key and the value to $callback which has the potential to change the value.
@@ -783,7 +795,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -808,9 +823,9 @@ Array
 
 <a name="method_grep_"></a>Methods: grep, grep\_
 ====================
-void **grep** (array $arr , string $pattern [, callable $callback = NULL ] )
+mixed **grep** (array $arr , string $pattern [, callable $callback = NULL ] )
 
-void **grep\_** (array &$arr , string $pattern [, callable $callback = NULL ] )
+mixed **grep\_** (array &$arr , string $pattern [, callable $callback = NULL ] )
 
 
 Will only keep an item if the value of the item matches $pattern.
@@ -836,7 +851,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -858,9 +876,9 @@ Array
 
 <a name="method_group_by_"></a>Methods: group\_by, group\_by\_
 ============================
-void **group\_by** (array &$arr , callable $callback [, boolean $preserve_keys = false ] )
+mixed **group\_by** (array &$arr , callable $callback [, boolean $preserve_keys = false ] )
 
-void **group\_by\_** (array &$arr , callable $callback [, boolean $preserve_keys = false ] )
+mixed **group\_by\_** (array &$arr , callable $callback [, boolean $preserve_keys = false ] )
 
 
 Each item will be passed into $callback and the return value will be the new "category" of this item.
@@ -886,7 +904,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -1386,9 +1407,9 @@ bool(true)
 
 <a name="method_partition_"></a>Methods: partition, partition\_
 ==============================
-void **partition** (array $arr , callable $callback [, boolean $preserve_keys = false ] )
+mixed **partition** (array $arr , callable $callback [, boolean $preserve_keys = false ] )
 
-void **partition\_** (array &$arr , callable $callback [, boolean $preserve_keys = false ] )
+mixed **partition\_** (array &$arr , callable $callback [, boolean $preserve_keys = false ] )
 
 
 Passes each element into $callback. If $callback returns true the item will be in the first category, otherwise the second.
@@ -1410,7 +1431,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -1511,11 +1535,11 @@ echo enumerator::inject($arr, function($key, &$value, &$memo){
 
 <a name="method_delete_if_"></a>Methods: reject: reject\_, delete\_if, delete\_if\_
 ===============================================
-void **reject: reject\_** (array &$arr , callable $callback )
+mixed **reject: reject\_** (array &$arr , callable $callback )
 
-void **delete\_if** (array &$arr , callable $callback )
+mixed **delete\_if** (array &$arr , callable $callback )
 
-void **delete\_if\_** (array &$arr , callable $callback )
+mixed **delete\_if\_** (array &$arr , callable $callback )
 
 
 Will unset an item in $arr if $callback returns true for it.
@@ -1535,7 +1559,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -1563,23 +1590,23 @@ Array
 
 <a name="method_reverse_each_"></a>Methods: reverse\_collect, reverse\_collect\_, reverse\_each, reverse\_each\_, reverse\_map, reverse\_map\_, reverse\_foreach, reverse\_foreach\_, reverse\_each\_with\_index
 ==============================================================================================================================================================
-void **reverse\_collect** (array &$arr , callable $callback )
+mixed **reverse\_collect** (array &$arr , callable $callback )
 
-void **reverse\_collect\_** (array &$arr , callable $callback )
+mixed **reverse\_collect\_** (array &$arr , callable $callback )
 
-void **reverse\_each** (array &$arr , callable $callback )
+mixed **reverse\_each** (array &$arr , callable $callback )
 
-void **reverse\_each\_** (array &$arr , callable $callback )
+mixed **reverse\_each\_** (array &$arr , callable $callback )
 
-void **reverse\_map** (array &$arr , callable $callback )
+mixed **reverse\_map** (array &$arr , callable $callback )
 
-void **reverse\_map\_** (array &$arr , callable $callback )
+mixed **reverse\_map\_** (array &$arr , callable $callback )
 
-void **reverse\_foreach** (array &$arr , callable $callback )
+mixed **reverse\_foreach** (array &$arr , callable $callback )
 
-void **reverse\_foreach\_** (array &$arr , callable $callback )
+mixed **reverse\_foreach\_** (array &$arr , callable $callback )
 
-void **reverse\_each\_with\_index** (array &$arr , callable $callback )
+mixed **reverse\_each\_with\_index** (array &$arr , callable $callback )
 
 
 Will iterate the array in reverse, but will NOT save the order.
@@ -1599,7 +1626,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -1618,9 +1648,9 @@ enumerator::reverse_collect($arr, function($key, &$value) {
 
 <a name="method_sort_"></a>Methods: sort, sort\_
 ====================
-void **sort** (array $arr [, callable $callback = NULL ] )
+mixed **sort** (array $arr [, callable $callback = NULL ] )
 
-void **sort\_** (array &$arr [, callable $callback = NULL ] )
+mixed **sort\_** (array &$arr [, callable $callback = NULL ] )
 
 
 Will sort the contents of $arr. A callback can be used to sort.
@@ -1640,7 +1670,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -1681,9 +1714,9 @@ Array
 
 <a name="method_sort_by_"></a>Methods: sort\_by, sort\_by\_
 ==========================
-void **sort\_by** (array &$arr , callable $callback )
+mixed **sort\_by** (array &$arr , callable $callback )
 
-void **sort\_by\_** (array &$arr , callable $callback )
+mixed **sort\_by\_** (array &$arr , callable $callback )
 
 
 Will sort based off of the return of $callback.
@@ -1700,7 +1733,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -1724,9 +1760,9 @@ Array
 
 <a name="method_take_while_"></a>Methods: take\_while, take\_while\_
 ================================
-void **take\_while** (array &$arr , callable $callback )
+mixed **take\_while** (array &$arr , callable $callback )
 
-void **take\_while\_** (array &$arr , callable $callback )
+mixed **take\_while\_** (array &$arr , callable $callback )
 
 
 Passes elements into $callback until it returns false or null, at which point this function will stop and set $arr to all prior elements.
@@ -1746,7 +1782,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -1769,9 +1808,9 @@ Array
 
 <a name="method_zip_"></a>Methods: zip, zip\_
 ==================
-void **zip** (array $arr , array $one )
+mixed **zip** (array $arr , array $one )
 
-void **zip\_** (array &$arr , array $one )
+mixed **zip\_** (array &$arr , array $one )
 
 
 Will turn each element in $arr into an array then appending the associated indexs from the other arrays into this array as well.
@@ -1791,7 +1830,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -1895,9 +1937,9 @@ Array
 
 <a name="method_drop_while_"></a>Methods: drop\_while, drop\_while\_
 ================================
-void **drop\_while** (array &$arr , callable $callback )
+mixed **drop\_while** (array &$arr , callable $callback )
 
-void **drop\_while\_** (array &$arr , callable $callback )
+mixed **drop\_while\_** (array &$arr , callable $callback )
 
 
 Will pass elements into $callback until false is returned at which point all elements before the current one will be removed.
@@ -1914,7 +1956,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -1939,9 +1984,9 @@ Array
 
 <a name="method_cycle_"></a>Methods: cycle, cycle\_
 ======================
-void **cycle** (array $arr , int $it , callable $callback )
+mixed **cycle** (array $arr , int $it , callable $callback )
 
-void **cycle\_** (array $arr , int $it , callable $callback )
+mixed **cycle\_** (array $arr , int $it , callable $callback )
 
 
 Will pass every element of $arr into $callback exactly $it times.
@@ -1963,7 +2008,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -1981,9 +2029,9 @@ enumerator::cycle($arr, 3, function($key, $value, $it) {
 
 <a name="method_each_cons_"></a>Methods: each\_cons, each\_cons\_
 ==============================
-void **each\_cons** (array &$arr , int $size [, callable $callback = false ] )
+mixed **each\_cons** (array &$arr , int $size [, callable $callback = false ] )
 
-void **each\_cons\_** (array &$arr , int $size [, callable $callback = false ] )
+mixed **each\_cons\_** (array &$arr , int $size [, callable $callback = false ] )
 
 
 This will return each section as an item in an array.
@@ -2004,7 +2052,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -2059,9 +2110,9 @@ Array
 
 <a name="method_slice_before_"></a>Methods: slice\_before, slice\_before\_
 ====================================
-void **slice\_before** (array &$arr , string $pattern )
+mixed **slice\_before** (array &$arr , string $pattern )
 
-void **slice\_before\_** (array &$arr , string $pattern )
+mixed **slice\_before\_** (array &$arr , string $pattern )
 
 
 When $pattern is matched in an element, all previous elements not include previous chunks are placed into a new chunk.
@@ -2078,7 +2129,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -2131,13 +2185,13 @@ Array
 
 <a name="method_concat_"></a>Methods: merge, merge\_, concat, concat\_
 =======================================
-void **merge** (array $arr , array $arr2 )
+mixed **merge** (array $arr , array $arr2 )
 
-void **merge\_** (array &$arr , array $arr2 )
+mixed **merge\_** (array &$arr , array $arr2 )
 
-void **concat** (array $arr , array $arr2 )
+mixed **concat** (array $arr , array $arr2 )
 
-void **concat\_** (array &$arr , array $arr2 )
+mixed **concat\_** (array &$arr , array $arr2 )
 
 
 Will merge two or more arrays together.
@@ -2154,7 +2208,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -2179,9 +2236,9 @@ Array
 
 <a name="method_rotate_"></a>Methods: rotate, rotate\_
 ========================
-void **rotate** (array $arr , int $index )
+mixed **rotate** (array $arr , int $index )
 
-void **rotate\_** (array &$arr , int $index )
+mixed **rotate\_** (array &$arr , int $index )
 
 
 Will rotate the array so that $index is the first element in the array. Negative indexs are allowed.
@@ -2201,7 +2258,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -2240,9 +2300,9 @@ Array
 
 <a name="method_reverse_"></a>Methods: reverse, reverse\_
 ==========================
-void **reverse** (array $arr , boolean optional )
+mixed **reverse** (array $arr , boolean optional )
 
-void **reverse\_** (array &$arr , boolean optional )
+mixed **reverse\_** (array &$arr , boolean optional )
 
 
 Will reverse an array.
@@ -2262,7 +2322,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -2310,7 +2373,10 @@ Parameters
 
 Return
 ------
- mixed
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -2343,9 +2409,9 @@ Array
 
 <a name="method_shuffle_"></a>Methods: shuffle, shuffle\_
 ==========================
-void **shuffle** (array $arr [, boolean $preserve_keys = false ] )
+mixed **shuffle** (array $arr [, boolean $preserve_keys = false ] )
 
-void **shuffle\_** (array &$arr [, boolean $preserve_keys = false ] )
+mixed **shuffle\_** (array &$arr [, boolean $preserve_keys = false ] )
 
 
 Will shuffle the inputted array.
@@ -2365,7 +2431,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -2404,9 +2473,9 @@ Array
 
 <a name="method_values_at_"></a>Methods: values\_at, values\_at\_
 ==============================
-void **values\_at** (array &$arr , mixed $index )
+mixed **values\_at** (array &$arr , mixed $index )
 
-void **values\_at\_** (array &$arr , mixed $index )
+mixed **values\_at\_** (array &$arr , mixed $index )
 
 
 Will replace the current array with only the inserted indexs. Use the non-destructive form to get the array returned instead.
@@ -2426,7 +2495,10 @@ Parameters
 
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
@@ -2689,9 +2761,9 @@ suffix
 
 <a name="method_compact_"></a>Methods: compact, compact\_
 ==========================
-void **compact** (array $arr )
+mixed **compact** (array $arr [, boolean $recursive = false ] )
 
-void **compact\_** (array &$arr )
+mixed **compact\_** (array &$arr [, boolean $recursive = false ] )
 
 
 Will remove all null values inside of $arr. If $recursive is set to true, it will crawl sub-arrays.
@@ -2704,9 +2776,17 @@ Parameters
 ----------
   **&$arr**
 
+  **$recursive**
+    ```
+    If you want this to iterate all child arrays.
+    ```
+
 Return
 ------
- void
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
 
 Example 1
 ---------
