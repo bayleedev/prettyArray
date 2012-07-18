@@ -342,10 +342,10 @@ class PrettyArray implements ArrayAccess {
 	 * )
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Array.html#method-i-slice
 	 * @param mixed $start 
 	 * @param int $length 
 	 * @return PrettyArray
-	 * @link http://ruby-doc.org/core-1.9.3/Array.html#method-i-slice
 	 */
 	public function getSet_($start, $length) {
 		$ret = new PrettyArray();
@@ -378,10 +378,10 @@ class PrettyArray implements ArrayAccess {
 	 * bar
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Array.html#method-i-slice
 	 * @param mixed $key 
 	 * @param mixed &$value 
 	 * @return $value from before
-	 * @link http://ruby-doc.org/core-1.9.3/Array.html#method-i-slice
 	 */
 	public function setByReference($key, &$value) {
 		if(is_null($key)) {

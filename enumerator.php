@@ -173,10 +173,10 @@ class enumerator {
 	 * bool(false)
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-all-3F
 	 * @param array &$arr
 	 * @param callable $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
 	 * @return boolean
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-all-3F
 	 */
 	public static function all_(array &$arr, $callback = null) {
 		if(!is_callable($callback)) {
@@ -211,9 +211,10 @@ class enumerator {
 	 * )
 	 * </pre>
 	 * 
+	 * @link http://www.ruby-doc.org/core-1.9.3/Enumerable.html#method-i-drop
 	 * @param array &$arr
 	 * @param int $count
-	 * @link http://www.ruby-doc.org/core-1.9.3/Enumerable.html#method-i-drop
+	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function drop_(array &$arr, $count) {
 		$arr = array_slice($arr, $count);
@@ -256,10 +257,10 @@ class enumerator {
 	 * bool(true)
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-any-3F
 	 * @param array $arr
 	 * @param callable $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
 	 * @return boolean
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-any-3F
 	 */
 	public static function any_(array &$arr, $callback = null) {
 		if(!is_callable($callback)) {
@@ -317,9 +318,10 @@ class enumerator {
 	 * )
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-collect
 	 * @param array &$arr
 	 * @param callable $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-collect
+	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function array_walk_(array &$arr, $callback) {
 		// Alias destructive method
@@ -381,10 +383,10 @@ class enumerator {
 	 * 3
 	 * </pre>
 	 * 
+	 * @link http://www.ruby-doc.org/core-1.9.3/Enumerable.html#method-i-count
 	 * @param array &$arr 
 	 * @param callable $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
 	 * @return int
-	 * @link http://www.ruby-doc.org/core-1.9.3/Enumerable.html#method-i-count
 	 */
 	public static function size_(array &$arr, $callback) {
 		// Alias destructive method
@@ -439,11 +441,11 @@ class enumerator {
 	 * 35
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-detect
 	 * @param array &$arr
 	 * @param callable $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
 	 * @param mixed $ifnone 
 	 * @return mixed
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-detect
 	 */
 	public static function find_(array &$arr, $callback, $ifnone = null) {
 		// Alias destructive method
@@ -484,10 +486,10 @@ class enumerator {
 	 * )
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-select
 	 * @param array &$arr
 	 * @param callable $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
-	 * @return array The array that has already been edited by reference.
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-select
+	 * @return array Nothing if called destructively, otherwise a new array.
 	 */
 	public static function find_all_(array &$arr, $callback) {
 		// Alias destructive method
@@ -552,10 +554,11 @@ class enumerator {
 	 * )
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-each_slice
 	 * @param array &$arr
 	 * @param int $size The size of each slice.
 	 * @param callable $callback The callback will be passed each collection. This can be passed by reference.
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-each_slice
+	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function each_slice_(array &$arr, $size, $callback = null) {
 		$count = self::count($arr);
@@ -603,9 +606,10 @@ class enumerator {
 	 * )
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-first
 	 * @param array &$arr
 	 * @param int $count The number of items you wish to return. Defaults to 1
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-first
+	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function first_(array &$arr, $count = 1) {
 		$arr = array_slice($arr, 0, $count, true);
@@ -635,9 +639,10 @@ class enumerator {
 	 * )
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-flat_map
 	 * @param array &$arr
 	 * @param callable $callback The callback will be passed each sliced item as an array. This can be passed by reference.
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-flat_map
+	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function flat_map_(array &$arr, $callback) {
 		// Alias destructive method
@@ -673,10 +678,11 @@ class enumerator {
 	 * )
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-grep
 	 * @param array &$arr
 	 * @param string $pattern The regex pattern.
 	 * @param callable $callback The callback will be passed each sliced item as an array. This can be passed by reference.
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-grep
+	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function grep_(array &$arr, $pattern, $callback = null) {
 		$arr = preg_grep($pattern, $arr);
@@ -725,10 +731,11 @@ class enumerator {
 	 * )
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-group_by
 	 * @param array &$arr
 	 * @param callable $callback The callback will be passed each sliced item as an array. This can be passed by reference.
 	 * @param boolean $preserve_keys If you want to preserve the keys or not.
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-group_by
+	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function group_by_(array &$arr, $callback, $preserve_keys = false) {
 		$newArr = array();
@@ -782,10 +789,10 @@ class enumerator {
 	 * bool(true)
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-member-3F
 	 * @param array $arr
 	 * @param mixed $needle 
 	 * @return boolean
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-member-3F
 	 */
 	public static function member(array $arr, $needle) {
 		foreach($arr as $key => $value) {
@@ -819,10 +826,10 @@ class enumerator {
 	 * dog
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-min
 	 * @param array $arr
 	 * @param callback optional $callback Will accept two values. Return 0 if they are equal, return -1 if the second parameter is bigger, and 1 is the first parameter is bigger.
 	 * @return mixed
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-min
 	 */
 	public static function min(array $arr, $callback = null) {
 		if(!is_callable($callback)) {
@@ -855,10 +862,10 @@ class enumerator {
 	 * albatross
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-max
 	 * @param array $arr
 	 * @param callback optional $callback Will accept two values. Return 0 if they are equal, return -1 if the second parameter is bigger, and 1 is the first parameter is bigger.
 	 * @return mixed
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-max
 	 */
 	public static function max(array $arr, $callback = null) {
 		if(!is_callable($callback)) {
@@ -883,10 +890,10 @@ class enumerator {
 	 * dog
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-min_by
 	 * @param array $arr
 	 * @param callable $callback
 	 * @return mixed
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-min_by
 	 */
 	public static function min_by(array $arr, $callback) {
 		usort($arr, function($key1, $key2) use (&$callback) {
@@ -910,10 +917,10 @@ class enumerator {
 	 * albatross
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-max_by
 	 * @param array $arr
 	 * @param callable $callback
 	 * @return mixed
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-max_by
 	 */
 	public static function max_by(array $arr, $callback) {
 		usort($arr, function($key1, $key2) use (&$callback) {
@@ -942,10 +949,10 @@ class enumerator {
 	 * )
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-minmax
 	 * @param array $arr
 	 * @param callback optional $callback Will accept two values. Return 0 if they are equal, return -1 if the second parameter is bigger, and 1 is the first parameter is bigger.
 	 * @return array
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-minmax
 	 */
 	public static function minmax(array $arr, $callback = null) {
 		if(!is_callable($callback)) {
@@ -975,10 +982,10 @@ class enumerator {
 	 * )
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-minmax_by
 	 * @param array $arr
 	 * @param callable $callback
 	 * @return array
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-minmax_by
 	 */
 	public static function minmax_by(array $arr, $callback) {
 		usort($arr, function($key1, $key2) use (&$callback) {
@@ -1039,10 +1046,10 @@ class enumerator {
 	 * bool(true)
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-none-3F
 	 * @param array $arr 
 	 * @param callable $callback A $key, $value are passed to this callback.
 	 * @return boolean
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-none-3F
 	 */
 	public static function none(array $arr, $callback = null) {
 		if(!is_callable($callback)) {
@@ -1091,10 +1098,10 @@ class enumerator {
 	 * bool(true)
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-one-3F
 	 * @param array $arr 
 	 * @param callable $callback A $key, $value are passed to this callback.
 	 * @return boolean
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-one-3F
 	 */
 	public static function one(array $arr, $callback = null) {
 		if(!is_callable($callback)) {
@@ -1145,10 +1152,11 @@ class enumerator {
 	 * )
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-partition
 	 * @param array &$arr
 	 * @param callable $callback A $key, $value are passed to this callback.
 	 * @param boolean $preserve_keys
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-partition
+	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function partition_(array &$arr, $callback, $preserve_keys = false) {
 		$newArr = array(array(), array());
@@ -1191,11 +1199,11 @@ class enumerator {
 	 * 151200
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-inject
 	 * @param array &$arr
 	 * @param callable $callback A $key, $value are passed to this callback.
 	 * @param mixed optional $memo This value is passed to all callback. Be sure to accept it by reference. Defaults to 0 (zero).
 	 * @return mixed The memo variable.
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-inject
 	 */
 	public static function reduce_(array &$arr, $callback, $memo = 0) {
 		// Alias destructive method
@@ -1233,9 +1241,10 @@ class enumerator {
 	 * )
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-reject
 	 * @param array &$arr
 	 * @param callable $callback A $key, $value are passed to this callback. The $value can be passed by reference.
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-reject
+	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function delete_if_(array &$arr, $callback) {
 		// Alias destructive method
@@ -1266,9 +1275,10 @@ class enumerator {
 	 * 3, 2, 1, 
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-reverse_each
 	 * @param array &$arr
 	 * @param callable $callback A $key, $value are passed to this callback. The $value can be passed by reference.
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-reverse_each
+	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function reverse_each_(array &$arr, $callback) {
 		// Alias destructive method
@@ -1328,9 +1338,10 @@ class enumerator {
 	 * )
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-sort
 	 * @param array &$arr
 	 * @param callable $callback A $key, $value are passed to this callback. The $value can be passed by reference.
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-sort
+	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function sort_(array &$arr, $callback = null, $preserve_keys = false) {
 		if(!is_callable($callback)) {
@@ -1366,9 +1377,10 @@ class enumerator {
 	 * )
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-sort_by
 	 * @param array &$arr 
 	 * @param callable $callback
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-sort_by
+	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function sort_by_(array &$arr, $callback, $preserve_keys = false) {
 		$method = ($preserve_keys) ? 'uasort' : 'usort';
@@ -1398,9 +1410,10 @@ class enumerator {
 	 * )
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-take_while
 	 * @param array &$arr 
 	 * @param callable $callback A $key, $value are passed to this callback.
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-take_while
+	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function take_while_(array &$arr, $callback) {
 		$i = 0;
@@ -1510,9 +1523,10 @@ class enumerator {
 	 * )
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-zip
 	 * @param array &$arr 
 	 * @param array $one Unlimited of this.
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-zip
+	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function zip_(array &$arr, array $one) {
 		$args = func_get_args();
@@ -1551,9 +1565,10 @@ class enumerator {
 	 * )
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-drop_while
 	 * @param array &$arr 
 	 * @param callable $callback 
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-drop_while
+	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function drop_while_(array &$arr, $callback) {
 		$i = 0;
@@ -1581,10 +1596,11 @@ class enumerator {
 	 * 1,2,3,1,2,3,1,2,3,
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Array.html#method-i-cycle
 	 * @param array $arr 
 	 * @param int $it 
 	 * @param callable $callback This can accept 3 arguments: $key - The key in the array, $value - The value of this key, $it - The current iteration.
-	 * @link http://ruby-doc.org/core-1.9.3/Array.html#method-i-cycle
+	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function cycle_(array $arr, $it, $callback) {
 		for($i = 0;$i<$it;$i++) {
@@ -1649,10 +1665,11 @@ class enumerator {
 	 * )
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-each_cons
 	 * @param array &$arr 
 	 * @param int $size 
 	 * @param callable $callback 
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-each_cons
+	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function each_cons_(array &$arr, $size, $callback = false) {
 		$newArr = array();
@@ -1725,9 +1742,10 @@ class enumerator {
 	 * )
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-slice_before
 	 * @param array &$arr 
 	 * @param string $pattern
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-slice_before
+	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function slice_before_(array &$arr, $pattern) {
 		$newArr = array();
@@ -1770,9 +1788,10 @@ class enumerator {
 	 * )
 	 * </pre>
 	 * 
+	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-2B
 	 * @param array &$arr
 	 * @param array $arr2
-	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-2B
+	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function concat_(array &$arr, array $arr2) {
 		// Alias destructive method
@@ -1818,9 +1837,10 @@ class enumerator {
 	 * )
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Array.html#method-i-rotate
 	 * @param array &$arr
 	 * @param int $index The starting index
-	 * @link http://ruby-doc.org/core-1.9.3/Array.html#method-i-rotate
+	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function rotate_(array &$arr, $index) {
 		$arr = array_merge(array_slice($arr, $index), array_slice($arr, 0, $index));
@@ -1846,9 +1866,10 @@ class enumerator {
 	 * )
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Array.html#method-i-reverse
 	 * @param array &$arr 
 	 * @param boolean optional $preserve_keys Defaults to false. If you want to preserve the keys or not.
-	 * @link http://ruby-doc.org/core-1.9.3/Array.html#method-i-reverse
+	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function reverse_(array &$arr, $preserve_keys = false) {
 		$arr = array_reverse($arr, $preserve_keys);
@@ -1882,10 +1903,10 @@ class enumerator {
 	 * )
 	 * </pre>
 	 * 
+	 * @link http://ruby-doc.org/core-1.9.3/Array.html#method-i-sample
 	 * @param array &$arr 
 	 * @param int optional $count Defaults to 1
-	 * @return mixed
-	 * @link http://ruby-doc.org/core-1.9.3/Array.html#method-i-sample
+	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function sample_(array &$arr, $count = 1) {
 		// Alias destructive method
@@ -1931,9 +1952,10 @@ class enumerator {
 	 * )
 	 * </pre>
 	 * 
+	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-shuffle
 	 * @param array &$arr
 	 * @param boolean $preserve_keys If you want to preserve keys or not. Defaults to false.
-	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-shuffle
+	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function shuffle_(array &$arr, $preserve_keys = false) {
 		if(!$preserve_keys) {
@@ -1976,9 +1998,10 @@ class enumerator {
 	 * )
 	 * </pre>
 	 * 
+	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-values_at
 	 * @param array &$arr 
 	 * @param mixed $index Put in as many indexes as you please.
-	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-values_at
+	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function values_at_(array &$arr, $index) {
 		$ret = array();
@@ -2022,7 +2045,7 @@ class enumerator {
 	 * bool(false)
 	 * </pre>
 	 * 
-	 * @param array $arr 
+	 * @param array $arr
 	 * @return boolean
 	 */
 	public static function isEmpty(array $arr) {
@@ -2111,10 +2134,10 @@ class enumerator {
 	 * title
 	 * </pre>
 	 * 
+	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-index
 	 * @param array &$arr 
 	 * @param mixed $callback 
 	 * @return mixed
-	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-index
 	 */
 	public static function find_index_(array &$arr, $callback = null) {
 		// Alias destructive method
@@ -2171,10 +2194,10 @@ class enumerator {
 	 * suffix
 	 * </pre>
 	 * 
+	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-rindex
 	 * @param array &$arr 
 	 * @param mixed $callback 
 	 * @return mixed
-	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-rindex
 	 */
 	public static function rindex_(array &$arr, $callback) {
 		$arr2 = array_reverse($arr);
@@ -2238,8 +2261,9 @@ class enumerator {
 	 * )
 	 * </pre>
 	 * 
-	 * @param array &$arr
 	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-compact
+	 * @param array &$arr
+	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function compact_(array &$arr, $recursive = false) {
 		if(!$recursive) {
