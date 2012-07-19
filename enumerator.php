@@ -95,6 +95,21 @@ class enumerator {
 	);
 
 	/**
+	 * Methods: get
+	 * 
+	 * A generic getter method.
+	 * 
+	 * @param string $name 
+	 * @return mixed
+	 */
+	public static function get($name) {
+		if(isset(self::$$name)) {
+			return self::$$name;
+		}
+		return;
+	}
+
+	/**
 	 * Methods: __callStatic
 	 * 
 	 * This magic method helps with method aliases and calling destrucitve methods in a non-destructive way.
