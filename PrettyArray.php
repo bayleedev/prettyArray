@@ -29,10 +29,6 @@ require_once(__DIR__ . '/enumerator.php');
  * Method Aliases
  * --------------
  * Methods often have various aliases which are pointed out in the documentation. They work identically to the real function call.
- * 
- * 
- * @see PrettyArray::__call()
- * @see PrettyArray::__callStatic()
  */
 class PrettyArray implements ArrayAccess {
 
@@ -55,11 +51,52 @@ class PrettyArray implements ArrayAccess {
 	);
 
 	/**
+	 * Caches the enumerator data. This is used to tell if we should chain the method or not.
+	 */
+	protected static $enumData = array(
+		'methodMap' => null,
+		'destructiveMap' => null
+	);
+
+	/**
 	 * The default array can be passed as the first argument in the constructor.
 	 * @param array optional $defaults 
 	 */
 	public function __construct(array $defaults = array()) {
+		if(is_null(self::$enumData['methodMap'])) {
+			self::$enumData['methodMap'] = enumerator::get('methodMap');
+			self::$enumData['destructiveMap'] = enumerator::get('destructiveMap');
+		}
 		$this->data = $defaults;
+	}
+
+	/**
+	 * Methods: chain
+	 * 
+	 * Determines if the given method supports chaining.
+	 * 
+	 * @param string $method The method you are testing.
+	 * @return bool If the method does not exist false is returned.
+	 */
+	protected function chain($method) {
+		// Is destructive
+		if(substr($method, -1) == '_') {
+			// The non-destructive name
+			$method = substr($method, 0, -1);
+
+			// Absolute name
+			if(isset(self::$enumData['methodMap'][$method])) {
+				$method = self::$enumData['methodMap'][$method];
+			}
+
+			// Give back return value
+			if(isset(self::$enumData['destructiveMap'][$method])) {
+				return self::$enumData['destructiveMap'][$method];
+			}
+		}
+
+		// Default return
+		return false;
 	}
 
 
@@ -231,8 +268,13 @@ class PrettyArray implements ArrayAccess {
 			$ret = call_user_func_array(array(self::$mixins, $method), $params);
 		}
 		if(is_array($ret)) {
+			// Chainable non-destructive
 			$ret = new PrettyArray($ret);
+		} else if($this->chain($method)) {
+			// Chainable destructive
+			return $this;
 		}
+		// Typical returns
 		return $ret;
 	}
 
