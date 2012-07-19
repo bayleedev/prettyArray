@@ -145,7 +145,7 @@ class prettyArrayTest extends PHPUnit_Framework_TestCase {
 	public function test_call_5() {
 		$arr = new PrettyArray(array('snowball', 'snowcone', 'snowangel', 'igloo', 'ice'));
 		$ret = $arr->grep_("/^snow/"); // [snowball, snowcone, snowangel]
-		$this->assertEquals($ret, null);
+		$this->assertEquals($ret, $arr);
 		$this->assertEquals($arr->to_a(), array('snowball', 'snowcone', 'snowangel'));
 	}
 
