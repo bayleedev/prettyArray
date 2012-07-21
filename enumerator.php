@@ -50,7 +50,8 @@ class enumerator {
 		'usort' => 'sort',
 		'delete_if' => 'reject',
 		'empty' => 'isEmpty',
-		'find_index' => 'index'
+		'find_index' => 'index',
+		'array_unique' => 'uniq'
 	);
 
 	/**
@@ -91,7 +92,8 @@ class enumerator {
 		'index' => false,
 		'rindex' => false,
 		'compact' => true,
-		'cycle' => true
+		'cycle' => true,
+		'uniq' => true
 	);
 
 	/**
@@ -2297,6 +2299,37 @@ class enumerator {
 				}
 			}
 		}
+		return;
+	}
+
+	/**
+	 * Methods: uniq, uniq_, array_unique, array_unique_
+	 * 
+	 * Will force all itemsm in $arr to be unique.
+	 * 
+	 * <code>
+	 * $arr = array(1,1,2,3,3,2,1,1,1);
+	 * $a = enumerator::uniq($arr);
+	 * print_r($a);
+	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => 1
+	 *     [2] => 2
+	 *     [3] => 3
+	 * )
+	 * </pre>
+	 * 
+	 * @param array &$arr
+	 * @return mixed Nothing if called destructively, otherwise a new array.
+	 */
+	public static function array_unique_(array &$arr) {
+		// Alias destructive method
+		return self::uniq_($arr);
+	}
+	public static function uniq_(array &$arr) {
+		$arr = array_unique($arr);
 		return;
 	}
 }
