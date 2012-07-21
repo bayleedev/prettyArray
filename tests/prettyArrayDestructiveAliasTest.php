@@ -255,4 +255,10 @@ class prettyArrayDestructiveAliasTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($ret, 'title');
 	}
 
+	public function test_uniq_1() {
+		$arr = new PrettyArray(array(1,1,2,3,3,2,1,1,1));
+		$arr->array_unique_();
+		$this->assertEquals($arr->to_a(), array(0=>1,2=>2,3=>3));
+	}
+
 }

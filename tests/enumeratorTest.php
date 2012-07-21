@@ -712,4 +712,10 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($arr, array(1,2,3,4=>array(2,3,4)));
 	}
 
+	public function test_uniq_1() {
+		$arr = array(1,1,2,3,3,2,1,1,1);
+		enumerator::uniq_($arr);
+		$this->assertEquals($arr, array(0=>1,2=>2,3=>3));
+	}
+
 }

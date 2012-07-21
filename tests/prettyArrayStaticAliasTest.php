@@ -529,4 +529,16 @@ class prettyArrayStaticAliasTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($i, 9);
 	}
 
+	public function test_uniq_1() {
+		$arr = array(1,1,2,3,3,2,1,1,1);
+		$o = PrettyArray::uniq($arr);
+		$this->assertEquals($o, array(0=>1,2=>2,3=>3));
+	}
+
+	public function test_uniq_2() {
+		$arr = array(1,1,2,3,3,2,1,1,1);
+		$o = PrettyArray::array_unique($arr);
+		$this->assertEquals($o, array(0=>1,2=>2,3=>3));
+	}
+
 }

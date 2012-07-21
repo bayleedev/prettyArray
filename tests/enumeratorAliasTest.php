@@ -529,4 +529,16 @@ class enumeratorAliasTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($i, 9);
 	}
 
+	public function test_uniq_1() {
+		$arr = array(1,1,2,3,3,2,1,1,1);
+		$a = enumerator::uniq($arr);
+		$this->assertEquals($a, array(0=>1,2=>2,3=>3));
+	}
+
+	public function test_uniq_2() {
+		$arr = array(1,1,2,3,3,2,1,1,1);
+		$a = enumerator::array_unique($arr);
+		$this->assertEquals($a, array(0=>1,2=>2,3=>3));
+	}
+
 }

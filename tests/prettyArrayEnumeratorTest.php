@@ -762,4 +762,11 @@ class prettyArrayEnumeratorTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($arr, array(1,2,3,4=>array(2,3,4)));
 	}
 
+	public function test_uniq_1() {
+		$arr = new PrettyArray(array(1,1,2,3,3,2,1,1,1));
+		$arr->uniq_();
+		$o = $arr->to_a();
+		$this->assertEquals($o, array(0=>1,2=>2,3=>3));
+	}
+
 }
