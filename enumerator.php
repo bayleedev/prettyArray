@@ -21,6 +21,28 @@ require_once(__DIR__ . '/exceptions/ContinueException.php');
  * Method Aliases
  * --------------
  * Methods often have various aliases which are pointed out in the documentation. They work identically to the real function call.
+ * 
+ * Continue / Break
+ * ----------------
+ * You can throw new continue/break statements as exceptions. You can throw them in the following methods and their respective aliases:
+ * * collect
+ * * each_slice
+ * * collect_concat
+ * * grep
+ * * inject
+ * * reverse_collect
+ * * cycle
+ * * each_cons
+ * 
+ * Throwing a continue:
+ * <code>
+ * 	throw new ContinueException;
+ * </code>
+ * 
+ * Throwing a break:
+ * <code>
+ * 	throw new BreakException;
+ * </code>
  *  
  * @link http://ruby-doc.org/core-1.9.3/Enumerable.html
  */
@@ -366,7 +388,13 @@ class enumerator {
 	}
 	public static function collect_(array &$arr, $callback) {
 		foreach($arr as $key => &$value) {
-			$callback($key, $value);
+			try {
+				$callback($key, $value);
+			} catch(BreakException $e) {
+				break;
+			} catch(ContinueException $e) {
+				continue;
+			}
 		}
 		return;
 	}
@@ -375,7 +403,7 @@ class enumerator {
 	 * Methods: count, count_, size, size_, length, length_
 	 * 
 	 * If the callback is null, this function give you the total size of the array.
-	 * If the callback is a anonmous function, this function iterate the blocks and count how many times it returns true.
+	 * If the callback is a anonymous function, each time it returns 'true' will count as 1.
 	 * Otherwise this function will count how many times $callback is equal to $value.
 	 * 
 	 * <code>
@@ -590,7 +618,13 @@ class enumerator {
 		}
 		if(is_callable($callback)) {
 			foreach($newArr as &$item) {
-				$callback($item);
+				try {
+					$callback($item);
+				} catch(BreakException $e) {
+					break;
+				} catch(ContinueException $e) {
+					continue;
+				}
 			}
 		}
 		$arr = $newArr;
@@ -640,8 +674,8 @@ class enumerator {
 	/**
 	 * Methods: collect_concat, collect_concat_, flat_map, flat_map_
 	 * 
-	 * Will flatten the input $arr into a non-multi-dimensional array.It will pass the current key and the value to $callback which has the potential to change the value.
-	 * The new array will have discarded all current keys.
+	 * Will flatten the input $arr into a non-multi-dimensional array.
+	 * It will pass the current key and the value to $callback which has the potential to change the value.
 	 * 
 	 * <code>
 	 * $arr = array(array(1,2),array(3,4));
@@ -671,10 +705,18 @@ class enumerator {
 	}
 	public static function collect_concat_(array &$arr, $callback) {
 		$newArr = array();
-		array_walk_recursive($arr, function(&$value, $key) use (&$callback, &$newArr) {
-			$callback($key, $value);
+		array_walk_recursive($arr, function(&$value, $key) use (&$newArr) {
 			$newArr[] = $value;
 		});
+		foreach($newArr as $key => &$value) {
+			try {
+				$callback($key, $value);
+			} catch(BreakException $e) {
+				break;
+			} catch(ContinueException $e) {
+				continue;
+			}
+		}
 		$arr = $newArr;
 		return;
 	}
@@ -709,7 +751,13 @@ class enumerator {
 		$arr = preg_grep($pattern, $arr);
 		if(is_callable($callback)) {
 			foreach($arr as $key => &$value) {
-				$callback($key, $value);
+				try{
+					$callback($key, $value);
+				} catch(BreakException $e) {
+					break;
+				} catch(ContinueException $e) {
+					continue;
+				}
 			}
 		}
 		return;
@@ -1232,7 +1280,13 @@ class enumerator {
 	}
 	public static function inject_(array &$arr, $callback, $memo = 0) {
 		foreach($arr as $key => &$value) {
-			$callback($key, $value, $memo);
+			try{
+				$callback($key, $value, $memo);
+			} catch(BreakException $e) {
+				break;
+			} catch(ContinueException $e) {
+				continue;
+			}
 		}
 		return $memo;
 	}
@@ -1319,7 +1373,13 @@ class enumerator {
 	}
 	public static function reverse_collect_(array &$arr, $callback) {
 		for(end($arr);!is_null($key = key($arr));prev($arr)) {
-			$callback($key, $arr[$key]);
+			try {
+				$callback($key, $arr[$key]);
+			} catch(BreakException $e) {
+				break;
+			} catch(ContinueException $e) {
+				continue;
+			}
 		}
 		return;
 	}
@@ -1626,7 +1686,13 @@ class enumerator {
 	public static function cycle_(array $arr, $it, $callback) {
 		for($i = 0;$i<$it;$i++) {
 			foreach($arr as $key => &$value) {
-				$callback($key, $value, $i);
+				try {
+					$callback($key, $value, $i);
+				} catch(BreakException $e) {
+					return;
+				} catch(ContinueException $e) {
+					continue;
+				}
 			}
 		}
 		return;
@@ -1696,14 +1762,22 @@ class enumerator {
 		$newArr = array();
 		$count = count($arr);
 		$current = 0;
+		$break = false;
 		foreach($arr as $k => $v) {
 			if($current + $size > $count) {
 				break;
 			}
 			$newArr[$current] = array_slice($arr, $current, $size);
-			if(is_callable($callback)) {
+			if(is_callable($callback) && !$break) {
 				foreach($newArr[$current] as $key => &$value) {
-					$callback($key, $value, $current);
+					try {
+						$callback($key, $value, $current);
+					} catch(BreakException $e) {
+						$break = true;
+						break;
+					} catch(ContinueException $e) {
+						continue;
+					}
 				}
 			}
 			$current++;

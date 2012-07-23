@@ -29,6 +29,28 @@ require_once(__DIR__ . '/enumerator.php');
  * Method Aliases
  * --------------
  * Methods often have various aliases which are pointed out in the documentation. They work identically to the real function call.
+ * 
+ * Continue / Break
+ * ----------------
+ * You can throw new continue/break statements as exceptions. You can throw them in the following methods and their respective aliases:
+ * * collect
+ * * each_slice
+ * * collect_concat
+ * * grep
+ * * inject
+ * * reverse_collect
+ * * cycle
+ * * each_cons
+ * 
+ * Throwing a continue:
+ * <code>
+ * 	throw new ContinueException;
+ * </code>
+ * 
+ * Throwing a break:
+ * <code>
+ * 	throw new BreakException;
+ * </code>
  */
 class PrettyArray implements ArrayAccess {
 
