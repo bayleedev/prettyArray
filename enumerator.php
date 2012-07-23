@@ -1,5 +1,9 @@
 <?php
 
+// Dependencies
+require_once(__DIR__ . '/exceptions/BreakException.php');
+require_once(__DIR__ . '/exceptions/ContinueException.php');
+
 /**
  * Enumerator
  * 
