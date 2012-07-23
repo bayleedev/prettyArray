@@ -19,16 +19,34 @@ Method Aliases
 --------------
 Methods often have various aliases which are pointed out in the documentation. They work identically to the real function call.
 
-see
----
-* PrettyArray::__call()
-* PrettyArray::__callStatic()
+Continue / Break
+----------------
+You can throw new continue/break statements as exceptions. You can throw them in the following methods and their respective aliases:
+* collect
+* each_slice
+* collect_concat
+* grep
+* inject
+* reverse_collect
+* cycle
+* each_cons
+
+Throwing a continue:
+<code>
+	throw new ContinueException;
+</code>
+
+Throwing a break:
+<code>
+	throw new BreakException;
+</code>
 
 ---------
 
 Table Of Contents
 =================
  * [\_\_construct](#method___construct)
+ * [chain](#method_chain)
  * [offsetSet](#method_offsetSet)
  * [offsetExists](#method_offsetExists)
  * [offsetUnset](#method_offsetUnset)
@@ -41,6 +59,7 @@ Table Of Contents
  * [setByReference](#method_setByReference)
  * [\_\_toString](#method___toString)
  * [to\_a](#method_to_a)
+ * [get](#method_get)
  * [all](#method_all_)
  * [all\_](#method_all_)
  * [drop](#method_drop_)
@@ -157,6 +176,10 @@ Table Of Contents
  * [rindex\_](#method_rindex_)
  * [compact](#method_compact_)
  * [compact\_](#method_compact_)
+ * [uniq](#method_array_unique_)
+ * [uniq\_](#method_array_unique_)
+ * [array\_unique](#method_array_unique_)
+ * [array\_unique\_](#method_array_unique_)
 
 <a name="method___construct"></a>Methods: \_\_construct
 ====================
@@ -175,6 +198,28 @@ Parameters
 Return
 ------
  void
+
+
+<a name="method_chain"></a>Methods: chain
+==============
+bool **chain** (string $method )
+
+
+Determines if the given method supports chaining.
+
+Parameters
+----------
+  **$method**
+    ```
+    The method you are testing.
+    ```
+
+Return
+------
+bool
+    ```
+    If the method does not exist false is returned.
+    ```
 
 
 <a name="method_offsetSet"></a>Methods: offsetSet
@@ -594,6 +639,20 @@ Array
 ```
 
 
+<a name="method_get"></a>Methods: get
+============
+mixed **get** ()
+
+
+A generic getter method.
+
+Parameters
+----------
+Return
+------
+ mixed
+
+
 <a name="method_all_"></a>Methods: all, all\_
 ==================
 boolean **all** ([ callable $callback = NULL ] )
@@ -869,7 +928,7 @@ int **length\_** (callable $callback )
 
 
 If the callback is null, this function give you the total size of the array.
-If the callback is a anonmous function, this function iterate the blocks and count how many times it returns true.
+If the callback is a anonymous function, each time it returns 'true' will count as 1.
 Otherwise this function will count how many times $callback is equal to $value.
 
 Links
@@ -1184,8 +1243,8 @@ mixed **flat\_map** (callable $callback )
 mixed **flat\_map\_** (callable $callback )
 
 
-Will flatten the input $arr into a non-multi-dimensional array.It will pass the current key and the value to $callback which has the potential to change the value.
-The new array will have discarded all current keys.
+Will flatten the input $arr into a non-multi-dimensional array.
+It will pass the current key and the value to $callback which has the potential to change the value.
 
 Links
 -----
@@ -3175,6 +3234,47 @@ Array
             [2] => 4
        )
 
+)
+```
+
+
+<a name="method_array_unique_"></a>Methods: uniq, uniq\_, array\_unique, array\_unique\_
+=================================================
+mixed **uniq** ()
+
+mixed **uniq\_** ()
+
+mixed **array\_unique** ()
+
+mixed **array\_unique\_** ()
+
+
+Will force all itemsm in $arr to be unique.
+
+Parameters
+----------
+Return
+------
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
+
+Example 1
+---------
+```php
+$arr = new PrettyArray(array(1,1,2,3,3,2,1,1,1));
+$a = $arr->uniq_($arr)->to_a();
+print_r($a);
+
+```
+
+```
+Array
+(
+    [0] => 1
+    [2] => 2
+    [3] => 3
 )
 ```
 

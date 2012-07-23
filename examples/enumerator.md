@@ -17,6 +17,28 @@ Method Aliases
 --------------
 Methods often have various aliases which are pointed out in the documentation. They work identically to the real function call.
 
+Continue / Break
+----------------
+You can throw new continue/break statements as exceptions. You can throw them in the following methods and their respective aliases:
+* collect
+* each_slice
+* collect_concat
+* grep
+* inject
+* reverse_collect
+* cycle
+* each_cons
+
+Throwing a continue:
+<code>
+	throw new ContinueException;
+</code>
+
+Throwing a break:
+<code>
+	throw new BreakException;
+</code>
+
 link
 ----
 * http://ruby-doc.org/core-1.9.3/Enumerable.html
@@ -25,6 +47,7 @@ link
 
 Table Of Contents
 =================
+ * [get](#method_get)
  * [\_\_callStatic](#method___callStatic)
  * [all](#method_all_)
  * [all\_](#method_all_)
@@ -142,6 +165,26 @@ Table Of Contents
  * [rindex\_](#method_rindex_)
  * [compact](#method_compact_)
  * [compact\_](#method_compact_)
+ * [uniq](#method_array_unique_)
+ * [uniq\_](#method_array_unique_)
+ * [array\_unique](#method_array_unique_)
+ * [array\_unique\_](#method_array_unique_)
+
+<a name="method_get"></a>Methods: get
+============
+mixed **get** (string $name )
+
+
+A generic getter method.
+
+Parameters
+----------
+  **$name**
+
+Return
+------
+ mixed
+
 
 <a name="method___callStatic"></a>Methods: \_\_callStatic
 =====================
@@ -452,7 +495,7 @@ int **length\_** (array &$arr , callable $callback )
 
 
 If the callback is null, this function give you the total size of the array.
-If the callback is a anonmous function, this function iterate the blocks and count how many times it returns true.
+If the callback is a anonymous function, each time it returns 'true' will count as 1.
 Otherwise this function will count how many times $callback is equal to $value.
 
 Links
@@ -777,8 +820,8 @@ mixed **flat\_map** (array &$arr , callable $callback )
 mixed **flat\_map\_** (array &$arr , callable $callback )
 
 
-Will flatten the input $arr into a non-multi-dimensional array.It will pass the current key and the value to $callback which has the potential to change the value.
-The new array will have discarded all current keys.
+Will flatten the input $arr into a non-multi-dimensional array.
+It will pass the current key and the value to $callback which has the potential to change the value.
 
 Links
 -----
@@ -2834,6 +2877,48 @@ Array
             [2] => 4
        )
 
+)
+```
+
+
+<a name="method_array_unique_"></a>Methods: uniq, uniq\_, array\_unique, array\_unique\_
+=================================================
+mixed **uniq** (array $arr )
+
+mixed **uniq\_** (array &$arr )
+
+mixed **array\_unique** (array &$arr )
+
+mixed **array\_unique\_** (array &$arr )
+
+
+Will force all itemsm in $arr to be unique.
+
+Parameters
+----------
+  **&$arr**
+
+Return
+------
+mixed
+    ```
+    Nothing if called destructively, otherwise a new array.
+    ```
+
+Example 1
+---------
+```php
+$arr = array(1,1,2,3,3,2,1,1,1);
+$a = enumerator::uniq($arr);
+print_r($a);
+```
+
+```
+Array
+(
+    [0] => 1
+    [2] => 2
+    [3] => 3
 )
 ```
 
