@@ -169,6 +169,7 @@ Table Of Contents
  * [uniq\_](#method_array_unique_)
  * [array\_unique](#method_array_unique_)
  * [array\_unique\_](#method_array_unique_)
+ * [assoc](#method_assoc)
 
 <a name="method_get"></a>Methods: get
 ============
@@ -2894,6 +2895,10 @@ mixed **array\_unique\_** (array &$arr )
 
 Will force all itemsm in $arr to be unique.
 
+Links
+-----
+ * http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-uniq
+
 Parameters
 ----------
   **&$arr**
@@ -2919,6 +2924,52 @@ Array
     [0] => 1
     [2] => 2
     [3] => 3
+)
+```
+
+
+<a name="method_assoc"></a>Methods: assoc
+==============
+mixed **assoc** (array $arr , mixed $search )
+
+
+Searches through top level items, if the item is an array and the first value matches $search it'll return this element.
+
+Links
+-----
+ * http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-assoc
+
+Parameters
+----------
+  **$arr**
+
+  **$search**
+
+Return
+------
+mixed
+    ```
+    The found array, or null.
+    ```
+
+Example 1
+---------
+```php
+$s1 = array('color', 'red', 'blue', 'green');
+$s2 = array('letters', 'a', 'b', 'c');
+$s3 = 'foo';
+$arr = array($s1, $s2, $s3);
+$o = enumerator::assoc($arr, 'letters');
+print_r($o);
+```
+
+```
+Array
+(
+    [0] => letters
+    [1] => a
+    [2] => b
+    [3] => c
 )
 ```
 

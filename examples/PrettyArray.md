@@ -180,6 +180,7 @@ Table Of Contents
  * [uniq\_](#method_array_unique_)
  * [array\_unique](#method_array_unique_)
  * [array\_unique\_](#method_array_unique_)
+ * [assoc](#method_assoc)
 
 <a name="method___construct"></a>Methods: \_\_construct
 ====================
@@ -3251,6 +3252,10 @@ mixed **array\_unique\_** ()
 
 Will force all itemsm in $arr to be unique.
 
+Links
+-----
+ * http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-uniq
+
 Parameters
 ----------
 Return
@@ -3275,6 +3280,51 @@ Array
     [0] => 1
     [2] => 2
     [3] => 3
+)
+```
+
+
+<a name="method_assoc"></a>Methods: assoc
+==============
+mixed **assoc** (mixed $search )
+
+
+Searches through top level items, if the item is an array and the first value matches $search it'll return this element.
+
+Links
+-----
+ * http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-assoc
+
+Parameters
+----------
+  **$search**
+
+Return
+------
+mixed
+    ```
+    The found array, or null.
+    ```
+
+Example 1
+---------
+```php
+$s1 = array('color', 'red', 'blue', 'green');
+$s2 = array('letters', 'a', 'b', 'c');
+$s3 = 'foo';
+$arr = new PrettyArray(array($s1, $s2, $s3));
+$o = $arr->assoc('letters');
+print_r($o->to_a());
+
+```
+
+```
+Array
+(
+    [0] => letters
+    [1] => a
+    [2] => b
+    [3] => c
 )
 ```
 
