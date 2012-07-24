@@ -170,6 +170,7 @@ Table Of Contents
  * [array\_unique](#method_array_unique_)
  * [array\_unique\_](#method_array_unique_)
  * [assoc](#method_assoc)
+ * [rassoc](#method_rassoc)
 
 <a name="method_get"></a>Methods: get
 ============
@@ -2971,5 +2972,58 @@ Array
     [2] => b
     [3] => c
 )
+```
+
+
+<a name="method_rassoc"></a>Methods: rassoc
+===============
+mixed **rassoc** (array $arr , mixed $search )
+
+
+Searches through top level items, if the item is an array and the second value matches $search it'll return this element.
+
+Links
+-----
+ * http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-rassoc
+
+Parameters
+----------
+  **$arr**
+
+  **$search**
+
+Return
+------
+mixed
+    ```
+    The found array, or null.
+    ```
+
+Example 1
+---------
+```php
+$arr = array(array(1, "one"), array(2, "two"), array(3, "three"), array("ii", "two"));
+$o = enumerator::rassoc($arr, 'two');
+print_r($o);
+```
+
+```
+Array
+(
+    [0] => 2
+    [1] => two
+)
+```
+
+Example 2
+---------
+```php
+$arr = array(array(1, "one"), array(2, "two"), array(3, "three"), array("ii", "two"));
+$o = enumerator::rassoc($arr, 'four');
+var_dump($o);
+```
+
+```
+NULL
 ```
 
