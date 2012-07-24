@@ -718,4 +718,22 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($arr, array(0=>1,2=>2,3=>3));
 	}
 
+	public function test_assoc_1() {
+		$s1 = array('color', 'red', 'blue', 'green');
+		$s2 = array('letters', 'a', 'b', 'c');
+		$s3 = 'foo';
+		$arr = array($s1, $s2, $s3);
+		$o = enumerator::assoc($arr, 'letters');
+		$this->assertEquals($o, $s2);
+	}
+
+	public function test_assoc_2() {
+		$s1 = array('color', 'red', 'blue', 'green');
+		$s2 = array('letters', 'a', 'b', 'c');
+		$s3 = 'foo';
+		$arr = array($s1, $s2, $s3);
+		$o = enumerator::assoc($arr, 'foo');
+		$this->assertEquals($o, null);
+	}
+
 }

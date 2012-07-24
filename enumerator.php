@@ -2399,6 +2399,7 @@ class enumerator {
 	 * )
 	 * </pre>
 	 * 
+	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-uniq
 	 * @param array &$arr
 	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
@@ -2409,5 +2410,42 @@ class enumerator {
 	public static function uniq_(array &$arr) {
 		$arr = array_unique($arr);
 		return;
+	}
+
+	/**
+	 * Methods: assoc
+	 * 
+	 * Searches through top level items, if the item is an array and the first value matches $search it'll return this element.
+	 * 
+	 * <code>
+	 * $s1 = array('color', 'red', 'blue', 'green');
+	 * $s2 = array('letters', 'a', 'b', 'c');
+	 * $s3 = 'foo';
+	 * $arr = array($s1, $s2, $s3);
+	 * $o = enumerator::assoc($arr, 'letters');
+	 * print_r($o);
+	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => letters
+	 *     [1] => a
+	 *     [2] => b
+	 *     [3] => c
+	 * )
+	 * </pre>
+	 * 
+	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-assoc
+	 * @param array $arr
+	 * @param mixed $search 
+	 * @return mixed The found array, or null.
+	 */
+	public static function assoc(array $arr, $search) {
+		foreach($arr as &$value) {
+			if(is_array($value) && $value[0] == $search) {
+				return $value;
+			}
+		}
+		return null;
 	}
 }
