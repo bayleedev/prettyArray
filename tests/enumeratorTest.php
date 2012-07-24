@@ -736,4 +736,16 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($o, null);
 	}
 
+	public function test_rassoc_1() {
+		$arr = array(array(1, "one"), array(2, "two"), array(3, "three"), array("ii", "two"));
+		$o = enumerator::rassoc($arr, 'two');
+		$this->assertEquals($o, array(2, 'two'));
+	}
+
+	public function test_rassoc_2() {
+		$arr = array(array(1, "one"), array(2, "two"), array(3, "three"), array("ii", "two"));
+		$o = enumerator::rassoc($arr, 'four');
+		$this->assertEquals($o, null);
+	}
+
 }

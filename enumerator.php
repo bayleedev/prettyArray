@@ -2442,7 +2442,48 @@ class enumerator {
 	 */
 	public static function assoc(array $arr, $search) {
 		foreach($arr as &$value) {
-			if(is_array($value) && $value[0] == $search) {
+			if(is_array($value) && isset($value[0]) && $value[0] == $search) {
+				return $value;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Methods: rassoc
+	 * 
+	 * Searches through top level items, if the item is an array and the second value matches $search it'll return this element.
+	 * 
+	 * <code>
+	 * $arr = array(array(1, "one"), array(2, "two"), array(3, "three"), array("ii", "two"));
+	 * $o = enumerator::rassoc($arr, 'two');
+	 * print_r($o);
+	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => 2
+	 *     [1] => two
+	 * )
+	 * </pre>
+	 * 
+	 * <code>
+	 * $arr = array(array(1, "one"), array(2, "two"), array(3, "three"), array("ii", "two"));
+	 * $o = enumerator::rassoc($arr, 'four');
+	 * var_dump($o);
+	 * </code>
+	 * <pre>
+	 * NULL
+	 * </pre>
+	 * 
+	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-rassoc
+	 * @param array $arr
+	 * @param mixed $search 
+	 * @return mixed The found array, or null.
+	 */
+	public static function rassoc(array $arr, $search) {
+		foreach($arr as &$value) {
+			if(is_array($value) && isset($value[1]) && $value[1] == $search) {
 				return $value;
 			}
 		}
