@@ -2660,7 +2660,7 @@ class enumerator {
 					if($found == true) {
 						// Found and add
 						if($key < $size) {
-							$t = array_slice($value,0);
+							$t = $value;
 							$t[] = $val;
 							$thisLevel[] = $t;
 						}
