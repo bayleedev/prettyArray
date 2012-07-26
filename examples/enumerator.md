@@ -171,6 +171,7 @@ Table Of Contents
  * [array\_unique\_](#method_array_unique_)
  * [assoc](#method_assoc)
  * [rassoc](#method_rassoc)
+ * [at](#method_at)
 
 <a name="method_get"></a>Methods: get
 ============
@@ -673,9 +674,9 @@ Array
 
 <a name="method_each_slice_"></a>Methods: each\_slice, each\_slice\_
 ================================
-mixed **each\_slice** (array &$arr , int $size [, callable $callback = NULL ] )
+mixed **each\_slice** (array &$arr , int $size [, mixed $callback = NULL ] )
 
-mixed **each\_slice\_** (array &$arr , int $size [, callable $callback = NULL ] )
+mixed **each\_slice\_** (array &$arr , int $size [, mixed $callback = NULL ] )
 
 
 Will slice the elements into $size collections and pass to $callback if defined. If not defined, the slized array is returned.
@@ -868,9 +869,9 @@ Array
 
 <a name="method_grep_"></a>Methods: grep, grep\_
 ====================
-mixed **grep** (array $arr , string $pattern [, callable $callback = NULL ] )
+mixed **grep** (array $arr , string $pattern [, mixed $callback = NULL ] )
 
-mixed **grep\_** (array &$arr , string $pattern [, callable $callback = NULL ] )
+mixed **grep\_** (array &$arr , string $pattern [, mixed $callback = NULL ] )
 
 
 Will only keep an item if the value of the item matches $pattern.
@@ -1053,7 +1054,7 @@ bool(true)
 
 <a name="method_min"></a>Methods: min
 ============
-mixed **min** (array $arr , callback optional )
+mixed **min** (array $arr , mixed optional )
 
 
 Will find the lowest value. If callback is defined it will compare them.
@@ -1221,7 +1222,7 @@ albatross
 
 <a name="method_minmax"></a>Methods: minmax
 ===============
-array **minmax** (array $arr , callback optional )
+array **minmax** (array $arr , mixed optional )
 
 
 Will return an array of min and max. Optionally you can provide a callback to sort them.
@@ -1304,7 +1305,7 @@ Array
 
 <a name="method_none"></a>Methods: none
 =============
-boolean **none** (array $arr [, callable $callback = NULL ] )
+boolean **none** (array $arr [, mixed $callback = NULL ] )
 
 
 Passes each element of the collection to $callback. This will return true if $callback never returns true, else false.
@@ -1391,7 +1392,7 @@ bool(true)
 
 <a name="method_one"></a>Methods: one
 ============
-boolean **one** (array $arr [, callable $callback = NULL ] )
+boolean **one** (array $arr [, mixed $callback = NULL ] )
 
 
 Pases each element of the collection to $callback. If $callback returns true once, the function will return true. Otherwise, the function will return false.
@@ -1693,9 +1694,9 @@ enumerator::reverse_collect($arr, function($key, &$value) {
 
 <a name="method_sort_"></a>Methods: sort, sort\_
 ====================
-mixed **sort** (array $arr [, callable $callback = NULL ] )
+mixed **sort** (array $arr [, mixed $callback = NULL ] )
 
-mixed **sort\_** (array &$arr [, callable $callback = NULL ] )
+mixed **sort\_** (array &$arr [, mixed $callback = NULL ] )
 
 
 Will sort the contents of $arr. A callback can be used to sort.
@@ -2074,9 +2075,9 @@ enumerator::cycle($arr, 3, function($key, $value, $it) {
 
 <a name="method_each_cons_"></a>Methods: each\_cons, each\_cons\_
 ==============================
-mixed **each\_cons** (array &$arr , int $size [, callable $callback = false ] )
+mixed **each\_cons** (array &$arr , int $size [, mixed $callback = NULL ] )
 
-mixed **each\_cons\_** (array &$arr , int $size [, callable $callback = false ] )
+mixed **each\_cons\_** (array &$arr , int $size [, mixed $callback = NULL ] )
 
 
 This will return each section as an item in an array.
@@ -2742,9 +2743,9 @@ title
 
 <a name="method_rindex_"></a>Methods: rindex, rindex\_
 ========================
-mixed **rindex** (array $arr , mixed $callback )
+mixed **rindex** (array $arr , callable $callback )
 
-mixed **rindex\_** (array &$arr , mixed $callback )
+mixed **rindex\_** (array &$arr , callable $callback )
 
 
 Similar to index but looks for the last occurace of $callback.
@@ -3025,5 +3026,67 @@ var_dump($o);
 
 ```
 NULL
+```
+
+
+<a name="method_at"></a>Methods: at
+===========
+mixed **at** (array $arr , mixed $key )
+
+
+Will create an array from all the keys provided. If only one element exists that element is returned, otherwise the array is returned. If none exist, null is returned.
+
+Parameters
+----------
+  **$arr**
+
+  **$key**
+    ```
+    You can insert multiple keys. If they key is negative and doe snot belong in the array, it'll return that index from the end.
+    ```
+
+Return
+------
+mixed
+    ```
+    An item or an array
+    ```
+
+Example 1
+---------
+```php
+$arr = array('a', 'b', 'c', 'd', 'e');
+echo enumerator::at($arr, 0);
+```
+
+```
+a
+```
+
+Example 2
+---------
+```php
+$arr = array('a', 'b', 'c', 'd', 'e');
+echo enumerator::at($arr, -1);
+```
+
+```
+e
+```
+
+Example 3
+---------
+```php
+$arr = array('a', 'b', 'c', 'd', 'e');
+print_r(enumerator::at($arr, 0, 3, 4));
+```
+
+```
+Array
+(
+    [0] => a
+    [1] => d
+    [2] => e
+)
 ```
 
