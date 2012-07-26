@@ -813,8 +813,26 @@ class prettyArrayEnumeratorTest extends PHPUnit_Framework_TestCase {
 
 	public function test_at_3() {
 		$arr = new PrettyArray(array('a', 'b', 'c', 'd', 'e'));
-		$o = $arr->at(0,3,4)->to_a();
-		$this->assertEquals($o, array('a', 'd', 'e'));
+		$o = $arr->at(0,3,4);
+		$this->assertEquals($o->to_a(), array('a', 'd', 'e'));
+	}
+
+	public function test_combination_1() {
+		$arr = new PrettyArray(array(1, 2, 3, 4));
+		$arr->combination_(1);
+		$this->assertEquals($arr->to_a(), array(array(1), array(2), array(3), array(4)));
+	}
+
+	public function test_combination_2() {
+		$arr = new PrettyArray(array(1, 2, 3, 4));
+		$arr->combination_(4);
+		$this->assertEquals($arr->to_a(), array(array(1,2,3,4)));
+	}
+
+	public function test_combination_3() {
+		$arr = new PrettyArray(array(1, 2, 3, 4));
+		$o = $arr->combination_(0);
+		$this->assertEquals($arr->to_a(), array(array()));
 	}
 
 }

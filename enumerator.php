@@ -119,7 +119,8 @@ class enumerator {
 		'rindex' => false,
 		'compact' => true,
 		'cycle' => true,
-		'uniq' => true
+		'uniq' => true,
+		'combination' => true
 	);
 
 	/**
@@ -2545,5 +2546,140 @@ class enumerator {
 			return $ret[0];
 		}
 		return $ret;
+	}
+
+	/**
+	 * Methods: combination_, combination
+	 * 
+	 * Will yield the various unique combinations of an array with a specific $limit.
+	 * 
+	 * <code>
+	 * $arr = array(1, 2, 3, 4);
+	 * enumerator::combination_($arr, 1);
+	 * print_r($arr);
+	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => Array
+	 *         (
+	 *             [0] => 1
+	 *         )
+	 * 
+	 *     [1] => Array
+	 *         (
+	 *             [0] => 2
+	 *         )
+	 * 
+	 *     [2] => Array
+	 *         (
+	 *             [0] => 3
+	 *         )
+	 * 
+	 *     [3] => Array
+	 *         (
+	 *             [0] => 4
+	 *         )
+	 * 
+	 * )
+	 * </pre>
+	 * 
+	 * <code>
+	 * $arr = array(1, 2, 3, 4);
+	 * enumerator::combination_($arr, 4);
+	 * print_r($arr);
+	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => Array
+	 *         (
+	 *             [0] => 1
+	 *             [1] => 2
+	 *             [2] => 3
+	 *             [3] => 4
+	 *         )
+	 * 
+	 * )
+	 * </pre>
+	 * 
+	 * <code>
+	 * $arr = array(1, 2, 3, 4);
+	 * enumerator::combination_($arr, 0);
+	 * print_r($arr);
+	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => Array
+	 *         (
+	 *         )
+	 * 
+	 * )
+	 * </pre>
+	 * 
+	 * @param array &$arr 
+	 * @param int $limit The number of items you wish to have per child element
+	 * @param mixed $callback
+	 * @return mixed
+	 */
+	public static function combination_(array &$arr, $limit, $callback = null, $level = 0, $size = null) {
+		// Cache Size
+		if(is_null($size)) {
+			$size = count($arr);
+		}
+
+		// Preliminary
+		$thisLevel = array();
+		if($size == 0 || $limit == 0){
+			// No value
+			$thisLevel = array(array());
+		} else if($limit == 1){
+			// Returns so each item is in an array
+			foreach($arr as $value){
+				$thisLevel[] = array($value);
+			}
+		} else if($limit == $size) {
+			// Same
+			foreach($arr as $value) {
+				$thisLevel[] = $value;
+			}
+			$thisLevel = array($thisLevel);
+		} else {
+			// Recursive building
+			$nextLevel = self::combination($arr,$limit-1, null, $level+1, $size);
+			foreach($nextLevel as $value) {
+				$lastEl = $value[$limit-2];
+				$found = false;
+				foreach($arr as $key => $val) {
+					if($val == $lastEl) {
+						// Iterates until it finds it?
+						$found = true;
+						continue;
+					}
+					if($found == true) {
+						// Found and add
+						if($key < $size) {
+							$t = array_slice($value,0);
+							$t[] = $val;
+							$thisLevel[] = $t;
+						}
+					}
+				}
+			}
+		}
+		if($level == 0 && is_callable($callback)) {
+			foreach($thisLevel as $key => &$value) {
+				try {
+					$callback($key, $value);
+				} catch(BreakException $e) {
+					break;
+				} catch(ContinueException $e) {
+					continue;
+				}
+			}
+		}
+		$arr = $thisLevel;
+		return;
 	}
 }

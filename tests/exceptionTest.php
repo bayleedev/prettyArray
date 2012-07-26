@@ -199,4 +199,26 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 		}); // 132
 		$this->assertEquals($count, 114);
 	}
+
+	public function test_combinatoin_1() {
+		$arr = array(1, 2, 3, 4);
+		enumerator::combination_($arr, 1, function($key, &$value) {
+			if($value[0] == 3) {
+				throw new BreakException;
+			}
+			$value[0]++;
+		});
+		$this->assertEquals($arr, array(array(2), array(3), array(3), array(4)));
+	}
+
+	public function test_combinatoin_2() {
+		$arr = array(1, 2, 3, 4);
+		enumerator::combination_($arr, 1, function($key, &$value) {
+			if($value[0] == 3) {
+				throw new ContinueException;
+			}
+			$value[0]++;
+		});
+		$this->assertEquals($arr, array(array(2), array(3), array(3), array(5)));
+	}
 }

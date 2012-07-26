@@ -541,4 +541,34 @@ class enumeratorAliasTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($a, array(0=>1,2=>2,3=>3));
 	}
 
+	public function test_combination_1() {
+		$arr = array(1, 2, 3, 4);
+		$arr = enumerator::combination($arr, 1);
+		$this->assertEquals($arr, array(array(1), array(2), array(3), array(4)));
+	}
+
+	public function test_combination_2() {
+		$arr = array(1, 2, 3, 4);
+		$arr = enumerator::combination($arr, 4);
+		$this->assertEquals($arr, array(array(1,2,3,4)));
+	}
+
+	public function test_combination_3() {
+		$arr = array(1, 2, 3, 4);
+		$arr = enumerator::combination($arr, 0);
+		$this->assertEquals($arr, array(array()));
+	}
+
+	public function test_combinatoin_4() {
+		// tests destructive
+		$arr = array(1, 2, 3, 4);
+		$arr2 = enumerator::combination($arr, 4, function($key, &$value) {
+			foreach($value as &$v) {
+				$v++;
+			}
+		});
+		$this->assertEquals($arr2, array(array(2,3,4,5)));
+		$this->assertEquals($arr, array(1,2,3,4));
+	}
+
 }
