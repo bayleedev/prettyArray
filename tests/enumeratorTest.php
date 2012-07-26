@@ -748,4 +748,22 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($o, null);
 	}
 
+	public function test_at_1() {
+		$arr = array('a', 'b', 'c', 'd', 'e');
+		$o = enumerator::at($arr, 0);
+		$this->assertEquals($o, 'a');
+	}
+
+	public function test_at_2() {
+		$arr = array('a', 'b', 'c', 'd', 'e');
+		$o = enumerator::at($arr, -1);
+		$this->assertEquals($o, 'e');
+	}
+
+	public function test_at_3() {
+		$arr = array('a', 'b', 'c', 'd', 'e');
+		$o = enumerator::at($arr, 0, 3, 4);
+		$this->assertEquals($o, array('a', 'd', 'e'));
+	}
+
 }

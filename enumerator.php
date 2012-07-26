@@ -2489,4 +2489,32 @@ class enumerator {
 		}
 		return null;
 	}
+
+	/**
+	 * Methods: at
+	 * 
+	 * Will create an array from all the keys provided. If only one element exists that element is returned, otherwise the array is returned. If none exist, null is returned.
+	 * 
+	 * @param array $arr 
+	 * @param mixed $key You can insert multiple keys. If they key is negative and doe snot belong in the array, it'll return that index from the end.
+	 * @return mixed An item or an array
+	 */
+	public static function at(array $arr, $key) {
+		$ret = array();
+		$keys = array_slice(func_get_args(), 1);
+		foreach($keys as $key) {
+			if(isset($arr[$key])) {
+				$ret[] = $arr[$key];
+			} else if(is_numeric($key) && $key < 0) {
+				$ret += array_slice($arr, $key, 1);
+			}
+		}
+		$len = count($ret);
+		if($len == 0) {
+			return null;
+		} else if($len == 1) {
+			return $ret[0];
+		}
+		return $ret;
+	}
 }
