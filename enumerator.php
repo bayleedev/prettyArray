@@ -606,7 +606,7 @@ class enumerator {
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-each_slice
 	 * @param array &$arr
 	 * @param int $size The size of each slice.
-	 * @param callable $callback The callback will be passed each collection. This can be passed by reference.
+	 * @param mixed $callback The callback will be passed each collection. This can be passed by reference.
 	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function each_slice_(array &$arr, $size, $callback = null) {
@@ -744,7 +744,7 @@ class enumerator {
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-grep
 	 * @param array &$arr
 	 * @param string $pattern The regex pattern.
-	 * @param callable $callback The callback will be passed each sliced item as an array. This can be passed by reference.
+	 * @param mixed $callback The callback will be passed each sliced item as an array. This can be passed by reference.
 	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function grep_(array &$arr, $pattern, $callback = null) {
@@ -897,7 +897,7 @@ class enumerator {
 	 * 
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-min
 	 * @param array $arr
-	 * @param callback optional $callback Will accept two values. Return 0 if they are equal, return -1 if the second parameter is bigger, and 1 is the first parameter is bigger.
+	 * @param mixed optional $callback Will accept two values. Return 0 if they are equal, return -1 if the second parameter is bigger, and 1 is the first parameter is bigger.
 	 * @return mixed
 	 */
 	public static function min(array $arr, $callback = null) {
@@ -1020,7 +1020,7 @@ class enumerator {
 	 * 
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-minmax
 	 * @param array $arr
-	 * @param callback optional $callback Will accept two values. Return 0 if they are equal, return -1 if the second parameter is bigger, and 1 is the first parameter is bigger.
+	 * @param mixed optional $callback Will accept two values. Return 0 if they are equal, return -1 if the second parameter is bigger, and 1 is the first parameter is bigger.
 	 * @return array
 	 */
 	public static function minmax(array $arr, $callback = null) {
@@ -1117,7 +1117,7 @@ class enumerator {
 	 * 
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-none-3F
 	 * @param array $arr 
-	 * @param callable $callback A $key, $value are passed to this callback.
+	 * @param mixed $callback A $key, $value are passed to this callback.
 	 * @return boolean
 	 */
 	public static function none(array $arr, $callback = null) {
@@ -1169,7 +1169,7 @@ class enumerator {
 	 * 
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-one-3F
 	 * @param array $arr 
-	 * @param callable $callback A $key, $value are passed to this callback.
+	 * @param mixed $callback A $key, $value are passed to this callback.
 	 * @return boolean
 	 */
 	public static function one(array $arr, $callback = null) {
@@ -1421,7 +1421,7 @@ class enumerator {
 	 * 
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-sort
 	 * @param array &$arr
-	 * @param callable $callback A $key, $value are passed to this callback. The $value can be passed by reference.
+	 * @param mixed $callback A $key, $value are passed to this callback. The $value can be passed by reference.
 	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function sort_(array &$arr, $callback = null, $preserve_keys = false) {
@@ -1755,10 +1755,10 @@ class enumerator {
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-each_cons
 	 * @param array &$arr 
 	 * @param int $size 
-	 * @param callable $callback 
+	 * @param mixed $callback 
 	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
-	public static function each_cons_(array &$arr, $size, $callback = false) {
+	public static function each_cons_(array &$arr, $size, $callback = null) {
 		$newArr = array();
 		$count = count($arr);
 		$current = 0;
@@ -2291,7 +2291,7 @@ class enumerator {
 	 * 
 	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-rindex
 	 * @param array &$arr 
-	 * @param mixed $callback 
+	 * @param callable $callback 
 	 * @return mixed
 	 */
 	public static function rindex_(array &$arr, $callback) {
@@ -2494,6 +2494,35 @@ class enumerator {
 	 * Methods: at
 	 * 
 	 * Will create an array from all the keys provided. If only one element exists that element is returned, otherwise the array is returned. If none exist, null is returned.
+	 * 
+	 * <code>
+	 * $arr = array('a', 'b', 'c', 'd', 'e');
+	 * echo enumerator::at($arr, 0);
+	 * </code>
+	 * <pre>
+	 * a
+	 * </pre>
+	 * 
+	 * <code>
+	 * $arr = array('a', 'b', 'c', 'd', 'e');
+	 * echo enumerator::at($arr, -1);
+	 * </code>
+	 * <pre>
+	 * e
+	 * </pre>
+	 * 
+	 * <code>
+	 * $arr = array('a', 'b', 'c', 'd', 'e');
+	 * print_r(enumerator::at($arr, 0, 3, 4));
+	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => a
+	 *     [1] => d
+	 *     [2] => e
+	 * )
+	 * </pre>
 	 * 
 	 * @param array $arr 
 	 * @param mixed $key You can insert multiple keys. If they key is negative and doe snot belong in the array, it'll return that index from the end.
