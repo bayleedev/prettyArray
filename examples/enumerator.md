@@ -172,6 +172,8 @@ Table Of Contents
  * [assoc](#method_assoc)
  * [rassoc](#method_rassoc)
  * [at](#method_at)
+ * [combination\_](#method_combination_)
+ * [combination](#method_combination_)
 
 <a name="method_get"></a>Methods: get
 ============
@@ -3087,6 +3089,105 @@ Array
     [0] => a
     [1] => d
     [2] => e
+)
+```
+
+
+<a name="method_combination_"></a>Methods: combination\_, combination
+==================================
+mixed **combination\_** (array &$arr , int $limit [, mixed $callback = NULL ] )
+
+mixed **combination** (array $arr , int $limit [, mixed $callback = NULL ] )
+
+
+Will yield the various unique combinations of an array with a specific $limit.
+
+Parameters
+----------
+  **&$arr**
+
+  **$limit**
+    ```
+    The number of items you wish to have per child element
+    ```
+
+  **$callback**
+
+Return
+------
+ mixed
+
+Example 1
+---------
+```php
+$arr = array(1, 2, 3, 4);
+enumerator::combination_($arr, 1);
+print_r($arr);
+```
+
+```
+Array
+(
+    [0] => Array
+        (
+            [0] => 1
+        )
+
+    [1] => Array
+        (
+            [0] => 2
+        )
+
+    [2] => Array
+        (
+            [0] => 3
+        )
+
+    [3] => Array
+        (
+            [0] => 4
+        )
+
+)
+```
+
+Example 2
+---------
+```php
+$arr = array(1, 2, 3, 4);
+enumerator::combination_($arr, 4);
+print_r($arr);
+```
+
+```
+Array
+(
+    [0] => Array
+        (
+            [0] => 1
+            [1] => 2
+            [2] => 3
+            [3] => 4
+        )
+
+)
+```
+
+Example 3
+---------
+```php
+$arr = array(1, 2, 3, 4);
+enumerator::combination_($arr, 0);
+print_r($arr);
+```
+
+```
+Array
+(
+    [0] => Array
+        (
+        )
+
 )
 ```
 
