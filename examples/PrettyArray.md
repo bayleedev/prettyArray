@@ -189,6 +189,8 @@ Table Of Contents
  * [delete](#method_delete_)
  * [delete\_at\_](#method_delete_at_)
  * [delete\_at](#method_delete_at_)
+ * [fetch\_](#method_fetch)
+ * [fetch](#method_fetch)
 
 <a name="method___construct"></a>Methods: \_\_construct
 ====================
@@ -3661,5 +3663,75 @@ var_dump($ret);
 
 ```
 NULL
+```
+
+
+<a name="method_fetch"></a>Methods: fetch\_, fetch
+======================
+mixed **fetch\_** (mixed $index , mixed $value )
+
+mixed **fetch** (mixed $index , mixed $value )
+
+
+Will retrieve the value of the specific index. Will also retrieve negative index counting backwards.
+If $index is not found and $value is callable, the index is passed to it and it's return value is returned.
+If $index is not found and $value is not callable, $value is returned.
+
+Parameters
+----------
+  **$index**
+
+  **$value**
+
+Return
+------
+ mixed
+
+Example 1
+---------
+```php
+$arr = new PrettyArray(array(11, 22, 33, 44));
+echo $arr->fetch(1);
+
+```
+
+```
+22
+```
+
+Example 2
+---------
+```php
+$arr = new PrettyArray(array(11, 22, 33, 44));
+echo $arr->fetch(-1);
+
+```
+
+```
+44
+```
+
+Example 3
+---------
+```php
+$arr = new PrettyArray(array(11, 22, 33, 44));
+echo $arr->fetch(4, 'cat');
+```
+
+```
+cat
+```
+
+Example 4
+---------
+```php
+$arr = new PrettyArray(array(11, 22, 33, 44));
+echo $arr->fetch(4, function($i) {
+	return $i * $i;
+});
+```
+
+```
+16
 ```
 

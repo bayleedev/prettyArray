@@ -178,6 +178,8 @@ Table Of Contents
  * [delete](#method_delete_)
  * [delete\_at\_](#method_delete_at_)
  * [delete\_at](#method_delete_at_)
+ * [fetch\_](#method_fetch)
+ * [fetch](#method_fetch)
 
 <a name="method_get"></a>Methods: get
 ============
@@ -3310,5 +3312,75 @@ var_dump($ret);
 
 ```
 NULL
+```
+
+
+<a name="method_fetch"></a>Methods: fetch\_, fetch
+======================
+mixed **fetch\_** (array $arr , mixed $index , mixed $value )
+
+mixed **fetch** (array $arr , mixed $index , mixed $value )
+
+
+Will retrieve the value of the specific index. Will also retrieve negative index counting backwards.
+If $index is not found and $value is callable, the index is passed to it and it's return value is returned.
+If $index is not found and $value is not callable, $value is returned.
+
+Parameters
+----------
+  **$arr**
+
+  **$index**
+
+  **$value**
+
+Return
+------
+ mixed
+
+Example 1
+---------
+```php
+$arr = array(11, 22, 33, 44);
+echo enumerator::fetch($arr, 1);
+```
+
+```
+22
+```
+
+Example 2
+---------
+```php
+$arr = array(11, 22, 33, 44);
+echo enumerator::fetch($arr, -1);
+```
+
+```
+44
+```
+
+Example 3
+---------
+```php
+$arr = array(11, 22, 33, 44);
+echo enumerator::fetch($arr, 4, 'cat');
+```
+
+```
+cat
+```
+
+Example 4
+---------
+```php
+$arr = array(11, 22, 33, 44);
+echo enumerator::fetch($arr, 4, function($i) {
+	return $i * $i;
+});
+```
+
+```
+16
 ```
 
