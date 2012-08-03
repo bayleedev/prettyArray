@@ -594,4 +594,17 @@ class enumeratorAliasTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($arr, array('a','b', 'b', 'b', 'c'));
 	}
 
+	public function test_delete_at_1() {
+		$arr = array('ant', 'bat', 'cat', 'dog');
+		$ret = enumerator::delete_at($arr, 2);
+		$this->assertEquals($ret, 'cat');
+		$this->assertEquals($arr, array('ant', 'bat', 'cat', 'dog'));
+	}
+
+	public function test_delete_at_2() {
+		$arr = array('ant', 'bat', 'cat', 'dog');
+		$ret = enumerator::delete_at($arr, 99);
+		$this->assertEquals($ret, null);
+	}
+
 }

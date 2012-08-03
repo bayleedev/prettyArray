@@ -121,7 +121,8 @@ class enumerator {
 		'cycle' => true,
 		'uniq' => true,
 		'combination' => true,
-		'delete' => false
+		'delete' => false,
+		'delete_at' => false
 	);
 
 	/**
@@ -2741,6 +2742,49 @@ class enumerator {
 			return $callback();
 		} else if($found) {
 			return $needle;
+		}
+		return;
+	}
+
+	/**
+	 * Methods: delete_at_, delete_at
+	 * 
+	 * Will delete the element at the specific index. If the element is found that element is returned, otherwise null is returned.
+	 * 
+	 * <code>
+	 * $arr = array('ant', 'bat', 'cat', 'dog');
+	 * $ret = enumerator::delete_at_($arr, 2);
+	 * echo $ret . PHP_EOL;
+	 * print_r($arr);
+	 * </code>
+	 * <pre>
+	 * cat
+	 * Array
+	 * (
+	 *     [0] => ant
+	 *     [1] => bat
+	 *     [3] => dog
+	 * )
+	 * </pre>
+	 * 
+	 * <code>
+	 * $arr = array('ant', 'bat', 'cat', 'dog');
+	 * $ret = enumerator::delete_at($arr, 99);
+	 * var_dump($ret);
+	 * </code>
+	 * <pre>
+	 * NULL
+	 * </pre>
+	 * 
+	 * @param array &$arr 
+	 * @param mixed $index 
+	 * @return mixed
+	 */
+	public static function delete_at_(array &$arr, $index) {
+		if(isset($arr[$index])) {
+			$ret = $arr[$index];
+			unset($arr[$index]);
+			return $ret;
 		}
 		return;
 	}
