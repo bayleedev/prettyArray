@@ -187,6 +187,8 @@ Table Of Contents
  * [combination](#method_combination_)
  * [delete\_](#method_delete_)
  * [delete](#method_delete_)
+ * [delete\_at\_](#method_delete_at_)
+ * [delete\_at](#method_delete_at_)
 
 <a name="method___construct"></a>Methods: \_\_construct
 ====================
@@ -3609,5 +3611,55 @@ var_dump($arr->delete('z', function() {
 
 ```
 bool(false)
+```
+
+
+<a name="method_delete_at_"></a>Methods: delete\_at\_, delete\_at
+==============================
+mixed **delete\_at\_** (mixed $index )
+
+mixed **delete\_at** (mixed $index )
+
+
+Will delete the element at the specific index. If the element is found that element is returned, otherwise null is returned.
+
+Parameters
+----------
+  **$index**
+
+Return
+------
+ mixed
+
+Example 1
+---------
+```php
+$arr = new PrettyArray(array('ant', 'bat', 'cat', 'dog'));
+echo $arr->delete_at_(2) . PHP_EOL;
+print_r($arr->to_a());
+
+```
+
+```
+cat
+Array
+(
+    [0] => ant
+    [1] => bat
+    [3] => dog
+)
+```
+
+Example 2
+---------
+```php
+$arr = new PrettyArray(array('ant', 'bat', 'cat', 'dog'));
+$ret = $arr->delete_at(99);
+var_dump($ret);
+
+```
+
+```
+NULL
 ```
 

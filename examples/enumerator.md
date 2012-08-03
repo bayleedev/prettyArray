@@ -176,6 +176,8 @@ Table Of Contents
  * [combination](#method_combination_)
  * [delete\_](#method_delete_)
  * [delete](#method_delete_)
+ * [delete\_at\_](#method_delete_at_)
+ * [delete\_at](#method_delete_at_)
 
 <a name="method_get"></a>Methods: get
 ============
@@ -3257,5 +3259,56 @@ var_dump(enumerator::delete($arr, 'z', function() {
 
 ```
 bool(false)
+```
+
+
+<a name="method_delete_at_"></a>Methods: delete\_at\_, delete\_at
+==============================
+mixed **delete\_at\_** (array &$arr , mixed $index )
+
+mixed **delete\_at** (array &$arr , mixed $index )
+
+
+Will delete the element at the specific index. If the element is found that element is returned, otherwise null is returned.
+
+Parameters
+----------
+  **&$arr**
+
+  **$index**
+
+Return
+------
+ mixed
+
+Example 1
+---------
+```php
+$arr = array('ant', 'bat', 'cat', 'dog');
+$ret = enumerator::delete_at_($arr, 2);
+echo $ret . PHP_EOL;
+print_r($arr);
+```
+
+```
+cat
+Array
+(
+    [0] => ant
+    [1] => bat
+    [3] => dog
+)
+```
+
+Example 2
+---------
+```php
+$arr = array('ant', 'bat', 'cat', 'dog');
+$ret = enumerator::delete_at($arr, 99);
+var_dump($ret);
+```
+
+```
+NULL
 ```
 
