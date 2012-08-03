@@ -174,6 +174,8 @@ Table Of Contents
  * [at](#method_at)
  * [combination\_](#method_combination_)
  * [combination](#method_combination_)
+ * [delete\_](#method_delete_)
+ * [delete](#method_delete_)
 
 <a name="method_get"></a>Methods: get
 ============
@@ -3189,5 +3191,71 @@ Array
         )
 
 )
+```
+
+
+<a name="method_delete_"></a>Methods: delete\_, delete
+========================
+mixed **delete\_** (array &$arr , mixed $needle [, callable $callback = NULL ] )
+
+mixed **delete** (array $arr , mixed $needle [, callable $callback = NULL ] )
+
+
+Will delete every instance of $needle inside of $arr.
+If $needle is not found null is returned.
+If it is found and $callback is callable it's return value is returned.
+If it is found and $callback is not defined $needle is returned.
+
+Parameters
+----------
+  **&$arr**
+
+  **$needle**
+
+  **$callback**
+
+Return
+------
+ mixed
+
+Example 1
+---------
+```php
+$arr = array('a','b', 'b', 'b', 'c');
+echo enumerator::delete_($arr, 'b') . PHP_EOL;
+print_r($arr);
+```
+
+```
+b
+Array
+(
+	[0] => a
+	[4] => c
+)
+```
+
+Example 2
+---------
+```php
+$arr = array('a','b', 'b', 'b', 'c');
+var_dump(enumerator::delete_($arr, 'z'));
+```
+
+```
+NULL
+```
+
+Example 3
+---------
+```php
+$arr = array('a','b', 'b', 'b', 'c');
+var_dump(enumerator::delete($arr, 'z', function() {
+	return false;
+}));
+```
+
+```
+bool(false)
 ```
 

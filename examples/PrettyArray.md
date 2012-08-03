@@ -185,6 +185,8 @@ Table Of Contents
  * [at](#method_at)
  * [combination\_](#method_combination_)
  * [combination](#method_combination_)
+ * [delete\_](#method_delete_)
+ * [delete](#method_delete_)
 
 <a name="method___construct"></a>Methods: \_\_construct
 ====================
@@ -3540,5 +3542,72 @@ Array
         )
 
 )
+```
+
+
+<a name="method_delete_"></a>Methods: delete\_, delete
+========================
+mixed **delete\_** (mixed $needle [, callable $callback = NULL ] )
+
+mixed **delete** (mixed $needle [, callable $callback = NULL ] )
+
+
+Will delete every instance of $needle inside of $arr.
+If $needle is not found null is returned.
+If it is found and $callback is callable it's return value is returned.
+If it is found and $callback is not defined $needle is returned.
+
+Parameters
+----------
+  **$needle**
+
+  **$callback**
+
+Return
+------
+ mixed
+
+Example 1
+---------
+```php
+$arr = new PrettyArray(array('a','b', 'b', 'b', 'c'));
+echo $arr->delete_('b') . PHP_EOL;
+print_r($arr->to_a());
+
+```
+
+```
+b
+Array
+(
+	[0] => a
+	[4] => c
+)
+```
+
+Example 2
+---------
+```php
+$arr = new PrettyArray(array('a','b', 'b', 'b', 'c'));
+var_dump($arr->delete_('z'));
+
+```
+
+```
+NULL
+```
+
+Example 3
+---------
+```php
+$arr = new PrettyArray(array('a','b', 'b', 'b', 'c'));
+var_dump($arr->delete('z', function() {
+	return false;
+}));
+
+```
+
+```
+bool(false)
 ```
 
