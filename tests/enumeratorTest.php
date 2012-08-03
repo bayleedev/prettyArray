@@ -831,4 +831,42 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($ret, null);
 	}
 
+	public function test_fetch_1() {
+		$arr = array(11, 22, 33, 44);
+		$ret = enumerator::fetch($arr, 1);
+		$this->assertEquals($ret, 22);
+	}
+
+	public function test_fetch_2() {
+		$arr = array(11, 22, 33, 44);
+		$ret = enumerator::fetch($arr, -1);
+		$this->assertEquals($ret, 44);
+	}
+
+	public function test_fetch_3() {
+		$arr = array(11, 22, 33, 44);
+		$ret = enumerator::fetch($arr, 4, 'cat');
+		$this->assertEquals($ret, 'cat');
+	}
+
+	public function test_fetch_4() {
+		$arr = array(11, 22, 33, 44);
+		$ret = enumerator::fetch($arr, 4, function($i) {
+			return $i * $i;
+		});
+		$this->assertEquals($ret, 16);
+	}
+
+	public function test_fetch_5() {
+		$arr = array(11, 22, 33, 44);
+		try {
+			$ret = enumerator::fetch($arr, 4);
+		} catch(\OutOfBoundsException $e) {
+			// Testing the catch
+			$this->assertEquals(true, true);
+			return;
+		}
+		$this->assertEquals(true, false);
+	}
+
 }

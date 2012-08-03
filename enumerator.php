@@ -2788,4 +2788,75 @@ class enumerator {
 		}
 		return;
 	}
+
+	/**
+	 * Methods: fetch_, fetch
+	 * 
+	 * Will retrieve the value of the specific index. Will also retrieve negative index counting backwards.
+	 * If $index is not found and $value is callable, the index is passed to it and it's return value is returned.
+	 * If $index is not found and $value is not callable, $value is returned.
+	 * 
+	 * <code>
+	 * $arr = array(11, 22, 33, 44);
+	 * echo enumerator::fetch($arr, 1);
+	 * </code>
+	 * <pre>
+	 * 22
+	 * </pre>
+	 * 
+	 * <code>
+	 * $arr = array(11, 22, 33, 44);
+	 * echo enumerator::fetch($arr, -1);
+	 * </code>
+	 * <pre>
+	 * 44
+	 * </pre>
+	 * 
+	 * <code>
+	 * $arr = array(11, 22, 33, 44);
+	 * echo enumerator::fetch($arr, 4, 'cat');
+	 * </code>
+	 * <pre>
+	 * cat
+	 * </pre>
+	 * 
+	 * <code>
+	 * $arr = array(11, 22, 33, 44);
+	 * echo enumerator::fetch($arr, 4, function($i) {
+	 * 	return $i * $i;
+	 * });
+	 * </code>
+	 * <pre>
+	 * 16
+	 * </pre>
+	 * 
+	 * @param array $arr 
+	 * @param mixed $index 
+	 * @param mixed $value 
+	 * @return mixed
+	 */
+	public static function fetch(array $arr, $index) {
+		$args = func_get_args();
+		$hasValue = (count($args) >= 3);
+		$value = ($hasValue) ? $args[2] : null;
+		$count = count($arr);
+
+		if(isset($arr[$index])) {
+			// Return found value
+			return $arr[$index];
+		} else if(is_numeric($index) && is_numeric($i = $count + $index) && isset($arr[$i])) {
+			// Negative index
+			return $arr[$i];
+		} else if($hasValue && is_callable($value)) {
+			// Return callback value
+			return $value($index);
+		} else if($hasValue) {
+			// Return set value
+			return $value;
+		} else {
+			// Throw exception
+			throw new \OutOfBoundsException;
+		}
+		return;
+	}
 }
