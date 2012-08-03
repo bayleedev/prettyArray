@@ -795,4 +795,27 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($arr, array(array(2,3,4,5)));
 	}
 
+	public function test_delete_1() {
+		$arr = array('a','b', 'b', 'b', 'c');
+		$ret = enumerator::delete_($arr, 'b');
+		$this->assertEquals($ret, 'b');
+		$this->assertEquals($arr, array(0 => 'a', 4 => 'c'));
+	}
+
+	public function test_delete_2() {
+		$arr = array('a','b', 'b', 'b', 'c');
+		$ret = enumerator::delete_($arr, 'z');
+		$this->assertEquals($ret, null);
+		$this->assertEquals($arr, array('a','b', 'b', 'b', 'c'));
+	}
+
+	public function test_delete_3() {
+		$arr = array('a','b', 'b', 'b', 'c');
+		$ret = enumerator::delete_($arr, 'z', function() {
+			return false;
+		});
+		$this->assertEquals($ret, false);
+		$this->assertEquals($arr, array('a','b', 'b', 'b', 'c'));
+	}
+
 }

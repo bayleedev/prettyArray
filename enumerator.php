@@ -120,7 +120,8 @@ class enumerator {
 		'compact' => true,
 		'cycle' => true,
 		'uniq' => true,
-		'combination' => true
+		'combination' => true,
+		'delete' => false
 	);
 
 	/**
@@ -2680,6 +2681,67 @@ class enumerator {
 			}
 		}
 		$arr = $thisLevel;
+		return;
+	}
+
+	/**
+	 * Methods: delete_, delete
+	 * 
+	 * Will delete every instance of $needle inside of $arr.
+	 * If $needle is not found null is returned.
+	 * If it is found and $callback is callable it's return value is returned.
+	 * If it is found and $callback is not defined $needle is returned.
+	 * 
+	 * <code>
+	 * $arr = array('a','b', 'b', 'b', 'c');
+	 * echo enumerator::delete_($arr, 'b') . PHP_EOL;
+	 * print_r($arr);
+	 * </code>
+	 * <pre>
+	 * b
+	 * Array
+	 * (
+	 * 	[0] => a
+	 * 	[4] => c
+	 * )
+	 * </pre>
+	 * 
+	 * <code>
+	 * $arr = array('a','b', 'b', 'b', 'c');
+	 * var_dump(enumerator::delete_($arr, 'z'));
+	 * </code>
+	 * <pre>
+	 * NULL
+	 * </pre>
+	 * 
+	 * <code>
+	 * $arr = array('a','b', 'b', 'b', 'c');
+	 * var_dump(enumerator::delete($arr, 'z', function() {
+	 * 	return false;
+	 * }));
+	 * </code>
+	 * <pre>
+	 * bool(false)
+	 * </pre>
+	 * 
+	 * @param array &$arr 
+	 * @param mixed $needle 
+	 * @param callable $callback 
+	 * @return mixed
+	 */
+	public static function delete_(array &$arr, $needle, $callback = null) {
+		$found = false;
+		foreach($arr as $key => &$value) {
+			if($value === $needle) {
+				$found = true;
+				unset($arr[$key]);
+			}
+		}
+		if(!$found && is_callable($callback)) {
+			return $callback();
+		} else if($found) {
+			return $needle;
+		}
 		return;
 	}
 }
