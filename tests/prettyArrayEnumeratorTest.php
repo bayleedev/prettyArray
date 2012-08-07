@@ -475,8 +475,9 @@ class prettyArrayEnumeratorTest extends PHPUnit_Framework_TestCase {
 		// Test destruction
 		$arr = new PrettyArray(array(1, 2, 3));
 		$index = 2;
-		$arr->reverse_collect_(function($key, &$value) use(&$index) {
-			$this->assertEquals($key, $index--);
+		$that = $this;
+		$arr->reverse_collect_(function($key, &$value) use(&$index, &$that) {
+			$that->assertEquals($key, $index--);
 			return;
 		});
 	}

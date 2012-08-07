@@ -447,8 +447,9 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		// Test destruction
 		$arr = array(1, 2, 3);
 		$index = 2;
-		enumerator::reverse_collect_($arr, function($key, &$value) use(&$index) {
-			$this->assertEquals($key, $index--);
+		$that = $this;
+		enumerator::reverse_collect_($arr, function($key, &$value) use(&$index, &$that) {
+			$that->assertEquals($key, $index--);
 			return;
 		});
 	}

@@ -130,8 +130,9 @@ class prettyArrayDestructiveAliasTest extends PHPUnit_Framework_TestCase {
 		// Test destruction
 		$arr = new PrettyArray(array(1, 2, 3));
 		$index = 2;
-		$arr->reverse_each_(function($key, &$value) use(&$index) {
-			$this->assertEquals($key, $index--);
+		$that = $this;
+		$arr->reverse_each_(function($key, &$value) use(&$index, &$that) {
+			$that->assertEquals($key, $index--);
 			return;
 		});
 	}
@@ -151,8 +152,9 @@ class prettyArrayDestructiveAliasTest extends PHPUnit_Framework_TestCase {
 		// Test destruction
 		$arr = new PrettyArray(array(1, 2, 3));
 		$index = 2;
-		$arr->reverse_map_(function($key, &$value) use(&$index) {
-			$this->assertEquals($key, $index--);
+		$that = $this;
+		$arr->reverse_map_(function($key, &$value) use(&$index, &$that) {
+			$that->assertEquals($key, $index--);
 			return;
 		});
 	}
@@ -172,8 +174,9 @@ class prettyArrayDestructiveAliasTest extends PHPUnit_Framework_TestCase {
 		// Test destruction
 		$arr = new PrettyArray(array(1, 2, 3));
 		$index = 2;
-		$arr->reverse_foreach_(function($key, &$value) use(&$index) {
-			$this->assertEquals($key, $index--);
+		$that = $this;
+		$arr->reverse_foreach_(function($key, &$value) use(&$index, &$that) {
+			$that->assertEquals($key, $index--);
 			return;
 		});
 	}
@@ -193,8 +196,9 @@ class prettyArrayDestructiveAliasTest extends PHPUnit_Framework_TestCase {
 		// Test destruction
 		$arr = new PrettyArray(array(1, 2, 3));
 		$index = 2;
-		$arr->reverse_each_with_index_(function($key, &$value) use(&$index) {
-			$this->assertEquals($key, $index--);
+		$that = $this;
+		$arr->reverse_each_with_index_(function($key, &$value) use(&$index, &$that) {
+			$that->assertEquals($key, $index--);
 			return;
 		});
 	}

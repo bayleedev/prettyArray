@@ -122,8 +122,9 @@ class enumeratorDestructiveAliasTest extends PHPUnit_Framework_TestCase {
 		// Test destruction
 		$arr = array(1, 2, 3);
 		$index = 2;
-		enumerator::reverse_each_($arr, function($key, &$value) use(&$index) {
-			$this->assertEquals($key, $index--);
+		$that = $this;
+		enumerator::reverse_each_($arr, function($key, &$value) use(&$index, &$that) {
+			$that->assertEquals($key, $index--);
 			return;
 		});
 	}
@@ -142,8 +143,9 @@ class enumeratorDestructiveAliasTest extends PHPUnit_Framework_TestCase {
 		// Test destruction
 		$arr = array(1, 2, 3);
 		$index = 2;
-		enumerator::reverse_map_($arr, function($key, &$value) use(&$index) {
-			$this->assertEquals($key, $index--);
+		$that = $this;
+		enumerator::reverse_map_($arr, function($key, &$value) use(&$index, &$that) {
+			$that->assertEquals($key, $index--);
 			return;
 		});
 	}
@@ -162,8 +164,9 @@ class enumeratorDestructiveAliasTest extends PHPUnit_Framework_TestCase {
 		// Test destruction
 		$arr = array(1, 2, 3);
 		$index = 2;
-		enumerator::reverse_foreach_($arr, function($key, &$value) use(&$index) {
-			$this->assertEquals($key, $index--);
+		$that = $this;
+		enumerator::reverse_foreach_($arr, function($key, &$value) use(&$index, &$that) {
+			$that->assertEquals($key, $index--);
 			return;
 		});
 	}
@@ -182,8 +185,9 @@ class enumeratorDestructiveAliasTest extends PHPUnit_Framework_TestCase {
 		// Test destruction
 		$arr = array(1, 2, 3);
 		$index = 2;
-		enumerator::reverse_each_with_index_($arr, function($key, &$value) use(&$index) {
-			$this->assertEquals($key, $index--);
+		$that = $this;
+		enumerator::reverse_each_with_index_($arr, function($key, &$value) use(&$index, &$that) {
+			$that->assertEquals($key, $index--);
 			return;
 		});
 	}
