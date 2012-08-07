@@ -869,4 +869,19 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(true, false);
 	}
 
+	public function test_flatten_1() {
+		$arr = array(1, 2, array(3, array(4, 5)));
+		enumerator::flatten_($arr);
+		$this->assertEquals($arr, array(1,2,3,4,5));
+
+		$ret = enumerator::flatten_($arr);
+		$this->assertEquals($ret, null);
+	}
+
+	public function test_flatten_2() {
+		$arr = array(1, 2, array(3, array(4, 5)));
+		enumerator::flatten_($arr, 1);
+		$this->assertEquals($arr, array(1,2,3, array(4,5)));
+	}
+
 }

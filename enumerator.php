@@ -122,7 +122,8 @@ class enumerator {
 		'uniq' => true,
 		'combination' => true,
 		'delete' => false,
-		'delete_at' => false
+		'delete_at' => false,
+		'flatten' => false
 	);
 
 	/**
@@ -2858,5 +2859,79 @@ class enumerator {
 			throw new \OutOfBoundsException;
 		}
 		return;
+	}
+
+	/**
+	 * Methods: flatten, flatten_
+	 * 
+	 * Will flatten the array to a single array or until the $depth is reached.
+	 * 
+	 * <code>
+	 * $arr = array(1, 2, array(3, array(4, 5)));
+	 * $arr = enumerator::flatten($arr);
+	 * echo print_r($arr, true) . PHP_EOL;
+	 * $arr = enumerator::flatten($arr);
+	 * var_dump($arr);
+	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => 1
+	 *     [1] => 2
+	 *     [2] => 3
+	 *     [3] => 4
+	 *     [4] => 5
+	 * )
+	 * NULL
+	 * </pre>
+	 * 
+	 * <code>
+	 * $arr = array(1, 2, array(3, array(4, 5)));
+	 * enumerator::flatten_($arr, 1);
+	 * print_r($arr);
+	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => 1
+	 *     [1] => 2
+	 *     [2] => 3
+	 *     [3] => Array
+	 *         (
+	 *             [0] => 4
+	 *             [1] => 5
+	 *         )
+	 * )
+	 * </pre>
+	 * 
+	 * @param array &$arr 
+	 * @param int $depth 
+	 * @return mixed
+	 */
+	public static function flatten_(array &$arr, $depth = 999999, $topLevel = true) {
+		$newArr = array();
+		if($depth > 0) {
+			foreach($arr as $key => &$value) {
+				if(is_array($value) && $depth > 0) {
+					foreach($value as $sKey => &$sVal) {
+						if(is_array($sVal) && $depth > 1) {
+							$newArr = array_merge($newArr, self::flatten($sVal, $depth-1, false));
+						} else {
+							$newArr[] = $sVal;
+						}
+					}
+				} else {
+					$newArr[] = $value;
+				}
+			}
+		}
+		if($topLevel) {
+			if($arr != $newArr) {
+				$arr = $newArr;
+				return $arr;
+			}
+			return;
+		}
+		return $arr;
 	}
 }
