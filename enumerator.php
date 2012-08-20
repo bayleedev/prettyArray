@@ -77,7 +77,8 @@ class enumerator {
 		'delete_if' => 'reject',
 		'empty' => 'isEmpty',
 		'find_index' => 'index',
-		'array_unique' => 'uniq'
+		'array_unique' => 'uniq',
+		'array_pluck' => 'array_column',
 	);
 
 	/**
@@ -123,7 +124,8 @@ class enumerator {
 		'combination' => true,
 		'delete' => false,
 		'delete_at' => false,
-		'flatten' => false
+		'flatten' => false,
+		'array_column' => false
 	);
 
 	/**
@@ -2933,5 +2935,29 @@ class enumerator {
 			return;
 		}
 		return $arr;
+	}
+
+	/**
+	 * Methods: array_column_, array_column, array_pluck_, array_pluck
+	 * 
+	 * Will return an array of values from a multidimensional array based on the index provided.
+	 * 
+	 * @param array &$arr 
+	 * @param mixed $index 
+	 * @return mixed
+	 */
+	public static function array_pluck_(array &$arr, $index) {
+		// Alias destructive method
+		return self::uniq_($arr, $index);
+	}
+	public static function array_column_(array &$arr, $index) {
+		$newArr = array();
+		foreach ($arr as $item) {
+			if(is_array($item) && isset($item[$index])) {
+				$newArr[] = $item[$index];
+			}
+		}
+		$arr = $newArr;
+		return;
 	}
 }
