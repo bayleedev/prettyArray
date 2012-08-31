@@ -20,8 +20,8 @@ class prettyArrayTest extends PHPUnit_Framework_TestCase {
 		$arr[] = 'foobar';
 		$arr2[] = 'foobar';
 
-		$this->assertEquals($arr->count(), count($arr2));
-		$this->assertEquals($arr->to_a(), $arr2);
+		$this->assertEquals(count($arr2), $arr->count());
+		$this->assertEquals($arr2, $arr->to_a());
 
 	}
 
@@ -47,8 +47,8 @@ class prettyArrayTest extends PHPUnit_Framework_TestCase {
 			}
 		}
 
-		$this->assertEquals($arr->count(), count($arr2));
-		$this->assertEquals($arr->to_a(), $arr2);
+		$this->assertEquals(count($arr2), $arr->count());
+		$this->assertEquals($arr2, $arr->to_a());
 	}
 
 	public function test_reference_1() {
@@ -56,7 +56,7 @@ class prettyArrayTest extends PHPUnit_Framework_TestCase {
 		$a = 'foo';
 		$arr->setByReference(0, $a);
 		$a = 'bar';
-		$this->assertEquals($a, $arr[0]);
+		$this->assertEquals($arr[0], $a);
 	}
 
 	public function test_reference_2() {
@@ -79,35 +79,35 @@ class prettyArrayTest extends PHPUnit_Framework_TestCase {
 		}
 
 		// Check accuracy
-		$this->assertEquals($arr->count(), count($arr2));
-		$this->assertEquals($arr->to_a(), $arr2);
+		$this->assertEquals(count($arr2), $arr->count());
+		$this->assertEquals($arr2, $arr->to_a());
 
 	}
 
 	public function test_range_1() {
 		$arr = new PrettyArray(array('swamp', 'desert', 'snow', 'rain', 'fog'));
 		$ret = $arr->getSet(1,3)->to_a();
-		$this->assertEquals($ret, array(1=>'desert', 2=>'snow', 3=>'rain'));
+		$this->assertEquals(array(1=>'desert', 2=>'snow', 3=>'rain'), $ret);
 	}
 
 	public function test_range_2() {
 		$arr = new PrettyArray(array('swamp', 'desert', 'snow', 'rain', 'fog'));
 		$arr2 = $arr->getSet_(1,3);
 		$arr2[1] = 'foobar';
-		$this->assertEquals($arr2[1], $arr[1]);
+		$this->assertEquals($arr[1], $arr2[1]);
 	}
 
 	public function test_getset_1() {
 		$arr = new PrettyArray(array(1,2,3,4,5));
 		$ret = $arr->getSet(1, 2)->to_a();
-		$this->assertEquals($ret, array(1=>2,2=>3));
+		$this->assertEquals(array(1=>2,2=>3), $ret);
 	}
 
 	public function test_getset_2() {
 		$arr = new PrettyArray(array(1,2,3,4,5));
 		$ret = $arr->getSet_(1, 2);
 		$ret[1] = 'foobar';
-		$this->assertEquals($ret[1], $arr[1]);
+		$this->assertEquals($arr[1], $ret[1]);
 	}
 
 	public function test_call_1() {
@@ -116,7 +116,7 @@ class prettyArrayTest extends PHPUnit_Framework_TestCase {
 			$value--;
 			return;
 		});
-		$this->assertEquals($arr->to_a(), array(0,1,2));
+		$this->assertEquals(array(0,1,2), $arr->to_a());
 	}
 	public function test_call_2() {
 		$arr = new PrettyArray(array(1,2,3));
@@ -124,7 +124,7 @@ class prettyArrayTest extends PHPUnit_Framework_TestCase {
 			$value--;
 			return;
 		});
-		$this->assertEquals($arr->to_a(), array(1,2,3));
+		$this->assertEquals(array(1,2,3), $arr->to_a());
 	}
 	public function test_call_3() {
 		$arr = new PrettyArray(array(1,2,3));
@@ -132,27 +132,27 @@ class prettyArrayTest extends PHPUnit_Framework_TestCase {
 			$value--;
 			return;
 		});
-		$this->assertEquals($arr->to_a(), array(1,2,3));
+		$this->assertEquals(array(1,2,3), $arr->to_a());
 	}
 
 	public function test_call_4() {
 		$arr = new PrettyArray(array('snowball', 'snowcone', 'snowangel', 'igloo', 'ice'));
 		$ret = $arr->grep("/^snow/"); // [snowball, snowcone, snowangel]
-		$this->assertEquals($ret->to_a(), array('snowball', 'snowcone', 'snowangel'));
-		$this->assertEquals($arr->to_a(), array('snowball', 'snowcone', 'snowangel', 'igloo', 'ice'));
+		$this->assertEquals(array('snowball', 'snowcone', 'snowangel'), $ret->to_a());
+		$this->assertEquals(array('snowball', 'snowcone', 'snowangel', 'igloo', 'ice'), $arr->to_a());
 	}
 
 	public function test_call_5() {
 		$arr = new PrettyArray(array('snowball', 'snowcone', 'snowangel', 'igloo', 'ice'));
 		$ret = $arr->grep_("/^snow/"); // [snowball, snowcone, snowangel]
-		$this->assertEquals($ret, $arr);
-		$this->assertEquals($arr->to_a(), array('snowball', 'snowcone', 'snowangel'));
+		$this->assertEquals($arr, $ret);
+		$this->assertEquals(array('snowball', 'snowcone', 'snowangel'), $arr->to_a());
 	}
 
 	public function test_call_6() {
 		$arr = new PrettyArray(array('snowball', 'snowcone', 'snowangel', 'igloo', 'ice'));
 		$ret = $arr->count();
-		$this->assertEquals($ret, 5);
+		$this->assertEquals(5, $ret);
 	}
 
 // Next 3 methods test instance destructive methods
@@ -160,7 +160,7 @@ class prettyArrayTest extends PHPUnit_Framework_TestCase {
 		// Counting specific values
 		$arr = new PrettyArray(array(1,2,4,2));
 		$ret = $arr->count_(2);
-		$this->assertEquals($ret, 2);
+		$this->assertEquals(2, $ret);
 	}
 	public function test_enumerator_destructive_instance_all() {
 		// Destructive testing
@@ -170,7 +170,7 @@ class prettyArrayTest extends PHPUnit_Framework_TestCase {
 			return true;
 		});
 		$animals = $animals->to_a();
-		$this->assertEquals($animals, array('ant_', 'bear_', 'cat_'));
+		$this->assertEquals(array('ant_', 'bear_', 'cat_'), $animals);
 	}
 	public function test_enumerator_destructive_instance_index() {
 		$name = new PrettyArray(array(
@@ -182,7 +182,7 @@ class prettyArrayTest extends PHPUnit_Framework_TestCase {
 			'suffix' => 'Jr.'
 		));
 		$ret = $name->index('John');
-		$this->assertEquals($ret, 'first');
+		$this->assertEquals('first', $ret);
 	}
 
 // Next 3 methods test instance non-destructive methods
@@ -194,12 +194,12 @@ class prettyArrayTest extends PHPUnit_Framework_TestCase {
 	public function test_enumerator_instance_one() {
 		$arr = new PrettyArray(array(null, true, false));
 		$ret = $arr->one();
-		$this->assertEquals($ret, true);
+		$this->assertEquals(true, $ret);
 	}
 	public function test_enumerator_instance_sort() {
 		$arr = new PrettyArray(array('rhea', 'kea', 'flea'));
 		$out = $arr->sort();
-		$this->assertEquals($out->to_a(), array('flea', 'kea', 'rhea'));
+		$this->assertEquals(array('flea', 'kea', 'rhea'), $out->to_a());
 	}
 
 // Next 3 methods test static non-destructive methods
@@ -208,13 +208,13 @@ class prettyArrayTest extends PHPUnit_Framework_TestCase {
 		$arr = PrettyArray::find_all($arr,function($key, $value) {
 			return ($value % 3 == 0);
 		});
-		$this->assertEquals($arr, array(2=>3, 5=>6, 8=>9));
+		$this->assertEquals(array(2=>3, 5=>6, 8=>9), $arr);
 	}
 	public function test_enumerator_static_count() {
 		// Counting specific values
 		$arr = array(1,2,4,2);
 		$ret = PrettyArray::count($arr, 2);
-		$this->assertEquals($ret, 2);
+		$this->assertEquals(2, $ret);
 	}
 	public function test_any() {
 		// Callback 2
@@ -222,7 +222,7 @@ class prettyArrayTest extends PHPUnit_Framework_TestCase {
 		$ret = PrettyArray::any($animals, function($key, $value) {
 			return (strlen($value) >= 4);
 		});
-		$this->assertEquals($ret, true);
+		$this->assertEquals(true, $ret);
 	}
 
 }

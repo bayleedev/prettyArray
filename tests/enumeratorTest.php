@@ -11,13 +11,13 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		// Normal value
 		$animals = array('ant', 'bear', 'cat');
 		$animals = enumerator::drop($animals, 1);
-		$this->assertEquals($animals, array('bear', 'cat'));
+		$this->assertEquals(array('bear', 'cat'), $animals);
 	}
 	public function test_alias_size() {
 		// Counting specific values
 		$arr = array(1,2,4,2);
 		$ret = enumerator::size($arr, 2);
-		$this->assertEquals($ret, 2);
+		$this->assertEquals(2, $ret);
 	}
 	public function test_alias_group_by() {
 		// Basic test
@@ -25,7 +25,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$arr =enumerator::group_by($arr, function($key, &$value) {
 			return ($value % 3);
 		});
-		$this->assertEquals($arr, array(array(3, 6), array(1, 4), array(2,5)));
+		$this->assertEquals(array(array(3, 6), array(1, 4), array(2,5)), $arr);
 	}
 
 // The next 3 methods test destructive aliases
@@ -35,7 +35,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 			$memo += $value;
 			return;
 		}); // 45
-		$this->assertEquals($ret, 45);
+		$this->assertEquals(45, $ret);
 	}
 	public function test_destructive_alias_keep_if() {
 		// Destructive
@@ -45,12 +45,12 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 			return true;
 		});
 		$arr = $arr->to_a();
-		$this->assertEquals($arr, array(2,4,6));
+		$this->assertEquals(array(2,4,6), $arr);
 	}
 	public function test_destructive_alias_unique() {
 		$arr = new PrettyArray(array(1,1,2,3,3,2,1,1,1));
 		$arr->array_unique_();
-		$this->assertEquals($arr->to_a(), array(0=>1,2=>2,3=>3));
+		$this->assertEquals(array(0=>1,2=>2,3=>3), $arr->to_a());
 	}
 
 // The rest test core enumerator methods
@@ -61,7 +61,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$ret = enumerator::all_($animals, function($key, $value) {
 			return (strlen($value) >= 3);
 		});
-		$this->assertEquals($ret, true);
+		$this->assertEquals(true, $ret);
 	}
 
 	public function test_all_2() {
@@ -70,7 +70,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$ret = enumerator::all_($animals, function($key, $value) {
 			return (strlen($value) >= 4);
 		});
-		$this->assertEquals($ret, false);
+		$this->assertEquals(false, $ret);
 	}
 
 	public function test_all_3() {
@@ -80,28 +80,28 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 			$value .= '_';
 			return true;
 		});
-		$this->assertEquals($animals, array('ant_', 'bear_', 'cat_'));
+		$this->assertEquals(array('ant_', 'bear_', 'cat_'), $animals);
 	}
 
 	public function test_all_4() {
 		// Without callback test
 		$values = array(null, true, 99);
 		$ret = enumerator::all_($values);
-		$this->assertEquals($ret, false);
+		$this->assertEquals(false, $ret);
 	}
 
 	public function test_drop_1() {
 		// Normal value
 		$animals = array('ant', 'bear', 'cat');
 		enumerator::drop_($animals, 1);
-		$this->assertEquals($animals, array('bear', 'cat'));
+		$this->assertEquals(array('bear', 'cat'), $animals);
 	}
 
 	public function test_drop_2() {
 		// High Value
 		$animals = array('ant', 'bear', 'cat');
 		enumerator::drop_($animals, 6);
-		$this->assertEquals($animals, array());
+		$this->assertEquals(array(), $animals);
 	}
 
 	public function test_any_1() {
@@ -110,7 +110,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$ret = enumerator::any_($animals, function($key, $value) {
 			return (strlen($value) >= 3);
 		});
-		$this->assertEquals($ret, true);
+		$this->assertEquals(true, $ret);
 	}
 
 	public function test_any_2() {
@@ -119,7 +119,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$ret = enumerator::any_($animals, function($key, $value) {
 			return (strlen($value) >= 4);
 		});
-		$this->assertEquals($ret, true);
+		$this->assertEquals(true, $ret);
 	}
 
 	public function test_any_3() {
@@ -129,14 +129,14 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 			$value .= '_';
 			return false;
 		});
-		$this->assertEquals($animals, array('ant_', 'bear_', 'cat_'));
+		$this->assertEquals(array('ant_', 'bear_', 'cat_'), $animals);
 	}
 
 	public function test_any_4() {
 		// No callback 1
 		$arr = array(null, true, 99);
 		$ret = enumerator::any_($arr);
-		$this->assertEquals($ret, true);
+		$this->assertEquals(true, $ret);
 	}
 
 	public function test_collect_1() {
@@ -146,7 +146,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 			$value *= $value;
 			return;
 		});
-		$this->assertEquals($arr, array(1, 4, 9, 16));
+		$this->assertEquals(array(1, 4, 9, 16), $arr);
 	}
 
 	public function test_collect_2() {
@@ -156,21 +156,21 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 			$value = "cat";
 			return;
 		});
-		$this->assertEquals($arr, array("cat", "cat", "cat", "cat"));
+		$this->assertEquals(array("cat", "cat", "cat", "cat"), $arr);
 	}
 
 	public function test_count_1() {
 		// Basic count
 		$arr = array(1,2,4,2);
 		$ret = enumerator::count_($arr);
-		$this->assertEquals($ret, 4);
+		$this->assertEquals(4, $ret);
 	}
 
 	public function test_count_2() {
 		// Counting specific values
 		$arr = array(1,2,4,2);
 		$ret = enumerator::count_($arr, 2);
-		$this->assertEquals($ret, 2);
+		$this->assertEquals(2, $ret);
 	}
 
 	public function test_count_3() {
@@ -179,7 +179,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$ret = enumerator::count_($arr, function($key, &$value) {
 			return ($value % 2 == 0);
 		});
-		$this->assertEquals($ret, 3);
+		$this->assertEquals(3, $ret);
 	}
 
 	public function test_count_4() {
@@ -189,7 +189,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 			$value *= 2;
 			return true;
 		});
-		$this->assertEquals($arr, array(2,4,8, 4));
+		$this->assertEquals(array(2,4,8, 4), $arr);
 	}
 
 	public function test_detect_1() {
@@ -198,7 +198,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$ret = enumerator::detect_($arr, function($key, $value) {
 			return ($value % 5 == 0 and $value % 7 == 0);
 		});
-		$this->assertEquals($ret, null);
+		$this->assertEquals(null, $ret);
 	}
 
 	public function test_detect_2() {
@@ -207,7 +207,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$ret = enumerator::detect_($arr, function($key, $value) {
 			return ($value % 5 == 0 and $value % 7 == 0);
 		});
-		$this->assertEquals($ret, 35);
+		$this->assertEquals(35, $ret);
 	}
 
 	public function test_detect_3() {
@@ -217,7 +217,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 			$value *= 2;
 			return false;
 		});
-		$this->assertEquals($arr, array(2,4,6));
+		$this->assertEquals(array(2,4,6), $arr);
 	}
 
 	public function test_select_1() {
@@ -226,7 +226,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		enumerator::select_($arr,function($key, $value) {
 			return ($value % 3 == 0);
 		});
-		$this->assertEquals($arr, array(2=>3, 5=>6, 8=>9));
+		$this->assertEquals(array(2=>3, 5=>6, 8=>9), $arr);
 	}
 
 	public function test_select_2() {
@@ -236,7 +236,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 			$value *= 2;
 			return true;
 		});
-		$this->assertEquals($arr, array(2,4,6));
+		$this->assertEquals(array(2,4,6), $arr);
 	}
 
 	public function test_each_slice_1() {
@@ -246,7 +246,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 			foreach($collection as $key => &$value) ++$value;
 			return;
 		});
-		$this->assertEquals($arr, array(array(2,3,4), array(5,6,7), array(8,9,10), array(11)));
+		$this->assertEquals(array(array(2,3,4), array(5,6,7), array(8,9,10), array(11)), $arr);
 	}
 
 	public function test_find_index_1() {
@@ -255,7 +255,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$ret = enumerator::find_index_($arr, function($key, $value) {
 			return ($value % 5 == 0 && $value % 7 == 0);
 		}); // null
-		$this->assertEquals($ret, null);
+		$this->assertEquals(null, $ret);
 	}
 
 	public function test_find_index_2() {
@@ -264,28 +264,28 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$ret = enumerator::find_index_($arr, function($key, &$value) {
 			return ($value % 5 == 0 && $value % 7 == 0);
 		}); // 34
-		$this->assertEquals($ret, 34);
+		$this->assertEquals(34, $ret);
 	}
 
 	public function test_find_index_3() {
 		// No callback
 		$arr = range(1,100);
 		$ret = enumerator::find_index_($arr, 50); // 49
-		$this->assertEquals($ret, 49);
+		$this->assertEquals(49, $ret);
 	}
 
 	public function test_first_1() {
 		// Test without $count
 		$animals = array('cat', 'dog', 'cow', 'pig');
 		enumerator::first_($animals);
-		$this->assertEquals($animals, array('cat'));
+		$this->assertEquals(array('cat'), $animals);
 	}
 
 	public function test_first_2() {
 		// With count
 		$animals = array('cat', 'dog', 'cow', 'pig');
 		enumerator::first_($animals, 2); // cat, dog
-		$this->assertEquals($animals, array('cat', 'dog'));
+		$this->assertEquals(array('cat', 'dog'), $animals);
 	}
 
 	public function test_collect_concat_1() {
@@ -294,14 +294,14 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		enumerator::collect_concat_($arr, function($key, &$value) {
 			return ++$value;
 		});
-		$this->assertEquals($arr, array(2,3,4,5));
+		$this->assertEquals(array(2,3,4,5), $arr);
 	}
 
 	public function test_grep_1() {
 		// No callback
 		$arr = array('snowball', 'snowcone', 'snowangel', 'igloo', 'ice');
 		enumerator::grep_($arr, "/^snow/");
-		$this->assertEquals($arr, array('snowball', 'snowcone', 'snowangel'));
+		$this->assertEquals(array('snowball', 'snowcone', 'snowangel'), $arr);
 	}
 	public function test_grep_2() {
 		// Destructive callback
@@ -310,7 +310,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 			$value .= '_';
 			return;
 		});
-		$this->assertEquals($arr, array('snowball_', 'snowcone_', 'snowangel_'));
+		$this->assertEquals(array('snowball_', 'snowcone_', 'snowangel_'), $arr);
 	}
 
 	public function test_group_by_1() {
@@ -319,27 +319,27 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		enumerator::group_by_($arr, function($key, &$value) {
 			return ($value % 3);
 		});
-		$this->assertEquals($arr, array(array(3, 6), array(1, 4), array(2,5)));
+		$this->assertEquals(array(array(3, 6), array(1, 4), array(2,5)), $arr);
 	}
 
 	public function test_member_1() {
 		// Basic test
 		$arr = array('snowball', 'snowcone', 'snowangel', 'igloo', 'ice');
 		$ret = enumerator::member($arr, 'snowcone'); // true
-		$this->assertEquals($ret, true);
+		$this->assertEquals(true, $ret);
 	}
 
 	public function test_member_2() {
 		// Basic test
 		$arr = array('snowball', 'snowcone', 'snowangel', 'igloo', 'ice');
 		$ret = enumerator::member($arr, 'snowman'); // false
-		$this->assertEquals($ret, false);
+		$this->assertEquals(false, $ret);
 	}
 	public function test_min_1() {
 		// Basic test
 		$array = array('albatross','dog','horse');
 		$ret = enumerator::min($array); // albatross
-		$this->assertEquals($ret, 'albatross');
+		$this->assertEquals('albatross', $ret);
 	}
 
 	public function test_min_2() {
@@ -348,14 +348,14 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$ret = enumerator::min($array, function($val1, $val2) {
 			return strcmp(strlen($val1), strlen($val2));
 		}); // dog
-		$this->assertEquals($ret, 'dog');
+		$this->assertEquals('dog', $ret);
 	}
 
 	public function test_max_1() {
 		// Basic test
 		$array = array('albatross','dog','horse');
 		$ret = enumerator::max($array); // horse
-		$this->assertEquals($ret, 'horse');
+		$this->assertEquals('horse', $ret);
 	}
 
 	public function test_max_2() {
@@ -364,7 +364,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$ret = enumerator::max($array, function($val1, $val2) {
 			return strcmp(strlen($val1), strlen($val2));
 		}); // albatross
-		$this->assertEquals($ret, 'albatross');
+		$this->assertEquals('albatross', $ret);
 	}
 
 	public function test_min_by_1() {
@@ -372,7 +372,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$ret = enumerator::min_by($array, function($val) { 
 			return strlen($val); 
 		}); // dog
-		$this->assertEquals($ret, 'dog');
+		$this->assertEquals('dog', $ret);
 	}
 
 	public function test_max_by_1() {
@@ -380,7 +380,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$ret = enumerator::max_by($array, function($val) {
 			return strlen($val);
 		}); // albatross
-		$this->assertEquals($ret, 'albatross');
+		$this->assertEquals('albatross', $ret);
 	}
 
 	public function test_minmax_1() {
@@ -388,7 +388,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$ret = enumerator::minmax($array, function($val1, $val2) { 
 			return strcmp(strlen($val1), strlen($val2));
 		}); // array(dog, albatross)
-		$this->assertEquals($ret, array('dog', 'albatross'));
+		$this->assertEquals(array('dog', 'albatross'), $ret);
 	}
 
 	public function test_minmax_by_1() {
@@ -396,7 +396,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$ret = enumerator::minmax_by($array, function($val) { 
 			return strlen($val);
 		}); // array(dog, albatross)
-		$this->assertEquals($ret, array('dog', 'albatross'));
+		$this->assertEquals(array('dog', 'albatross'), $ret);
 	}
 
 	public function test_none_1() {
@@ -404,7 +404,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$ret = enumerator::none($arr, function($key, $value) {
 			return (strlen($value) == 5);
 		}); // true
-		$this->assertEquals($ret, true);
+		$this->assertEquals(true, $ret);
 	}
 
 	public function test_none_2() {
@@ -412,22 +412,22 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$ret = enumerator::none($arr, function($key, $value) {
 			return (strlen($value) >= 4);
 		}); // false
-		$this->assertEquals($ret, false);
+		$this->assertEquals(false, $ret);
 	}
 
 	public function test_none_3() {
 		$ret = enumerator::none(array()); // true
-		$this->assertEquals($ret, true);
+		$this->assertEquals(true, $ret);
 	}
 
 	public function test_none_4() {
 		$ret = enumerator::none(array(null)); // true
-		$this->assertEquals($ret, true);
+		$this->assertEquals(true, $ret);
 	}
 
 	public function test_none_5() {
 		$ret = enumerator::none(array(null, false)); // true
-		$this->assertEquals($ret, true);
+		$this->assertEquals(true, $ret);
 	}
 
 	public function test_one_1() {
@@ -435,17 +435,17 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$ret = enumerator::one($array, function($key, $value) {
 			return (strlen($value) == 4);
 		}); // true
-		$this->assertEquals($ret, true);
+		$this->assertEquals(true, $ret);
 	}
 
 	public function test_one_2() {
 		$ret = enumerator::one(array(null, true, 99)); // false
-		$this->assertEquals($ret, false);
+		$this->assertEquals(false, $ret);
 	}
 
 	public function test_one_3() {
 		$ret = enumerator::one(array(null, true, false)); // true
-		$this->assertEquals($ret, true);
+		$this->assertEquals(true, $ret);
 	}
 
 	public function test_partition_1() {
@@ -453,7 +453,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		enumerator::partition_($arr, function($key, $value) {
 			return ($value % 2 == 0);
 		});
-		$this->assertEquals($arr, array(array(2,4,6), array(1,3,5)));
+		$this->assertEquals(array(array(2,4,6), array(1,3,5)), $arr);
 	}
 
 	public function test_inject_1() {
@@ -462,7 +462,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 			$memo += $value;
 			return;
 		}); // 45
-		$this->assertEquals($ret, 45);
+		$this->assertEquals(45, $ret);
 	}
 
 	public function test_inject_2() {
@@ -471,7 +471,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 			$memo *= $value;
 			return;
 		}, 1); // 151200
-		$this->assertEquals($ret, 151200);
+		$this->assertEquals(151200, $ret);
 	}
 
 	public function test_rejct_1() {
@@ -479,7 +479,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		enumerator::reject_($arr, function($key, $value) {
 			return ($value % 3 == 0);
 		}); // [1, 2, 4, 5, 7, 8, 10]
-		$this->assertEquals($arr, array(0=>1,1=>2,3=>4,4=>5,6=>7,7=>8,9=>10));
+		$this->assertEquals(array(0=>1,1=>2,3=>4,4=>5,6=>7,7=>8,9=>10), $arr);
 	}
 
 	public function test_reverse_collect_1() {
@@ -489,7 +489,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 			$value *= 2;
 			return;
 		});
-		$this->assertEquals($arr, array(2,4,6));
+		$this->assertEquals(array(2,4,6), $arr);
 	}
 
 	public function test_reverse_collect_2() {
@@ -498,7 +498,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$index = 2;
 		$that = $this;
 		enumerator::reverse_collect_($arr, function($key, &$value) use(&$index, &$that) {
-			$that->assertEquals($key, $index--);
+			$that->assertEquals($index--, $key);
 			return;
 		});
 	}
@@ -506,7 +506,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 	public function test_sort_1() {
 		$arr = array('rhea', 'kea', 'flea');
 		enumerator::sort_($arr); // [flea, kea, rhea]
-		$this->assertEquals($arr, array('flea', 'kea', 'rhea'));
+		$this->assertEquals(array('flea', 'kea', 'rhea'), $arr);
 	}
 
 	public function test_sort_2() {
@@ -514,7 +514,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		enumerator::sort_($arr, function($val1, $val2) {
 			return strcmp($val2, $val1);
 		});
-		$this->assertEquals($arr, array('rhea', 'kea', 'flea'));
+		$this->assertEquals(array('rhea', 'kea', 'flea'), $arr);
 	}
 
 	public function test_sort_by_1() {
@@ -522,7 +522,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		enumerator::sort_by_($arr, function($val) {
 			return strlen($val);
 		});
-		$this->assertEquals($arr, array('kea', 'flea', 'rhea'));
+		$this->assertEquals(array('kea', 'flea', 'rhea'), $arr);
 	}
 
 	public function test_take_while_1() {
@@ -530,25 +530,25 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		enumerator::take_while_($arr, function($key, &$value) {
 			return ($value < 3);
 		});
-		$this->assertEquals($arr, array(1, 2));
+		$this->assertEquals(array(1, 2), $arr);
 	}
 
 	public function test_zip_1() {
 		$arr = array(1,2,3);
 		enumerator::zip_($arr, array(4,5,6), array(7,8,9));
-		$this->assertEquals($arr, array(array(1,4,7),array(2,5,8),array(3,6,9)));
+		$this->assertEquals(array(array(1,4,7),array(2,5,8),array(3,6,9)), $arr);
 	}
 
 	public function test_zip_2() {
 		$arr = array(1,2);
 		enumerator::zip_($arr, array(4,5,6),array(7,8,9));
-		$this->assertEquals($arr, array(array(1, 4, 7), array(2, 5, 8)));
+		$this->assertEquals(array(array(1, 4, 7), array(2, 5, 8)), $arr);
 	}
 
 	public function test_zip_3() {
 		$arr = array(4,5,6);
 		enumerator::zip_($arr, array(1,2), array(8));
-		$this->assertEquals($arr, array(array(4, 1, 8), array(5, 2, null), array(6, null, null)));
+		$this->assertEquals(array(array(4, 1, 8), array(5, 2, null), array(6, null, null)), $arr);
 	}
 
 	public function test_drop_while_1() {
@@ -556,7 +556,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		enumerator::drop_while_($arr, function($key, &$value) {
 			return ($value < 3);
 		});
-		$this->assertEquals($arr, array(3,4,5,0));
+		$this->assertEquals(array(3,4,5,0), $arr);
 	}
 
 	public function test_cycle_1() {
@@ -565,7 +565,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		enumerator::cycle($arr, 3, function($key, $value, $it) use(&$i) {
 			$i++;
 		});
-		$this->assertEquals($i, 9);
+		$this->assertEquals(9, $i);
 	}
 
 	public function test_each_cons_1() {
@@ -579,14 +579,14 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 			}
 			$message .= $value . ',';
 		});
-		$this->assertEquals($message, "1,2,3,||2,3,4,||3,4,5,||4,5,6,||5,6,7,||6,7,8,||7,8,9,||8,9,10,");
-		$this->assertEquals($arr, array(array(1,2,3), array(2,3,4), array(3,4,5), array(4,5,6), array(5,6,7), array(6,7,8), array(7,8,9), array(8,9,10)));
+		$this->assertEquals("1,2,3,||2,3,4,||3,4,5,||4,5,6,||5,6,7,||6,7,8,||7,8,9,||8,9,10,", $message);
+		$this->assertEquals(array(array(1,2,3), array(2,3,4), array(3,4,5), array(4,5,6), array(5,6,7), array(6,7,8), array(7,8,9), array(8,9,10)), $arr);
 	}
 
 	public function test_slice_before_1() {
 		$arr = array(1,2,3,4,5,6,7,8,9,0);
 		enumerator::slice_before_($arr, "/[02468]/");
-		$this->assertEquals($arr, array(array(1), array(2,3), array(4,5), array(6,7), array(8,9), array(0)));
+		$this->assertEquals(array(array(1), array(2,3), array(4,5), array(6,7), array(8,9), array(0)), $arr);
 	}
 
 	public function test_merge_1() {
@@ -595,25 +595,25 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$trees = array('pine');
 		$material = array('wool');
 		enumerator::merge_($arr, $animals, $trees, $material);
-		$this->assertEquals($arr, array('dog', 'cat', 'pig', 'pine', 'wool'));
+		$this->assertEquals(array('dog', 'cat', 'pig', 'pine', 'wool'), $arr);
 	}
 
 	public function test_rotate_1() {
 		$arr = array('Foo', 'bar', 'foobar');
 		enumerator::rotate_($arr, 1); // bar, foobar, Foo
-		$this->assertEquals($arr, array('bar', 'foobar', 'Foo'));
+		$this->assertEquals(array('bar', 'foobar', 'Foo'), $arr);
 	}
 
 	public function test_rotate_2() {
 		$arr = array('Foo', 'bar', 'foobar');
 		enumerator::rotate_($arr, -1); // foobar, Foo, bar
-		$this->assertEquals($arr, array('foobar', 'Foo', 'bar'));
+		$this->assertEquals(array('foobar', 'Foo', 'bar'), $arr);
 	}
 
 	public function test_reverse() {
 		$arr = array(1,2,3);
 		enumerator::reverse_($arr);
-		$this->assertEquals($arr, array(3,2,1));
+		$this->assertEquals(array(3,2,1), $arr);
 	}
 
 	public function test_random_1() {
@@ -627,7 +627,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$arr = array('pig', 'cow', 'dog', 'horse');
 		enumerator::random_($arr, 2);
 		$this->assertInternalType('array', $arr);
-		$this->assertEquals(count($arr), 2);
+		$this->assertEquals(2, count($arr));
 		$this->assertContains($arr[0], array('pig', 'cow', 'dog', 'horse'));
 		$this->assertContains($arr[1], array('pig', 'cow', 'dog', 'horse'));
 	}
@@ -661,37 +661,37 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 			'title' => 'Dr.'
 		);
 		enumerator::values_at_($name, 'title', 'last'); // ['title' => 'Dr.', 'last' => 'Doe'];
-		$this->assertEquals($name, array('title'=>'Dr.', 'last' => 'Doe'));
+		$this->assertEquals(array('title'=>'Dr.', 'last' => 'Doe'), $name);
 	}
 
 	public function test_empty_1() {
 		$arr = array();
 		$ret = enumerator::isEmpty($arr);
-		$this->assertEquals($ret, true);
+		$this->assertEquals(true, $ret);
 	}
 
 	public function test_empty_2() {
 		$arr = array(1,2,3);
 		$ret = enumerator::isEmpty($arr);
-		$this->assertEquals($ret, false);
+		$this->assertEquals(false, $ret);
 	}
 
 	public function test_has_value_1() {
 		$arr = array(0,false);
 		$ret = enumerator::has_value($arr, null); // false
-		$this->assertEquals($ret, false);
+		$this->assertEquals(false, $ret);
 	}
 
 	public function test_has_value_2() {
 		$arr = array(false,null);
 		$ret = enumerator::has_value($arr, 0); // false
-		$this->assertEquals($ret, false);
+		$this->assertEquals(false, $ret);
 	}
 
 	public function test_has_value_3() {
 		$arr = array('apple', 'banana', 'orange');
 		$ret = enumerator::has_value($arr, 'orange'); // true
-		$this->assertEquals($ret, true);
+		$this->assertEquals(true, $ret);
 	}
 
 	public function test_index_1() {
@@ -704,7 +704,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 			'suffix' => 'Jr.'
 		);
 		$ret = enumerator::index_($name, 'John');
-		$this->assertEquals($ret, 'first');
+		$this->assertEquals('first', $ret);
 	}
 
 	public function test_index_2() {
@@ -719,7 +719,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$ret = enumerator::index_($name, function($key, &$value) {
 			return (strpos($value, '.') !== false); // Has a decimal
 		});
-		$this->assertEquals($ret, 'title');
+		$this->assertEquals('title', $ret);
 	}
 
 	public function test_rindex_1() {
@@ -732,7 +732,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 			'suffix' => 'Jr.'
 		);
 		$ret = enumerator::rindex_($name, 'John');
-		$this->assertEquals($ret, 'first');
+		$this->assertEquals('first', $ret);
 	}
 
 	public function test_rindex_2() {
@@ -747,25 +747,25 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$ret = enumerator::rindex_($name, function($key, &$value) {
 			return (strpos($value, '.') !== false);
 		});
-		$this->assertEquals($ret, 'suffix');
+		$this->assertEquals('suffix', $ret);
 	}
 
 	public function test_compact_1() {
 		$arr = array(1,2,3,null,array(2,3,4,null));
 		enumerator::compact_($arr);
-		$this->assertEquals($arr, array(1,2,3,4=>array(2,3,4,null)));
+		$this->assertEquals(array(1,2,3,4=>array(2,3,4,null)), $arr);
 	}
 
 	public function test_compact_2() {
 		$arr = array(1,2,3,null,array(2,3,4,null));
 		enumerator::compact_($arr, true);
-		$this->assertEquals($arr, array(1,2,3,4=>array(2,3,4)));
+		$this->assertEquals(array(1,2,3,4=>array(2,3,4)), $arr);
 	}
 
 	public function test_uniq_1() {
 		$arr = array(1,1,2,3,3,2,1,1,1);
 		enumerator::uniq_($arr);
-		$this->assertEquals($arr, array(0=>1,2=>2,3=>3));
+		$this->assertEquals(array(0=>1,2=>2,3=>3), $arr);
 	}
 
 	public function test_assoc_1() {
@@ -774,7 +774,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$s3 = 'foo';
 		$arr = array($s1, $s2, $s3);
 		$o = enumerator::assoc($arr, 'letters');
-		$this->assertEquals($o, $s2);
+		$this->assertEquals($s2, $o);
 	}
 
 	public function test_assoc_2() {
@@ -783,55 +783,55 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$s3 = 'foo';
 		$arr = array($s1, $s2, $s3);
 		$o = enumerator::assoc($arr, 'foo');
-		$this->assertEquals($o, null);
+		$this->assertEquals(null, $o);
 	}
 
 	public function test_rassoc_1() {
 		$arr = array(array(1, "one"), array(2, "two"), array(3, "three"), array("ii", "two"));
 		$o = enumerator::rassoc($arr, 'two');
-		$this->assertEquals($o, array(2, 'two'));
+		$this->assertEquals(array(2, 'two'), $o);
 	}
 
 	public function test_rassoc_2() {
 		$arr = array(array(1, "one"), array(2, "two"), array(3, "three"), array("ii", "two"));
 		$o = enumerator::rassoc($arr, 'four');
-		$this->assertEquals($o, null);
+		$this->assertEquals(null, $o);
 	}
 
 	public function test_at_1() {
 		$arr = array('a', 'b', 'c', 'd', 'e');
 		$o = enumerator::at($arr, 0);
-		$this->assertEquals($o, 'a');
+		$this->assertEquals('a', $o);
 	}
 
 	public function test_at_2() {
 		$arr = array('a', 'b', 'c', 'd', 'e');
 		$o = enumerator::at($arr, -1);
-		$this->assertEquals($o, 'e');
+		$this->assertEquals('e', $o);
 	}
 
 	public function test_at_3() {
 		$arr = array('a', 'b', 'c', 'd', 'e');
 		$o = enumerator::at($arr, 0, 3, 4);
-		$this->assertEquals($o, array('a', 'd', 'e'));
+		$this->assertEquals(array('a', 'd', 'e'), $o);
 	}
 
 	public function test_combination_1() {
 		$arr = array(1, 2, 3, 4);
 		enumerator::combination_($arr, 1);
-		$this->assertEquals($arr, array(array(1), array(2), array(3), array(4)));
+		$this->assertEquals(array(array(1), array(2), array(3), array(4)), $arr);
 	}
 
 	public function test_combination_2() {
 		$arr = array(1, 2, 3, 4);
 		enumerator::combination_($arr, 4);
-		$this->assertEquals($arr, array(array(1,2,3,4)));
+		$this->assertEquals(array(array(1,2,3,4)), $arr);
 	}
 
 	public function test_combination_3() {
 		$arr = array(1, 2, 3, 4);
 		enumerator::combination_($arr, 0);
-		$this->assertEquals($arr, array(array()));
+		$this->assertEquals(array(array()), $arr);
 	}
 
 	public function test_combinatoin_4() {
@@ -842,21 +842,21 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 				$v++;
 			}
 		});
-		$this->assertEquals($arr, array(array(2,3,4,5)));
+		$this->assertEquals(array(array(2,3,4,5)), $arr);
 	}
 
 	public function test_delete_1() {
 		$arr = array('a','b', 'b', 'b', 'c');
 		$ret = enumerator::delete_($arr, 'b');
-		$this->assertEquals($ret, 'b');
-		$this->assertEquals($arr, array(0 => 'a', 4 => 'c'));
+		$this->assertEquals('b', $ret);
+		$this->assertEquals(array(0 => 'a', 4 => 'c'), $arr);
 	}
 
 	public function test_delete_2() {
 		$arr = array('a','b', 'b', 'b', 'c');
 		$ret = enumerator::delete_($arr, 'z');
-		$this->assertEquals($ret, null);
-		$this->assertEquals($arr, array('a','b', 'b', 'b', 'c'));
+		$this->assertEquals(null, $ret);
+		$this->assertEquals(array('a','b', 'b', 'b', 'c'), $arr);
 	}
 
 	public function test_delete_3() {
@@ -864,39 +864,39 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$ret = enumerator::delete_($arr, 'z', function() {
 			return false;
 		});
-		$this->assertEquals($ret, false);
-		$this->assertEquals($arr, array('a','b', 'b', 'b', 'c'));
+		$this->assertEquals(false, $ret);
+		$this->assertEquals(array('a','b', 'b', 'b', 'c'), $arr);
 	}
 
 	public function test_delete_at_1() {
 		$arr = array('ant', 'bat', 'cat', 'dog');
 		$ret = enumerator::delete_at_($arr, 2);
-		$this->assertEquals($ret, 'cat');
-		$this->assertEquals($arr, array(0 => 'ant', 1 => 'bat', 3 => 'dog'));
+		$this->assertEquals('cat', $ret);
+		$this->assertEquals(array(0 => 'ant', 1 => 'bat', 3 => 'dog'), $arr);
 	}
 
 	public function test_delete_at_2() {
 		$arr = array('ant', 'bat', 'cat', 'dog');
 		$ret = enumerator::delete_at_($arr, 99);
-		$this->assertEquals($ret, null);
+		$this->assertEquals(null, $ret);
 	}
 
 	public function test_fetch_1() {
 		$arr = array(11, 22, 33, 44);
 		$ret = enumerator::fetch($arr, 1);
-		$this->assertEquals($ret, 22);
+		$this->assertEquals(22, $ret);
 	}
 
 	public function test_fetch_2() {
 		$arr = array(11, 22, 33, 44);
 		$ret = enumerator::fetch($arr, -1);
-		$this->assertEquals($ret, 44);
+		$this->assertEquals(44, $ret);
 	}
 
 	public function test_fetch_3() {
 		$arr = array(11, 22, 33, 44);
 		$ret = enumerator::fetch($arr, 4, 'cat');
-		$this->assertEquals($ret, 'cat');
+		$this->assertEquals('cat', $ret);
 	}
 
 	public function test_fetch_4() {
@@ -904,7 +904,7 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$ret = enumerator::fetch($arr, 4, function($i) {
 			return $i * $i;
 		});
-		$this->assertEquals($ret, 16);
+		$this->assertEquals(16, $ret);
 	}
 
 	public function test_fetch_5() {
@@ -916,22 +916,22 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 			$this->assertEquals(true, true);
 			return;
 		}
-		$this->assertEquals(true, false);
+		$this->assertEquals(false, true);
 	}
 
 	public function test_flatten_1() {
 		$arr = array(1, 2, array(3, array(4, 5)));
 		enumerator::flatten_($arr);
-		$this->assertEquals($arr, array(1,2,3,4,5));
+		$this->assertEquals(array(1,2,3,4,5), $arr);
 
 		$ret = enumerator::flatten_($arr);
-		$this->assertEquals($ret, null);
+		$this->assertEquals(null, $ret);
 	}
 
 	public function test_flatten_2() {
 		$arr = array(1, 2, array(3, array(4, 5)));
 		enumerator::flatten_($arr, 1);
-		$this->assertEquals($arr, array(1,2,3, array(4,5)));
+		$this->assertEquals(array(1,2,3, array(4,5)), $arr);
 	}
 
 	public function test_array_column_1() {

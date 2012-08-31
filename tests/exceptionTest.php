@@ -15,7 +15,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 			$o .= $value;
 			return;
 		});
-		$this->assertEquals($o, '1234');
+		$this->assertEquals('1234', $o);
 	}
 	public function test_collect_continue() {
 		$o = '';
@@ -27,7 +27,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 			$o .= $value;
 			return;
 		});
-		$this->assertEquals($o, '1234678910');
+		$this->assertEquals('1234678910', $o);
 	}
 
 	public function test_each_slice_break() {
@@ -39,7 +39,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 			}
 			$count += array_sum($collection);
 		});
-		$this->assertEquals($count, 6);
+		$this->assertEquals(6, $count);
 	}
 
 	public function test_each_slice_continue() {
@@ -51,7 +51,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 			}
 			$count += array_sum($collection);
 		});
-		$this->assertEquals($count, 40);
+		$this->assertEquals(40, $count);
 	}
 
 	public function test_collect_concat_break() {
@@ -63,7 +63,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 			}
 			$count += $value;
 		});
-		$this->assertEquals($count, 3);
+		$this->assertEquals(3, $count);
 	}
 
 	public function test_collect_concat_continue() {
@@ -75,7 +75,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 			}
 			$count += $value;
 		});
-		$this->assertEquals($count, 7);
+		$this->assertEquals(7, $count);
 	}
 
 	public function test_grep_break() {
@@ -87,7 +87,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 			}
 			$o .= $value;
 		});
-		$this->assertEquals($o, 'snowball');
+		$this->assertEquals('snowball', $o);
 	}
 
 	public function test_grep_continue() {
@@ -99,7 +99,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 			}
 			$o .= $value;
 		});
-		$this->assertEquals($o, 'snowballsnowangel');
+		$this->assertEquals('snowballsnowangel', $o);
 	}
 
 	public function test_inject_break() {
@@ -111,7 +111,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 			$memo += $value;
 			return;
 		});
-		$this->assertEquals($memo, 5);
+		$this->assertEquals(5, $memo);
 	}
 
 	public function test_inject_continue() {
@@ -123,7 +123,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 			$memo += $value;
 			return;
 		});
-		$this->assertEquals($memo, 39);
+		$this->assertEquals(39, $memo);
 	}
 
 	public function test_reverse_collect_break() {
@@ -136,7 +136,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 			$o .= $value . ', ';
 			return;
 		});
-		$this->assertEquals($o, '3, ');
+		$this->assertEquals('3, ', $o);
 	}
 
 	public function test_reverse_collect_continue() {
@@ -149,7 +149,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 			$o .= $value . ', ';
 			return;
 		});
-		$this->assertEquals($o, '3, 1, ');
+		$this->assertEquals('3, 1, ', $o);
 	}
 
 	public function test_cycle_break() {
@@ -161,7 +161,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 			}
 			$count += $value;
 		});
-		$this->assertEquals($count, 7);
+		$this->assertEquals(7, $count);
 	}
 
 	public function test_cycle_continue() {
@@ -173,7 +173,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 			}
 			$count += $value;
 		});
-		$this->assertEquals($count, 16);
+		$this->assertEquals(16, $count);
 	}
 
 	public function test_each_cons_break() {
@@ -185,7 +185,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 			}
 			$count += $value;
 		}); // 132
-		$this->assertEquals($count, 71);
+		$this->assertEquals(71, $count);
 	}
 
 	public function test_each_cons_continue() {
@@ -197,7 +197,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 			}
 			$count += $value;
 		}); // 132
-		$this->assertEquals($count, 114);
+		$this->assertEquals(114, $count);
 	}
 
 	public function test_combinatoin_1() {
@@ -208,7 +208,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 			}
 			$value[0]++;
 		});
-		$this->assertEquals($arr, array(array(2), array(3), array(3), array(4)));
+		$this->assertEquals(array(array(2), array(3), array(3), array(4)), $arr);
 	}
 
 	public function test_combinatoin_2() {
@@ -219,6 +219,6 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 			}
 			$value[0]++;
 		});
-		$this->assertEquals($arr, array(array(2), array(3), array(3), array(5)));
+		$this->assertEquals(array(array(2), array(3), array(3), array(5)), $arr);
 	}
 }
