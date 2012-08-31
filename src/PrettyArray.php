@@ -8,7 +8,7 @@
  */
 
 // Dependencies
-require_once(__DIR__ . '/enumerator.php');
+require_once(__DIR__ . '/Enumerator.php');
 
 /**
  * PrettyArray
