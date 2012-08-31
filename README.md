@@ -59,35 +59,24 @@ More examples can be found inside of the "/examples" directory in markdown forma
 
 Before making any pull requests please verify that your methods pass the current unit tests.
 ```
-cd PrettyArray/tests/
-phpunit ./
+cd PrettyArray && phpunit ./
 ```
 ```
-PHPUnit 3.6.11 by Sebastian Bergmann.
+PHPUnit 3.6.12 by Sebastian Bergmann.
 
-Configuration read from C:\xampp\htdocs\PrettyArray\tests\phpunit.xml
+Configuration read from /Users/blaineschmeisser/Sites/devup/PrettyArray/phpunit.xml
 
-...............................................................  63 / 410 ( 15%)
-............................................................... 126 / 410 ( 30%)
-............................................................... 189 / 410 ( 46%)
-............................................................... 252 / 410 ( 61%)
-............................................................... 315 / 410 ( 76%)
-............................................................... 378 / 410 ( 92%)
-................................
+...............................................................  63 / 159 ( 39%)
+............................................................... 126 / 159 ( 79%)
+.................................
 
-Time: 1 second, Memory: 5.25Mb
+Time: 1 second, Memory: 10.00Mb
 
-[30;42m[2KOK (410 tests, 488 assertions)
-[0m[2K
+OK (159 tests, 180 assertions)
 ```
 
 ### Test Files
 
  * [PrettyArray Test](tests/prettyArrayTest.php) - Tests the core functionality of PrettyArray.
  * [Enumerator Test](tests/enumeratorTest.php) - Tests all the core methods inside of enumerator.
- * [PrettyArray Enumerator Test](tests/prettyArrayEnumeratorTest.php) - Tests alias methods that go directly to a core enumerator method.
- * [Enumerator Alias Test](tests/enumeratorAliasTest.php) - Tests all non-destructive aliases inside of enumerator.
- * [PrettyArray Alias Test](tests/prettyArrayAliasTest.php) - Tests all non-destructive aliases inside of enumerator.
- * [PrettyArray Static Alias Test](tests/prettyArrayStaticAliasTest.php) - Tests static calls directly to non-destructive aliases on enumerator.
- * [Enumerator Destructive Alias Test](tests/enumeratorDestructiveAliasTest.php) - Tests all destructive aliases inside of enumerator.
- * [PrettyArray Destructive Alias Test](tests/prettyArrayDestructiveAliasTest.php) - Tests all destructive aliases inside of PrettyArray.
+ * [Exception Test](tests/exceptionTest.php) - Tests all methods specifically if they are handling exceptions correctly.
