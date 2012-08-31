@@ -885,4 +885,36 @@ class enumeratorTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($arr, array(1,2,3, array(4,5)));
 	}
 
+	public function test_array_column_1() {
+		$records = array(
+			array(
+				'id' => 1,
+				'first_name' => 'John',
+				'last_name' => 'Doe'
+			),
+			array(
+				'id' => 2,
+				'first_name' => 'Sally',
+				'last_name' => 'Smith'
+			),
+			array(
+				'id' => 3,
+				'first_name' => 'Jane',
+				'last_name' => 'Jones'
+			)
+		);
+		enumerator::array_column_($records, 'first_name');
+		$this->assertEquals(array('John', 'Sally', 'Jane'), $records);
+	}
+
+	public function test_array_column_2() {
+		$records = array(
+			array(1, 'John', 'Doe'),
+			array(2, 'Sally', 'Smith'),
+			array(3, 'Jane', 'Jones')
+		);
+		enumerator::array_column_($records, 2);
+		$this->assertEquals(array('Doe', 'Smith', 'Jones'), $records);
+	}
+
 }
