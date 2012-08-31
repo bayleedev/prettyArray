@@ -46,7 +46,7 @@ require_once(__DIR__ . '/exceptions/ContinueException.php');
  *  
  * @link http://ruby-doc.org/core-1.9.3/Enumerable.html
  */
-class enumerator {
+class Enumerator {
 
 	/**
 	 * Will map their "alias" to their real method.
