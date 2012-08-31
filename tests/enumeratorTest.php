@@ -6,6 +6,55 @@
 
 class enumeratorTest extends PHPUnit_Framework_TestCase {
 
+// The next 3 methods tests non-destructive aliases
+	public function test_alias_drop() {
+		// Normal value
+		$animals = array('ant', 'bear', 'cat');
+		$animals = enumerator::drop($animals, 1);
+		$this->assertEquals($animals, array('bear', 'cat'));
+	}
+	public function test_alias_size() {
+		// Counting specific values
+		$arr = array(1,2,4,2);
+		$ret = enumerator::size($arr, 2);
+		$this->assertEquals($ret, 2);
+	}
+	public function test_alias_group_by() {
+		// Basic test
+		$arr = range(1,6);
+		$arr =enumerator::group_by($arr, function($key, &$value) {
+			return ($value % 3);
+		});
+		$this->assertEquals($arr, array(array(3, 6), array(1, 4), array(2,5)));
+	}
+
+// The next 3 methods test destructive aliases
+	public function test_destructive_alias_reduce() {
+		$arr = range(5, 10);
+		$ret = enumerator::reduce_($arr, function($key, &$value, &$memo){
+			$memo += $value;
+			return;
+		}); // 45
+		$this->assertEquals($ret, 45);
+	}
+	public function test_destructive_alias_keep_if() {
+		// Destructive
+		$arr = new PrettyArray(range(1,3));
+		$arr->keep_if_(function($key, &$value) {
+			$value *= 2;
+			return true;
+		});
+		$arr = $arr->to_a();
+		$this->assertEquals($arr, array(2,4,6));
+	}
+	public function test_destructive_alias_unique() {
+		$arr = new PrettyArray(array(1,1,2,3,3,2,1,1,1));
+		$arr->array_unique_();
+		$this->assertEquals($arr->to_a(), array(0=>1,2=>2,3=>3));
+	}
+
+// The rest test core enumerator methods
+
 	public function test_all_1() {
 		// Callback testing
 		$animals = array('ant', 'bear', 'cat');

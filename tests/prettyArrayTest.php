@@ -154,4 +154,75 @@ class prettyArrayTest extends PHPUnit_Framework_TestCase {
 		$ret = $arr->count();
 		$this->assertEquals($ret, 5);
 	}
+
+// Next 3 methods test instance destructive methods
+	public function test_enumerator_destructive_instance_count() {
+		// Counting specific values
+		$arr = new PrettyArray(array(1,2,4,2));
+		$ret = $arr->count_(2);
+		$this->assertEquals($ret, 2);
+	}
+	public function test_enumerator_destructive_instance_all() {
+		// Destructive testing
+		$animals = new PrettyArray(array('ant', 'bear', 'cat'));
+		$animals->all_(function($key, &$value) {
+			$value .= '_';
+			return true;
+		});
+		$animals = $animals->to_a();
+		$this->assertEquals($animals, array('ant_', 'bear_', 'cat_'));
+	}
+	public function test_enumerator_destructive_instance_index() {
+		$name = new PrettyArray(array(
+			'name' => 'John Doe',
+			'first' => 'John',
+			'middle' => 'M',
+			'last' => 'Doe',
+			'title' => 'Dr.',
+			'suffix' => 'Jr.'
+		));
+		$ret = $name->index('John');
+		$this->assertEquals($ret, 'first');
+	}
+
+// Next 3 methods test instance non-destructive methods
+	public function test_enumerator_instance_none() {
+		$arr = new PrettyArray(array(null, false));
+		$ret = $arr->none();
+		$this->assertEquals($ret, true);
+	}
+	public function test_enumerator_instance_one() {
+		$arr = new PrettyArray(array(null, true, false));
+		$ret = $arr->one();
+		$this->assertEquals($ret, true);
+	}
+	public function test_enumerator_instance_sort() {
+		$arr = new PrettyArray(array('rhea', 'kea', 'flea'));
+		$out = $arr->sort();
+		$this->assertEquals($out->to_a(), array('flea', 'kea', 'rhea'));
+	}
+
+// Next 3 methods test static non-destructive methods
+	public function test_enumerator_static_find_all() {
+		$arr = range(1,10);
+		$arr = PrettyArray::find_all($arr,function($key, $value) {
+			return ($value % 3 == 0);
+		});
+		$this->assertEquals($arr, array(2=>3, 5=>6, 8=>9));
+	}
+	public function test_enumerator_static_count() {
+		// Counting specific values
+		$arr = array(1,2,4,2);
+		$ret = PrettyArray::count($arr, 2);
+		$this->assertEquals($ret, 2);
+	}
+	public function test_any() {
+		// Callback 2
+		$animals = array('ant', 'bear', 'cat');
+		$ret = PrettyArray::any($animals, function($key, $value) {
+			return (strlen($value) >= 4);
+		});
+		$this->assertEquals($ret, true);
+	}
+
 }
