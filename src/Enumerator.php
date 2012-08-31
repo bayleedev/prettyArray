@@ -1,4 +1,12 @@
 <?php
+/**
+ * Enumerator
+ * 
+ * A object oriented approach to handling arrays in PHP.
+ * 
+ * @package PrettyArray
+ * @author Blaine Schmeisser <BlaineSch@gmail.com>
+ */
 
 // Dependencies
 require_once(__DIR__ . '/exceptions/BreakException.php');
