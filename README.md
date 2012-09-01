@@ -3,6 +3,8 @@
 A object oriented approach to handling arrays in PHP.
 It attempts to combine Ruby (enumerator/array/hash) methods as well as built in PHP functions.
 
+[![Build Status](https://secure.travis-ci.org/BlaineSch/prettyArray.png?branch=dev)](http://travis-ci.org/BlaineSch/prettyArray)
+
 ## Example 1
 ```php
 <?php
