@@ -1,4 +1,6 @@
 <?php
-class ContinueException extends Exception {
+namespace prettyArray\src\exceptions;
+
+class ContinueException extends \Exception {
 	
 }

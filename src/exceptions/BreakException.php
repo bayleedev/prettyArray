@@ -1,4 +1,6 @@
 <?php
-class BreakException extends Exception {
+namespace prettyArray\src\exceptions;
+
+class BreakException extends \Exception {
 	
 }

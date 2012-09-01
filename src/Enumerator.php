@@ -8,6 +8,11 @@
  * @author Blaine Schmeisser <BlaineSch@gmail.com>
  */
 
+namespace prettyArray\src;
+
+use prettyArray\src\exceptions\BreakException;
+use prettyArray\src\exceptions\ContinueException;
+
 // Dependencies
 require_once(__DIR__ . '/exceptions/BreakException.php');
 require_once(__DIR__ . '/exceptions/ContinueException.php');

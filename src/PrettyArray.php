@@ -8,6 +8,10 @@
  * @author Blaine Schmeisser <BlaineSch@gmail.com>
  */
 
+namespace prettyArray\src;
+
+use prettyArray\src\Enumerator;
+
 // Dependencies
 require_once(__DIR__ . '/Enumerator.php');
 
@@ -53,7 +57,7 @@ require_once(__DIR__ . '/Enumerator.php');
  * 	throw new BreakException;
  * </code>
  */
-class PrettyArray implements ArrayAccess {
+class PrettyArray implements \ArrayAccess {
 
 	/**
 	 * The real data
@@ -63,7 +67,7 @@ class PrettyArray implements ArrayAccess {
 	/**
 	 * Currently only one mixin, but this might change.
 	 */
-	protected static $mixins = 'enumerator';
+	protected static $mixins = 'prettyArray\src\Enumerator';
 	
 	/**
 	 * Remaps non-destructive methods to their destructive counter parts.
@@ -87,8 +91,8 @@ class PrettyArray implements ArrayAccess {
 	 */
 	public function __construct(array $defaults = array()) {
 		if(is_null(self::$enumData['methodMap'])) {
-			self::$enumData['methodMap'] = enumerator::get('methodMap');
-			self::$enumData['destructiveMap'] = enumerator::get('destructiveMap');
+			self::$enumData['methodMap'] = Enumerator::get('methodMap');
+			self::$enumData['destructiveMap'] = Enumerator::get('destructiveMap');
 		}
 		$this->data = $defaults;
 	}

@@ -1,14 +1,17 @@
 <?php
-
 /*
 	Tests the core functionality of Enumerator
 */
+
+use \prettyArray\src\Enumerator;
+use \prettyArray\src\exceptions\BreakException;
+use \prettyArray\src\exceptions\ContinueException;
 
 class exceptionTest extends PHPUnit_Framework_TestCase {
 	public function test_collect_break() {
 		$o = '';
 		$arr = range(1,10);
-		enumerator::collect($arr, function($key, $value) use(&$o) {
+		Enumerator::collect($arr, function($key, $value) use(&$o) {
 			if($value == 5) {
 				throw new BreakException;
 			}
@@ -20,7 +23,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 	public function test_collect_continue() {
 		$o = '';
 		$arr = range(1,10);
-		enumerator::collect($arr, function($key, $value) use(&$o) {
+		Enumerator::collect($arr, function($key, $value) use(&$o) {
 			if($value == 5) {
 				throw new ContinueException;
 			}
@@ -33,7 +36,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 	public function test_each_slice_break() {
 		$arr = range(1,10);
 		$count = 0;
-		enumerator::each_slice($arr, 3, function(&$collection) use(&$count) {
+		Enumerator::each_slice($arr, 3, function(&$collection) use(&$count) {
 			if(in_array(4, $collection)) {
 				throw new BreakException;
 			}
@@ -45,7 +48,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 	public function test_each_slice_continue() {
 		$arr = range(1,10);
 		$count = 0;
-		enumerator::each_slice($arr, 3, function(&$collection) use(&$count) {
+		Enumerator::each_slice($arr, 3, function(&$collection) use(&$count) {
 			if(in_array(4, $collection)) {
 				throw new ContinueException;
 			}
@@ -57,7 +60,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 	public function test_collect_concat_break() {
 		$arr = array(array(1,2),array(3,4));
 		$count = 0;
-		enumerator::collect_concat($arr, function($key, &$value) use(&$count) {
+		Enumerator::collect_concat($arr, function($key, &$value) use(&$count) {
 			if($value == 3) {
 				throw new BreakException;
 			}
@@ -69,7 +72,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 	public function test_collect_concat_continue() {
 		$arr = array(array(1,2),array(3,4));
 		$count = 0;
-		enumerator::collect_concat($arr, function($key, &$value) use(&$count) {
+		Enumerator::collect_concat($arr, function($key, &$value) use(&$count) {
 			if($value == 3) {
 				throw new ContinueException;
 			}
@@ -81,7 +84,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 	public function test_grep_break() {
 		$arr = array('snowball', 'snowcone', 'snowangel', 'igloo', 'ice');
 		$o = '';
-		enumerator::grep($arr, "/^snow/", function($key, $value) use (&$o) {
+		Enumerator::grep($arr, "/^snow/", function($key, $value) use (&$o) {
 			if($value == 'snowcone') {
 				throw new BreakException;
 			}
@@ -93,7 +96,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 	public function test_grep_continue() {
 		$arr = array('snowball', 'snowcone', 'snowangel', 'igloo', 'ice');
 		$o = '';
-		enumerator::grep($arr, "/^snow/", function($key, $value) use (&$o) {
+		Enumerator::grep($arr, "/^snow/", function($key, $value) use (&$o) {
 			if($value == 'snowcone') {
 				throw new ContinueException;
 			}
@@ -104,7 +107,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 
 	public function test_inject_break() {
 		$arr = range(5, 10);
-		$memo = enumerator::inject($arr, function($key, &$value, &$memo) {
+		$memo = Enumerator::inject($arr, function($key, &$value, &$memo) {
 			if($value == 6) {
 				throw new BreakException;
 			}
@@ -116,7 +119,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 
 	public function test_inject_continue() {
 		$arr = range(5, 10);
-		$memo = enumerator::inject($arr, function($key, &$value, &$memo) {
+		$memo = Enumerator::inject($arr, function($key, &$value, &$memo) {
 			if($value == 6) {
 				throw new ContinueException;
 			}
@@ -129,7 +132,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 	public function test_reverse_collect_break() {
 		$arr = array(1, 2, 3);
 		$o = '';
-		enumerator::reverse_collect($arr, function($key, &$value) use (&$o) {
+		Enumerator::reverse_collect($arr, function($key, &$value) use (&$o) {
 			if($value == 2) {
 				throw new BreakException;
 			}
@@ -142,7 +145,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 	public function test_reverse_collect_continue() {
 		$arr = array(1, 2, 3);
 		$o = '';
-		enumerator::reverse_collect($arr, function($key, &$value) use (&$o) {
+		Enumerator::reverse_collect($arr, function($key, &$value) use (&$o) {
 			if($value == 2) {
 				throw new ContinueException;
 			}
@@ -155,7 +158,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 	public function test_cycle_break() {
 		$arr = array(1,2,3);
 		$count = 0;
-		enumerator::cycle($arr, 3, function($key, $value, $it) use (&$count) {
+		Enumerator::cycle($arr, 3, function($key, $value, $it) use (&$count) {
 			if($value == 2 && $it == 1) {
 				throw new BreakException;
 			}
@@ -167,7 +170,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 	public function test_cycle_continue() {
 		$arr = array(1,2,3);
 		$count = 0;
-		enumerator::cycle($arr, 3, function($key, $value, $it) use (&$count) {
+		Enumerator::cycle($arr, 3, function($key, $value, $it) use (&$count) {
 			if($value == 2 && $it == 1) {
 				throw new ContinueException;
 			}
@@ -179,7 +182,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 	public function test_each_cons_break() {
 		$arr = range(1,10);
 		$count = 0;
-		$o = enumerator::each_cons($arr, 8, function($key, $value) use(&$count) {
+		$o = Enumerator::each_cons($arr, 8, function($key, $value) use(&$count) {
 			if($value == 9) {
 				throw new BreakException;
 			}
@@ -191,7 +194,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 	public function test_each_cons_continue() {
 		$arr = range(1,10);
 		$count = 0;
-		$o = enumerator::each_cons($arr, 8, function($key, $value) use(&$count) {
+		$o = Enumerator::each_cons($arr, 8, function($key, $value) use(&$count) {
 			if($value == 9) {
 				throw new ContinueException;
 			}
@@ -202,7 +205,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 
 	public function test_combinatoin_1() {
 		$arr = array(1, 2, 3, 4);
-		enumerator::combination_($arr, 1, function($key, &$value) {
+		Enumerator::combination_($arr, 1, function($key, &$value) {
 			if($value[0] == 3) {
 				throw new BreakException;
 			}
@@ -213,7 +216,7 @@ class exceptionTest extends PHPUnit_Framework_TestCase {
 
 	public function test_combinatoin_2() {
 		$arr = array(1, 2, 3, 4);
-		enumerator::combination_($arr, 1, function($key, &$value) {
+		Enumerator::combination_($arr, 1, function($key, &$value) {
 			if($value[0] == 3) {
 				throw new ContinueException;
 			}

@@ -1,10 +1,10 @@
 <?php
-
 /*
-
 	This will test the core functionality of PrettyArray
-
 */
+
+use \prettyArray\src\PrettyArray;
+
 class prettyArrayTest extends PHPUnit_Framework_TestCase {
 
 	public function test_set_get_1() {
