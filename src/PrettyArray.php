@@ -243,7 +243,7 @@ class PrettyArray implements \ArrayAccess {
 	 * 
 	 * <code>
 	 * $arr = array(1,2,3);
-	 * enumerator::collect_($arr, function($key, &$value) {
+	 * Enumerator::collect_($arr, function($key, &$value) {
 	 * 	$value++;
 	 * 	return;
 	 * });
@@ -312,7 +312,7 @@ class PrettyArray implements \ArrayAccess {
 	 * 
 	 * <code>
 	 * $arr = array(1,2,3);
-	 * enumerator::collect($arr, function($key, &$value) {
+	 * Enumerator::collect($arr, function($key, &$value) {
 	 * 	echo $value;
 	 * });
 	 * </code>
