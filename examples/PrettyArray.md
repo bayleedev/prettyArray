@@ -1,5 +1,5 @@
-PrettyArray
-===========
+\prettyArray\src\PrettyArray
+============================
 PrettyArray
 
 This class does not have very much in it, and is planning on staying that way. Instead, it makes magic calls to the 'enumerator' class.
@@ -191,6 +191,12 @@ Table Of Contents
  * [delete\_at](#method_delete_at_)
  * [fetch\_](#method_fetch)
  * [fetch](#method_fetch)
+ * [flatten](#method_flatten_)
+ * [flatten\_](#method_flatten_)
+ * [array\_column\_](#method_array_pluck_)
+ * [array\_column](#method_array_pluck_)
+ * [array\_pluck\_](#method_array_pluck_)
+ * [array\_pluck](#method_array_pluck_)
 
 <a name="method___construct"></a>Methods: \_\_construct
 ====================
@@ -383,12 +389,17 @@ Return
 Example 1
 ---------
 ```php
+use \prettyArray\src\Enumerator;
+use \prettyArray\src\PrettyArray;
+use \prettyArray\srcexceptions\BreakException;
+use \prettyArray\srcexceptions\ContinueException;
 $arr = new PrettyArray(array(1,2,3));
 $arr->collect_(function($key, &$value) {
 	$value++;
 	return;
 });
 print_r($arr->to_a());
+
 ```
 
 ```
@@ -445,6 +456,7 @@ $arr = new PrettyArray(array(1,2,3));
 $arr->collect(function($key, &$value) {
 	echo $value;
 });
+
 ```
 
 ```
@@ -696,6 +708,7 @@ $o = $animals->all(function($key, &$value) {
 	return (strlen($value) >= 3);
 });
 var_dump($o);
+
 ```
 
 ```
@@ -710,6 +723,7 @@ $o = $animals->all(function($key, &$value) {
 	return (strlen($value) >= 4);
 });
 var_dump($o);
+
 ```
 
 ```
@@ -722,6 +736,7 @@ Example 3
 $arr = new PrettyArray(array(null, true, 99));
 $o = $arr->all();
 var_dump($o);
+
 ```
 
 ```
@@ -757,8 +772,9 @@ Example 1
 ---------
 ```php
 $animals = new PrettyArray(array('ant', 'bear', 'cat'));
-$animals->drop_(1);
-print_r($animals->to_a());
+$o = $animals->drop(1);
+print_r($o->to_a());
+
 ```
 
 ```
@@ -812,7 +828,7 @@ Example 2
 ---------
 ```php
 $animals = new PrettyArray(array('ant', 'bear', 'cat'));
-$o = $animals->any(function($key, &$value) {
+$o = $animals->any($animals, function($key, &$value) {
 	return (strlen($value) >= 4);
 });
 var_dump($o);
@@ -884,11 +900,11 @@ Example 1
 ---------
 ```php
 $arr = new PrettyArray(range(1,4));
-$arr->collect_(function($key, &$value) {
+$o = $arr->collect(function($key, &$value) {
 	$value *= $value;
 	return;
 });
-print_r($arr->to_a());
+print_r($o->to_a());
 ```
 
 ```
@@ -910,6 +926,7 @@ $o = $arr->collect(function($key, &$value) {
 	return;
 });
 print_r($o->to_a());
+
 ```
 
 ```
@@ -962,6 +979,7 @@ Example 1
 ```php
 $arr = new PrettyArray(array(1,2,4,2));
 echo $arr->count();
+
 ```
 
 ```
@@ -986,6 +1004,7 @@ $arr = new PrettyArray(array(1,2,4,2));
 echo $arr->count(function($key, &$value) {
 	return ($value % 2 == 0);
 });
+
 ```
 
 ```
@@ -1032,6 +1051,7 @@ $o = $arr->detect(function($key, &$value) {
 	return ($value % 5 == 0 and $value % 7 == 0);
 });
 var_dump($o);
+
 ```
 
 ```
@@ -1091,10 +1111,10 @@ Example 1
 ---------
 ```php
 $arr = new PrettyArray(range(1,10));
-$arr->select_(function($key, &$value) {
+$o = $arr->select(function($key, &$value) {
 	return ($value % 3 == 0);
 });
-print_r($arr->to_a());
+print_r($o->to_a());
 ```
 
 ```
@@ -1143,11 +1163,11 @@ Example 1
 ---------
 ```php
 $arr = new PrettyArray(range(1,10));
-$arr->each_slice_(3, function(&$collection) {
+$o = $arr->each_slice(3, function(&$collection) {
 	foreach($collection as $key => &$value) ++$value;
 	return;
 });
-print_r($arr->to_a());
+print_r($o->to_a());
 ```
 
 ```
@@ -1217,6 +1237,7 @@ Example 1
 $animals = new PrettyArray(array('cat', 'dog', 'cow', 'pig'));
 $o = $animals->first();
 print_r($o->to_a());
+
 ```
 
 ```
@@ -1230,8 +1251,9 @@ Example 2
 ---------
 ```php
 $animals = new PrettyArray(array('cat', 'dog', 'cow', 'pig'));
-$animals->first_(2);
-print_r($animals->to_a());
+$o = $animals->first(2);
+print_r($o->to_a());
+
 ```
 
 ```
@@ -1279,10 +1301,11 @@ Example 1
 ---------
 ```php
 $arr = new PrettyArray(array(array(1,2),array(3,4)));
-$arr->collect_concat_(function($key, &$value) {
+$o = $arr->collect_concat(function($key, &$value) {
 	return ++$value;
 });
-print_r($arr->to_a());
+print_r($o->to_a());
+
 ```
 
 ```
@@ -1333,8 +1356,9 @@ Example 1
 ---------
 ```php
 $arr = new PrettyArray(array('snowball', 'snowcone', 'snowangel', 'igloo', 'ice'));
-$arr->grep_("/^snow/");
-print_r($arr->to_a());
+$o = $arr->grep("/^snow/");
+print_r($o->to_a());
+
 ```
 
 ```
@@ -1453,8 +1477,9 @@ Example 2
 ---------
 ```php
 $arr = new PrettyArray(array('snowball', 'snowcone', 'snowangel', 'igloo', 'ice'));
-$o = $arr->member('snowman');
+$o = $arr->member($arr, 'snowman');
 var_dump($o);
+
 ```
 
 ```
@@ -1502,6 +1527,7 @@ Example 1
 ```php
 $arr = new PrettyArray(array('albatross','dog','horse'));
 echo $arr->min();
+
 ```
 
 ```
@@ -1548,7 +1574,8 @@ Example 1
 ---------
 ```php
 $arr = new PrettyArray(array('albatross','dog','horse'));
-echo $arr->max();
+echo $arr->max($arr);
+
 ```
 
 ```
@@ -1562,6 +1589,7 @@ $arr = new PrettyArray(array('albatross','dog','horse'));
 echo $arr->max(function($val1, $val2) {
 	return strcmp(strlen($val1), strlen($val2));
 });
+
 ```
 
 ```
@@ -1595,6 +1623,7 @@ $arr = new PrettyArray(array('albatross','dog','horse'));
 echo $arr->min_by(function($val) { 
 	return strlen($val); 
 });
+
 ```
 
 ```
@@ -1628,6 +1657,7 @@ $arr = new PrettyArray(array('albatross','dog','horse'));
 echo $arr->max_by(function($val) {
 	return strlen($val);
 });
+
 ```
 
 ```
@@ -1660,11 +1690,12 @@ Return
 Example 1
 ---------
 ```php
-$arr = new PrettyArray(array('albatross','dog','horse'));
+$arr = new PrettyArray(array('albatross','dog','horse')); 
 $o = $arr->minmax(function($val1, $val2) { 
 	return strcmp(strlen($val1), strlen($val2));
 });
 print_r($o->to_a());
+
 ```
 
 ```
@@ -1703,6 +1734,7 @@ $o = $arr->minmax_by(function($val) {
 	return strlen($val);
 });
 print_r($o->to_a());
+
 ```
 
 ```
@@ -1744,6 +1776,7 @@ $o = $arr->none(function($key, $value) {
 	return (strlen($value) == 5);
 });
 var_dump($o);
+
 ```
 
 ```
@@ -1758,6 +1791,7 @@ $o = $arr->none(function($key, $value) {
 	return (strlen($value) >= 4);
 });
 var_dump($o);
+
 ```
 
 ```
@@ -1767,7 +1801,7 @@ bool(false)
 Example 3
 ---------
 ```php
-$arr = new PrettyArray();
+$arr = new PrettyArray(array());
 $o = $arr->none();
 var_dump($o);
 ```
@@ -1794,6 +1828,7 @@ Example 5
 $arr = new PrettyArray(array(null, false));
 $o = $arr->none();
 var_dump($o);
+
 ```
 
 ```
@@ -1831,6 +1866,7 @@ $o = $arr->one(function($key, $value) {
 	return (strlen($value) == 4);
 });
 var_dump($o);
+
 ```
 
 ```
@@ -1899,6 +1935,7 @@ $o = $arr->partition(function($key, $value) {
 	return ($value % 2 == 0);
 });
 print_r($o->to_a());
+
 ```
 
 ```
@@ -1965,6 +2002,7 @@ echo $arr->inject(function($key, &$value, &$memo){
 	$memo += $value;
 	return;
 });
+
 ```
 
 ```
@@ -1979,6 +2017,7 @@ echo $arr->inject(function($key, &$value, &$memo){
 	$memo *= $value;
 	return;
 }, 1);
+
 ```
 
 ```
@@ -2019,10 +2058,11 @@ Example 1
 ---------
 ```php
 $arr = new PrettyArray(range(1,10));
-$arr->reject_(function($key, $value) {
+$o = $arr->reject(function($key, $value) {
 	return ($value % 3 == 0);
 });
-print_r($arr->to_a());
+print_r($o->to_a());
+
 ```
 
 ```
@@ -2088,6 +2128,7 @@ $arr->reverse_collect(function($key, &$value) {
 	echo $value . ', ';
 	return;
 });
+
 ```
 
 ```
@@ -2126,8 +2167,9 @@ Example 1
 ---------
 ```php
 $arr = new PrettyArray(array('rhea', 'kea', 'flea'));
-$arr->sort_();
-print_r($arr->to_a());
+$o = $arr->sort($arr);
+print_r($o->to_a());
+
 ```
 
 ```
@@ -2143,10 +2185,11 @@ Example 2
 ---------
 ```php
 $arr = new PrettyArray(array('rhea', 'kea', 'flea'));
-$arr->sort_(function($val1, $val2) {
+$o = $arr->sort(function($val1, $val2) {
 	return strcmp($val2, $val1);
 });
-print_r($arr->to_a());
+print_r($o->to_a());
+
 ```
 
 ```
@@ -2187,10 +2230,11 @@ Example 1
 ---------
 ```php
 $arr = new PrettyArray(array('rhea', 'kea', 'flea'));
-$arr->sort_by_(function($val) {
+$o = $arr->sort_by(function($val) {
 	return strlen($val);
 });
-print_r($arr->to_a());
+print_r($o->to_a());
+
 ```
 
 ```
@@ -2234,10 +2278,11 @@ Example 1
 ---------
 ```php
 $arr = new PrettyArray(array(1,2,3,4,5,0));
-$arr->take_while_(function($key, &$value) {
+$o = $arr->take_while(function($key, &$value) {
 	return ($value < 3);
 });
-print_r($arr->to_a());
+print_r($o->to_a());
+
 ```
 
 ```
@@ -2280,8 +2325,9 @@ Example 1
 ---------
 ```php
 $arr = new PrettyArray(array(1,2,3));
-$arr->zip_(array(4,5,6), array(7,8,9));
-print_r($arr->to_a());
+$o = $arr->zip(array(4,5,6), array(7,8,9));
+print_r($o->to_a());
+
 ```
 
 ```
@@ -2318,6 +2364,7 @@ Example 2
 $arr = new PrettyArray(array(1,2));
 $o = $arr->zip(array(4,5,6),array(7,8,9));
 print_r($o->to_a());
+
 ```
 
 ```
@@ -2346,6 +2393,7 @@ Example 3
 $arr = new PrettyArray(array(4,5,6));
 $o = $arr->zip(array(1,2), array(8));
 print_r($o->to_a());
+
 ```
 
 ```
@@ -2404,10 +2452,11 @@ Example 1
 ---------
 ```php
 $arr = new PrettyArray(array(1,2,3,4,5,0));
-$arr->drop_while_(function($key, &$value) {
+$o = $arr->drop_while(function($key, &$value) {
 	return ($value < 3);
 });
-print_r($arr->to_a());
+print_r($o->to_a());
+
 ```
 
 ```
@@ -2457,6 +2506,7 @@ $arr = new PrettyArray(array(1,2,3));
 $arr->cycle(3, function($key, $value, $it) {
 	echo $value . ',';
 });
+
 ```
 
 ```
@@ -2496,8 +2546,9 @@ Example 1
 ---------
 ```php
 $arr = new PrettyArray(range(1,10));
-$arr->each_cons_(8);
-print_r($arr->to_a());
+$o = $arr->each_cons(8);
+print_r($o->to_a());
+
 ```
 
 ```
@@ -2571,8 +2622,9 @@ Example 1
 ---------
 ```php
 $arr = new PrettyArray(array(1,2,3,4,5,6,7,8,9,0));
-$arr->slice_before_("/[02468]/"); // will "splice before" an even number.
-print_r($arr->to_a());
+$o = $arr->slice_before("/[02468]/"); // will "splice before" an even number.
+print_r($o->to_a());
+
 ```
 
 ```
@@ -2649,8 +2701,8 @@ Example 1
 ```php
 $animals = new PrettyArray(array('dog', 'cat', 'pig'));
 $trees = array('pine');
-$animals->merge_($trees, array('wool'));
-print_r($animals->to_a());
+$o = $animals->merge($trees, array('wool'));
+print_r($o->to_a());
 ```
 
 ```
@@ -2696,8 +2748,9 @@ Example 1
 ---------
 ```php
 $arr = new PrettyArray(array('Foo', 'bar', 'foobar'));
-$arr->rotate_(1);
-print_r($arr->to_a());
+$o = $arr->rotate(1);
+print_r($o->to_a());
+
 ```
 
 ```
@@ -2759,8 +2812,9 @@ Example 1
 ---------
 ```php
 $arr = new PrettyArray(array(1,2,3));
-$arr->reverse_();
-print_r($arr->to_a());
+$o = $arr->reverse();
+print_r($o->to_a());
+
 ```
 
 ```
@@ -2808,7 +2862,9 @@ Example 1
 ---------
 ```php
 $arr = new PrettyArray(array('pig', 'cow', 'dog', 'horse'));
-echo $arr->random();
+$o = $arr->random();
+echo $o;
+
 ```
 
 ```
@@ -2819,8 +2875,9 @@ Example 2
 ---------
 ```php
 $arr = new PrettyArray(array('pig', 'cow', 'dog', 'horse'));
-$arr->random_(2);
-print_r($arr->to_a());
+$o = $arr->random(2);
+print_r($o->to_a());
+
 ```
 
 ```
@@ -2863,8 +2920,9 @@ Example 1
 ---------
 ```php
 $arr = new PrettyArray(array(1,2,3));
-$arr->shuffle_();
-print_r($arr->to_a());
+$o = $arr->shuffle();
+print_r($o->to_a());
+
 ```
 
 ```
@@ -2882,6 +2940,7 @@ Example 2
 $arr = new PrettyArray(array('a' => 'apple', 'b' => 'banana', 'c' => 'carrot'));
 $o = $arr->shuffle(true);
 print_r($o->to_a());
+
 ```
 
 ```
@@ -2933,6 +2992,7 @@ $name = new PrettyArray(array(
 ));
 $o = $name->values_at('title', 'last');
 print_r($o->to_a());
+
 ```
 
 ```
@@ -2963,8 +3023,9 @@ Return
 Example 1
 ---------
 ```php
-$arr = new PrettyArray();
+$arr = new PrettyArray(array());
 var_dump($arr->isEmpty());
+
 ```
 
 ```
@@ -2976,6 +3037,7 @@ Example 2
 ```php
 $arr = new PrettyArray(array(1,2,3));
 var_dump($arr->isEmpty());
+
 ```
 
 ```
@@ -2988,6 +3050,7 @@ Example 3
 $empty = 'empty';
 $arr = new PrettyArray(array(1,2,3));
 var_dump($arr->$empty());
+
 ```
 
 ```
@@ -3015,6 +3078,7 @@ Example 1
 ```php
 $arr = new PrettyArray(array(0,false));
 var_dump($arr->has_value(null));
+
 ```
 
 ```
@@ -3026,6 +3090,7 @@ Example 2
 ```php
 $arr = new PrettyArray(array(false,null));
 var_dump($arr->has_value(0));
+
 ```
 
 ```
@@ -3037,6 +3102,7 @@ Example 3
 ```php
 $arr = new PrettyArray(array('apple', 'banana', 'orange'));
 var_dump($arr->has_value('orange'));
+
 ```
 
 ```
@@ -3079,8 +3145,7 @@ $name = new PrettyArray(array(
 	'first' => 'John',
 	'middle' => 'M',
 	'last' => 'Doe',
-	'title' => 'Dr.',
-	'suffix' => 'Jr.'
+	'title' => 'Dr.'
 ));
 echo $name->index('John');
 ```
@@ -3097,8 +3162,7 @@ $name = new PrettyArray(array(
 	'first' => 'John',
 	'middle' => 'M',
 	'last' => 'Doe',
-	'title' => 'Dr.',
-	'suffix' => 'Jr.'
+	'title' => 'Dr.'
 ));
 echo $name->index_(function($key, &$value) {
 	return (strpos($value, '.') !== false); // Has a decimal
@@ -3141,8 +3205,7 @@ $name = new PrettyArray(array(
 	'first' => 'John',
 	'middle' => 'M',
 	'last' => 'Doe',
-	'title' => 'Dr.',
-	'suffix' => 'Jr.'
+	'title' => 'Dr.'
 ));
 echo $name->rindex('John');
 ```
@@ -3165,6 +3228,7 @@ $name = new PrettyArray(array(
 echo $name->rindex_(function($key, &$value) {
 	return (strpos($value, '.') !== false);
 });
+
 ```
 
 ```
@@ -3203,8 +3267,9 @@ Example 1
 ---------
 ```php
 $arr = new PrettyArray(array(1,2,3,null,array(2,3,4,null)));
-$arr->compact_();
-print_r($arr->to_a());
+$o = $arr->compact();
+print_r($o->to_a());
+
 ```
 
 ```
@@ -3230,6 +3295,7 @@ Example 2
 $arr = new PrettyArray(array(1,2,3,null,array(2,3,4,null)));
 $o = $arr->compact(true);
 print_r($o->to_a());
+
 ```
 
 ```
@@ -3279,8 +3345,8 @@ Example 1
 ---------
 ```php
 $arr = new PrettyArray(array(1,1,2,3,3,2,1,1,1));
-$a = $arr->uniq_($arr)->to_a();
-print_r($a);
+$a = $arr->uniq();
+print_r($a->to_a());
 
 ```
 
@@ -3365,8 +3431,9 @@ Example 1
 ---------
 ```php
 $arr = new PrettyArray(array(array(1, "one"), array(2, "two"), array(3, "three"), array("ii", "two")));
-$o = $arr->rassoc('two')->to_a();
-print_r($o);
+$o = $arr->rassoc('two');
+print_r($o->to_a());
+
 ```
 
 ```
@@ -3383,6 +3450,7 @@ Example 2
 $arr = new PrettyArray(array(array(1, "one"), array(2, "two"), array(3, "three"), array("ii", "two")));
 $o = $arr->rassoc('four');
 var_dump($o);
+
 ```
 
 ```
@@ -3428,6 +3496,7 @@ Example 2
 ```php
 $arr = new PrettyArray(array('a', 'b', 'c', 'd', 'e'));
 echo $arr->at(-1);
+
 ```
 
 ```
@@ -3438,7 +3507,8 @@ Example 3
 ---------
 ```php
 $arr = new PrettyArray(array('a', 'b', 'c', 'd', 'e'));
-print_r($arr->at(0, 3, 4)->to_a());
+$o = $arr->at(0, 3, 4);
+print_r($o->to_a());
 ```
 
 ```
@@ -3514,6 +3584,7 @@ Example 2
 $arr = new PrettyArray(array(1, 2, 3, 4));
 $arr->combination_(4);
 print_r($arr->to_a());
+
 ```
 
 ```
@@ -3536,6 +3607,7 @@ Example 3
 $arr = new PrettyArray(array(1, 2, 3, 4));
 $arr->combination_(0);
 print_r($arr->to_a());
+
 ```
 
 ```
@@ -3637,7 +3709,8 @@ Example 1
 ---------
 ```php
 $arr = new PrettyArray(array('ant', 'bat', 'cat', 'dog'));
-echo $arr->delete_at_(2) . PHP_EOL;
+$ret = $arr->delete_at_(2);
+echo $ret . PHP_EOL;
 print_r($arr->to_a());
 
 ```
@@ -3716,6 +3789,7 @@ Example 3
 ```php
 $arr = new PrettyArray(array(11, 22, 33, 44));
 echo $arr->fetch(4, 'cat');
+
 ```
 
 ```
@@ -3729,9 +3803,95 @@ $arr = new PrettyArray(array(11, 22, 33, 44));
 echo $arr->fetch(4, function($i) {
 	return $i * $i;
 });
+
 ```
 
 ```
 16
 ```
+
+
+<a name="method_flatten_"></a>Methods: flatten, flatten\_
+==========================
+mixed **flatten** ([ int $depth = 999999 ] )
+
+mixed **flatten\_** ([ int $depth = 999999 ] )
+
+
+Will flatten the array to a single array or until the $depth is reached.
+
+Parameters
+----------
+  **$depth**
+
+Return
+------
+ mixed
+
+Example 1
+---------
+```php
+$arr = new PrettyArray(array(1, 2, array(3, array(4, 5))));
+$arr = $arr->flatten();
+echo print_r($arr->to_a(), true) . PHP_EOL;
+$arr = $arr->flatten();
+var_dump($arr);
+```
+
+```
+Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => 3
+    [3] => 4
+    [4] => 5
+)
+NULL
+```
+
+Example 2
+---------
+```php
+$arr = new PrettyArray(array(1, 2, array(3, array(4, 5))));
+$arr->flatten_(1);
+print_r($arr->to_a());
+
+```
+
+```
+Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => 3
+    [3] => Array
+        (
+            [0] => 4
+            [1] => 5
+        )
+)
+```
+
+
+<a name="method_array_pluck_"></a>Methods: array\_column\_, array\_column, array\_pluck\_, array\_pluck
+===============================================================
+mixed **array\_column\_** (mixed $index )
+
+mixed **array\_column** (mixed $index )
+
+mixed **array\_pluck\_** (mixed $index )
+
+mixed **array\_pluck** (mixed $index )
+
+
+Will return an array of values from a multidimensional array based on the index provided.
+
+Parameters
+----------
+  **$index**
+
+Return
+------
+ mixed
 
