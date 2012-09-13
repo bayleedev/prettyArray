@@ -206,7 +206,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $animals = array('ant', 'bear', 'cat');
-	 * $o = enumerator::all($animals, function($key, &$value) {
+	 * $o = Enumerator::all($animals, function($key, &$value) {
 	 * 	return (strlen($value) >= 3);
 	 * });
 	 * var_dump($o);
@@ -217,7 +217,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $animals = array('ant', 'bear', 'cat');
-	 * $o = enumerator::all($animals, function($key, &$value) {
+	 * $o = Enumerator::all($animals, function($key, &$value) {
 	 * 	return (strlen($value) >= 4);
 	 * });
 	 * var_dump($o);
@@ -228,7 +228,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(null, true, 99);
-	 * $o = enumerator::all($arr);
+	 * $o = Enumerator::all($arr);
 	 * var_dump($o);
 	 * </code>
 	 * <pre>
@@ -262,7 +262,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $animals = array('ant', 'bear', 'cat');
-	 * $o = enumerator::drop($animals, 1);
+	 * $o = Enumerator::drop($animals, 1);
 	 * print_r($o);
 	 * </code>
 	 * <pre>
@@ -290,7 +290,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $animals = array('ant', 'bear', 'cat');
-	 * $o = enumerator::any($animals, function($key, &$value) {
+	 * $o = Enumerator::any($animals, function($key, &$value) {
 	 * 	return (strlen($value) >= 3);
 	 * });
 	 * var_dump($o);
@@ -301,7 +301,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $animals = array('ant', 'bear', 'cat');
-	 * $o = enumerator::any($animals, function($key, &$value) {
+	 * $o = Enumerator::any($animals, function($key, &$value) {
 	 * 	return (strlen($value) >= 4);
 	 * });
 	 * var_dump($o);
@@ -312,7 +312,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(null, true, 99);
-	 * $o = enumerator::any($arr);
+	 * $o = Enumerator::any($arr);
 	 * var_dump($o);
 	 * </code>
 	 * <pre>
@@ -346,7 +346,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = range(1,4);
-	 * $o = enumerator::collect($arr, function($key, &$value) {
+	 * $o = Enumerator::collect($arr, function($key, &$value) {
 	 * 	$value *= $value;
 	 * 	return;
 	 * });
@@ -364,7 +364,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = range(1,4);
-	 * $o = enumerator::collect($arr, function($key, &$value) {
+	 * $o = Enumerator::collect($arr, function($key, &$value) {
 	 * 	$value = "cat";
 	 * 	return;
 	 * });
@@ -427,7 +427,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(1,2,4,2);
-	 * echo enumerator::count($arr);
+	 * echo Enumerator::count($arr);
 	 * </code>
 	 * <pre>
 	 * 4
@@ -435,7 +435,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(1,2,4,2);
-	 * echo enumerator::count($arr, 2);
+	 * echo Enumerator::count($arr, 2);
 	 * </code>
 	 * <pre>
 	 * 2
@@ -443,7 +443,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(1,2,4,2);
-	 * echo enumerator::count($arr, function($key, &$value) {
+	 * echo Enumerator::count($arr, function($key, &$value) {
 	 * 	return ($value % 2 == 0);
 	 * });
 	 * </code>
@@ -490,7 +490,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = range(1,10);
-	 * $o = enumerator::detect($arr, function($key, &$value) {
+	 * $o = Enumerator::detect($arr, function($key, &$value) {
 	 * 	return ($value % 5 == 0 and $value % 7 == 0);
 	 * });
 	 * var_dump($o);
@@ -501,7 +501,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = range(1,100);
-	 * echo enumerator::detect($arr, function($key, &$value) {
+	 * echo Enumerator::detect($arr, function($key, &$value) {
 	 * 	return ($value % 5 == 0 and $value % 7 == 0);
 	 * });
 	 * </code>
@@ -540,7 +540,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = range(1,10);
-	 * $o = enumerator::select($arr, function($key, &$value) {
+	 * $o = Enumerator::select($arr, function($key, &$value) {
 	 * 	return ($value % 3 == 0);
 	 * });
 	 * print_r($o);
@@ -583,7 +583,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = range(1,10);
-	 * $o = enumerator::each_slice($arr, 3, function(&$collection) {
+	 * $o = Enumerator::each_slice($arr, 3, function(&$collection) {
 	 * 	foreach($collection as $key => &$value) ++$value;
 	 * 	return;
 	 * });
@@ -657,7 +657,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $animals = array('cat', 'dog', 'cow', 'pig');
-	 * $o = enumerator::first($animals);
+	 * $o = Enumerator::first($animals);
 	 * print_r($o);
 	 * </code>
 	 * <pre>
@@ -669,7 +669,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $animals = array('cat', 'dog', 'cow', 'pig');
-	 * $o = enumerator::first($animals, 2);
+	 * $o = Enumerator::first($animals, 2);
 	 * print_r($o);
 	 * </code>
 	 * <pre>
@@ -698,7 +698,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(array(1,2),array(3,4));
-	 * $o = enumerator::collect_concat($arr, function($key, &$value) {
+	 * $o = Enumerator::collect_concat($arr, function($key, &$value) {
 	 * 	return ++$value;
 	 * });
 	 * print_r($o);
@@ -748,7 +748,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('snowball', 'snowcone', 'snowangel', 'igloo', 'ice');
-	 * $o = enumerator::grep($arr, "/^snow/");
+	 * $o = Enumerator::grep($arr, "/^snow/");
 	 * print_r($o);
 	 * </code>
 	 * <pre>
@@ -790,7 +790,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = range(1,6);
-	 * $o = enumerator::group_by($arr, function($key, &$value) {
+	 * $o = Enumerator::group_by($arr, function($key, &$value) {
 	 * 	return ($value % 3);
 	 * });
 	 * print_r($o);
@@ -851,7 +851,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('snowball', 'snowcone', 'snowangel', 'igloo', 'ice');
-	 * $o = enumerator::member($arr, 'snowcone');
+	 * $o = Enumerator::member($arr, 'snowcone');
 	 * var_dump($o);
 	 * </code>
 	 * <pre>
@@ -860,7 +860,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('snowball', 'snowcone', 'snowangel', 'igloo', 'ice');
-	 * $o = enumerator::member($arr, 'snowman');
+	 * $o = Enumerator::member($arr, 'snowman');
 	 * var_dump($o);
 	 * </code>
 	 * <pre>
@@ -870,7 +870,7 @@ class Enumerator {
 	 * <code>
 	 * $fun = 'include';
 	 * $arr = array('snowball', 'snowcone', 'snowangel', 'igloo', 'ice');
-	 * $o = enumerator::$fun($arr, 'snowcone');
+	 * $o = Enumerator::$fun($arr, 'snowcone');
 	 * var_dump($o);
 	 * </code>
 	 * <pre>
@@ -898,7 +898,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('albatross','dog','horse');
-	 * echo enumerator::min($arr);
+	 * echo Enumerator::min($arr);
 	 * </code>
 	 * <pre>
 	 * albatross
@@ -906,7 +906,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('albatross','dog','horse');
-	 * echo enumerator::min($arr, function($val1, $val2) {
+	 * echo Enumerator::min($arr, function($val1, $val2) {
 	 * 	return strcmp(strlen($val1), strlen($val2));
 	 * });
 	 * </code>
@@ -934,7 +934,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('albatross','dog','horse');
-	 * echo enumerator::max($arr);
+	 * echo Enumerator::max($arr);
 	 * </code>
 	 * <pre>
 	 * horse
@@ -942,7 +942,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('albatross','dog','horse');
-	 * echo enumerator::max($arr, function($val1, $val2) {
+	 * echo Enumerator::max($arr, function($val1, $val2) {
 	 * 	return strcmp(strlen($val1), strlen($val2));
 	 * });
 	 * </code>
@@ -970,7 +970,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('albatross','dog','horse');
-	 * echo enumerator::min_by($arr, function($val) { 
+	 * echo Enumerator::min_by($arr, function($val) { 
 	 * 	return strlen($val); 
 	 * });
 	 * </code>
@@ -997,7 +997,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('albatross','dog','horse');
-	 * echo enumerator::max_by($arr, function($val) {
+	 * echo Enumerator::max_by($arr, function($val) {
 	 * 	return strlen($val);
 	 * });
 	 * </code>
@@ -1024,7 +1024,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('albatross','dog','horse'); 
-	 * $o = enumerator::minmax($arr, function($val1, $val2) { 
+	 * $o = Enumerator::minmax($arr, function($val1, $val2) { 
 	 * 	return strcmp(strlen($val1), strlen($val2));
 	 * });
 	 * print_r($o);
@@ -1057,7 +1057,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('albatross','dog','horse');
-	 * $o = enumerator::minmax_by($arr, function($val) { 
+	 * $o = Enumerator::minmax_by($arr, function($val) { 
 	 * 	return strlen($val);
 	 * });
 	 * print_r($o);
@@ -1089,7 +1089,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('ant', 'bear', 'cat');
-	 * $o = enumerator::none($arr, function($key, $value) {
+	 * $o = Enumerator::none($arr, function($key, $value) {
 	 * 	return (strlen($value) == 5);
 	 * });
 	 * var_dump($o);
@@ -1100,7 +1100,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('ant', 'bear', 'cat');
-	 * $o = enumerator::none($arr, function($key, $value) {
+	 * $o = Enumerator::none($arr, function($key, $value) {
 	 * 	return (strlen($value) >= 4);
 	 * });
 	 * var_dump($o);
@@ -1110,7 +1110,7 @@ class Enumerator {
 	 * </pre>
 	 * 
 	 * <code>
-	 * $o = enumerator::none(array());
+	 * $o = Enumerator::none(array());
 	 * var_dump($o);
 	 * </code>
 	 * <pre>
@@ -1118,7 +1118,7 @@ class Enumerator {
 	 * </pre>
 	 * 
 	 * <code>
-	 * $o = enumerator::none(array(null));
+	 * $o = Enumerator::none(array(null));
 	 * var_dump($o);
 	 * </code>
 	 * <pre>
@@ -1127,7 +1127,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(null, false);
-	 * $o = enumerator::none($arr);
+	 * $o = Enumerator::none($arr);
 	 * var_dump($o);
 	 * </code>
 	 * <pre>
@@ -1161,7 +1161,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('ant','bear','cat');
-	 * $o = enumerator::one($arr, function($key, $value) {
+	 * $o = Enumerator::one($arr, function($key, $value) {
 	 * 	return (strlen($value) == 4);
 	 * });
 	 * var_dump($o);
@@ -1171,7 +1171,7 @@ class Enumerator {
 	 * </pre>
 	 * 
 	 * <code>
-	 * $o = enumerator::one(array(null, true, 99));
+	 * $o = Enumerator::one(array(null, true, 99));
 	 * var_dump($o);
 	 * </code>
 	 * <pre>
@@ -1179,7 +1179,7 @@ class Enumerator {
 	 * </pre>
 	 * 
 	 * <code>
-	 * $o = enumerator::one(array(null, true, false));
+	 * $o = Enumerator::one(array(null, true, false));
 	 * var_dump($o);
 	 * </code>
 	 * <pre>
@@ -1216,7 +1216,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = range(1,6);
-	 * $o = enumerator::partition($arr, function($key, $value) {
+	 * $o = Enumerator::partition($arr, function($key, $value) {
 	 * 	return ($value % 2 == 0);
 	 * });
 	 * print_r($o);
@@ -1267,7 +1267,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = range(5, 10);
-	 * echo enumerator::inject($arr, function($key, &$value, &$memo){
+	 * echo Enumerator::inject($arr, function($key, &$value, &$memo){
 	 * 	$memo += $value;
 	 * 	return;
 	 * });
@@ -1278,7 +1278,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = range(5, 10);
-	 * echo enumerator::inject($arr, function($key, &$value, &$memo){
+	 * echo Enumerator::inject($arr, function($key, &$value, &$memo){
 	 * 	$memo *= $value;
 	 * 	return;
 	 * }, 1);
@@ -1317,7 +1317,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = range(1,10);
-	 * $o = enumerator::reject($arr, function($key, $value) {
+	 * $o = Enumerator::reject($arr, function($key, $value) {
 	 * 	return ($value % 3 == 0);
 	 * });
 	 * print_r($o);
@@ -1360,7 +1360,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(1, 2, 3);
-	 * enumerator::reverse_collect($arr, function($key, &$value) {
+	 * Enumerator::reverse_collect($arr, function($key, &$value) {
 	 * 	echo $value . ', ';
 	 * 	return;
 	 * });
@@ -1410,7 +1410,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('rhea', 'kea', 'flea');
-	 * $o = enumerator::sort($arr);
+	 * $o = Enumerator::sort($arr);
 	 * print_r($o);
 	 * </code>
 	 * <pre>
@@ -1424,7 +1424,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('rhea', 'kea', 'flea');
-	 * $o = enumerator::sort($arr, function($val1, $val2) {
+	 * $o = Enumerator::sort($arr, function($val1, $val2) {
 	 * 	return strcmp($val2, $val1);
 	 * });
 	 * print_r($o);
@@ -1463,7 +1463,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('rhea', 'kea', 'flea');
-	 * $o = enumerator::sort_by($arr, function($val) {
+	 * $o = Enumerator::sort_by($arr, function($val) {
 	 * 	return strlen($val);
 	 * });
 	 * print_r($o);
@@ -1497,7 +1497,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(1,2,3,4,5,0);
-	 * $o = enumerator::take_while($arr, function($key, &$value) {
+	 * $o = Enumerator::take_while($arr, function($key, &$value) {
 	 * 	return ($value < 3);
 	 * });
 	 * print_r($o);
@@ -1535,7 +1535,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(1,2,3);
-	 * $o = enumerator::zip($arr, array(4,5,6), array(7,8,9));
+	 * $o = Enumerator::zip($arr, array(4,5,6), array(7,8,9));
 	 * print_r($o);
 	 * </code>
 	 * <pre>
@@ -1568,7 +1568,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(1,2);
-	 * $o = enumerator::zip($arr, array(4,5,6),array(7,8,9));
+	 * $o = Enumerator::zip($arr, array(4,5,6),array(7,8,9));
 	 * print_r($o);
 	 * </code>
 	 * <pre>
@@ -1593,7 +1593,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(4,5,6);
-	 * $o = enumerator::zip($arr, array(1,2), array(8));
+	 * $o = Enumerator::zip($arr, array(1,2), array(8));
 	 * print_r($o);
 	 * </code>
 	 * <pre>
@@ -1650,7 +1650,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(1,2,3,4,5,0);
-	 * $o = enumerator::drop_while($arr, function($key, &$value) {
+	 * $o = Enumerator::drop_while($arr, function($key, &$value) {
 	 * 	return ($value < 3);
 	 * });
 	 * print_r($o);
@@ -1688,7 +1688,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(1,2,3);
-	 * enumerator::cycle($arr, 3, function($key, $value, $it) {
+	 * Enumerator::cycle($arr, 3, function($key, $value, $it) {
 	 * 	echo $value . ',';
 	 * });
 	 * </code>
@@ -1726,7 +1726,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = range(1,10);
-	 * $o = enumerator::each_cons($arr, 8);
+	 * $o = Enumerator::each_cons($arr, 8);
 	 * print_r($o);
 	 * </code>
 	 * <pre>
@@ -1812,7 +1812,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(1,2,3,4,5,6,7,8,9,0);
-	 * $o = enumerator::slice_before($arr, "/[02468]/"); // will "splice before" an even number.
+	 * $o = Enumerator::slice_before($arr, "/[02468]/"); // will "splice before" an even number.
 	 * print_r($o);
 	 * </code>
 	 * <pre>
@@ -1888,7 +1888,7 @@ class Enumerator {
 	 * <code>
 	 * $animals = array('dog', 'cat', 'pig');
 	 * $trees = array('pine');
-	 * $o = enumerator::merge($animals, $trees, array('wool'));
+	 * $o = Enumerator::merge($animals, $trees, array('wool'));
 	 * print_r($o);
 	 * </code>
 	 * <pre>
@@ -1911,7 +1911,7 @@ class Enumerator {
 		// Alias destructive method
 		$params = func_get_args();
 		$params[0] =& $arr; 
-		return call_user_func_array('enumerator::merge_', $params);
+		return call_user_func_array('Enumerator::merge_', $params);
 	}
 	public static function merge_(array &$arr, array $arr2) {
 		$arr = call_user_func_array('array_merge', func_get_args());
@@ -1925,7 +1925,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('Foo', 'bar', 'foobar');
-	 * $o = enumerator::rotate($arr, 1);
+	 * $o = Enumerator::rotate($arr, 1);
 	 * print_r($o);
 	 * </code>
 	 * <pre>
@@ -1939,7 +1939,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('Foo', 'bar', 'foobar');
-	 * $o = enumerator::rotate($arr, -1);
+	 * $o = Enumerator::rotate($arr, -1);
 	 * print_r($o);
 	 * </code>
 	 * <pre>
@@ -1968,7 +1968,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(1,2,3);
-	 * $o = enumerator::reverse($arr);
+	 * $o = Enumerator::reverse($arr);
 	 * print_r($o);
 	 * </code>
 	 * <pre>
@@ -1997,7 +1997,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('pig', 'cow', 'dog', 'horse');
-	 * $o = enumerator::random($arr);
+	 * $o = Enumerator::random($arr);
 	 * echo $o;
 	 * </code>
 	 * <pre>
@@ -2006,7 +2006,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('pig', 'cow', 'dog', 'horse');
-	 * $o = enumerator::random($arr, 2);
+	 * $o = Enumerator::random($arr, 2);
 	 * print_r($o);
 	 * </code>
 	 * <pre>
@@ -2040,7 +2040,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(1,2,3);
-	 * $o = enumerator::shuffle($arr);
+	 * $o = Enumerator::shuffle($arr);
 	 * print_r($o);
 	 * </code>
 	 * <pre>
@@ -2054,7 +2054,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('a' => 'apple', 'b' => 'banana', 'c' => 'carrot');
-	 * $o = enumerator::shuffle($arr, true);
+	 * $o = Enumerator::shuffle($arr, true);
 	 * print_r($o);
 	 * </code>
 	 * <pre>
@@ -2101,7 +2101,7 @@ class Enumerator {
 	 * 	'last' => 'Doe',
 	 * 	'title' => 'Dr.'
 	 * );
-	 * $o = enumerator::values_at($name, 'title', 'last');
+	 * $o = Enumerator::values_at($name, 'title', 'last');
 	 * print_r($o);
 	 * </code>
 	 * <pre>
@@ -2136,7 +2136,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array();
-	 * var_dump(enumerator::isEmpty($arr));
+	 * var_dump(Enumerator::isEmpty($arr));
 	 * </code>
 	 * <pre>
 	 * bool(true)
@@ -2144,7 +2144,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(1,2,3);
-	 * var_dump(enumerator::isEmpty($arr));
+	 * var_dump(Enumerator::isEmpty($arr));
 	 * </code>
 	 * <pre>
 	 * bool(false)
@@ -2153,7 +2153,7 @@ class Enumerator {
 	 * <code>
 	 * $empty = 'empty';
 	 * $arr = array(1,2,3);
-	 * var_dump(enumerator::$empty($arr));
+	 * var_dump(Enumerator::$empty($arr));
 	 * </code>
 	 * <pre>
 	 * bool(false)
@@ -2174,7 +2174,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(0,false);
-	 * var_dump(enumerator::has_value($arr, null));
+	 * var_dump(Enumerator::has_value($arr, null));
 	 * </code>
 	 * <pre>
 	 * bool(false)
@@ -2182,7 +2182,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(false,null);
-	 * var_dump(enumerator::has_value($arr, 0));
+	 * var_dump(Enumerator::has_value($arr, 0));
 	 * </code>
 	 * <pre>
 	 * bool(false)
@@ -2190,7 +2190,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('apple', 'banana', 'orange');
-	 * var_dump(enumerator::has_value($arr, 'orange'));
+	 * var_dump(Enumerator::has_value($arr, 'orange'));
 	 * </code>
 	 * <pre>
 	 * bool(true)
@@ -2225,7 +2225,7 @@ class Enumerator {
 	 * 	'title' => 'Dr.',
 	 * 	'suffix' => 'Jr.'
 	 * );
-	 * echo enumerator::index($name, 'John');
+	 * echo Enumerator::index($name, 'John');
 	 * </code>
 	 * <pre>
 	 * first
@@ -2240,7 +2240,7 @@ class Enumerator {
 	 * 	'title' => 'Dr.',
 	 * 	'suffix' => 'Jr.'
 	 * );
-	 * echo enumerator::index_($name, function($key, &$value) {
+	 * echo Enumerator::index_($name, function($key, &$value) {
 	 * 	return (strpos($value, '.') !== false); // Has a decimal
 	 * });
 	 * </code>
@@ -2285,7 +2285,7 @@ class Enumerator {
 	 * 	'title' => 'Dr.',
 	 * 	'suffix' => 'Jr.'
 	 * );
-	 * echo enumerator::rindex($name, 'John');
+	 * echo Enumerator::rindex($name, 'John');
 	 * </code>
 	 * <pre>
 	 * first
@@ -2300,7 +2300,7 @@ class Enumerator {
 	 * 	'title' => 'Dr.',
 	 * 	'suffix' => 'Jr.'
 	 * );
-	 * echo enumerator::rindex_($name, function($key, &$value) {
+	 * echo Enumerator::rindex_($name, function($key, &$value) {
 	 * 	return (strpos($value, '.') !== false);
 	 * });
 	 * </code>
@@ -2334,7 +2334,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(1,2,3,null,array(2,3,4,null));
-	 * $o = enumerator::compact($arr);
+	 * $o = Enumerator::compact($arr);
 	 * print_r($o);
 	 * </code>
 	 * <pre>
@@ -2356,7 +2356,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(1,2,3,null,array(2,3,4,null));
-	 * $o = enumerator::compact($arr, true);
+	 * $o = Enumerator::compact($arr, true);
 	 * print_r($o);
 	 * </code>
 	 * <pre>
@@ -2406,7 +2406,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(1,1,2,3,3,2,1,1,1);
-	 * $a = enumerator::uniq($arr);
+	 * $a = Enumerator::uniq($arr);
 	 * print_r($a);
 	 * </code>
 	 * <pre>
@@ -2441,7 +2441,7 @@ class Enumerator {
 	 * $s2 = array('letters', 'a', 'b', 'c');
 	 * $s3 = 'foo';
 	 * $arr = array($s1, $s2, $s3);
-	 * $o = enumerator::assoc($arr, 'letters');
+	 * $o = Enumerator::assoc($arr, 'letters');
 	 * print_r($o);
 	 * </code>
 	 * <pre>
@@ -2475,7 +2475,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(array(1, "one"), array(2, "two"), array(3, "three"), array("ii", "two"));
-	 * $o = enumerator::rassoc($arr, 'two');
+	 * $o = Enumerator::rassoc($arr, 'two');
 	 * print_r($o);
 	 * </code>
 	 * <pre>
@@ -2488,7 +2488,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(array(1, "one"), array(2, "two"), array(3, "three"), array("ii", "two"));
-	 * $o = enumerator::rassoc($arr, 'four');
+	 * $o = Enumerator::rassoc($arr, 'four');
 	 * var_dump($o);
 	 * </code>
 	 * <pre>
@@ -2516,7 +2516,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('a', 'b', 'c', 'd', 'e');
-	 * echo enumerator::at($arr, 0);
+	 * echo Enumerator::at($arr, 0);
 	 * </code>
 	 * <pre>
 	 * a
@@ -2524,7 +2524,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('a', 'b', 'c', 'd', 'e');
-	 * echo enumerator::at($arr, -1);
+	 * echo Enumerator::at($arr, -1);
 	 * </code>
 	 * <pre>
 	 * e
@@ -2532,7 +2532,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('a', 'b', 'c', 'd', 'e');
-	 * print_r(enumerator::at($arr, 0, 3, 4));
+	 * print_r(Enumerator::at($arr, 0, 3, 4));
 	 * </code>
 	 * <pre>
 	 * Array
@@ -2573,7 +2573,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(1, 2, 3, 4);
-	 * enumerator::combination_($arr, 1);
+	 * Enumerator::combination_($arr, 1);
 	 * print_r($arr);
 	 * </code>
 	 * <pre>
@@ -2604,7 +2604,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(1, 2, 3, 4);
-	 * enumerator::combination_($arr, 4);
+	 * Enumerator::combination_($arr, 4);
 	 * print_r($arr);
 	 * </code>
 	 * <pre>
@@ -2623,7 +2623,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(1, 2, 3, 4);
-	 * enumerator::combination_($arr, 0);
+	 * Enumerator::combination_($arr, 0);
 	 * print_r($arr);
 	 * </code>
 	 * <pre>
@@ -2711,7 +2711,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('a','b', 'b', 'b', 'c');
-	 * echo enumerator::delete_($arr, 'b') . PHP_EOL;
+	 * echo Enumerator::delete_($arr, 'b') . PHP_EOL;
 	 * print_r($arr);
 	 * </code>
 	 * <pre>
@@ -2725,7 +2725,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('a','b', 'b', 'b', 'c');
-	 * var_dump(enumerator::delete_($arr, 'z'));
+	 * var_dump(Enumerator::delete_($arr, 'z'));
 	 * </code>
 	 * <pre>
 	 * NULL
@@ -2733,7 +2733,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('a','b', 'b', 'b', 'c');
-	 * var_dump(enumerator::delete($arr, 'z', function() {
+	 * var_dump(Enumerator::delete($arr, 'z', function() {
 	 * 	return false;
 	 * }));
 	 * </code>
@@ -2769,7 +2769,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('ant', 'bat', 'cat', 'dog');
-	 * $ret = enumerator::delete_at_($arr, 2);
+	 * $ret = Enumerator::delete_at_($arr, 2);
 	 * echo $ret . PHP_EOL;
 	 * print_r($arr);
 	 * </code>
@@ -2785,7 +2785,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array('ant', 'bat', 'cat', 'dog');
-	 * $ret = enumerator::delete_at($arr, 99);
+	 * $ret = Enumerator::delete_at($arr, 99);
 	 * var_dump($ret);
 	 * </code>
 	 * <pre>
@@ -2814,7 +2814,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(11, 22, 33, 44);
-	 * echo enumerator::fetch($arr, 1);
+	 * echo Enumerator::fetch($arr, 1);
 	 * </code>
 	 * <pre>
 	 * 22
@@ -2822,7 +2822,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(11, 22, 33, 44);
-	 * echo enumerator::fetch($arr, -1);
+	 * echo Enumerator::fetch($arr, -1);
 	 * </code>
 	 * <pre>
 	 * 44
@@ -2830,7 +2830,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(11, 22, 33, 44);
-	 * echo enumerator::fetch($arr, 4, 'cat');
+	 * echo Enumerator::fetch($arr, 4, 'cat');
 	 * </code>
 	 * <pre>
 	 * cat
@@ -2838,7 +2838,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(11, 22, 33, 44);
-	 * echo enumerator::fetch($arr, 4, function($i) {
+	 * echo Enumerator::fetch($arr, 4, function($i) {
 	 * 	return $i * $i;
 	 * });
 	 * </code>
@@ -2883,9 +2883,9 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(1, 2, array(3, array(4, 5)));
-	 * $arr = enumerator::flatten($arr);
+	 * $arr = Enumerator::flatten($arr);
 	 * echo print_r($arr, true) . PHP_EOL;
-	 * $arr = enumerator::flatten($arr);
+	 * $arr = Enumerator::flatten($arr);
 	 * var_dump($arr);
 	 * </code>
 	 * <pre>
@@ -2902,7 +2902,7 @@ class Enumerator {
 	 * 
 	 * <code>
 	 * $arr = array(1, 2, array(3, array(4, 5)));
-	 * enumerator::flatten_($arr, 1);
+	 * Enumerator::flatten_($arr, 1);
 	 * print_r($arr);
 	 * </code>
 	 * <pre>
