@@ -265,8 +265,8 @@ $o = Enumerator::all($animals, function($key, &$value) {
 var_dump($o);
 ```
 
-```
-bool(true)
+```
+bool(true)
 ```
 
 Example 2
@@ -279,8 +279,8 @@ $o = Enumerator::all($animals, function($key, &$value) {
 var_dump($o);
 ```
 
-```
-bool(false)
+```
+bool(false)
 ```
 
 Example 3
@@ -291,8 +291,8 @@ $o = Enumerator::all($arr);
 var_dump($o);
 ```
 
-```
-bool(false)
+```
+bool(false)
 ```
 
 
@@ -330,12 +330,12 @@ $o = Enumerator::drop($animals, 1);
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => bear
     [1] => cat
-)
+)
 ```
 
 
@@ -375,8 +375,8 @@ $o = Enumerator::any($animals, function($key, &$value) {
 var_dump($o);
 ```
 
-```
-bool(true)
+```
+bool(true)
 ```
 
 Example 2
@@ -389,8 +389,8 @@ $o = Enumerator::any($animals, function($key, &$value) {
 var_dump($o);
 ```
 
-```
-bool(true)
+```
+bool(true)
 ```
 
 Example 3
@@ -401,8 +401,8 @@ $o = Enumerator::any($arr);
 var_dump($o);
 ```
 
-```
-bool(true)
+```
+bool(true)
 ```
 
 
@@ -464,14 +464,14 @@ $o = Enumerator::collect($arr, function($key, &$value) {
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => 1
     [1] => 4
     [2] => 9
     [3] => 16
-)
+)
 ```
 
 Example 2
@@ -485,14 +485,14 @@ $o = Enumerator::collect($arr, function($key, &$value) {
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => cat
     [1] => cat
     [2] => cat
     [3] => cat
-)
+)
 ```
 
 
@@ -539,8 +539,8 @@ $arr = array(1,2,4,2);
 echo Enumerator::count($arr);
 ```
 
-```
-4
+```
+4
 ```
 
 Example 2
@@ -550,8 +550,8 @@ $arr = array(1,2,4,2);
 echo Enumerator::count($arr, 2);
 ```
 
-```
-2
+```
+2
 ```
 
 Example 3
@@ -563,8 +563,8 @@ echo Enumerator::count($arr, function($key, &$value) {
 });
 ```
 
-```
-3
+```
+3
 ```
 
 
@@ -611,8 +611,8 @@ $o = Enumerator::detect($arr, function($key, &$value) {
 var_dump($o);
 ```
 
-```
-NULL
+```
+NULL
 ```
 
 Example 2
@@ -624,8 +624,8 @@ echo Enumerator::detect($arr, function($key, &$value) {
 });
 ```
 
-```
-35
+```
+35
 ```
 
 
@@ -676,13 +676,13 @@ $o = Enumerator::select($arr, function($key, &$value) {
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [2] => 3
     [5] => 6
     [8] => 9
-)
+)
 ```
 
 
@@ -731,7 +731,7 @@ $o = Enumerator::each_slice($arr, 3, function(&$collection) {
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => Array
@@ -761,7 +761,7 @@ Array
             [0] => 11
         )
 
-)
+)
 ```
 
 
@@ -802,11 +802,11 @@ $o = Enumerator::first($animals);
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => cat
-)
+)
 ```
 
 Example 2
@@ -817,12 +817,12 @@ $o = Enumerator::first($animals, 2);
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => cat
     [1] => dog
-)
+)
 ```
 
 
@@ -870,14 +870,14 @@ $o = Enumerator::collect_concat($arr, function($key, &$value) {
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => 2
     [1] => 3
     [2] => 4
     [3] => 5
-)
+)
 ```
 
 
@@ -924,13 +924,13 @@ $o = Enumerator::grep($arr, "/^snow/");
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => snowball
     [1] => snowcone
     [2] => snowangel
-)
+)
 ```
 
 
@@ -979,7 +979,7 @@ $o = Enumerator::group_by($arr, function($key, &$value) {
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => Array
@@ -1000,7 +1000,7 @@ Array
             [1] => 5
         )
 
-)
+)
 ```
 
 
@@ -1036,8 +1036,8 @@ $o = Enumerator::member($arr, 'snowcone');
 var_dump($o);
 ```
 
-```
-bool(true)
+```
+bool(true)
 ```
 
 Example 2
@@ -1048,8 +1048,8 @@ $o = Enumerator::member($arr, 'snowman');
 var_dump($o);
 ```
 
-```
-bool(false)
+```
+bool(false)
 ```
 
 Example 3
@@ -1061,8 +1061,8 @@ $o = Enumerator::$fun($arr, 'snowcone');
 var_dump($o);
 ```
 
-```
-bool(true)
+```
+bool(true)
 ```
 
 
@@ -1097,8 +1097,8 @@ $arr = array('albatross','dog','horse');
 echo Enumerator::min($arr);
 ```
 
-```
-albatross
+```
+albatross
 ```
 
 Example 2
@@ -1110,8 +1110,8 @@ echo Enumerator::min($arr, function($val1, $val2) {
 });
 ```
 
-```
-dog
+```
+dog
 ```
 
 
@@ -1146,8 +1146,8 @@ $arr = array('albatross','dog','horse');
 echo Enumerator::max($arr);
 ```
 
-```
-horse
+```
+horse
 ```
 
 Example 2
@@ -1159,8 +1159,8 @@ echo Enumerator::max($arr, function($val1, $val2) {
 });
 ```
 
-```
-albatross
+```
+albatross
 ```
 
 
@@ -1194,8 +1194,8 @@ echo Enumerator::min_by($arr, function($val) {
 });
 ```
 
-```
-dog
+```
+dog
 ```
 
 
@@ -1229,8 +1229,8 @@ echo Enumerator::max_by($arr, function($val) {
 });
 ```
 
-```
-albatross
+```
+albatross
 ```
 
 
@@ -1268,12 +1268,12 @@ $o = Enumerator::minmax($arr, function($val1, $val2) {
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => dog
     [1] => albatross
-)
+)
 ```
 
 
@@ -1308,12 +1308,12 @@ $o = Enumerator::minmax_by($arr, function($val) {
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => dog
     [1] => albatross
-)
+)
 ```
 
 
@@ -1351,8 +1351,8 @@ $o = Enumerator::none($arr, function($key, $value) {
 var_dump($o);
 ```
 
-```
-bool(true)
+```
+bool(true)
 ```
 
 Example 2
@@ -1365,8 +1365,8 @@ $o = Enumerator::none($arr, function($key, $value) {
 var_dump($o);
 ```
 
-```
-bool(false)
+```
+bool(false)
 ```
 
 Example 3
@@ -1376,8 +1376,8 @@ $o = Enumerator::none(array());
 var_dump($o);
 ```
 
-```
-bool(true)
+```
+bool(true)
 ```
 
 Example 4
@@ -1387,8 +1387,8 @@ $o = Enumerator::none(array(null));
 var_dump($o);
 ```
 
-```
-bool(true)
+```
+bool(true)
 ```
 
 Example 5
@@ -1399,8 +1399,8 @@ $o = Enumerator::none($arr);
 var_dump($o);
 ```
 
-```
-bool(true)
+```
+bool(true)
 ```
 
 
@@ -1438,8 +1438,8 @@ $o = Enumerator::one($arr, function($key, $value) {
 var_dump($o);
 ```
 
-```
-bool(true)
+```
+bool(true)
 ```
 
 Example 2
@@ -1449,8 +1449,8 @@ $o = Enumerator::one(array(null, true, 99));
 var_dump($o);
 ```
 
-```
-bool(false)
+```
+bool(false)
 ```
 
 Example 3
@@ -1460,8 +1460,8 @@ $o = Enumerator::one(array(null, true, false));
 var_dump($o);
 ```
 
-```
-bool(true)
+```
+bool(true)
 ```
 
 
@@ -1506,7 +1506,7 @@ $o = Enumerator::partition($arr, function($key, $value) {
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => Array
@@ -1522,7 +1522,7 @@ Array
             [1] => 3
             [2] => 5
         )
-)
+)
 ```
 
 
@@ -1574,8 +1574,8 @@ echo Enumerator::inject($arr, function($key, &$value, &$memo){
 });
 ```
 
-```
-45
+```
+45
 ```
 
 Example 2
@@ -1588,8 +1588,8 @@ echo Enumerator::inject($arr, function($key, &$value, &$memo){
 }, 1);
 ```
 
-```
-151200
+```
+151200
 ```
 
 
@@ -1634,7 +1634,7 @@ $o = Enumerator::reject($arr, function($key, $value) {
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => 1
@@ -1644,7 +1644,7 @@ Array
     [6] => 7
     [7] => 8
     [9] => 10
-)
+)
 ```
 
 
@@ -1701,8 +1701,8 @@ Enumerator::reverse_collect($arr, function($key, &$value) {
 });
 ```
 
-```
-3, 2, 1,
+```
+3, 2, 1,
 ```
 
 
@@ -1743,13 +1743,13 @@ $o = Enumerator::sort($arr);
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => flea
     [1] => kea
     [2] => rhea
-)
+)
 ```
 
 Example 2
@@ -1762,13 +1762,13 @@ $o = Enumerator::sort($arr, function($val1, $val2) {
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => rhea
     [1] => kea
     [2] => flea
-)
+)
 ```
 
 
@@ -1808,13 +1808,13 @@ $o = Enumerator::sort_by($arr, function($val) {
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => kea
     [1] => flea
     [2] => rhea
-)
+)
 ```
 
 
@@ -1857,12 +1857,12 @@ $o = Enumerator::take_while($arr, function($key, &$value) {
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => 1
     [1] => 2
-)
+)
 ```
 
 
@@ -1903,7 +1903,7 @@ $o = Enumerator::zip($arr, array(4,5,6), array(7,8,9));
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => Array
@@ -1928,7 +1928,7 @@ Array
             [2] => 9
         )
 
-)
+)
 ```
 
 Example 2
@@ -1939,7 +1939,7 @@ $o = Enumerator::zip($arr, array(4,5,6),array(7,8,9));
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => Array
@@ -1956,7 +1956,7 @@ Array
             [2] => 8
         )
 
-)
+)
 ```
 
 Example 3
@@ -1967,7 +1967,7 @@ $o = Enumerator::zip($arr, array(1,2), array(8));
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => Array
@@ -1991,7 +1991,7 @@ Array
             [2] => 
         )
 
-)
+)
 ```
 
 
@@ -2031,14 +2031,14 @@ $o = Enumerator::drop_while($arr, function($key, &$value) {
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => 3
     [1] => 4
     [2] => 5
     [3] => 0
-)
+)
 ```
 
 
@@ -2082,8 +2082,8 @@ Enumerator::cycle($arr, 3, function($key, $value, $it) {
 });
 ```
 
-```
-1,2,3,1,2,3,1,2,3,
+```
+1,2,3,1,2,3,1,2,3,
 ```
 
 
@@ -2125,7 +2125,7 @@ $o = Enumerator::each_cons($arr, 8);
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => Array
@@ -2164,7 +2164,7 @@ Array
             [7] => 10
         )
 
-)
+)
 ```
 
 
@@ -2202,7 +2202,7 @@ $o = Enumerator::slice_before($arr, "/[02468]/"); // will "splice before" an eve
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => Array
@@ -2239,7 +2239,7 @@ Array
             [0] => 0
         )
 
-)
+)
 ```
 
 
@@ -2282,7 +2282,7 @@ $o = Enumerator::merge($animals, $trees, array('wool'));
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => dog
@@ -2290,7 +2290,7 @@ Array
     [2] => pig
     [3] => pine
     [4] => wool
-)
+)
 ```
 
 
@@ -2331,13 +2331,13 @@ $o = Enumerator::rotate($arr, 1);
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => bar
     [1] => foobar
     [2] => Foo
-)
+)
 ```
 
 Example 2
@@ -2348,13 +2348,13 @@ $o = Enumerator::rotate($arr, -1);
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => foobar
     [1] => Foo
     [2] => bar
-)
+)
 ```
 
 
@@ -2395,13 +2395,13 @@ $o = Enumerator::reverse($arr);
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => 3
     [1] => 2
     [2] => 1
-)
+)
 ```
 
 
@@ -2446,8 +2446,8 @@ $o = Enumerator::random($arr);
 echo $o;
 ```
 
-```
-dog
+```
+dog
 ```
 
 Example 2
@@ -2458,12 +2458,12 @@ $o = Enumerator::random($arr, 2);
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => dog
     [1] => cow
-)
+)
 ```
 
 
@@ -2504,13 +2504,13 @@ $o = Enumerator::shuffle($arr);
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => 2
     [1] => 1
     [2] => 3
-)
+)
 ```
 
 Example 2
@@ -2521,13 +2521,13 @@ $o = Enumerator::shuffle($arr, true);
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [a] => apple
     [c] => carrot
     [b] => banana
-)
+)
 ```
 
 
@@ -2574,12 +2574,12 @@ $o = Enumerator::values_at($name, 'title', 'last');
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [title] => Dr.
     [last] => Doe
-)
+)
 ```
 
 
@@ -2608,8 +2608,8 @@ $arr = array();
 var_dump(Enumerator::isEmpty($arr));
 ```
 
-```
-bool(true)
+```
+bool(true)
 ```
 
 Example 2
@@ -2619,8 +2619,8 @@ $arr = array(1,2,3);
 var_dump(Enumerator::isEmpty($arr));
 ```
 
-```
-bool(false)
+```
+bool(false)
 ```
 
 Example 3
@@ -2631,8 +2631,8 @@ $arr = array(1,2,3);
 var_dump(Enumerator::$empty($arr));
 ```
 
-```
-bool(false)
+```
+bool(false)
 ```
 
 
@@ -2660,8 +2660,8 @@ $arr = array(0,false);
 var_dump(Enumerator::has_value($arr, null));
 ```
 
-```
-bool(false)
+```
+bool(false)
 ```
 
 Example 2
@@ -2671,8 +2671,8 @@ $arr = array(false,null);
 var_dump(Enumerator::has_value($arr, 0));
 ```
 
-```
-bool(false)
+```
+bool(false)
 ```
 
 Example 3
@@ -2682,8 +2682,8 @@ $arr = array('apple', 'banana', 'orange');
 var_dump(Enumerator::has_value($arr, 'orange'));
 ```
 
-```
-bool(true)
+```
+bool(true)
 ```
 
 
@@ -2730,8 +2730,8 @@ $name = array(
 echo Enumerator::index($name, 'John');
 ```
 
-```
-first
+```
+first
 ```
 
 Example 2
@@ -2750,8 +2750,8 @@ echo Enumerator::index_($name, function($key, &$value) {
 });
 ```
 
-```
-title
+```
+title
 ```
 
 
@@ -2794,8 +2794,8 @@ $name = array(
 echo Enumerator::rindex($name, 'John');
 ```
 
-```
-first
+```
+first
 ```
 
 Example 2
@@ -2814,8 +2814,8 @@ echo Enumerator::rindex_($name, function($key, &$value) {
 });
 ```
 
-```
-suffix
+```
+suffix
 ```
 
 
@@ -2856,7 +2856,7 @@ $o = Enumerator::compact($arr);
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => 1
@@ -2870,7 +2870,7 @@ Array
             [3] => 
        )
 
-)
+)
 ```
 
 Example 2
@@ -2881,7 +2881,7 @@ $o = Enumerator::compact($arr, true);
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => 1
@@ -2894,7 +2894,7 @@ Array
             [2] => 4
        )
 
-)
+)
 ```
 
 
@@ -2934,13 +2934,13 @@ $a = Enumerator::uniq($arr);
 print_r($a);
 ```
 
-```
+```
 Array
 (
     [0] => 1
     [2] => 2
     [3] => 3
-)
+)
 ```
 
 
@@ -2979,14 +2979,14 @@ $o = Enumerator::assoc($arr, 'letters');
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => letters
     [1] => a
     [2] => b
     [3] => c
-)
+)
 ```
 
 
@@ -3022,12 +3022,12 @@ $o = Enumerator::rassoc($arr, 'two');
 print_r($o);
 ```
 
-```
+```
 Array
 (
     [0] => 2
     [1] => two
-)
+)
 ```
 
 Example 2
@@ -3038,8 +3038,8 @@ $o = Enumerator::rassoc($arr, 'four');
 var_dump($o);
 ```
 
-```
-NULL
+```
+NULL
 ```
 
 
@@ -3073,8 +3073,8 @@ $arr = array('a', 'b', 'c', 'd', 'e');
 echo Enumerator::at($arr, 0);
 ```
 
-```
-a
+```
+a
 ```
 
 Example 2
@@ -3084,8 +3084,8 @@ $arr = array('a', 'b', 'c', 'd', 'e');
 echo Enumerator::at($arr, -1);
 ```
 
-```
-e
+```
+e
 ```
 
 Example 3
@@ -3095,13 +3095,13 @@ $arr = array('a', 'b', 'c', 'd', 'e');
 print_r(Enumerator::at($arr, 0, 3, 4));
 ```
 
-```
+```
 Array
 (
     [0] => a
     [1] => d
     [2] => e
-)
+)
 ```
 
 
@@ -3137,7 +3137,7 @@ Enumerator::combination_($arr, 1);
 print_r($arr);
 ```
 
-```
+```
 Array
 (
     [0] => Array
@@ -3160,7 +3160,7 @@ Array
             [0] => 4
         )
 
-)
+)
 ```
 
 Example 2
@@ -3171,7 +3171,7 @@ Enumerator::combination_($arr, 4);
 print_r($arr);
 ```
 
-```
+```
 Array
 (
     [0] => Array
@@ -3182,7 +3182,7 @@ Array
             [3] => 4
         )
 
-)
+)
 ```
 
 Example 3
@@ -3193,14 +3193,14 @@ Enumerator::combination_($arr, 0);
 print_r($arr);
 ```
 
-```
+```
 Array
 (
     [0] => Array
         (
         )
 
-)
+)
 ```
 
 
@@ -3236,13 +3236,13 @@ echo Enumerator::delete_($arr, 'b') . PHP_EOL;
 print_r($arr);
 ```
 
-```
+```
 b
 Array
 (
 	[0] => a
 	[4] => c
-)
+)
 ```
 
 Example 2
@@ -3252,8 +3252,8 @@ $arr = array('a','b', 'b', 'b', 'c');
 var_dump(Enumerator::delete_($arr, 'z'));
 ```
 
-```
-NULL
+```
+NULL
 ```
 
 Example 3
@@ -3265,8 +3265,8 @@ var_dump(Enumerator::delete($arr, 'z', function() {
 }));
 ```
 
-```
-bool(false)
+```
+bool(false)
 ```
 
 
@@ -3298,14 +3298,14 @@ echo $ret . PHP_EOL;
 print_r($arr);
 ```
 
-```
+```
 cat
 Array
 (
     [0] => ant
     [1] => bat
     [3] => dog
-)
+)
 ```
 
 Example 2
@@ -3316,8 +3316,8 @@ $ret = Enumerator::delete_at($arr, 99);
 var_dump($ret);
 ```
 
-```
-NULL
+```
+NULL
 ```
 
 
@@ -3351,8 +3351,8 @@ $arr = array(11, 22, 33, 44);
 echo Enumerator::fetch($arr, 1);
 ```
 
-```
-22
+```
+22
 ```
 
 Example 2
@@ -3362,8 +3362,8 @@ $arr = array(11, 22, 33, 44);
 echo Enumerator::fetch($arr, -1);
 ```
 
-```
-44
+```
+44
 ```
 
 Example 3
@@ -3373,8 +3373,8 @@ $arr = array(11, 22, 33, 44);
 echo Enumerator::fetch($arr, 4, 'cat');
 ```
 
-```
-cat
+```
+cat
 ```
 
 Example 4
@@ -3386,8 +3386,8 @@ echo Enumerator::fetch($arr, 4, function($i) {
 });
 ```
 
-```
-16
+```
+16
 ```
 
 
@@ -3420,7 +3420,7 @@ $arr = Enumerator::flatten($arr);
 var_dump($arr);
 ```
 
-```
+```
 Array
 (
     [0] => 1
@@ -3429,7 +3429,7 @@ Array
     [3] => 4
     [4] => 5
 )
-NULL
+NULL
 ```
 
 Example 2
@@ -3440,7 +3440,7 @@ Enumerator::flatten_($arr, 1);
 print_r($arr);
 ```
 
-```
+```
 Array
 (
     [0] => 1
@@ -3451,7 +3451,7 @@ Array
             [0] => 4
             [1] => 5
         )
-)
+)
 ```
 
 
