@@ -1,2 +1,3 @@
 <?php
-require_once(__DIR__ . '/../src/PrettyArray.php');
+
+require __DIR__ . '/../vendor/autoload.php';

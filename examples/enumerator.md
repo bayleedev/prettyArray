@@ -1,4 +1,4 @@
-\prettyArray\src\Enumerator
+\prettyArray\Enumerator
 ===========================
 Enumerator
 
@@ -1189,8 +1189,8 @@ Example 1
 ---------
 ```php
 $arr = array('albatross','dog','horse');
-echo Enumerator::min_by($arr, function($val) { 
-	return strlen($val); 
+echo Enumerator::min_by($arr, function($val) {
+	return strlen($val);
 });
 ```
 
@@ -1261,8 +1261,8 @@ Return
 Example 1
 ---------
 ```php
-$arr = array('albatross','dog','horse'); 
-$o = Enumerator::minmax($arr, function($val1, $val2) { 
+$arr = array('albatross','dog','horse');
+$o = Enumerator::minmax($arr, function($val1, $val2) {
 	return strcmp(strlen($val1), strlen($val2));
 });
 print_r($o);
@@ -1302,7 +1302,7 @@ Example 1
 ---------
 ```php
 $arr = array('albatross','dog','horse');
-$o = Enumerator::minmax_by($arr, function($val) { 
+$o = Enumerator::minmax_by($arr, function($val) {
 	return strlen($val);
 });
 print_r($o);
@@ -1981,14 +1981,14 @@ Array
         (
             [0] => 5
             [1] => 2
-            [2] => 
+            [2] =>
         )
 
     [2] => Array
         (
             [0] => 6
-            [1] => 
-            [2] => 
+            [1] =>
+            [2] =>
         )
 
 )
@@ -2867,7 +2867,7 @@ Array
             [0] => 2
             [1] => 3
             [2] => 4
-            [3] => 
+            [3] =>
        )
 
 )

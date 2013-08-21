@@ -3,7 +3,7 @@
 	This will test the core functionality of PrettyArray
 */
 
-use \prettyArray\src\PrettyArray;
+use prettyArray\PrettyArray;
 
 class prettyArrayTest extends PHPUnit_Framework_TestCase {
 
@@ -30,7 +30,7 @@ class prettyArrayTest extends PHPUnit_Framework_TestCase {
 		$arr2 = array();
 
 		$iterations = 10000;
-		
+
 		for($i = 0;$i<$iterations;$i++) {
 			// Value
 			$value = mt_rand(1000,2000);

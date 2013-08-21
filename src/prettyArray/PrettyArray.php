@@ -1,40 +1,37 @@
 <?php
 /**
  * PrettyArray
- * 
+ *
  * A object oriented approach to handling arrays in PHP.
- * 
+ *
  * @package PrettyArray
  * @author Blaine Schmeisser <BlaineSch@gmail.com>
  */
 
-namespace prettyArray\src;
+namespace prettyArray;
 
-use prettyArray\src\Enumerator;
-
-// Dependencies
-require_once(__DIR__ . '/Enumerator.php');
+use prettyArray\Enumerator;
 
 /**
  * PrettyArray
- * 
+ *
  * This class does not have very much in it, and is planning on staying that way. Instead, it makes magic calls to the 'enumerator' class.
  * All methods in enumerator are static, which allows this class to call them statically or non-statically making PrettyArray very versatile.
  * When you are calling methods in enumerator through PrettyArray non-statically it will always prepend the current array to the paramater list.
- * 
+ *
  * Destructive methods
  * -------------------
  * Some methods that this class provides are 'destructive' similar to methods in Ruby that end in an exclamation mark (!).
  * Every destructive methods has a 'magic' alias which allow for non-destructive calls.
- * 
+ *
  * For example the method 'count_' has a callback which could modify the array, even though it never returns it.
  * The method 'select_' returns nothing by default and simply modifies the input array, however it's non-destructive alias would return the array.
  * The underscore is simply an extra precaution.
- * 
+ *
  * Method Aliases
  * --------------
  * Methods often have various aliases which are pointed out in the documentation. They work identically to the real function call.
- * 
+ *
  * Continue / Break
  * ----------------
  * You can throw new continue/break statements as exceptions. You can throw them in the following methods and their respective aliases:
@@ -46,12 +43,12 @@ require_once(__DIR__ . '/Enumerator.php');
  * * reverse_collect
  * * cycle
  * * each_cons
- * 
+ *
  * Throwing a continue:
  * <code>
  * 	throw new ContinueException;
  * </code>
- * 
+ *
  * Throwing a break:
  * <code>
  * 	throw new BreakException;
@@ -63,12 +60,12 @@ class PrettyArray implements \ArrayAccess {
 	 * The real data
 	 */
 	protected $data = array();
-	
+
 	/**
 	 * Currently only one mixin, but this might change.
 	 */
-	protected static $mixins = 'prettyArray\src\Enumerator';
-	
+	protected static $mixins = 'prettyArray\Enumerator';
+
 	/**
 	 * Remaps non-destructive methods to their destructive counter parts.
 	 */
@@ -87,7 +84,7 @@ class PrettyArray implements \ArrayAccess {
 
 	/**
 	 * The default array can be passed as the first argument in the constructor.
-	 * @param array optional $defaults 
+	 * @param array optional $defaults
 	 */
 	public function __construct(array $defaults = array()) {
 		if(is_null(self::$enumData['methodMap'])) {
@@ -99,9 +96,9 @@ class PrettyArray implements \ArrayAccess {
 
 	/**
 	 * Methods: chain
-	 * 
+	 *
 	 * Determines if the given method supports chaining.
-	 * 
+	 *
 	 * @param string $method The method you are testing.
 	 * @return bool If the method does not exist false is returned.
 	 */
@@ -129,9 +126,9 @@ class PrettyArray implements \ArrayAccess {
 
 	/**
 	 * Methods: offsetSet
-	 * 
+	 *
 	 * Part of ArrayAccess. Allows PrettyArray to set a value based on the [] operator.
-	 * 
+	 *
 	 * <code>
 	 * $arr = new PrettyArray();
 	 * $arr[] = 'new';
@@ -145,9 +142,9 @@ class PrettyArray implements \ArrayAccess {
 	 *     [1] => 2
 	 * )
 	 * </pre>
-	 * 
-	 * @param mixed $key 
-	 * @param mixed $value 
+	 *
+	 * @param mixed $key
+	 * @param mixed $value
 	 * @return $value
 	 */
 	public function offsetSet($key, $value) {
@@ -161,9 +158,9 @@ class PrettyArray implements \ArrayAccess {
 
 	/**
 	 * Methods: offsetExists
-	 * 
+	 *
 	 * Part of ArrayAccess. If the offest exists.
-	 * 
+	 *
 	 * <code>
 	 * $arr = new PrettyArray();
 	 * $arr[0] = 'foobar';
@@ -174,8 +171,8 @@ class PrettyArray implements \ArrayAccess {
 	 * bool(true)
 	 * bool(true)
 	 * </pre>
-	 * 
-	 * @param mixed $key 
+	 *
+	 * @param mixed $key
 	 * @return boolean
 	 */
 	public function offsetExists($key) {
@@ -184,9 +181,9 @@ class PrettyArray implements \ArrayAccess {
 
 	/**
 	 * Methods: offsetUnset
-	 * 
+	 *
 	 * Part of ArrayAccess. Will unset the value if it exists.
-	 * 
+	 *
 	 * <code>
 	 * $arr = new PrettyArray();
 	 * $arr[0] = 'foobar';
@@ -200,8 +197,8 @@ class PrettyArray implements \ArrayAccess {
 	 * (
 	 * )
 	 * </pre>
-	 * 
-	 * @param mixed $key 
+	 *
+	 * @param mixed $key
 	 * @return void
 	 */
 	public function offsetUnset($key) {
@@ -213,9 +210,9 @@ class PrettyArray implements \ArrayAccess {
 
 	/**
 	 * Methods: offsetGet
-	 * 
+	 *
 	 * Part of ArrayAccess. Will get the value of the current offset.
-	 * 
+	 *
 	 * <code>
 	 * $arr = new PrettyArray();
 	 * $arr[0] = 'foobar';
@@ -226,8 +223,8 @@ class PrettyArray implements \ArrayAccess {
 	 * foobar
 	 * foobar
 	 * </pre>
-	 * 
-	 * @param type $key 
+	 *
+	 * @param type $key
 	 * @return type
 	 */
 	public function offsetGet($key) {
@@ -236,11 +233,11 @@ class PrettyArray implements \ArrayAccess {
 
 	/**
 	 * Methods: __call
-	 * 
+	 *
 	 * This serves two purposes.
 	 * The first is that it helps the destructive methods in this class become non-destructive giving them aliases.
 	 * The second is that is also proxies/mixins the static enumerable methods to non-static calls on this class and appends the current array as the first param.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(1,2,3);
 	 * Enumerator::collect_($arr, function($key, &$value) {
@@ -257,7 +254,7 @@ class PrettyArray implements \ArrayAccess {
 	 *     [2] => 4
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = new PrettyArray(array(2,3,4));
 	 * $arr->collect_(function($key, &$value) {
@@ -274,9 +271,9 @@ class PrettyArray implements \ArrayAccess {
 	 *     [2] => 3
 	 * )
 	 * </pre>
-	 * 
-	 * @param string $method 
-	 * @param array $params 
+	 *
+	 * @param string $method
+	 * @param array $params
 	 * @return mixed
 	 */
 	public function __call($method, $params) {
@@ -307,9 +304,9 @@ class PrettyArray implements \ArrayAccess {
 
 	/**
 	 * Methods: __callStatic
-	 * 
+	 *
 	 * A basic proxy for static methods on enumerator.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(1,2,3);
 	 * Enumerator::collect($arr, function($key, &$value) {
@@ -319,7 +316,7 @@ class PrettyArray implements \ArrayAccess {
 	 * <pre>
 	 * 123
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(1,2,3);
 	 * PrettyArray::collect($arr, function($key, &$value) {
@@ -329,9 +326,9 @@ class PrettyArray implements \ArrayAccess {
 	 * <pre>
 	 * 123
 	 * </pre>
-	 * 
-	 * @param string $method 
-	 * @param array $params 
+	 *
+	 * @param string $method
+	 * @param array $params
 	 * @return mixed
 	 */
 	public static function __callStatic($method, $params) {
@@ -345,12 +342,12 @@ class PrettyArray implements \ArrayAccess {
 
 	/**
 	 * Will get a 'range' from PrettyArray. Calling it destructively will force the return value to be references to the current PrettyArray.
-	 * 
+	 *
 	 * <code>
 	 * $arr = new PrettyArray(['swamp', 'desert', 'snow', 'rain', 'fog']);
 	 * $arr->getSet(1,3); // [ 1 => desert, 2 => snow, 3 => rain]
 	 * </code>
-	 * 
+	 *
 	 * <code>
 	 * $arr = new PrettyArray();
 	 * $arr['nasty'] = 'swamp';
@@ -358,7 +355,7 @@ class PrettyArray implements \ArrayAccess {
 	 * $arr['cold'] = 'snow';
 	 * $arr[] = 'rain';
 	 * $arr[] = 'fog';
-	 * 
+	 *
 	 * $o = $arr->getRange('hot', 0)->to_a();
 	 * print_r($o);
 	 * </code>
@@ -370,9 +367,9 @@ class PrettyArray implements \ArrayAccess {
 	 *     [0] => rain
 	 * )
 	 * </pre>
-	 * 
-	 * @param mixed $start 
-	 * @param mixed $end 
+	 *
+	 * @param mixed $start
+	 * @param mixed $end
 	 * @return PrettyArray
 	 */
 	public function getRange_($start, $end) {
@@ -395,9 +392,9 @@ class PrettyArray implements \ArrayAccess {
 
 	/**
 	 * Methods: getSet, getSet_
-	 * 
+	 *
 	 * Will get a 'set' from PrettyArray. Calling it destructively will force the return value to be references to the current PrettyArray.
-	 * 
+	 *
 	 * <code>
 	 * $arr = new PrettyArray(array(1,2,3,4,5));
 	 * $o = $arr->getSet(1, 2)->to_a();
@@ -410,10 +407,10 @@ class PrettyArray implements \ArrayAccess {
 	 *     [2] => 3
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Array.html#method-i-slice
-	 * @param mixed $start 
-	 * @param int $length 
+	 * @param mixed $start
+	 * @param int $length
 	 * @return PrettyArray
 	 */
 	public function getSet_($start, $length) {
@@ -433,9 +430,9 @@ class PrettyArray implements \ArrayAccess {
 
 	/**
 	 * Methods: setByReference
-	 * 
+	 *
 	 * By default you can't set by reference. This helps you do so.
-	 * 
+	 *
 	 * <code>
 	 * $arr = new PrettyArray();
 	 * $a = 'foo';
@@ -446,10 +443,10 @@ class PrettyArray implements \ArrayAccess {
 	 * <pre>
 	 * bar
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Array.html#method-i-slice
-	 * @param mixed $key 
-	 * @param mixed &$value 
+	 * @param mixed $key
+	 * @param mixed &$value
 	 * @return $value from before
 	 */
 	public function setByReference($key, &$value) {
@@ -463,9 +460,9 @@ class PrettyArray implements \ArrayAccess {
 
 	/**
 	 * Method: __toString
-	 * 
+	 *
 	 * Converts the PrettyArray into a print_r string.
-	 * 
+	 *
 	 * <code>
 	 * $arr = new PrettyArray(array(1,2,3));
 	 * echo $arr;
@@ -478,7 +475,7 @@ class PrettyArray implements \ArrayAccess {
 	 *     [2] => 3
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * @return string
 	 */
 	public function __toString() {
@@ -487,9 +484,9 @@ class PrettyArray implements \ArrayAccess {
 
 	/**
 	 * Methods: to_a
-	 * 
+	 *
 	 * Will return the array of data that PrettyArray has stored.
-	 * 
+	 *
 	 * <code>
 	 * $arr = new PrettyArray(array(1,2,3));
 	 * print_r($arr->to_a());
@@ -502,7 +499,7 @@ class PrettyArray implements \ArrayAccess {
 	 *     [2] => 3
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * @return array
 	 */
 	public function to_a() {
