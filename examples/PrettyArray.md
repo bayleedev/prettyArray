@@ -1,4 +1,4 @@
-\prettyArray\src\PrettyArray
+\prettyArray\PrettyArray
 ============================
 PrettyArray
 
@@ -389,8 +389,8 @@ Return
 Example 1
 ---------
 ```php
-use \prettyArray\src\Enumerator;
-use \prettyArray\src\PrettyArray;
+use \prettyArray\Enumerator;
+use \prettyArray\PrettyArray;
 use \prettyArray\srcexceptions\BreakException;
 use \prettyArray\srcexceptions\ContinueException;
 $arr = new PrettyArray(array(1,2,3));
@@ -1620,8 +1620,8 @@ Example 1
 ---------
 ```php
 $arr = new PrettyArray(array('albatross','dog','horse'));
-echo $arr->min_by(function($val) { 
-	return strlen($val); 
+echo $arr->min_by(function($val) {
+	return strlen($val);
 });
 
 ```
@@ -1690,8 +1690,8 @@ Return
 Example 1
 ---------
 ```php
-$arr = new PrettyArray(array('albatross','dog','horse')); 
-$o = $arr->minmax(function($val1, $val2) { 
+$arr = new PrettyArray(array('albatross','dog','horse'));
+$o = $arr->minmax(function($val1, $val2) {
 	return strcmp(strlen($val1), strlen($val2));
 });
 print_r($o->to_a());
@@ -1730,7 +1730,7 @@ Example 1
 ---------
 ```php
 $arr = new PrettyArray(array('albatross','dog','horse'));
-$o = $arr->minmax_by(function($val) { 
+$o = $arr->minmax_by(function($val) {
 	return strlen($val);
 });
 print_r($o->to_a());
@@ -2410,14 +2410,14 @@ Array
         (
             [0] => 5
             [1] => 2
-            [2] => 
+            [2] =>
         )
 
     [2] => Array
         (
             [0] => 6
-            [1] => 
-            [2] => 
+            [1] =>
+            [2] =>
         )
 
 )
@@ -3283,7 +3283,7 @@ Array
             [0] => 2
             [1] => 3
             [2] => 4
-            [3] => 
+            [3] =>
        )
 
 )

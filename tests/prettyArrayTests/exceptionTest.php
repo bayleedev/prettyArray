@@ -3,9 +3,9 @@
 	Tests the core functionality of Enumerator
 */
 
-use \prettyArray\src\Enumerator;
-use \prettyArray\src\exceptions\BreakException;
-use \prettyArray\src\exceptions\ContinueException;
+use prettyArray\Enumerator;
+use prettyArray\exceptions\BreakException;
+use prettyArray\exceptions\ContinueException;
 
 class exceptionTest extends PHPUnit_Framework_TestCase {
 	public function test_collect_break() {

@@ -1,40 +1,36 @@
 <?php
 /**
  * Enumerator
- * 
+ *
  * A object oriented approach to handling arrays in PHP.
- * 
+ *
  * @package PrettyArray
  * @author Blaine Schmeisser <BlaineSch@gmail.com>
  */
 
-namespace prettyArray\src;
+namespace prettyArray;
 
-use prettyArray\src\exceptions\BreakException;
-use prettyArray\src\exceptions\ContinueException;
-
-// Dependencies
-require_once(__DIR__ . '/exceptions/BreakException.php');
-require_once(__DIR__ . '/exceptions/ContinueException.php');
+use prettyArray\exceptions\BreakException;
+use prettyArray\exceptions\ContinueException;
 
 /**
  * Enumerator
- * 
+ *
  * A handy static class for handling array methods similar to the methods available to ruby.
- * 
+ *
  * Destructive methods
  * -------------------
  * Some methods that this class provides are 'destructive' similar to methods in Ruby that end in an exclamation mark (!).
  * Every destructive methods has a 'magic' alias which allow for non-destructive calls.
- * 
+ *
  * For example the method 'count_' has a callback which could modify the array, even though it never returns it.
  * The method 'select_' returns nothing by default and simply modifies the input array, however it's non-destructive alias would return the array.
  * The underscore is simply an extra precaution.
- * 
+ *
  * Method Aliases
  * --------------
  * Methods often have various aliases which are pointed out in the documentation. They work identically to the real function call.
- * 
+ *
  * Continue / Break
  * ----------------
  * You can throw new continue/break statements as exceptions. You can throw them in the following methods and their respective aliases:
@@ -46,17 +42,17 @@ require_once(__DIR__ . '/exceptions/ContinueException.php');
  * * reverse_collect
  * * cycle
  * * each_cons
- * 
+ *
  * Throwing a continue:
  * <code>
  * 	throw new ContinueException;
  * </code>
- * 
+ *
  * Throwing a break:
  * <code>
  * 	throw new BreakException;
  * </code>
- *  
+ *
  * @link http://ruby-doc.org/core-1.9.3/Enumerable.html
  */
 class Enumerator {
@@ -143,10 +139,10 @@ class Enumerator {
 
 	/**
 	 * Methods: get
-	 * 
+	 *
 	 * A generic getter method.
-	 * 
-	 * @param string $name 
+	 *
+	 * @param string $name
 	 * @return mixed
 	 */
 	public static function get($name) {
@@ -158,11 +154,11 @@ class Enumerator {
 
 	/**
 	 * Methods: __callStatic
-	 * 
+	 *
 	 * This magic method helps with method aliases and calling destrucitve methods in a non-destructive way.
 	 * For example the real method "partition_" will take over your $array, but calling the magic method "partition" will not.
 	 * All methods implemented in this class that have an underscore at the end are destructive and have a non-destructive alias.
-	 * 
+	 *
 	 * @param string $method The method name
 	 * @param array $params An array of parrams you wish to pass
 	 * @return mixed
@@ -201,9 +197,9 @@ class Enumerator {
 
 	/**
 	 * Methods: all, all_
-	 * 
+	 *
 	 * Passes each element of the collection to the $callback, if it ever turns false or null this function will return false, else true.
-	 * 
+	 *
 	 * <code>
 	 * $animals = array('ant', 'bear', 'cat');
 	 * $o = Enumerator::all($animals, function($key, &$value) {
@@ -214,7 +210,7 @@ class Enumerator {
 	 * <pre>
 	 * bool(true)
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $animals = array('ant', 'bear', 'cat');
 	 * $o = Enumerator::all($animals, function($key, &$value) {
@@ -225,7 +221,7 @@ class Enumerator {
 	 * <pre>
 	 * bool(false)
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(null, true, 99);
 	 * $o = Enumerator::all($arr);
@@ -234,7 +230,7 @@ class Enumerator {
 	 * <pre>
 	 * bool(false)
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-all-3F
 	 * @param array &$arr
 	 * @param callable $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
@@ -257,9 +253,9 @@ class Enumerator {
 
 	/**
 	 * Methods: drop, drop_
-	 * 
+	 *
 	 * Drops the first $count elements.
-	 * 
+	 *
 	 * <code>
 	 * $animals = array('ant', 'bear', 'cat');
 	 * $o = Enumerator::drop($animals, 1);
@@ -272,7 +268,7 @@ class Enumerator {
 	 *     [1] => cat
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * @link http://www.ruby-doc.org/core-1.9.3/Enumerable.html#method-i-drop
 	 * @param array &$arr
 	 * @param int $count
@@ -285,9 +281,9 @@ class Enumerator {
 
 	/**
 	 * Methods: any, any_
-	 * 
+	 *
 	 * Passes each element of the collection to the $callback, if it ever returns anything besides null or false I'll return true, else I'll return false.
-	 * 
+	 *
 	 * <code>
 	 * $animals = array('ant', 'bear', 'cat');
 	 * $o = Enumerator::any($animals, function($key, &$value) {
@@ -298,7 +294,7 @@ class Enumerator {
 	 * <pre>
 	 * bool(true)
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $animals = array('ant', 'bear', 'cat');
 	 * $o = Enumerator::any($animals, function($key, &$value) {
@@ -309,7 +305,7 @@ class Enumerator {
 	 * <pre>
 	 * bool(true)
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(null, true, 99);
 	 * $o = Enumerator::any($arr);
@@ -318,7 +314,7 @@ class Enumerator {
 	 * <pre>
 	 * bool(true)
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-any-3F
 	 * @param array $arr
 	 * @param callable $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
@@ -341,9 +337,9 @@ class Enumerator {
 
 	/**
 	 * Methods: collect, collect_, each, each_, map, map_, foreach, foreach_, each_with_index, each_with_index_, array_walk
-	 * 
+	 *
 	 * Will iterate the elements in the array. Has the potential to change the values.
-	 * 
+	 *
 	 * <code>
 	 * $arr = range(1,4);
 	 * $o = Enumerator::collect($arr, function($key, &$value) {
@@ -361,7 +357,7 @@ class Enumerator {
 	 *     [3] => 16
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = range(1,4);
 	 * $o = Enumerator::collect($arr, function($key, &$value) {
@@ -379,7 +375,7 @@ class Enumerator {
 	 *     [3] => cat
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-collect
 	 * @param array &$arr
 	 * @param callable $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
@@ -420,11 +416,11 @@ class Enumerator {
 
 	/**
 	 * Methods: count, count_, size, size_, length, length_
-	 * 
+	 *
 	 * If the callback is null, this function give you the total size of the array.
 	 * If the callback is a anonymous function, each time it returns 'true' will count as 1.
 	 * Otherwise this function will count how many times $callback is equal to $value.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(1,2,4,2);
 	 * echo Enumerator::count($arr);
@@ -432,7 +428,7 @@ class Enumerator {
 	 * <pre>
 	 * 4
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(1,2,4,2);
 	 * echo Enumerator::count($arr, 2);
@@ -440,7 +436,7 @@ class Enumerator {
 	 * <pre>
 	 * 2
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(1,2,4,2);
 	 * echo Enumerator::count($arr, function($key, &$value) {
@@ -450,9 +446,9 @@ class Enumerator {
 	 * <pre>
 	 * 3
 	 * </pre>
-	 * 
+	 *
 	 * @link http://www.ruby-doc.org/core-1.9.3/Enumerable.html#method-i-count
-	 * @param array &$arr 
+	 * @param array &$arr
 	 * @param callable $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
 	 * @return int
 	 */
@@ -484,10 +480,10 @@ class Enumerator {
 
 	/**
 	 * Methods: detect, detect_, find, find_
-	 * 
+	 *
 	 * Will pass the key and value to $callback the first result that does not return false is returned.
 	 * If no results are found this function will return the result of $ifnone (mixed) if none is provided false will be returned.
-	 * 
+	 *
 	 * <code>
 	 * $arr = range(1,10);
 	 * $o = Enumerator::detect($arr, function($key, &$value) {
@@ -498,7 +494,7 @@ class Enumerator {
 	 * <pre>
 	 * NULL
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = range(1,100);
 	 * echo Enumerator::detect($arr, function($key, &$value) {
@@ -508,11 +504,11 @@ class Enumerator {
 	 * <pre>
 	 * 35
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-detect
 	 * @param array &$arr
 	 * @param callable $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
-	 * @param mixed $ifnone 
+	 * @param mixed $ifnone
 	 * @return mixed
 	 */
 	public static function find_(array &$arr, $callback, $ifnone = null) {
@@ -535,9 +531,9 @@ class Enumerator {
 
 	/**
 	 * Methods: select, select_, find_all, find_all_, keep_if, keep_if_
-	 * 
+	 *
 	 * Will pass the elements to the callback and unset them if the callback returns false.
-	 * 
+	 *
 	 * <code>
 	 * $arr = range(1,10);
 	 * $o = Enumerator::select($arr, function($key, &$value) {
@@ -553,7 +549,7 @@ class Enumerator {
 	 *     [8] => 9
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-select
 	 * @param array &$arr
 	 * @param callable $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
@@ -578,9 +574,9 @@ class Enumerator {
 
 	/**
 	 * Methods: each_slice, each_slice_
-	 * 
+	 *
 	 * Will slice the elements into $size collections and pass to $callback if defined. If not defined, the slized array is returned.
-	 * 
+	 *
 	 * <code>
 	 * $arr = range(1,10);
 	 * $o = Enumerator::each_slice($arr, 3, function(&$collection) {
@@ -598,30 +594,30 @@ class Enumerator {
 	 *             [1] => 3
 	 *             [2] => 4
 	 *         )
-	 * 
+	 *
 	 *     [1] => Array
 	 *         (
-	 * 
+	 *
 	 *             [0] => 5
 	 *             [1] => 6
 	 *             [2] => 7
 	 *         )
-	 * 
+	 *
 	 *     [2] => Array
 	 *         (
 	 *             [0] => 8
 	 *             [1] => 9
 	 *             [2] => 10
 	 *         )
-	 * 
+	 *
 	 *     [3] => Array
 	 *         (
 	 *             [0] => 11
 	 *         )
-	 * 
+	 *
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-each_slice
 	 * @param array &$arr
 	 * @param int $size The size of each slice.
@@ -652,9 +648,9 @@ class Enumerator {
 
 	/**
 	 * Methods: first, first_
-	 * 
+	 *
 	 * Will overwrite $arr with the first $count items in array.
-	 * 
+	 *
 	 * <code>
 	 * $animals = array('cat', 'dog', 'cow', 'pig');
 	 * $o = Enumerator::first($animals);
@@ -666,7 +662,7 @@ class Enumerator {
 	 *     [0] => cat
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $animals = array('cat', 'dog', 'cow', 'pig');
 	 * $o = Enumerator::first($animals, 2);
@@ -679,7 +675,7 @@ class Enumerator {
 	 *     [1] => dog
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-first
 	 * @param array &$arr
 	 * @param int $count The number of items you wish to return. Defaults to 1
@@ -692,10 +688,10 @@ class Enumerator {
 
 	/**
 	 * Methods: collect_concat, collect_concat_, flat_map, flat_map_
-	 * 
+	 *
 	 * Will flatten the input $arr into a non-multi-dimensional array.
 	 * It will pass the current key and the value to $callback which has the potential to change the value.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(array(1,2),array(3,4));
 	 * $o = Enumerator::collect_concat($arr, function($key, &$value) {
@@ -712,7 +708,7 @@ class Enumerator {
 	 *     [3] => 5
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-flat_map
 	 * @param array &$arr
 	 * @param callable $callback The callback will be passed each sliced item as an array. This can be passed by reference.
@@ -742,10 +738,10 @@ class Enumerator {
 
 	/**
 	 * Methods: grep, grep_
-	 * 
+	 *
 	 * Will only keep an item if the value of the item matches $pattern.
 	 * If a callback is provided, it will pass the $key and $value into the array.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array('snowball', 'snowcone', 'snowangel', 'igloo', 'ice');
 	 * $o = Enumerator::grep($arr, "/^snow/");
@@ -759,7 +755,7 @@ class Enumerator {
 	 *     [2] => snowangel
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-grep
 	 * @param array &$arr
 	 * @param string $pattern The regex pattern.
@@ -784,10 +780,10 @@ class Enumerator {
 
 	/**
 	 * Methods: group_by, group_by_
-	 * 
+	 *
 	 * Each item will be passed into $callback and the return value will be the new "category" of this item.
 	 * The param $arr will be replaced with an array of these categories with all of their items.
-	 * 
+	 *
 	 * <code>
 	 * $arr = range(1,6);
 	 * $o = Enumerator::group_by($arr, function($key, &$value) {
@@ -803,22 +799,22 @@ class Enumerator {
 	 *             [0] => 3
 	 *             [1] => 6
 	 *         )
-	 * 
+	 *
 	 *     [1] => Array
 	 *         (
 	 *             [0] => 1
 	 *             [1] => 4
 	 *         )
-	 * 
+	 *
 	 *     [2] => Array
 	 *         (
 	 *             [0] => 2
 	 *             [1] => 5
 	 *         )
-	 * 
+	 *
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-group_by
 	 * @param array &$arr
 	 * @param callable $callback The callback will be passed each sliced item as an array. This can be passed by reference.
@@ -845,10 +841,10 @@ class Enumerator {
 
 	/**
 	 * Methods: member, include
-	 * 
+	 *
 	 * This function will iterate over $arr, if any value is equal (===) to $needle this function will return true. If nothing is found this function will return false.
 	 * NOTICE: that 'include' alias is a language construct so this alias cannot be called directly. Refer to example #2.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array('snowball', 'snowcone', 'snowangel', 'igloo', 'ice');
 	 * $o = Enumerator::member($arr, 'snowcone');
@@ -857,7 +853,7 @@ class Enumerator {
 	 * <pre>
 	 * bool(true)
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array('snowball', 'snowcone', 'snowangel', 'igloo', 'ice');
 	 * $o = Enumerator::member($arr, 'snowman');
@@ -866,7 +862,7 @@ class Enumerator {
 	 * <pre>
 	 * bool(false)
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $fun = 'include';
 	 * $arr = array('snowball', 'snowcone', 'snowangel', 'igloo', 'ice');
@@ -876,10 +872,10 @@ class Enumerator {
 	 * <pre>
 	 * bool(true)
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-member-3F
 	 * @param array $arr
-	 * @param mixed $needle 
+	 * @param mixed $needle
 	 * @return boolean
 	 */
 	public static function member(array $arr, $needle) {
@@ -893,9 +889,9 @@ class Enumerator {
 
 	/**
 	 * Methods: min
-	 * 
+	 *
 	 * Will find the lowest value. If callback is defined it will compare them.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array('albatross','dog','horse');
 	 * echo Enumerator::min($arr);
@@ -903,7 +899,7 @@ class Enumerator {
 	 * <pre>
 	 * albatross
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array('albatross','dog','horse');
 	 * echo Enumerator::min($arr, function($val1, $val2) {
@@ -913,7 +909,7 @@ class Enumerator {
 	 * <pre>
 	 * dog
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-min
 	 * @param array $arr
 	 * @param mixed optional $callback Will accept two values. Return 0 if they are equal, return -1 if the second parameter is bigger, and 1 is the first parameter is bigger.
@@ -929,9 +925,9 @@ class Enumerator {
 
 	/**
 	 * Methods: max
-	 * 
+	 *
 	 * Will find the highest value. If callback is defined it will compare them.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array('albatross','dog','horse');
 	 * echo Enumerator::max($arr);
@@ -939,7 +935,7 @@ class Enumerator {
 	 * <pre>
 	 * horse
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array('albatross','dog','horse');
 	 * echo Enumerator::max($arr, function($val1, $val2) {
@@ -949,7 +945,7 @@ class Enumerator {
 	 * <pre>
 	 * albatross
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-max
 	 * @param array $arr
 	 * @param callback optional $callback Will accept two values. Return 0 if they are equal, return -1 if the second parameter is bigger, and 1 is the first parameter is bigger.
@@ -965,19 +961,19 @@ class Enumerator {
 
 	/**
 	 * Methods: min_by
-	 * 
+	 *
 	 * Will find the lowest item in the array but comparing the output os $callback against every item.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array('albatross','dog','horse');
-	 * echo Enumerator::min_by($arr, function($val) { 
-	 * 	return strlen($val); 
+	 * echo Enumerator::min_by($arr, function($val) {
+	 * 	return strlen($val);
 	 * });
 	 * </code>
 	 * <pre>
 	 * dog
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-min_by
 	 * @param array $arr
 	 * @param callable $callback
@@ -992,9 +988,9 @@ class Enumerator {
 
 	/**
 	 * Methods: max_by
-	 * 
+	 *
 	 * Will find the highest item in the array but comparing the output os $callback against every item.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array('albatross','dog','horse');
 	 * echo Enumerator::max_by($arr, function($val) {
@@ -1004,7 +1000,7 @@ class Enumerator {
 	 * <pre>
 	 * albatross
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-max_by
 	 * @param array $arr
 	 * @param callable $callback
@@ -1019,12 +1015,12 @@ class Enumerator {
 
 	/**
 	 * Methods: minmax
-	 * 
+	 *
 	 * Will return an array of min and max. Optionally you can provide a callback to sort them.
-	 * 
+	 *
 	 * <code>
-	 * $arr = array('albatross','dog','horse'); 
-	 * $o = Enumerator::minmax($arr, function($val1, $val2) { 
+	 * $arr = array('albatross','dog','horse');
+	 * $o = Enumerator::minmax($arr, function($val1, $val2) {
 	 * 	return strcmp(strlen($val1), strlen($val2));
 	 * });
 	 * print_r($o);
@@ -1036,7 +1032,7 @@ class Enumerator {
 	 *     [1] => albatross
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-minmax
 	 * @param array $arr
 	 * @param mixed optional $callback Will accept two values. Return 0 if they are equal, return -1 if the second parameter is bigger, and 1 is the first parameter is bigger.
@@ -1052,12 +1048,12 @@ class Enumerator {
 
 	/**
 	 * Methods: minmax_by
-	 * 
+	 *
 	 * Will find the lowest and highest item in the array but comparing the output os $callback against every item.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array('albatross','dog','horse');
-	 * $o = Enumerator::minmax_by($arr, function($val) { 
+	 * $o = Enumerator::minmax_by($arr, function($val) {
 	 * 	return strlen($val);
 	 * });
 	 * print_r($o);
@@ -1069,7 +1065,7 @@ class Enumerator {
 	 *     [1] => albatross
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-minmax_by
 	 * @param array $arr
 	 * @param callable $callback
@@ -1084,9 +1080,9 @@ class Enumerator {
 
 	/**
 	 * Methods: none
-	 * 
+	 *
 	 * Passes each element of the collection to $callback. This will return true if $callback never returns true, else false.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array('ant', 'bear', 'cat');
 	 * $o = Enumerator::none($arr, function($key, $value) {
@@ -1097,7 +1093,7 @@ class Enumerator {
 	 * <pre>
 	 * bool(true)
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array('ant', 'bear', 'cat');
 	 * $o = Enumerator::none($arr, function($key, $value) {
@@ -1108,7 +1104,7 @@ class Enumerator {
 	 * <pre>
 	 * bool(false)
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $o = Enumerator::none(array());
 	 * var_dump($o);
@@ -1116,7 +1112,7 @@ class Enumerator {
 	 * <pre>
 	 * bool(true)
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $o = Enumerator::none(array(null));
 	 * var_dump($o);
@@ -1124,7 +1120,7 @@ class Enumerator {
 	 * <pre>
 	 * bool(true)
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(null, false);
 	 * $o = Enumerator::none($arr);
@@ -1133,9 +1129,9 @@ class Enumerator {
 	 * <pre>
 	 * bool(true)
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-none-3F
-	 * @param array $arr 
+	 * @param array $arr
 	 * @param mixed $callback A $key, $value are passed to this callback.
 	 * @return boolean
 	 */
@@ -1156,9 +1152,9 @@ class Enumerator {
 
 	/**
 	 * Methods: one
-	 * 
+	 *
 	 * Pases each element of the collection to $callback. If $callback returns true once, the function will return true. Otherwise, the function will return false.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array('ant','bear','cat');
 	 * $o = Enumerator::one($arr, function($key, $value) {
@@ -1169,7 +1165,7 @@ class Enumerator {
 	 * <pre>
 	 * bool(true)
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $o = Enumerator::one(array(null, true, 99));
 	 * var_dump($o);
@@ -1177,7 +1173,7 @@ class Enumerator {
 	 * <pre>
 	 * bool(false)
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $o = Enumerator::one(array(null, true, false));
 	 * var_dump($o);
@@ -1185,9 +1181,9 @@ class Enumerator {
 	 * <pre>
 	 * bool(true)
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-one-3F
-	 * @param array $arr 
+	 * @param array $arr
 	 * @param mixed $callback A $key, $value are passed to this callback.
 	 * @return boolean
 	 */
@@ -1211,9 +1207,9 @@ class Enumerator {
 
 	/**
 	 * Methods: partition, partition_
-	 * 
+	 *
 	 * Passes each element into $callback. If $callback returns true the item will be in the first category, otherwise the second.
-	 * 
+	 *
 	 * <code>
 	 * $arr = range(1,6);
 	 * $o = Enumerator::partition($arr, function($key, $value) {
@@ -1230,7 +1226,7 @@ class Enumerator {
 	 *             [1] => 4
 	 *             [2] => 6
 	 *         )
-	 * 
+	 *
 	 *     [1] => Array
 	 *         (
 	 *             [0] => 1
@@ -1239,7 +1235,7 @@ class Enumerator {
 	 *         )
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-partition
 	 * @param array &$arr
 	 * @param callable $callback A $key, $value are passed to this callback.
@@ -1262,9 +1258,9 @@ class Enumerator {
 
 	/**
 	 * Methods: inject, inject_, reduce, reduce_
-	 * 
+	 *
 	 * Will iterate the items in $arr passing each one to $callback with $memo as the third argument.
-	 * 
+	 *
 	 * <code>
 	 * $arr = range(5, 10);
 	 * echo Enumerator::inject($arr, function($key, &$value, &$memo){
@@ -1275,7 +1271,7 @@ class Enumerator {
 	 * <pre>
 	 * 45
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = range(5, 10);
 	 * echo Enumerator::inject($arr, function($key, &$value, &$memo){
@@ -1286,7 +1282,7 @@ class Enumerator {
 	 * <pre>
 	 * 151200
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-inject
 	 * @param array &$arr
 	 * @param callable $callback A $key, $value are passed to this callback.
@@ -1312,9 +1308,9 @@ class Enumerator {
 
 	/**
 	 * Methods: reject: reject_, delete_if, delete_if_
-	 * 
+	 *
 	 * Will unset an item in $arr if $callback returns true for it.
-	 * 
+	 *
 	 * <code>
 	 * $arr = range(1,10);
 	 * $o = Enumerator::reject($arr, function($key, $value) {
@@ -1334,7 +1330,7 @@ class Enumerator {
 	 *     [9] => 10
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-reject
 	 * @param array &$arr
 	 * @param callable $callback A $key, $value are passed to this callback. The $value can be passed by reference.
@@ -1355,9 +1351,9 @@ class Enumerator {
 
 	/**
 	 * Methods: reverse_collect, reverse_collect_, reverse_each, reverse_each_, reverse_map, reverse_map_, reverse_foreach, reverse_foreach_, reverse_each_with_index
-	 * 
+	 *
 	 * Will iterate the array in reverse, but will NOT save the order.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(1, 2, 3);
 	 * Enumerator::reverse_collect($arr, function($key, &$value) {
@@ -1366,9 +1362,9 @@ class Enumerator {
 	 * });
 	 * </code>
 	 * <pre>
-	 * 3, 2, 1, 
+	 * 3, 2, 1,
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-reverse_each
 	 * @param array &$arr
 	 * @param callable $callback A $key, $value are passed to this callback. The $value can be passed by reference.
@@ -1405,9 +1401,9 @@ class Enumerator {
 
 	/**
 	 * Methods: sort, sort_
-	 * 
+	 *
 	 * Will sort the contents of $arr. A callback can be used to sort.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array('rhea', 'kea', 'flea');
 	 * $o = Enumerator::sort($arr);
@@ -1421,7 +1417,7 @@ class Enumerator {
 	 *     [2] => rhea
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array('rhea', 'kea', 'flea');
 	 * $o = Enumerator::sort($arr, function($val1, $val2) {
@@ -1437,7 +1433,7 @@ class Enumerator {
 	 *     [2] => flea
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-sort
 	 * @param array &$arr
 	 * @param mixed $callback A $key, $value are passed to this callback. The $value can be passed by reference.
@@ -1458,9 +1454,9 @@ class Enumerator {
 
 	/**
 	 * Methods: sort_by, sort_by_
-	 * 
+	 *
 	 * Will sort based off of the return of $callback.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array('rhea', 'kea', 'flea');
 	 * $o = Enumerator::sort_by($arr, function($val) {
@@ -1476,9 +1472,9 @@ class Enumerator {
 	 *     [2] => rhea
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-sort_by
-	 * @param array &$arr 
+	 * @param array &$arr
 	 * @param callable $callback
 	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
@@ -1492,9 +1488,9 @@ class Enumerator {
 
 	/**
 	 * Methods: take_while, take_while_
-	 * 
+	 *
 	 * Passes elements into $callback until it returns false or null, at which point this function will stop and set $arr to all prior elements.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(1,2,3,4,5,0);
 	 * $o = Enumerator::take_while($arr, function($key, &$value) {
@@ -1509,9 +1505,9 @@ class Enumerator {
 	 *     [1] => 2
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-take_while
-	 * @param array &$arr 
+	 * @param array &$arr
 	 * @param callable $callback A $key, $value are passed to this callback.
 	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
@@ -1530,9 +1526,9 @@ class Enumerator {
 
 	/**
 	 * Methods: zip, zip_
-	 * 
+	 *
 	 * Will turn each element in $arr into an array then appending the associated indexs from the other arrays into this array as well.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(1,2,3);
 	 * $o = Enumerator::zip($arr, array(4,5,6), array(7,8,9));
@@ -1547,25 +1543,25 @@ class Enumerator {
 	 *             [1] => 4
 	 *             [2] => 7
 	 *         )
-	 * 
+	 *
 	 *     [1] => Array
 	 *         (
 	 *             [0] => 2
 	 *             [1] => 5
 	 *             [2] => 8
 	 *         )
-	 * 
+	 *
 	 *     [2] => Array
 	 *        (
-	 * 
+	 *
 	 *             [0] => 3
 	 *             [1] => 6
 	 *             [2] => 9
 	 *         )
-	 * 
+	 *
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(1,2);
 	 * $o = Enumerator::zip($arr, array(4,5,6),array(7,8,9));
@@ -1580,17 +1576,17 @@ class Enumerator {
 	 *             [1] => 4
 	 *             [2] => 7
 	 *         )
-	 * 
+	 *
 	 *     [1] => Array
 	 *         (
 	 *             [0] => 2
 	 *             [1] => 5
 	 *             [2] => 8
 	 *         )
-	 * 
+	 *
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(4,5,6);
 	 * $o = Enumerator::zip($arr, array(1,2), array(8));
@@ -1605,26 +1601,26 @@ class Enumerator {
 	 *             [1] => 1
 	 *             [2] => 8
 	 *         )
-	 * 
+	 *
 	 *     [1] => Array
 	 *         (
 	 *             [0] => 5
 	 *             [1] => 2
-	 *             [2] => 
+	 *             [2] =>
 	 *         )
-	 * 
+	 *
 	 *     [2] => Array
 	 *         (
 	 *             [0] => 6
-	 *             [1] => 
-	 *             [2] => 
+	 *             [1] =>
+	 *             [2] =>
 	 *         )
-	 * 
+	 *
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-zip
-	 * @param array &$arr 
+	 * @param array &$arr
 	 * @param array $one Unlimited of this.
 	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
@@ -1645,9 +1641,9 @@ class Enumerator {
 
 	/**
 	 * Methods: drop_while, drop_while_
-	 * 
+	 *
 	 * Will pass elements into $callback until false is returned at which point all elements before the current one will be removed.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(1,2,3,4,5,0);
 	 * $o = Enumerator::drop_while($arr, function($key, &$value) {
@@ -1664,10 +1660,10 @@ class Enumerator {
 	 *     [3] => 0
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-drop_while
-	 * @param array &$arr 
-	 * @param callable $callback 
+	 * @param array &$arr
+	 * @param callable $callback
 	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function drop_while_(array &$arr, $callback) {
@@ -1683,9 +1679,9 @@ class Enumerator {
 
 	/**
 	 * Methods: cycle, cycle_
-	 * 
+	 *
 	 * Will pass every element of $arr into $callback exactly $it times.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(1,2,3);
 	 * Enumerator::cycle($arr, 3, function($key, $value, $it) {
@@ -1695,10 +1691,10 @@ class Enumerator {
 	 * <pre>
 	 * 1,2,3,1,2,3,1,2,3,
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Array.html#method-i-cycle
-	 * @param array $arr 
-	 * @param int $it 
+	 * @param array $arr
+	 * @param int $it
 	 * @param callable $callback This can accept 3 arguments: $key - The key in the array, $value - The value of this key, $it - The current iteration.
 	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
@@ -1719,11 +1715,11 @@ class Enumerator {
 
 	/**
 	 * Methods: each_cons, each_cons_
-	 * 
+	 *
 	 * This will return each section as an item in an array.
 	 * A section is each consecutive $size of $arr.
 	 * It will also iterate over each item in every section.
-	 * 
+	 *
 	 * <code>
 	 * $arr = range(1,10);
 	 * $o = Enumerator::each_cons($arr, 8);
@@ -1743,7 +1739,7 @@ class Enumerator {
 	 *             [6] => 7
 	 *             [7] => 8
 	 *         )
-	 * 
+	 *
 	 *     [1] => Array
 	 *         (
 	 *             [0] => 2
@@ -1755,7 +1751,7 @@ class Enumerator {
 	 *             [6] => 8
 	 *             [7] => 9
 	 *         )
-	 * 
+	 *
 	 *     [2] => Array
 	 *         (
 	 *             [0] => 3
@@ -1767,14 +1763,14 @@ class Enumerator {
 	 *             [6] => 9
 	 *             [7] => 10
 	 *         )
-	 * 
+	 *
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-each_cons
-	 * @param array &$arr 
-	 * @param int $size 
-	 * @param mixed $callback 
+	 * @param array &$arr
+	 * @param int $size
+	 * @param mixed $callback
 	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function each_cons_(array &$arr, $size, $callback = null) {
@@ -1807,57 +1803,57 @@ class Enumerator {
 
 	/**
 	 * Methods: slice_before, slice_before_
-	 * 
+	 *
 	 * When $pattern is matched in an element, all previous elements not include previous chunks are placed into a new chunk.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(1,2,3,4,5,6,7,8,9,0);
 	 * $o = Enumerator::slice_before($arr, "/[02468]/"); // will "splice before" an even number.
 	 * print_r($o);
 	 * </code>
 	 * <pre>
-	 * 
+	 *
 	 * Array
 	 * (
 	 *     [0] => Array
 	 *         (
 	 *             [0] => 1
 	 *         )
-	 * 
+	 *
 	 *     [1] => Array
 	 *         (
 	 *             [0] => 2
 	 *             [1] => 3
 	 *         )
-	 * 
+	 *
 	 *     [2] => Array
 	 *         (
 	 *             [0] => 4
 	 *             [1] => 5
 	 *         )
-	 * 
+	 *
 	 *     [3] => Array
 	 *         (
 	 *             [0] => 6
 	 *             [1] => 7
 	 *         )
-	 * 
+	 *
 	 *     [4] => Array
 	 *         (
 	 *             [0] => 8
 	 *             [1] => 9
 	 *         )
-	 * 
+	 *
 	 *     [5] => Array
 	 *         (
 	 *             [0] => 0
 	 *         )
-	 * 
+	 *
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-slice_before
-	 * @param array &$arr 
+	 * @param array &$arr
 	 * @param string $pattern
 	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
@@ -1882,9 +1878,9 @@ class Enumerator {
 
 	/**
 	 * Methods: merge, merge_, concat, concat_
-	 * 
+	 *
 	 * Will merge two or more arrays together.
-	 * 
+	 *
 	 * <code>
 	 * $animals = array('dog', 'cat', 'pig');
 	 * $trees = array('pine');
@@ -1901,7 +1897,7 @@ class Enumerator {
 	 *     [4] => wool
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-2B
 	 * @param array &$arr
 	 * @param array $arr2
@@ -1910,7 +1906,7 @@ class Enumerator {
 	public static function concat_(array &$arr, array $arr2) {
 		// Alias destructive method
 		$params = func_get_args();
-		$params[0] =& $arr; 
+		$params[0] =& $arr;
 		return call_user_func_array('Enumerator::merge_', $params);
 	}
 	public static function merge_(array &$arr, array $arr2) {
@@ -1920,9 +1916,9 @@ class Enumerator {
 
 	/**
 	 * Methods: rotate, rotate_
-	 * 
+	 *
 	 * Will rotate the array so that $index is the first element in the array. Negative indexs are allowed.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array('Foo', 'bar', 'foobar');
 	 * $o = Enumerator::rotate($arr, 1);
@@ -1936,7 +1932,7 @@ class Enumerator {
 	 *     [2] => Foo
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array('Foo', 'bar', 'foobar');
 	 * $o = Enumerator::rotate($arr, -1);
@@ -1950,7 +1946,7 @@ class Enumerator {
 	 *     [2] => bar
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Array.html#method-i-rotate
 	 * @param array &$arr
 	 * @param int $index The starting index
@@ -1963,9 +1959,9 @@ class Enumerator {
 
 	/**
 	 * Methods: reverse, reverse_
-	 * 
+	 *
 	 * Will reverse an array.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(1,2,3);
 	 * $o = Enumerator::reverse($arr);
@@ -1979,9 +1975,9 @@ class Enumerator {
 	 *     [2] => 1
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Array.html#method-i-reverse
-	 * @param array &$arr 
+	 * @param array &$arr
 	 * @param boolean optional $preserve_keys Defaults to false. If you want to preserve the keys or not.
 	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
@@ -1992,9 +1988,9 @@ class Enumerator {
 
 	/**
 	 * Methods: random, random_, sample, sample_
-	 * 
+	 *
 	 * Will get $count random values from $arr. If $count is 1 then it'll return the value, otherwise it'll return an array of values.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array('pig', 'cow', 'dog', 'horse');
 	 * $o = Enumerator::random($arr);
@@ -2003,7 +1999,7 @@ class Enumerator {
 	 * <pre>
 	 * dog
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array('pig', 'cow', 'dog', 'horse');
 	 * $o = Enumerator::random($arr, 2);
@@ -2016,9 +2012,9 @@ class Enumerator {
 	 *     [1] => cow
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * @link http://ruby-doc.org/core-1.9.3/Array.html#method-i-sample
-	 * @param array &$arr 
+	 * @param array &$arr
 	 * @param int optional $count Defaults to 1
 	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
@@ -2035,9 +2031,9 @@ class Enumerator {
 
 	/**
 	 * Methods: shuffle, shuffle_
-	 * 
+	 *
 	 * Will shuffle the inputted array.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(1,2,3);
 	 * $o = Enumerator::shuffle($arr);
@@ -2051,7 +2047,7 @@ class Enumerator {
 	 *     [2] => 3
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array('a' => 'apple', 'b' => 'banana', 'c' => 'carrot');
 	 * $o = Enumerator::shuffle($arr, true);
@@ -2065,7 +2061,7 @@ class Enumerator {
 	 *     [b] => banana
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-shuffle
 	 * @param array &$arr
 	 * @param boolean $preserve_keys If you want to preserve keys or not. Defaults to false.
@@ -2090,9 +2086,9 @@ class Enumerator {
 
 	/**
 	 * Methods: values_at, values_at_
-	 * 
+	 *
 	 * Will replace the current array with only the inserted indexs. Use the non-destructive form to get the array returned instead.
-	 * 
+	 *
 	 * <code>
 	 * $name = array(
 	 * 	'name' => 'John Doe',
@@ -2111,9 +2107,9 @@ class Enumerator {
 	 *     [last] => Doe
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-values_at
-	 * @param array &$arr 
+	 * @param array &$arr
 	 * @param mixed $index Put in as many indexes as you please.
 	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
@@ -2130,10 +2126,10 @@ class Enumerator {
 
 	/**
 	 * Methods: empty, isEmpty
-	 * 
+	 *
 	 * If the array is empty or not.
 	 * NOTICE: that 'empty' alias is a language construct so this alias cannot be called directly. Refer to example #3.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array();
 	 * var_dump(Enumerator::isEmpty($arr));
@@ -2141,7 +2137,7 @@ class Enumerator {
 	 * <pre>
 	 * bool(true)
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(1,2,3);
 	 * var_dump(Enumerator::isEmpty($arr));
@@ -2149,7 +2145,7 @@ class Enumerator {
 	 * <pre>
 	 * bool(false)
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $empty = 'empty';
 	 * $arr = array(1,2,3);
@@ -2158,7 +2154,7 @@ class Enumerator {
 	 * <pre>
 	 * bool(false)
 	 * </pre>
-	 * 
+	 *
 	 * @param array $arr
 	 * @return boolean
 	 */
@@ -2169,9 +2165,9 @@ class Enumerator {
 
 	/**
 	 * Methods: has_value
-	 * 
+	 *
 	 * Will return a boolean based on the condition that $value exists inside of $arr and are the same data type.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(0,false);
 	 * var_dump(Enumerator::has_value($arr, null));
@@ -2179,7 +2175,7 @@ class Enumerator {
 	 * <pre>
 	 * bool(false)
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(false,null);
 	 * var_dump(Enumerator::has_value($arr, 0));
@@ -2187,7 +2183,7 @@ class Enumerator {
 	 * <pre>
 	 * bool(false)
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array('apple', 'banana', 'orange');
 	 * var_dump(Enumerator::has_value($arr, 'orange'));
@@ -2195,9 +2191,9 @@ class Enumerator {
 	 * <pre>
 	 * bool(true)
 	 * </pre>
-	 * 
-	 * @param array $arr 
-	 * @param mixed $value 
+	 *
+	 * @param array $arr
+	 * @param mixed $value
 	 * @return boolean
 	 */
 	public static function has_value(array $arr, $value) {
@@ -2211,11 +2207,11 @@ class Enumerator {
 
 	/**
 	 * Methods: index, index_, find_index, find_index_
-	 * 
+	 *
 	 * Will return the first index if found or false otherwise. Use '===' for comparing.
 	 * If $callback is a callback function, the $key is returned the first time $callback returns true.
 	 * If $callback is not a callback, we are looking for the first $value in $arr to be === $callback.
-	 * 
+	 *
 	 * <code>
 	 * $name = array(
 	 * 	'name' => 'John Doe',
@@ -2230,7 +2226,7 @@ class Enumerator {
 	 * <pre>
 	 * first
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $name = array(
 	 * 	'name' => 'John Doe',
@@ -2247,10 +2243,10 @@ class Enumerator {
 	 * <pre>
 	 * title
 	 * </pre>
-	 * 
+	 *
 	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-index
-	 * @param array &$arr 
-	 * @param mixed $callback 
+	 * @param array &$arr
+	 * @param mixed $callback
 	 * @return mixed
 	 */
 	public static function find_index_(array &$arr, $callback = null) {
@@ -2271,11 +2267,11 @@ class Enumerator {
 
 	/**
 	 * Methods: rindex, rindex_
-	 * 
+	 *
 	 * Similar to index but looks for the last occurace of $callback.
 	 * If $callback is a callback function, the $key is returned the last time $callback returns true.
 	 * If $callback is not a callback, we are looking for the last $value in $arr to be === $callback.
-	 * 
+	 *
 	 * <code>
 	 * $name = array(
 	 * 	'name' => 'John Doe',
@@ -2290,7 +2286,7 @@ class Enumerator {
 	 * <pre>
 	 * first
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $name = array(
 	 * 	'name' => 'John Doe',
@@ -2307,10 +2303,10 @@ class Enumerator {
 	 * <pre>
 	 * suffix
 	 * </pre>
-	 * 
+	 *
 	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-rindex
-	 * @param array &$arr 
-	 * @param callable $callback 
+	 * @param array &$arr
+	 * @param callable $callback
 	 * @return mixed
 	 */
 	public static function rindex_(array &$arr, $callback) {
@@ -2329,9 +2325,9 @@ class Enumerator {
 
 	/**
 	 * Methods: compact, compact_
-	 * 
+	 *
 	 * Will remove all null values inside of $arr. If $recursive is set to true, it will crawl sub-arrays.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(1,2,3,null,array(2,3,4,null));
 	 * $o = Enumerator::compact($arr);
@@ -2348,12 +2344,12 @@ class Enumerator {
 	 *             [0] => 2
 	 *             [1] => 3
 	 *             [2] => 4
-	 *             [3] => 
+	 *             [3] =>
 	 *        )
-	 * 
+	 *
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(1,2,3,null,array(2,3,4,null));
 	 * $o = Enumerator::compact($arr, true);
@@ -2371,10 +2367,10 @@ class Enumerator {
 	 *             [1] => 3
 	 *             [2] => 4
 	 *        )
-	 * 
+	 *
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-compact
 	 * @param array &$arr
 	 * @param boolean $recursive If you want this to iterate all child arrays.
@@ -2401,9 +2397,9 @@ class Enumerator {
 
 	/**
 	 * Methods: uniq, uniq_, array_unique, array_unique_
-	 * 
+	 *
 	 * Will force all itemsm in $arr to be unique.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(1,1,2,3,3,2,1,1,1);
 	 * $a = Enumerator::uniq($arr);
@@ -2417,7 +2413,7 @@ class Enumerator {
 	 *     [3] => 3
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-uniq
 	 * @param array &$arr
 	 * @return mixed Nothing if called destructively, otherwise a new array.
@@ -2433,9 +2429,9 @@ class Enumerator {
 
 	/**
 	 * Methods: assoc
-	 * 
+	 *
 	 * Searches through top level items, if the item is an array and the first value matches $search it'll return this element.
-	 * 
+	 *
 	 * <code>
 	 * $s1 = array('color', 'red', 'blue', 'green');
 	 * $s2 = array('letters', 'a', 'b', 'c');
@@ -2453,10 +2449,10 @@ class Enumerator {
 	 *     [3] => c
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-assoc
 	 * @param array $arr
-	 * @param mixed $search 
+	 * @param mixed $search
 	 * @return mixed The found array, or null.
 	 */
 	public static function assoc(array $arr, $search) {
@@ -2470,9 +2466,9 @@ class Enumerator {
 
 	/**
 	 * Methods: rassoc
-	 * 
+	 *
 	 * Searches through top level items, if the item is an array and the second value matches $search it'll return this element.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(array(1, "one"), array(2, "two"), array(3, "three"), array("ii", "two"));
 	 * $o = Enumerator::rassoc($arr, 'two');
@@ -2485,7 +2481,7 @@ class Enumerator {
 	 *     [1] => two
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(array(1, "one"), array(2, "two"), array(3, "three"), array("ii", "two"));
 	 * $o = Enumerator::rassoc($arr, 'four');
@@ -2494,10 +2490,10 @@ class Enumerator {
 	 * <pre>
 	 * NULL
 	 * </pre>
-	 * 
+	 *
 	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-rassoc
 	 * @param array $arr
-	 * @param mixed $search 
+	 * @param mixed $search
 	 * @return mixed The found array, or null.
 	 */
 	public static function rassoc(array $arr, $search) {
@@ -2511,9 +2507,9 @@ class Enumerator {
 
 	/**
 	 * Methods: at
-	 * 
+	 *
 	 * Will create an array from all the keys provided. If only one element exists that element is returned, otherwise the array is returned. If none exist, null is returned.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array('a', 'b', 'c', 'd', 'e');
 	 * echo Enumerator::at($arr, 0);
@@ -2521,7 +2517,7 @@ class Enumerator {
 	 * <pre>
 	 * a
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array('a', 'b', 'c', 'd', 'e');
 	 * echo Enumerator::at($arr, -1);
@@ -2529,7 +2525,7 @@ class Enumerator {
 	 * <pre>
 	 * e
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array('a', 'b', 'c', 'd', 'e');
 	 * print_r(Enumerator::at($arr, 0, 3, 4));
@@ -2542,8 +2538,8 @@ class Enumerator {
 	 *     [2] => e
 	 * )
 	 * </pre>
-	 * 
-	 * @param array $arr 
+	 *
+	 * @param array $arr
 	 * @param mixed $key You can insert multiple keys. If they key is negative and doe snot belong in the array, it'll return that index from the end.
 	 * @return mixed An item or an array
 	 */
@@ -2568,9 +2564,9 @@ class Enumerator {
 
 	/**
 	 * Methods: combination_, combination
-	 * 
+	 *
 	 * Will yield the various unique combinations of an array with a specific $limit.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(1, 2, 3, 4);
 	 * Enumerator::combination_($arr, 1);
@@ -2583,25 +2579,25 @@ class Enumerator {
 	 *         (
 	 *             [0] => 1
 	 *         )
-	 * 
+	 *
 	 *     [1] => Array
 	 *         (
 	 *             [0] => 2
 	 *         )
-	 * 
+	 *
 	 *     [2] => Array
 	 *         (
 	 *             [0] => 3
 	 *         )
-	 * 
+	 *
 	 *     [3] => Array
 	 *         (
 	 *             [0] => 4
 	 *         )
-	 * 
+	 *
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(1, 2, 3, 4);
 	 * Enumerator::combination_($arr, 4);
@@ -2617,10 +2613,10 @@ class Enumerator {
 	 *             [2] => 3
 	 *             [3] => 4
 	 *         )
-	 * 
+	 *
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(1, 2, 3, 4);
 	 * Enumerator::combination_($arr, 0);
@@ -2632,11 +2628,11 @@ class Enumerator {
 	 *     [0] => Array
 	 *         (
 	 *         )
-	 * 
+	 *
 	 * )
 	 * </pre>
-	 * 
-	 * @param array &$arr 
+	 *
+	 * @param array &$arr
 	 * @param int $limit The number of items you wish to have per child element
 	 * @param mixed $callback
 	 * @return mixed
@@ -2703,12 +2699,12 @@ class Enumerator {
 
 	/**
 	 * Methods: delete_, delete
-	 * 
+	 *
 	 * Will delete every instance of $needle inside of $arr.
 	 * If $needle is not found null is returned.
 	 * If it is found and $callback is callable it's return value is returned.
 	 * If it is found and $callback is not defined $needle is returned.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array('a','b', 'b', 'b', 'c');
 	 * echo Enumerator::delete_($arr, 'b') . PHP_EOL;
@@ -2722,7 +2718,7 @@ class Enumerator {
 	 * 	[4] => c
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array('a','b', 'b', 'b', 'c');
 	 * var_dump(Enumerator::delete_($arr, 'z'));
@@ -2730,7 +2726,7 @@ class Enumerator {
 	 * <pre>
 	 * NULL
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array('a','b', 'b', 'b', 'c');
 	 * var_dump(Enumerator::delete($arr, 'z', function() {
@@ -2740,10 +2736,10 @@ class Enumerator {
 	 * <pre>
 	 * bool(false)
 	 * </pre>
-	 * 
-	 * @param array &$arr 
-	 * @param mixed $needle 
-	 * @param callable $callback 
+	 *
+	 * @param array &$arr
+	 * @param mixed $needle
+	 * @param callable $callback
 	 * @return mixed
 	 */
 	public static function delete_(array &$arr, $needle, $callback = null) {
@@ -2764,9 +2760,9 @@ class Enumerator {
 
 	/**
 	 * Methods: delete_at_, delete_at
-	 * 
+	 *
 	 * Will delete the element at the specific index. If the element is found that element is returned, otherwise null is returned.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array('ant', 'bat', 'cat', 'dog');
 	 * $ret = Enumerator::delete_at_($arr, 2);
@@ -2782,7 +2778,7 @@ class Enumerator {
 	 *     [3] => dog
 	 * )
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array('ant', 'bat', 'cat', 'dog');
 	 * $ret = Enumerator::delete_at($arr, 99);
@@ -2791,9 +2787,9 @@ class Enumerator {
 	 * <pre>
 	 * NULL
 	 * </pre>
-	 * 
-	 * @param array &$arr 
-	 * @param mixed $index 
+	 *
+	 * @param array &$arr
+	 * @param mixed $index
 	 * @return mixed
 	 */
 	public static function delete_at_(array &$arr, $index) {
@@ -2807,11 +2803,11 @@ class Enumerator {
 
 	/**
 	 * Methods: fetch_, fetch
-	 * 
+	 *
 	 * Will retrieve the value of the specific index. Will also retrieve negative index counting backwards.
 	 * If $index is not found and $value is callable, the index is passed to it and it's return value is returned.
 	 * If $index is not found and $value is not callable, $value is returned.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(11, 22, 33, 44);
 	 * echo Enumerator::fetch($arr, 1);
@@ -2819,7 +2815,7 @@ class Enumerator {
 	 * <pre>
 	 * 22
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(11, 22, 33, 44);
 	 * echo Enumerator::fetch($arr, -1);
@@ -2827,7 +2823,7 @@ class Enumerator {
 	 * <pre>
 	 * 44
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(11, 22, 33, 44);
 	 * echo Enumerator::fetch($arr, 4, 'cat');
@@ -2835,7 +2831,7 @@ class Enumerator {
 	 * <pre>
 	 * cat
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(11, 22, 33, 44);
 	 * echo Enumerator::fetch($arr, 4, function($i) {
@@ -2845,10 +2841,10 @@ class Enumerator {
 	 * <pre>
 	 * 16
 	 * </pre>
-	 * 
-	 * @param array $arr 
-	 * @param mixed $index 
-	 * @param mixed $value 
+	 *
+	 * @param array $arr
+	 * @param mixed $index
+	 * @param mixed $value
 	 * @return mixed
 	 */
 	public static function fetch(array $arr, $index) {
@@ -2878,9 +2874,9 @@ class Enumerator {
 
 	/**
 	 * Methods: flatten, flatten_
-	 * 
+	 *
 	 * Will flatten the array to a single array or until the $depth is reached.
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(1, 2, array(3, array(4, 5)));
 	 * $arr = Enumerator::flatten($arr);
@@ -2899,7 +2895,7 @@ class Enumerator {
 	 * )
 	 * NULL
 	 * </pre>
-	 * 
+	 *
 	 * <code>
 	 * $arr = array(1, 2, array(3, array(4, 5)));
 	 * Enumerator::flatten_($arr, 1);
@@ -2918,9 +2914,9 @@ class Enumerator {
 	 *         )
 	 * )
 	 * </pre>
-	 * 
-	 * @param array &$arr 
-	 * @param int $depth 
+	 *
+	 * @param array &$arr
+	 * @param int $depth
 	 * @return mixed
 	 */
 	public static function flatten_(array &$arr, $depth = 999999, $topLevel = true) {
@@ -2952,11 +2948,11 @@ class Enumerator {
 
 	/**
 	 * Methods: array_column_, array_column, array_pluck_, array_pluck
-	 * 
+	 *
 	 * Will return an array of values from a multidimensional array based on the index provided.
-	 * 
-	 * @param array &$arr 
-	 * @param mixed $index 
+	 *
+	 * @param array &$arr
+	 * @param mixed $index
 	 * @return mixed
 	 */
 	public static function array_pluck_(array &$arr, $index) {

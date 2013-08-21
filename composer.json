@@ -1,0 +1,23 @@
+{
+    "name": "blainesch/prettyarray",
+    "description": "Manipulate arrays similar to Ruby.",
+    "keywords": ["array", "enumerator", "underscore", "ruby"],
+    "homepage": "https://github.com/BlaineSch/prettyArray",
+    "license": "The BSD License",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Blaine Schmeisser",
+            "email": "BlaineSch@gmail.com",
+            "homepage": "https://github.com/BlaineSch"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "prettyArray": "src/"
+        }
+    },
+    "require": {
+        "php": ">=5.3.10"
+    }
+}

@@ -3,7 +3,7 @@
 	Tests the core functionality of Enumerator
 */
 
-use \prettyArray\src\Enumerator;
+use prettyArray\Enumerator;
 
 class EnumeratorTest extends PHPUnit_Framework_TestCase {
 
@@ -368,9 +368,9 @@ class EnumeratorTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function test_min_by_1() {
-		$array = array('albatross','dog','horse'); 
-		$ret = Enumerator::min_by($array, function($val) { 
-			return strlen($val); 
+		$array = array('albatross','dog','horse');
+		$ret = Enumerator::min_by($array, function($val) {
+			return strlen($val);
 		}); // dog
 		$this->assertEquals('dog', $ret);
 	}
@@ -384,16 +384,16 @@ class EnumeratorTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function test_minmax_1() {
-		$array = array('albatross','dog','horse'); 
-		$ret = Enumerator::minmax($array, function($val1, $val2) { 
+		$array = array('albatross','dog','horse');
+		$ret = Enumerator::minmax($array, function($val1, $val2) {
 			return strcmp(strlen($val1), strlen($val2));
 		}); // array(dog, albatross)
 		$this->assertEquals(array('dog', 'albatross'), $ret);
 	}
 
 	public function test_minmax_by_1() {
-		$array = array('albatross','dog','horse'); 
-		$ret = Enumerator::minmax_by($array, function($val) { 
+		$array = array('albatross','dog','horse');
+		$ret = Enumerator::minmax_by($array, function($val) {
 			return strlen($val);
 		}); // array(dog, albatross)
 		$this->assertEquals(array('dog', 'albatross'), $ret);
