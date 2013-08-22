@@ -6,11 +6,10 @@ It attempts to combine Ruby (enumerator/array/hash) methods as well as built in 
 [![Build Status](https://secure.travis-ci.org/BlaineSch/prettyArray.png?branch=master)](http://travis-ci.org/BlaineSch/prettyArray)
 
 ## Example 1
-```php
+~~~php
 <?php
-require_once('./src/PrettyArray.php');
 
-use prettyArray\src\PrettyArray;
+use prettyArray\PrettyArray;
 
 $arr = new PrettyArray(range(1,6));
 $arr->group_by_(function($key, &$value) {
@@ -18,8 +17,8 @@ $arr->group_by_(function($key, &$value) {
 });
 print_r($arr->to_a());
 ?>
-```
-```
+~~~
+~~~
 Array
 (
     [0] => Array
@@ -40,7 +39,7 @@ Array
             [1] => 5
         )
 )
-```
+~~~
 
 ## More Examples
 
@@ -63,10 +62,10 @@ More examples can be found inside of the "/examples" directory in markdown forma
 ### Testing
 
 Before making any pull requests please verify that your methods pass the current unit tests.
-```
-cd PrettyArray && phpunit ./
-```
-```
+~~~
+cd PrettyArray && phpunit
+~~~
+~~~
 PHPUnit 3.6.12 by Sebastian Bergmann.
 
 Configuration read from /Users/blaineschmeisser/Sites/devup/PrettyArray/phpunit.xml
@@ -78,7 +77,7 @@ Configuration read from /Users/blaineschmeisser/Sites/devup/PrettyArray/phpunit.
 Time: 1 second, Memory: 10.00Mb
 
 OK (159 tests, 180 assertions)
-```
+~~~
 
 ### Test Files
 
