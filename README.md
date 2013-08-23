@@ -46,9 +46,23 @@ Array
 More examples can be found inside of the "/examples" directory in markdown format which is viewable on Github.
 
 ## Installation
- * cd /libraries/
- * git clone [git@github.com:BlaineSch/PrettyArray.git](https://github.com/BlaineSch/PrettyArray)
- * Enjoy PrettyArray!
+
+### GIT
+~~~ bash
+git clone git://github.com/BlaineSch/prettyArray.git
+# OR
+git submodule add git://github.com/BlaineSch/prettyArray.git
+~~~
+
+### Composer
+~~~ json
+"require": {
+    "blainesch/prettyarray": "1.0.0"
+}
+~~~
+~~~ bash
+php compooser.phar install
+~~~
 
 ## Requirements
  * [PHP 5.3+](http://php.net/downloads.php)
