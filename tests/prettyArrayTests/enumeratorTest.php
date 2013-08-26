@@ -664,6 +664,22 @@ class EnumeratorTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(array('title'=>'Dr.', 'last' => 'Doe'), $name);
 	}
 
+	public function test_values_at_extra_key() {
+		$name = array(
+			'name' => 'John Doe',
+			'first' => 'John',
+			'middle' => 'M',
+			'last' => 'Doe',
+			'title' => 'Dr.'
+		);
+		$result = Enumerator::values_at($name, 'title', 'suffix');
+		$expected = array(
+			'title' => 'Dr.',
+			'suffix' => null,
+		);
+		$this->assertEquals($expected, $result);
+	}
+
 	public function test_empty_1() {
 		$arr = array();
 		$ret = Enumerator::isEmpty($arr);

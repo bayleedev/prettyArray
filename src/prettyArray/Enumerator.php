@@ -2118,7 +2118,7 @@ class Enumerator {
 		$keys = func_get_args();
 		array_shift($keys);
 		foreach($keys as $key) {
-			$ret[$key] = $arr[$key];
+			$ret[$key] = isset($arr[$key]) ? $arr[$key] : null;
 		}
 		$arr = $ret;
 		return;
