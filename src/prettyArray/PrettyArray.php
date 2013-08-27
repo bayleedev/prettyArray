@@ -529,7 +529,7 @@ class PrettyArray implements \ArrayAccess, \Iterator {
 	 * @return null
 	 */
 	public function current() {
-		return $this->data[$this->position];
+		return $this->data[$this->key()];
 	}
 
 	/**
@@ -538,7 +538,8 @@ class PrettyArray implements \ArrayAccess, \Iterator {
 	 * @return null
 	 */
 	public function key() {
-		return $this->position;
+		$keys = array_keys($this->data);
+		return isset($keys[$this->position]) ? $keys[$this->position] : null;
 	}
 
 	/**
@@ -556,7 +557,7 @@ class PrettyArray implements \ArrayAccess, \Iterator {
 	 * @return null
 	 */
 	public function valid() {
-		return isset($this->data[$this->position]);
+		return isset($this->data[$this->key()]);
 	}
 
 }
