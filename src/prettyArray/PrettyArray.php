@@ -54,12 +54,19 @@ use prettyArray\Enumerator;
  * 	throw new BreakException;
  * </code>
  */
-class PrettyArray implements \ArrayAccess {
+class PrettyArray implements \ArrayAccess, \Iterator {
 
 	/**
 	 * The real data
 	 */
 	protected $data = array();
+
+	/**
+	 * The data position.
+	 *
+	 * @var integer
+	 */
+	protected $position = 0;
 
 	/**
 	 * Currently only one mixin, but this might change.
@@ -91,6 +98,7 @@ class PrettyArray implements \ArrayAccess {
 			self::$enumData['methodMap'] = Enumerator::get('methodMap');
 			self::$enumData['destructiveMap'] = Enumerator::get('destructiveMap');
 		}
+		$this->position = 0;
 		$this->data = $defaults;
 	}
 
@@ -505,4 +513,50 @@ class PrettyArray implements \ArrayAccess {
 	public function to_a() {
 		return $this->data;
 	}
+
+	/**
+	 * Rewind the current position. Part of the Iterator interface.
+	 *
+	 * @return null
+	 */
+	public function rewind() {
+		$this->position = 0;
+	}
+
+	/**
+	 * Rewind the current position. Part of the Iterator interface.
+	 *
+	 * @return null
+	 */
+	public function current() {
+		return $this->data[$this->position];
+	}
+
+	/**
+	 * Retrieve the current key. Part of the Iterator interface.
+	 *
+	 * @return null
+	 */
+	public function key() {
+		return $this->position;
+	}
+
+	/**
+	 * Increase the pointer position. Part of the Iterator interface.
+	 *
+	 * @return null
+	 */
+	public function next() {
+		++$this->position;
+	}
+
+	/**
+	 * Validate the current pointer. Part of the Iterator interface.
+	 *
+	 * @return null
+	 */
+	public function valid() {
+		return isset($this->data[$this->position]);
+	}
+
 }

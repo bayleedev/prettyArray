@@ -225,4 +225,13 @@ class prettyArrayTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(true, $ret);
 	}
 
+	public function testIteration() {
+		$animals = new PrettyArray(array('ant', 'bear', 'cat'));
+		$newAnimals = array();
+		foreach ($animals as $key => $animal) {
+			$newAnimals[$key] = $animal;
+		}
+		$this->assertEquals(array('ant', 'bear', 'cat'), $newAnimals);
+	}
+
 }
