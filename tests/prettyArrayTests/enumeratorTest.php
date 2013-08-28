@@ -994,6 +994,12 @@ class EnumeratorTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(array('Jane'), $records);
 	}
 
+	public function testSliceSingleNegativeNumber() {
+		$records = array('John', 'Sallie', 'Jane');
+		Enumerator::slice_($records, -2);
+		$this->assertEquals(array('Sallie', 'Jane'), $records);
+	}
+
 	public function testSliceNoNumber() {
 		$records = array('John', 'Sallie', 'Jane');
 		Enumerator::slice_($records);

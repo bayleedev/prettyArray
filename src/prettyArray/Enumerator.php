@@ -12,6 +12,7 @@ namespace prettyArray;
 
 use prettyArray\exceptions\BreakException;
 use prettyArray\exceptions\ContinueException;
+use BadMethodCallException;
 
 /**
  * Enumerator
@@ -190,8 +191,7 @@ class Enumerator {
 			$ret = call_user_func_array(array(__CLASS__, $key), $params);
 			return ($arrReturn) ? $params[0] : $ret;
 		} else {
-			// They are clueless
-			throw new BadMethodCallException();
+			throw new BadMethodCallException('Method ' . $method . ' does not exist.');
 		}
 		return;
 	}
@@ -2980,10 +2980,23 @@ class Enumerator {
 	 * @return null
 	 */
 	public static function slice_(array &$arr, $start = 0, $length = false) {
+		list($start, $length) = static::_determineRange($arr, $start, $length);
+		$arr = array_slice($arr, $start, $length);
+		return;
+	}
+
+	/**
+	 * Determines the correct starting position, and length of an array.
+	 *
+	 * @param  array   $arr
+	 * @param  integer $start  Optional assumes 0. The beginning index.
+	 * @param  integer $length Optional assumes end of array. Length of slice.
+	 * @return null
+	 */
+	protected static function _determineRange($arr, $start = 0, $length = false) {
 		if ($length === false) {
 			$length = ($start < 0) ? abs($start) : count($arr) - $start;
 		}
-		$arr = array_slice($arr, $start, $length);
-		return;
+		return array($start, $length);
 	}
 }
