@@ -139,12 +139,31 @@ class EnumeratorTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(true, $ret);
 	}
 
+	public function test_each_1() {
+		// Editing 1
+		$arr = range(1,4);
+		Enumerator::each_($arr, function($key, &$value) {
+			$value *= $value;
+			return;
+		});
+		$this->assertEquals(array(1, 4, 9, 16), $arr);
+	}
+
+	public function test_each_2() {
+		// Editing 2
+		$arr = range(1,4);
+		Enumerator::each_($arr, function($key, &$value) {
+			$value = "cat";
+			return;
+		});
+		$this->assertEquals(array("cat", "cat", "cat", "cat"), $arr);
+	}
+
 	public function test_collect_1() {
 		// Editing 1
 		$arr = range(1,4);
 		Enumerator::collect_($arr, function($key, &$value) {
-			$value *= $value;
-			return;
+			return $value * $value;
 		});
 		$this->assertEquals(array(1, 4, 9, 16), $arr);
 	}
@@ -153,8 +172,7 @@ class EnumeratorTest extends PHPUnit_Framework_TestCase {
 		// Editing 2
 		$arr = range(1,4);
 		Enumerator::collect_($arr, function($key, &$value) {
-			$value = "cat";
-			return;
+			return 'cat';
 		});
 		$this->assertEquals(array("cat", "cat", "cat", "cat"), $arr);
 	}

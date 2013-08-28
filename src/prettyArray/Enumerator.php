@@ -72,11 +72,10 @@ class Enumerator {
 		'find' => 'detect',
 		'size' => 'count',
 		'length' => 'count',
-		'array_walk' => 'collect',
-		'each' => 'collect',
+		'array_walk' => 'each',
+		'foreach' => 'each',
+		'each_with_index' => 'each',
 		'map' => 'collect',
-		'foreach' => 'collect',
-		'each_with_index' => 'collect',
 		'reverse_each' => 'reverse_collect',
 		'reverse_map' => 'reverse_collect',
 		'reverse_foreach' => 'reverse_collect',
@@ -103,6 +102,7 @@ class Enumerator {
 		'inject' => false,
 		'all' => false,
 		'any' => false,
+		'each' => true,
 		'collect' => true,
 		'count' => false,
 		'detect' => false,
@@ -337,15 +337,14 @@ class Enumerator {
 	}
 
 	/**
-	 * Methods: collect, collect_, each, each_, map, map_, foreach, foreach_, each_with_index, each_with_index_, array_walk
+	 * Methods: each, each_, foreach, foreach_, each_with_index, each_with_index_, array_walk
 	 *
 	 * Will iterate the elements in the array. Has the potential to change the values.
 	 *
 	 * <code>
 	 * $arr = range(1,4);
-	 * $o = Enumerator::collect($arr, function($key, &$value) {
+	 * $o = Enumerator::each($arr, function($key, &$value) {
 	 * 	$value *= $value;
-	 * 	return;
 	 * });
 	 * print_r($o);
 	 * </code>
@@ -361,9 +360,8 @@ class Enumerator {
 	 *
 	 * <code>
 	 * $arr = range(1,4);
-	 * $o = Enumerator::collect($arr, function($key, &$value) {
+	 * $o = Enumerator::each($arr, function($key, &$value) {
 	 * 	$value = "cat";
-	 * 	return;
 	 * });
 	 * print_r($o);
 	 * </code>
@@ -377,35 +375,88 @@ class Enumerator {
 	 * )
 	 * </pre>
 	 *
-	 * @link http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-collect
+	 * @link http://www.ruby-doc.org/core-1.9.3/Array.html#method-i-each
 	 * @param array &$arr
 	 * @param callable $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
 	 * @return mixed Nothing if called destructively, otherwise a new array.
 	 */
 	public static function array_walk_(array &$arr, $callback) {
 		// Alias destructive method
-		return self::collect_($arr, $callback);
+		return self::each_($arr, $callback);
 	}
 	public static function each_with_index_(array &$arr, $callback) {
 		// Alias destructive method
-		return self::collect_($arr, $callback);
+		return self::each_($arr, $callback);
 	}
 	public static function foreach_(array &$arr, $callback) {
 		// Alias destructive method
-		return self::collect_($arr, $callback);
+		return self::each_($arr, $callback);
 	}
+	public static function each_(array &$arr, $callback) {
+		foreach($arr as $key => &$value) {
+			try {
+				$callback($key, $value);
+			} catch(BreakException $e) {
+				break;
+			} catch(ContinueException $e) {
+				continue;
+			}
+		}
+		return;
+	}
+
+
+	/**
+	 * Methods: collect, collect_, map, map_
+	 *
+	 * Will iterate the elements in the array. The return value will modify the value.
+	 *
+	 * <code>
+	 * $arr = range(1,4);
+	 * $o = Enumerator::each($arr, function($key, &$value) {
+	 * 	return $value * $value;
+	 * });
+	 * print_r($o);
+	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => 1
+	 *     [1] => 4
+	 *     [2] => 9
+	 *     [3] => 16
+	 * )
+	 * </pre>
+	 *
+	 * <code>
+	 * $arr = range(1,4);
+	 * $o = Enumerator::each($arr, function($key, &$value) {
+	 * 	return 'cat';
+	 * });
+	 * print_r($o);
+	 * </code>
+	 * <pre>
+	 * Array
+	 * (
+	 *     [0] => cat
+	 *     [1] => cat
+	 *     [2] => cat
+	 *     [3] => cat
+	 * )
+	 * </pre>
+	 * @link   http://ruby-doc.org/core-1.9.3/Enumerable.html#method-i-collect
+	 * @param  array     &$arr
+	 * @param  callable  $callback A $key and a $value are passed to this callback. The $value can be accepted by reference.
+	 * @return mixed               Nothing if called destructively, otherwise a new array.
+	 */
 	public static function map_(array &$arr, $callback) {
 		// Alias destructive method
 		return self::collect_($arr, $callback);
 	}
-	public static function each_(array &$arr, $callback) {
-		// Alias destructive method
-		return self::collect_($arr, $callback);
-	}
 	public static function collect_(array &$arr, $callback) {
-		foreach($arr as $key => &$value) {
+		foreach($arr as $key => $value) {
 			try {
-				$callback($key, $value);
+				$arr[$key] = $callback($key, $value);
 			} catch(BreakException $e) {
 				break;
 			} catch(ContinueException $e) {

@@ -112,7 +112,7 @@ class prettyArrayTest extends PHPUnit_Framework_TestCase {
 
 	public function test_call_1() {
 		$arr = new PrettyArray(array(1,2,3));
-		$arr->collect_(function($key, &$value) {
+		$arr->each_(function($key, &$value) {
 			$value--;
 			return;
 		});
@@ -120,7 +120,7 @@ class prettyArrayTest extends PHPUnit_Framework_TestCase {
 	}
 	public function test_call_2() {
 		$arr = new PrettyArray(array(1,2,3));
-		$arr->collect(function($key, &$value) {
+		$arr->each(function($key, &$value) {
 			$value--;
 			return;
 		});
@@ -128,7 +128,7 @@ class prettyArrayTest extends PHPUnit_Framework_TestCase {
 	}
 	public function test_call_3() {
 		$arr = new PrettyArray(array(1,2,3));
-		$arr->each(function($key, &$value) {
+		$arr->foreach(function($key, &$value) {
 			$value--;
 			return;
 		});
