@@ -982,4 +982,34 @@ class EnumeratorTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(array('Doe', 'Smith', 'Jones'), $records);
 	}
 
+	public function testSliceBothNumbers() {
+		$records = array('John', 'Sallie', 'Jane');
+		Enumerator::slice_($records, 0, 1);
+		$this->assertEquals(array('John'), $records);
+	}
+
+	public function testSliceSingleNumber() {
+		$records = array('John', 'Sallie', 'Jane');
+		Enumerator::slice_($records, 2);
+		$this->assertEquals(array('Jane'), $records);
+	}
+
+	public function testSliceNoNumber() {
+		$records = array('John', 'Sallie', 'Jane');
+		Enumerator::slice_($records);
+		$this->assertEquals(array('John', 'Sallie', 'Jane'), $records);
+	}
+
+	public function testSliceNonDestructiveKeptOriginal() {
+		$records = array('John', 'Sallie', 'Jane');
+		$results = Enumerator::slice($records, 0, 1);
+		$this->assertEquals(array('John', 'Sallie', 'Jane'), $records);
+	}
+
+	public function testSliceNonDestructiveGaveNew() {
+		$records = array('John', 'Sallie', 'Jane');
+		$results = Enumerator::slice($records, 0, 1);
+		$this->assertEquals(array('John'), $results);
+	}
+
 }

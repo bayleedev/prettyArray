@@ -134,7 +134,8 @@ class Enumerator {
 		'delete' => false,
 		'delete_at' => false,
 		'flatten' => false,
-		'array_column' => false
+		'array_column' => false,
+		'slice' => true,
 	);
 
 	/**
@@ -2967,6 +2968,22 @@ class Enumerator {
 			}
 		}
 		$arr = $newArr;
+		return;
+	}
+
+	/**
+	 * Will slice an array.
+	 *
+	 * @param  array   $arr
+	 * @param  integer $start  Optional assumes 0. The beginning index.
+	 * @param  integer $length Optional assumes end of array. Length of slice.
+	 * @return null
+	 */
+	public static function slice_(array &$arr, $start = 0, $length = false) {
+		if ($length === false) {
+			$length = ($start < 0) ? abs($start) : count($arr) - $start;
+		}
+		$arr = array_slice($arr, $start, $length);
 		return;
 	}
 }
