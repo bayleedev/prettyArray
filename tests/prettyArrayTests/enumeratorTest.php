@@ -1036,4 +1036,72 @@ class EnumeratorTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(array('John'), $results);
 	}
 
+	public function testFillNoRangeWithString() {
+		$records = array('John', 'Sallie', 'Jane');
+		Enumerator::fill_($records, 'x');
+		$this->assertEquals(array('x', 'x', 'x'), $records);
+	}
+
+	public function testFillStartRangeWithString() {
+		$records = array('John', 'Sallie', 'Jane');
+		Enumerator::fill_($records, 'x', 1);
+		$this->assertEquals(array('John', 'x', 'x'), $records);
+	}
+
+	public function testFillBothRangesWithString() {
+		$records = array('John', 'Sallie', 'Jane');
+		Enumerator::fill_($records, 'x', 1, 1);
+		$this->assertEquals(array('John', 'x', 'Jane'), $records);
+	}
+
+	public function testFillWithNegativeStartRange() {
+		$records = array('John', 'Sallie', 'Jane');
+		Enumerator::fill_($records, 'x', -1);
+		$this->assertEquals(array('John', 'Sallie', 'x'), $records);
+	}
+
+	public function testFillCallbackNoRange() {
+		$records = array('John', 'Sallie', 'Jane');
+		Enumerator::fill_($records, function() {
+			return 'x';
+		});
+		$this->assertEquals(array('x', 'x', 'x'), $records);
+	}
+
+	public function testFillWithCallbackAndStartRange() {
+		$records = array('John', 'Sallie', 'Jane');
+		Enumerator::fill_($records, 1, function() {
+			return 'x';
+		});
+		$this->assertEquals(array('John', 'x', 'x'), $records);
+	}
+
+	public function testFillWithCallbackAndBothRanges() {
+		$records = array('John', 'Sallie', 'Jane');
+		Enumerator::fill_($records, 1, 1, function() {
+			return 'x';
+		});
+		$this->assertEquals(array('John', 'x', 'Jane'), $records);
+	}
+
+	public function testFillWithCallbackAndWithNegativeStartRange() {
+		$records = array('John', 'Sallie', 'Jane');
+		Enumerator::fill_($records, -1, function() {
+			return 'x';
+		});
+		$this->assertEquals(array('John', 'Sallie', 'x'), $records);
+	}
+
+	public function testNonDestructiveFillDoesntDestroy() {
+		$records = array('John', 'Sallie', 'Jane');
+		$return = Enumerator::fill($records, 'x');
+		$this->assertEquals(array('John', 'Sallie', 'Jane'), $records);
+	}
+
+	public function testNonDestructiveFillReturns() {
+		$records = array('John', 'Sallie', 'Jane');
+		$return = Enumerator::fill($records, 'x');
+		$this->assertEquals(array('x', 'x', 'x'), $return);
+	}
+
 }

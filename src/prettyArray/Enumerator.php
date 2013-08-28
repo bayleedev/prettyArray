@@ -137,6 +137,7 @@ class Enumerator {
 		'flatten' => false,
 		'array_column' => false,
 		'slice' => true,
+		'fill' => true,
 	);
 
 	/**
@@ -3033,6 +3034,44 @@ class Enumerator {
 	public static function slice_(array &$arr, $start = 0, $length = false) {
 		list($start, $length) = static::_determineRange($arr, $start, $length);
 		$arr = array_slice($arr, $start, $length);
+		return;
+	}
+
+	/**
+	 * Fills an array with given values. Optional start and end values can be used.
+	 *
+	 * <code>
+	 * $arr = array("a", "b", "c", "d");
+	 * Enumerator::fill($arr, 'x');       // array('x', 'x', 'x', 'x')
+	 * Enumerator::fill($arr, 'z', 2, 2); // array('a', 'b', 'z', 'z')
+	 * Enumerator::fill($arr, function($index, $value) {
+	 * 	return $index * $index;
+	 * }); // array(0, 1, 4, 9)
+	 *
+	 * Enumerator::fill(2, 2, function() {
+	 * 	return 'z';
+	 * }); // array('a', 'b', 'z', 'z')
+	 * </code>
+	 *
+	 * @param  array  $arr [description]
+	 * @return [type]      [description]
+	 */
+	public static function fill_(array &$arr) {
+		$args = array_slice(func_get_args(), 1);
+		if (!is_callable($args[count($args) - 1])) {
+			$ret = array_shift($args);
+			$args[] = function() use (&$ret) {
+				return $ret;
+			};
+		}
+		$callback = array_pop($args);
+		array_unshift($args, $arr);
+		list($start, $length) = call_user_func_array(array(get_called_class(), '_determineRange'), $args);
+		$oldSlice = array_slice($arr, $start, $length);
+		$newSlice = Enumerator::collect($oldSlice, function($key, &$value) use(&$callback) {
+			return $callback($key, $value);
+		});
+		array_splice($arr, $start, $length, $newSlice);
 		return;
 	}
 
