@@ -93,13 +93,13 @@ class PrettyArray implements \ArrayAccess, \Iterator {
 	 * The default array can be passed as the first argument in the constructor.
 	 * @param array optional $defaults
 	 */
-	public function __construct(array $defaults = array()) {
+	public function __construct($defaults = array()) {
 		if(is_null(self::$enumData['methodMap'])) {
 			self::$enumData['methodMap'] = Enumerator::get('methodMap');
 			self::$enumData['destructiveMap'] = Enumerator::get('destructiveMap');
 		}
 		$this->position = 0;
-		$this->data = $defaults;
+		$this->data = is_array($defaults) ? $defaults : array_filter(func_get_args());
 	}
 
 	/**

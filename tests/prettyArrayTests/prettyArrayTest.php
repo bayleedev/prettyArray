@@ -251,4 +251,24 @@ class prettyArrayTest extends PHPUnit_Framework_TestCase {
 		), $newAnimals);
 	}
 
+	public function testMultipleParamsToConstructor() {
+		$animals = new PrettyArray('ant', 'bear', 'cat');
+		$this->assertEquals(array('ant', 'bear', 'cat'), $animals->to_a());
+	}
+
+	public function testNoParamsToConstructor() {
+		$animals = new PrettyArray();
+		$this->assertEquals(array(), $animals->to_a());
+	}
+
+	public function testNullParamToConstructor() {
+		$animals = new PrettyArray(null);
+		$this->assertEquals(array(), $animals->to_a());
+	}
+
+	public function testNullParamsToConstructor() {
+		$animals = new PrettyArray(null, null);
+		$this->assertEquals(array(), $animals->to_a());
+	}
+
 }
