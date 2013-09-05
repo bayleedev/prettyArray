@@ -210,12 +210,6 @@ class prettyArrayTest extends PHPUnit_Framework_TestCase {
 		});
 		$this->assertEquals(array(2=>3, 5=>6, 8=>9), $arr);
 	}
-	public function test_enumerator_static_count() {
-		// Counting specific values
-		$arr = array(1,2,4,2);
-		$ret = PrettyArray::count($arr, 2);
-		$this->assertEquals(2, $ret);
-	}
 	public function test_any() {
 		// Callback 2
 		$animals = array('ant', 'bear', 'cat');
@@ -269,6 +263,11 @@ class prettyArrayTest extends PHPUnit_Framework_TestCase {
 	public function testNullParamsToConstructor() {
 		$animals = new PrettyArray(null, null);
 		$this->assertEquals(array(), $animals->to_a());
+	}
+
+	public function testCountable() {
+		$animals = new PrettyArray('ant', 'bear', 'cat');
+		$this->assertCount(3, $animals);
 	}
 
 }

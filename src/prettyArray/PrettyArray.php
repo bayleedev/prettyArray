@@ -11,6 +11,9 @@
 namespace prettyArray;
 
 use prettyArray\Enumerator;
+use ArrayAccess;
+use Iterator;
+use Countable;
 
 /**
  * PrettyArray
@@ -54,7 +57,7 @@ use prettyArray\Enumerator;
  * 	throw new BreakException;
  * </code>
  */
-class PrettyArray implements \ArrayAccess, \Iterator {
+class PrettyArray implements ArrayAccess, Iterator, Countable {
 
 	/**
 	 * The real data
@@ -558,6 +561,15 @@ class PrettyArray implements \ArrayAccess, \Iterator {
 	 */
 	public function valid() {
 		return isset($this->data[$this->key()]);
+	}
+
+	/**
+	 * Counts the number of items in the array. Part of the Countable interface.
+	 *
+	 * @return int
+	 */
+	public function count() {
+		return $this->__call('count', func_get_args());
 	}
 
 }

@@ -978,12 +978,8 @@ Example 1
 ---------
 ```php
 $arr = new PrettyArray(array(1,2,4,2));
-echo $arr->count();
-
-```
-
-```
-4
+echo $arr->count(); // 4
+echo count($arr); // 4
 ```
 
 Example 2
