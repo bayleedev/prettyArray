@@ -3,7 +3,7 @@
 A object oriented approach to handling arrays in PHP.
 It attempts to combine Ruby (enumerator/array/hash) methods as well as built in PHP functions.
 
-[![Build Status](https://secure.travis-ci.org/BlaineSch/prettyArray.png?branch=master)](http://travis-ci.org/BlaineSch/prettyArray)
+[![Build Status](https://secure.travis-ci.org/blainesch/prettyArray.png?branch=master)](http://travis-ci.org/blainesch/prettyArray)
 
 ## Example 1
 ~~~php
